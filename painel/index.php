@@ -9,6 +9,17 @@ if(@$_GET['pagina'] != ""){
 	$pagina = 'home';
 }
 
+$id_usuario = @$_SESSION['id'];
+$query = $pdo->query("SELECT * from usuarios where id = 'id_usuario'");
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$linhas = @count($res);
+if($linhas > 0){
+	$nome_usuario = $res[0]['nome'];
+	$email_usuario = $res[0]['email'];
+	$senha_usuario = $res[0]['senha'];
+	$nivel_usuario = $res[0]['nivel'];
+	$foto_usuario = $res[0]['foto'];
+}
 
 
 ?>
@@ -228,7 +239,7 @@ if(@$_GET['pagina'] != ""){
 							<ul class="dropdown-menu drp-mnu">
 								<li> <a href="" data-toggle="modal" data-target="#modalConfig"><i class="fa fa-cog"></i> Configurações</a> </li> 
 								<li> <a href="" data-toggle="modal" data-target="#modalPerfil"><i class="fa fa-user"></i> Perfil</a> </li> 								
-								<li> <a href="../logout.php"><i class="fa fa-sign-out"></i> Sair</a> </li>
+								<li> <a href="logout.php"><i class="fa fa-sign-out"></i> Sair</a> </li>
 							</ul>
 						</li>
 					</ul>

@@ -30,9 +30,13 @@
                 <img src="images/logo.png" alt="Logomarca" class="img">
                 <input type="email" name="usuario" placeholder="E-mail">
                 <input type="password" name="senha" placeholder="Senha">
+               
                 <button>Login</button>
+                <!-- <a href="cadastro.html" class="btn btn-secundary">Cadastre-se</a><br>
+                <a href="#" class="form__action__aside">Esqueci minha senha</a> -->
            </form>
         </div>
     </div>
 </body>
 </html>
+          
