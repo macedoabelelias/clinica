@@ -28,40 +28,40 @@ function inserir(){
 
 
 
-// $("#form").submit(function () {
+$("#form").submit(function () {
 
-//     event.preventDefault();
-//     var formData = new FormData(this);
+    event.preventDefault();
+    var formData = new FormData(this);
 
-//     $.ajax({
-//         url: 'paginas/' + pag + "/salvar.php",
-//         type: 'POST',
-//         data: formData,
+    $.ajax({
+        url: 'paginas/' + pag + "/salvar.php",
+        type: 'POST',
+        data: formData,
 
-//         success: function (mensagem) {
-//             $('#mensagem').text('');
-//             $('#mensagem').removeClass()
-//             if (mensagem.trim() == "Salvo com Sucesso") {
+        success: function (mensagem) {
+            $('#mensagem').text('');
+            $('#mensagem').removeClass()
+            if (mensagem.trim() == "Salvo com Sucesso") {
 
-//                 $('#btn-fechar').click();
-//                 listar();          
+                $('#btn-fechar').click();
+                listar();          
 
-//             } else {
+            } else {
 
-//                 $('#mensagem').addClass('text-danger')
-//                 $('#mensagem').text(mensagem)
-//             }
+                $('#mensagem').addClass('text-danger')
+                $('#mensagem').text(mensagem)
+            }
 
 
-//         },
+        },
 
-//         cache: false,
-//         contentType: false,
-//         processData: false,
+        cache: false,
+        contentType: false,
+        processData: false,
 
-//     });
+    });
 
-// });
+});
 
 
 

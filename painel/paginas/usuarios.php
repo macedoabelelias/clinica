@@ -4,12 +4,7 @@ $pag ='usuarios';
  ?>
 <a onclick="inserir()" type="button" class="btn btn-primary"><span class="fa fa-plus"></span> Usuário</a>
 
-<div class="bs-example widget-shadow" style="padding:15px" id="listar">
-    
-</div>
-
-<script type="text/javascript">var pag = "<?=$pag?>"</script>
-<script src="js/ajax.js"></script>
+<div class="bs-example widget-shadow" style="padding:15px" id="listar"></div>
 
 <!-- Modal Perfil -->
 <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -81,11 +76,11 @@ $pag ='usuarios';
 					</div>
 
 
-					<input type="hidden" name="id_usuario" value="<?php echo $id_usuario ?>">
+					
 				
 
 				<br>
-				<small><div id="msg-perfil" align="center"></div></small>
+				<small><div id="mensagem" align="center"></div></small>
 			</div>
 			<div class="modal-footer">       
 				<button type="submit" class="btn btn-primary">Salvar</button>
@@ -94,6 +89,9 @@ $pag ='usuarios';
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">var pag = "<?=$pag?>"</script>
+<script src="js/ajax.js"></script>
 
 <script type="text/javascript">
 	function carregarImg() {
