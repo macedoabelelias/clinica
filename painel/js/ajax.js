@@ -18,14 +18,12 @@ function listar(){
     });
 }
 
-// function inserir(){
-//     $('#id_usuario').val(localStorage.id_usu);
-//     $('#id_empresa').val(localStorage.id_empresa);
-//     $('#mensagem').text('');
-//     $('#titulo_inserir').text('Inserir Registro');
-//     $('#modalForm').modal('show');
-//     limparCampos();
-// }
+function inserir(){
+    $('#mensagem').text('');
+    $('#titulo_inserir').text('Inserir Registro');
+    $('#modalForm').modal('show');
+    limparCampos();
+}
 
 
 
