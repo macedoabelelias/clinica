@@ -7,8 +7,8 @@
  $senha_crip = md5($senha);
  if($linhas == 0){
     $pdo->query("INSERT INTO usuarios SET nome = '$nome_sistema', email = '$email_sistema', 
-    senha = '$senha', senha_crip = '$senha_crip', nivel = 'Admin', ativo = 'Sim', 
-    foto = 'sem-foto.jpg'");
+    senha = '$senha', senha_crip = '$senha_crip', nivel = 'Administrador', ativo = 'Sim', 
+    foto = 'sem-foto.jpg', telefone = '$telefone_sistema'");
  }
 ?>
 
@@ -28,8 +28,8 @@
         <div class="form">
            <form method="post" action="autenticar.php">
                 <img src="images/logo.png" alt="Logomarca" class="img">
-                <input type="email" name="usuario" placeholder="E-mail">
-                <input type="password" name="senha" placeholder="Senha">
+                <input type="email" name="usuario" placeholder="E-mail" required>
+                <input type="password" name="senha" placeholder="Senha" required>
                
                 <button>Login</button>
                 <!-- <a href="cadastro.html" class="btn btn-secundary">Cadastre-se</a><br>
