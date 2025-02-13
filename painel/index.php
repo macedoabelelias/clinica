@@ -32,7 +32,7 @@ if($linhas > 0){
 	<title>clínicas</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="shortcut icon" href="" type="image/x-icon">
+	<link rel="shortcut icon" href="../images/icon_logo.png" type="image/x-icon">
 
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
@@ -112,11 +112,11 @@ if($linhas > 0){
 		});
 
 	</script>
-	<!-- //pie-chart --><!-- index page sales reviews visitors pie chart -->
+	<!-- //pie-chart --><!-- index page sales reviews visitors pie chart -->	
 
-	<link href="https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.css">
+	<link href="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.css" rel="stylesheet" integrity="sha384-2vMryTPZxTZDZ3GnMBDVQV8OtmoutdrfJxnDTg0bVam9mZhi7Zr3J1+lkVFRr71f" crossorigin="anonymous">
  
-	<script src="https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.js"></script>
+<script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js" integrity="sha384-2Ul6oqy3mEjM7dBJzKOck1Qb/mzlO+k/0BQv3D3C7u+Ri9+7OBINGa24AeOv5rgu" crossorigin="anonymous"></script>
 
 
 	
