@@ -334,11 +334,6 @@ if($linhas > 0){
 </body>
 </html>
 
-
-
-
-
-
 <!-- Modal Perfil -->
 <div class="modal fade" id="modalPerfil" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -420,13 +415,6 @@ if($linhas > 0){
 	</div>
 </div>
 
-
-
-
-
-
-
-
 <!-- Modal Config -->
 <div class="modal fade" id="modalConfig" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
@@ -486,14 +474,9 @@ if($linhas > 0){
 									<option value="PDF" <?php if(@$tipo_rel == 'PDF'){?> selected <?php } ?> >PDF</option>
 									<option value="HTML" <?php if(@$tipo_rel == 'HTML'){?> selected <?php } ?> >HTML</option>
 								</select>							
-						</div>
+						</div>						
 
-						
-
-					</div>
-
-
-					
+					</div>			
 
 					
 
