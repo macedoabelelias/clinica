@@ -112,6 +112,10 @@ $pag ='usuarios';
 					<div class="col-md-12" style="margin-bottom: 5px">
 						<span><b>Endereço: </b></span><span id="endereco_dados"></span>
 					</div>
+
+					<div class="col-md-12" style="margin-bottom: 5px">
+						<div align="center"><img src="" id="foto_dados" width="20%"></div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -85,25 +85,24 @@ function excluir(id){
 
 
 
-// function ativar(id, acao){
-// 	var id_usuario = localStorage.id_usu;
-//     var id_empresa = localStorage.id_empresa;
-//     $.ajax({
-//         url: 'paginas/' + pag + "/mudar-status.php",
-//         method: 'POST',
-//         data: {id, id_usuario, acao, id_empresa},
-//         dataType: "html",
+function ativar(id, acao){
+	
+    $.ajax({
+        url: 'paginas/' + pag + "/mudar-status.php",
+        method: 'POST',
+        data: {id, acao},
+        dataType: "html",
 
-//         success:function(mensagem){
-//             if (mensagem.trim() == "Alterado com Sucesso") {
-//                 listar();
-//             } else {
-//                 $('#mensagem-excluir').addClass('text-danger')
-//                 $('#mensagem-excluir').text(mensagem)
-//             }
-//         }
-//     });
-// }
+        success:function(mensagem){
+            if (mensagem.trim() == "Alterado com Sucesso") {
+                listar();
+            } else {
+                $('#mensagem-excluir').addClass('text-danger')
+                $('#mensagem-excluir').text(mensagem)
+            }
+        }
+    });
+}
 
 
 
