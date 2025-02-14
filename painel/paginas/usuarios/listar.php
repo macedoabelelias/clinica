@@ -109,3 +109,21 @@ HTML;
     });
 </script>
 
+<script type="text/javascript">
+   function editar(id, nome, email, telefone, endereco, nivel){
+      $('#mensagem').text('');
+      $('#titulo_inserir').text('Editar Registro');
+
+      $('#id').val(id);
+      $('#nome').val(nome);
+      $('#email').val(email);
+      $('#telefone').val(telefone);
+      $('#endereco').val(endereco);
+      $('#nivel').val(nivel).change();
+
+      $('#modalForm').modal('show');
+   
+   }
+
+</script>
+

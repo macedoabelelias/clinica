@@ -60,7 +60,7 @@ $pag ='usuarios';
 					</div>
 
 
-					<div class="row">
+					<!-- <div class="row">
 						<div class="col-md-8">							
 								<label>Foto</label>
 								<input type="file" class="form-control" id="foto" name="foto"                                
@@ -71,9 +71,9 @@ $pag ='usuarios';
 							<img src="images/perfil/sem-foto.jpg"  width="80px" id="target">								
 							
 						</div>						
-					</div>
+					</div> -->
 
-					<input type="text" class="form-control" id="id" name="id">					
+					<input type="hidden" class="form-control" id="id" name="id">					
 				
 
 				<br>
@@ -90,24 +90,24 @@ $pag ='usuarios';
 <script type="text/javascript">var pag = "<?=$pag?>"</script>
 <script src="js/ajax.js"></script>
 
-<script type="text/javascript">
-	function carregarImg() {
-    var target = document.getElementById('target');
-    var file = document.querySelector("#foto").files[0];
+// <script type="text/javascript">
+// 	function carregarImg() {
+//     var target = document.getElementById('target');
+//     var file = document.querySelector("#foto").files[0];
     
-        var reader = new FileReader();
+//         var reader = new FileReader();
 
-        reader.onloadend = function () {
-            target.src = reader.result;
-        };
+//         reader.onloadend = function () {
+//             target.src = reader.result;
+//         };
 
-        if (file) {
-            reader.readAsDataURL(file);
+//         if (file) {
+//             reader.readAsDataURL(file);
 
-        } else {
-            target.src = "";
-        }
-    }
+//         } else {
+//             target.src = "";
+//         }
+//     }
 </script>
 
 
