@@ -70,13 +70,10 @@ $pag ='usuarios';
 						<div class="col-md-4">								
 							<img src="images/perfil/sem-foto.jpg"  width="80px" id="target">								
 							
-						</div>
-
-						
+						</div>						
 					</div>
 
-
-					
+					<input type="text" class="form-control" id="id" name="id">					
 				
 
 				<br>

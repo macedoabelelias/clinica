@@ -9,8 +9,29 @@ $nivel = $_POST['nivel'];
 $endereco = $_POST['endereco'];
 $senha = '123';
 $senha_crip = md5($senha);
+$id = $_POST['id'];
 
-$query = $pdo->prepare("INSERT INTO usuarios SET nome = :nome, email = :email, 
+
+//validação email
+$query = $pdo->query("SELECT * from $tabela where email = '$email'");    
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$id_reg = @$res[0]['id'];
+if(@count($res) > 0 and $id != $id_reg){
+    echo 'Email já Cadastrado!';
+    exit();
+}
+
+//validação telefone
+$query = $pdo->query("SELECT * from $tabela where telefone = '$telefone'");    
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$id_reg = @$res[0]['id'];
+if(@count($res) > 0 and $id != $id_reg){
+    echo 'Telefone já Cadastrado!';
+    exit();
+}  
+   
+
+$query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome, email = :email, 
     senha = '$senha', senha_crip = '$senha_crip', nivel = '$nivel', ativo = 'Sim', 
     foto = 'sem-foto.jpg', telefone = :telefone, data = curDate(), endereco = :endereco");
  $query->bindValue(":nome", "$nome");
