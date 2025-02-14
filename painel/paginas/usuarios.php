@@ -59,22 +59,7 @@ $pag ='usuarios';
 						</div>						
 					</div>
 
-
-					<!-- <div class="row">
-						<div class="col-md-8">							
-								<label>Foto</label>
-								<input type="file" class="form-control" id="foto" name="foto"                                
-                                onchange="carregarImg()">							
-						</div>
-
-						<div class="col-md-4">								
-							<img src="images/perfil/sem-foto.jpg"  width="80px" id="target">								
-							
-						</div>						
-					</div> -->
-
-					<input type="hidden" class="form-control" id="id" name="id">					
-				
+					<input type="hidden" class="form-control" id="id" name="id">				
 
 				<br>
 				<small><div id="mensagem" align="center"></div></small>
@@ -83,6 +68,52 @@ $pag ='usuarios';
 				<button type="submit" class="btn btn-primary">Salvar</button>
 			</div>
 			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Dados -->
+<div class="modal fade" id="modalDados" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="exampleModalLabel"><span id="titulo_dados"></span></h4>
+				<button id="btn-fechar-dados" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			
+			<div class="modal-body">
+			<div class="row" style="margin-top: 0px">
+					<div class="col-md-6" style="margin-bottom: 5px">
+						<span><b>Telefone: </b></span><span id="telefone_dados"></span>
+					</div>
+
+					<div class="col-md-8" style="margin-bottom: 5px">
+						<span><b>Email: </b></span><span id="email_dados"></span>
+					</div>					
+
+					<div class="col-md-4" style="margin-bottom: 5px">
+						<span><b>Senha: </b></span><span id="senha_dados"></span>
+					</div>
+
+					<div class="col-md-6" style="margin-bottom: 5px">
+						<span><b>Nível: </b></span><span id="nivel_dados"></span>
+					</div>
+
+					<div class="col-md-6" style="margin-bottom: 5px">
+						<span><b>Ativo: </b></span><span id="ativo_dados"></span>
+					</div>
+
+					<div class="col-md-6" style="margin-bottom: 5px">
+						<span><b>Data Cadastro: </b></span><span id="data_dados"></span>
+					</div>
+
+					<div class="col-md-12" style="margin-bottom: 5px">
+						<span><b>Endereço: </b></span><span id="endereco_dados"></span>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -108,6 +139,6 @@ $pag ='usuarios';
 //             target.src = "";
 //         }
 //     }
-</script>
+// </script>
 
 

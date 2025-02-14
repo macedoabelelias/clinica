@@ -15,6 +15,7 @@ $query = $pdo->query("SELECT * from usuarios order by id desc");
 	<th class="esc">Telefone</th>	
 	<th class="esc">Email</th>	
 	<th class="esc">Nível</th>	
+   <th class="esc">Foto</th>	
 	<th>Ações</th>
 	</tr> 
 	</thead> 
@@ -58,6 +59,7 @@ for($i=0; $i < $linhas; $i++){
     <td class="esc">{$telefone}</td>
     <td class="esc">{$email}</td>
     <td class="esc">{$nivel}</td>
+    <td class="esc"><img src="images/perfil/{$foto}" width="25px"></td>
     <td>
       <big><a href="#" onclick="editar('{$id}','{$nome}','{$email}','{$telefone}','{$endereco}',
       '{$nivel}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
@@ -77,7 +79,7 @@ for($i=0; $i < $linhas; $i++){
       </li>
 
       <big><a href="#" onclick="mostrar('{$nome}','{$email}','{$telefone}','{$endereco}','{$ativo}',
-      '{$dataF}', '{$senha}', '{$nivel}')" title="Mostrar Dados"><i class="fa fa-info-circle text-primary">         
+      '{$dataF}', '{$senha}', '{$nivel}', '{$foto}')" title="Mostrar Dados"><i class="fa fa-info-circle text-primary">         
       </i></a></big>
 
       <big><a href="#" onclick="ativar('{$id}', '{$acao}')" title="{$titulo_link}"><i class
@@ -123,6 +125,29 @@ HTML;
 
       $('#modalForm').modal('show');
    
+   }
+
+   function mostrar(nome, email, telefone, endereco, ativo, data, senha, nivel, foto){
+     
+      $('#titulo_dados').text(nome);
+      $('#email_dados').text(email);
+      $('#telefone_dados').text(telefone);
+      $('#endereco_dados').text(endereco);
+      $('#ativo_dados').text(ativo);
+      $('#data_dados').text(data);
+      $('#senha_dados').text(senha);
+      $('#nivel_dados').text(nivel);
+      $('#foto_dados').text(foto);
+
+      $('#modalDados').modal('show');
+   
+   }
+   function limparCampos(){
+      $('#id').val('');
+      $('#nome').val('');
+      $('#email').val('');
+      $('#telefone').val('');
+      $('#endereco').val('');      
    }
 
 </script>

@@ -2,9 +2,7 @@ $(document).ready(function() {
     listar();    
 } );
 
-function listar(){   
-	// var id_usuario = localStorage.id_usu;
-    // var id_empresa = localStorage.id_empresa;
+function listar(){   	
     $.ajax({
         url: 'paginas/' + pag + "/listar.php",
         method: 'POST',
@@ -65,26 +63,25 @@ $("#form").submit(function () {
 
 
 
-// function excluir(id){
-//     $('#mensagem-excluir').text('Excluindo...')
-//     var id_empresa = localStorage.id_empresa;
-// 	var id_usuario = localStorage.id_usu;
-//     $.ajax({
-//         url: 'paginas/' + pag + "/excluir.php",
-//         method: 'POST',
-//         data: {id, id_usuario, id_empresa},
-//         dataType: "html",
+function excluir(id){
+    $('#mensagem-excluir').text('Excluindo...')
+   
+    $.ajax({
+        url: 'paginas/' + pag + "/excluir.php",
+        method: 'POST',
+        data: {id},
+        dataType: "html",
 
-//         success:function(mensagem){
-//             if (mensagem.trim() == "Excluído com Sucesso") {
-//                 listar();
-//             } else {
-//                 $('#mensagem-excluir').addClass('text-danger')
-//                 $('#mensagem-excluir').text(mensagem)
-//             }
-//         }
-//     });
-// }
+        success:function(mensagem){
+            if (mensagem.trim() == "Excluído com Sucesso") {
+                listar();
+            } else {
+                $('#mensagem-excluir').addClass('text-danger')
+                $('#mensagem-excluir').text(mensagem)
+            }
+        }
+    });
+}
 
 
 
