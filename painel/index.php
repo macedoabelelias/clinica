@@ -29,10 +29,10 @@ if($linhas > 0){
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>clínicas</title>
+	<title><?php echo $nome_sistema ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="shortcut icon" href="../images/icon_logo.png" type="image/x-icon">
+	<link rel="shortcut icon" href="../images/icone.png" type="image/x-icon">
 
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
@@ -134,7 +134,8 @@ if($linhas > 0){
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<h2><a class="navbar-brand" href="index.php"><span><img src="../images/dentistry1.png"></span> Clínicas<span class="dashboard_text">AM Systems</span></a></h2>
+						<h2><a class="navbar-brand" href="index.php"><span><img src="../images/dentistry1.png">
+						</span> <?php echo $nome_sistema ?><span class="dashboard_text"><?php echo $nome_sistema ?></span></a></h2>
 					</div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="sidebar-menu">

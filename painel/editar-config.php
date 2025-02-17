@@ -8,56 +8,47 @@ $telefone = $_POST['telefone_sistema'];
 $endereco = $_POST['endereco_sistema'];
 $instagram = $_POST['instagram_sistema'];
 
-//validação email
-$query = $pdo->query("SELECT * from $tabela where email = '$email'");    
-$res = $query->fetchAll(PDO::FETCH_ASSOC);
-$id_reg = @$res[0]['id'];
-if(@count($res) > 0 and $id != $id_reg){
-    echo 'Email já Cadastrado!';
-    exit();
+//foto logo
+
+$caminho = '../images/logo.png' ;
+
+$imagem_temp = @$_FILES['foto-logo']['tmp_name']; 
+
+if(@$_FILES['foto-logo']['name'] != ""){
+	$ext = pathinfo(@$_FILES['foto-logo']['name'], PATHINFO_EXTENSION);   
+	if($ext == 'png'){ 
+		move_uploaded_file($imagem_temp, $caminho);
+	}else{
+		echo 'Extensão de Imagem não permitida!';
+		exit();
+	}
 }
 
-//validação telefone
-$query = $pdo->query("SELECT * from $tabela where telefone = '$telefone'");    
-$res = $query->fetchAll(PDO::FETCH_ASSOC);
-$id_reg = @$res[0]['id'];
-if(@count($res) > 0 and $id != $id_reg){
-    echo 'Telefone já Cadastrado!';
-    exit();
-}   
+//foto logo-rel
 
+$caminho = '../images/logo.jpg' ;
 
-//validar troca da foto
-$query = $pdo->query("SELECT * FROM $tabela where id = '$id'");
-$res = $query->fetchAll(PDO::FETCH_ASSOC);
-$total_reg = @count($res);
-if($total_reg > 0){
-	$foto = $res[0]['foto'];
-}else{
-	$foto = 'sem-foto.jpg';
+$imagem_temp = @$_FILES['foto-logo-rel']['tmp_name']; 
+
+if(@$_FILES['foto-logo-rel']['name'] != ""){
+	$ext = pathinfo(@$_FILES['foto-logo-rel']['name'], PATHINFO_EXTENSION);   
+	if($ext == 'jpg'){ 	
+		move_uploaded_file($imagem_temp, $caminho);
+	}else{
+		echo 'Extensão de Imagem não permitida!';
+		exit();
+	}
 }
 
+//foto icone
 
+$caminho = '../images/icone.png' ;
 
-//SCRIPT PARA SUBIR FOTO NO SERVIDOR
-$nome_img = date('d-m-Y H:i:s') .'-'.@$_FILES['foto']['name'];
-$nome_img = preg_replace('/[ :]+/' , '-' , $nome_img);
+$imagem_temp = @$_FILES['foto-icone']['tmp_name']; 
 
-$caminho = 'images/perfil/' .$nome_img;
-
-$imagem_temp = @$_FILES['foto']['tmp_name']; 
-
-if(@$_FILES['foto']['name'] != ""){
-	$ext = pathinfo($nome_img, PATHINFO_EXTENSION);   
-	if($ext == 'png' or $ext == 'jpg' or $ext == 'jpeg' or $ext == 'gif'){ 
-	
-			//EXCLUO A FOTO ANTERIOR
-			if($foto != "sem-foto.jpg"){
-				@unlink('images/perfil/'.$foto);
-			}
-
-			$foto = $nome_img;
-		
+if(@$_FILES['foto-icone']['name'] != ""){
+	$ext = pathinfo(@$_FILES['foto-icone']['name'], PATHINFO_EXTENSION);   
+	if($ext == 'png'){ 	
 		move_uploaded_file($imagem_temp, $caminho);
 	}else{
 		echo 'Extensão de Imagem não permitida!';
@@ -67,15 +58,14 @@ if(@$_FILES['foto']['name'] != ""){
 
 
 $query = $pdo->prepare("UPDATE $tabela SET nome = :nome, email = :email,  
-    telefone = :telefone, senha = :senha, senha_crip = '$senha_crip', endereco = :endereco, 
-    foto = '$foto' where id = '$id'"); 
+    telefone = :telefone, endereco = :endereco, instagram = :instagram where id = 1"); 
 
  $query->bindValue(":nome", "$nome");
  $query->bindValue(":email", "$email");
  $query->bindValue(":telefone", "$telefone");
  $query->bindValue(":endereco", "$endereco");
- $query->bindValue(":senha", "$senha");
- $query->execute();
+ $query->bindValue(":instagram", "$instagram");
+//  $query->execute();
 
  echo 'Editado com Sucesso';
 ?>
