@@ -2,9 +2,27 @@
 $pag ='usuarios';
 
  ?>
+
 <a onclick="inserir()" type="button" class="btn btn-primary"><span class="fa fa-plus"></span> Usuário</a>
 
+<li class="dropdown head-dpdn2" style="display: inline-block;">
+	<a href="#" data-toggle="dropdown" class="btn btn-danger dropdown-toggle" id="btn-deletar"
+	style="display:none"><span class="fa fa-trash-o"></span> Excluir</a>
+           
+        <ul class="dropdown-menu">
+            <li>
+            <div class="notification_desc2">
+            <p>Excluir os Selecionados? <a href="#" onclick="excluirSel()"><span class
+               ="text-danger">Sim</span></a></p>
+            </div>
+            </li>										
+        </ul>           
+</li>
+
+
 <div class="bs-example widget-shadow" style="padding:15px" id="listar"></div>
+
+<input type="hidden" id="ids">
 
 <!-- Modal Perfil -->
 <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -78,7 +96,8 @@ $pag ='usuarios';
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="exampleModalLabel"><span id="titulo_dados"></span></h4>
-				<button id="btn-fechar-dados" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px">
+				<button id="btn-fechar-dados" type="button" class="close" data-dismiss="modal" 
+					aria-label="Close" style="margin-top: -25px">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -125,24 +144,24 @@ $pag ='usuarios';
 <script type="text/javascript">var pag = "<?=$pag?>"</script>
 <script src="js/ajax.js"></script>
 
-// <script type="text/javascript">
-// 	function carregarImg() {
-//     var target = document.getElementById('target');
-//     var file = document.querySelector("#foto").files[0];
+<script type="text/javascript">
+	function carregarImg() {
+    var target = document.getElementById('target');
+    var file = document.querySelector("#foto").files[0];
     
-//         var reader = new FileReader();
+        var reader = new FileReader();
 
-//         reader.onloadend = function () {
-//             target.src = reader.result;
-//         };
+        reader.onloadend = function () {
+            target.src = reader.result;
+        };
 
-//         if (file) {
-//             reader.readAsDataURL(file);
+        if (file) {
+            reader.readAsDataURL(file);
 
-//         } else {
-//             target.src = "";
-//         }
-//     }
-// </script>
+        } else {
+            target.src = "";
+        }
+    }
+</script>
 
 

@@ -34,7 +34,8 @@ if($linhas > 0){
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="../images/icone.png" type="image/x-icon">
 
-	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<script type="application/x-javascript"> addEventListener("load", function() 
+	{ setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
 	<!-- Bootstrap Core CSS -->
 	<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -55,7 +56,8 @@ if($linhas > 0){
 	<script src="js/modernizr.custom.js"></script>
 
 	<!--webfonts-->
-	<link href="//fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,
+	cyrillic-ext,latin-ext" rel="stylesheet">
 	<!--//webfonts--> 
 
 	<!-- chart -->
@@ -112,13 +114,10 @@ if($linhas > 0){
 		});
 
 	</script>
-	<!-- //pie-chart --><!-- index page sales reviews visitors pie chart -->	
+	<!-- //pie-chart --><!-- index page sales reviews visitors pie chart -->
 
-	<link href="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.css" rel="stylesheet" integrity="sha384-2vMryTPZxTZDZ3GnMBDVQV8OtmoutdrfJxnDTg0bVam9mZhi7Zr3J1+lkVFRr71f" crossorigin="anonymous">
- 
-<script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js" integrity="sha384-2Ul6oqy3mEjM7dBJzKOck1Qb/mzlO+k/0BQv3D3C7u+Ri9+7OBINGa24AeOv5rgu" crossorigin="anonymous"></script>
-
-
+<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/> 
+ 	<script src="DataTables/datatables.min.js"></script>
 	
 </head> 
 <body class="cbp-spmenu-push">
@@ -128,7 +127,8 @@ if($linhas > 0){
 			<aside class="sidebar-left" style="overflow: scroll; height:100%; scrollbar-width: thin;">
 				<nav class="navbar navbar-inverse">
 					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".collapse" aria-expanded="false">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
+							data-target=".collapse" aria-expanded="false">
 							<span class="sr-only">Toggle navigation</span>
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
@@ -169,12 +169,14 @@ if($linhas > 0){
 		<div class="sticky-header header-section ">
 			<div class="header-left">
 				<!--toggle button start-->
-				<button id="showLeftPush" data-toggle="collapse" data-target=".collapse"><i class="fa fa-bars"></i></button>
+				<button id="showLeftPush" data-toggle="collapse" data-target=".collapse">
+					<i class="fa fa-bars"></i></button>
 				<!--toggle button end-->
 				<div class="profile_details_left"><!--notifications of menu start -->
 					<ul class="nofitications-dropdown">
 						<li class="dropdown head-dpdn">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">4</span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded=
+							"false"><i class="fa fa-envelope"></i><span class="badge">4</span></a>
 							<ul class="dropdown-menu">
 								<li>
 									<div class="notification_header">
@@ -235,7 +237,8 @@ if($linhas > 0){
 						<li class="dropdown profile_details_drop">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 								<div class="profile_img">	
-									<span class="prfil-img"><img src="images/perfil/<?php echo $foto_usuario ?>" alt="" width="50px" height="50px"> </span> 
+									<span class="prfil-img"><img src="images/perfil/<?php echo $foto_usuario ?>"
+									 alt="" width="50px" height="50px"> </span> 
 									<div class="user-name esc">
 										<p><?php echo $nome_usuario ?></p>
 										<span><?php echo $nivel_usuario ?></span>
@@ -246,8 +249,10 @@ if($linhas > 0){
 								</div>	
 							</a>
 							<ul class="dropdown-menu drp-mnu">
-								<li> <a href="" data-toggle="modal" data-target="#modalConfig"><i class="fa fa-cog"></i> Configurações</a> </li> 
-								<li> <a href="" data-toggle="modal" data-target="#modalPerfil"><i class="fa fa-user"></i> Perfil</a> </li> 								
+								<li> <a href="" data-toggle="modal" data-target="#modalConfig"><i class=
+								"fa fa-cog"></i> Configurações</a> </li> 
+								<li> <a href="" data-toggle="modal" data-target="#modalPerfil"><i class=
+								"fa fa-user"></i> Perfil</a> </li> 								
 								<li> <a href="logout.php"><i class="fa fa-sign-out"></i> Sair</a> </li>
 							</ul>
 						</li>
@@ -341,7 +346,8 @@ if($linhas > 0){
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="exampleModalLabel">Alterar Dados</h4>
-				<button id="btn-fechar-perfil" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px">
+				<button id="btn-fechar-perfil" type="button" class="close" data-dismiss="modal" aria-label=
+				"Close" style="margin-top: -25px">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -352,12 +358,14 @@ if($linhas > 0){
 					<div class="row">
 						<div class="col-md-6">							
 								<label>Nome</label>
-								<input type="text" class="form-control" id="nome_perfil" name="nome" placeholder="Seu Nome" value="<?php echo $nome_usuario ?>" required>							
+								<input type="text" class="form-control" id="nome_perfil" name="nome" 
+								placeholder="Seu Nome" value="<?php echo $nome_usuario ?>" required>							
 						</div>
 
 						<div class="col-md-6">							
 								<label>Email</label>
-								<input type="email" class="form-control" id="email_perfil" name="email" placeholder="Seu Nome" value="<?php echo $email_usuario ?>" required>							
+								<input type="email" class="form-control" id="email_perfil" name="email" 
+								placeholder="Seu Nome" value="<?php echo $email_usuario ?>" required>							
 						</div>
 					</div>
 
@@ -365,22 +373,26 @@ if($linhas > 0){
 					<div class="row">
 						<div class="col-md-12">							
 								<label>Endereço</label>
-								<input type="text" class="form-control" id="endereco_perfil" name="endereco" placeholder="Endereço completo" value="<?php echo $endereco_usuario ?>">							
+								<input type="text" class="form-control" id="endereco_perfil" name="endereco" 
+								placeholder="Endereço completo" value="<?php echo $endereco_usuario ?>">							
 						</div>
 
 						<div class="col-md-4">							
 								<label>Telefone</label>
-								<input type="text" class="form-control" id="telefone_perfil" name="telefone" placeholder="Seu Telefone" value="<?php echo $telefone_usuario ?>" required>							
+								<input type="text" class="form-control" id="telefone_perfil" name="telefone" 
+								placeholder="Seu Telefone" value="<?php echo $telefone_usuario ?>" required>							
 						</div>
 
 						<div class="col-md-4">							
 								<label>Senha</label>
-								<input type="password" class="form-control" id="senha_perfil" name="senha" placeholder="Senha" value="<?php echo $senha_usuario ?>" required>							
+								<input type="password" class="form-control" id="senha_perfil" name="senha" 
+								placeholder="Senha" value="<?php echo $senha_usuario ?>" required>							
 						</div>
 
 						<div class="col-md-4">							
 								<label>Confirmar Senha</label>
-								<input type="password" class="form-control" id="conf_senha_perfil" name="conf_senha" placeholder="Confirmar Senha" value="" required>							
+								<input type="password" class="form-control" id="conf_senha_perfil" name=
+								"conf_senha" placeholder="Confirmar Senha" value="" required>							
 						</div>
 
 						
@@ -390,7 +402,8 @@ if($linhas > 0){
 					<div class="row">
 						<div class="col-md-8">							
 								<label>Foto</label>
-								<input type="file" class="form-control" id="foto_perfil" name="foto" value="<?php echo $foto_usuario ?>" onchange="carregarImgPerfil()">							
+								<input type="file" class="form-control" id="foto_perfil" name="foto" 
+								value="<?php echo $foto_usuario ?>" onchange="carregarImgPerfil()">							
 						</div>
 
 						<div class="col-md-4">								
@@ -422,7 +435,8 @@ if($linhas > 0){
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="exampleModalLabel">Editar Configurações</h4>
-				<button id="btn-fechar-config" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px">
+				<button id="btn-fechar-config" type="button" class="close" data-dismiss="modal" aria-label=
+				"Close" style="margin-top: -25px">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -433,18 +447,24 @@ if($linhas > 0){
 					<div class="row">
 						<div class="col-md-4">							
 								<label>Nome do Projeto</label>
-								<input type="text" class="form-control" id="nome_sistema" name="nome_sistema" placeholder="Delivery Interativo" value="<?php echo @$nome_sistema ?>" required>							
+								<input type="text" class="form-control" id="nome_sistema" name=
+								"nome_sistema" placeholder="Delivery Interativo" value=
+								"<?php echo @$nome_sistema ?>" required>							
 						</div>
 
 						<div class="col-md-4">							
 								<label>Email Sistema</label>
-								<input type="email" class="form-control" id="email_sistema" name="email_sistema" placeholder="Email do Sistema" value="<?php echo @$email_sistema ?>" >							
+								<input type="email" class="form-control" id="email_sistema" name=
+								"email_sistema" placeholder="Email do Sistema" value=
+								"<?php echo @$email_sistema ?>" >							
 						</div>
 
 
 						<div class="col-md-4">							
 								<label>Telefone Sistema</label>
-								<input type="text" class="form-control" id="telefone_sistema" name="telefone_sistema" placeholder="Telefone do Sistema" value="<?php echo @$telefone_sistema ?>" required>							
+								<input type="text" class="form-control" id="telefone_sistema" name=
+								"telefone_sistema" placeholder="Telefone do Sistema" value=
+								"<?php echo @$telefone_sistema ?>" required>							
 						</div>
 
 					</div>
@@ -453,12 +473,16 @@ if($linhas > 0){
 					<div class="row">
 						<div class="col-md-6">							
 								<label>Endereço <small>(Rua Número Bairro e Cidade)</small></label>
-								<input type="text" class="form-control" id="endereco_sistema" name="endereco_sistema" placeholder="Rua X..." value="<?php echo @$endereco_sistema ?>" >							
+								<input type="text" class="form-control" id="endereco_sistema" name=
+								"endereco_sistema" placeholder="Rua X..." value=
+								"<?php echo @$endereco_sistema ?>" >							
 						</div>
 
 						<div class="col-md-6">							
 								<label>Instagram</label>
-								<input type="text" class="form-control" id="instagram_sistema" name="instagram_sistema" placeholder="Link do Instagram" value="<?php echo @$instagram_sistema ?>">							
+								<input type="text" class="form-control" id="instagram_sistema" name=
+								"instagram_sistema" placeholder="Link do Instagram" value=
+								"<?php echo @$instagram_sistema ?>">							
 						</div>
 					</div>
 
@@ -466,12 +490,14 @@ if($linhas > 0){
 						<div class="col-md-4">						
 								<div class="form-group"> 
 									<label>Logo (*PNG)</label> 
-									<input class="form-control" type="file" name="foto-logo" onChange="carregarImgLogo();" id="foto-logo">
+									<input class="form-control" type="file" name=
+									"foto-logo" onChange="carregarImgLogo();" id="foto-logo">
 								</div>						
 							</div>
 							<div class="col-md-2">
 								<div id="divImg">
-									<img src="../images/<?php echo $logo_sistema ?>"  width="80px" id="target-logo">									
+									<img src="../images/<?php echo $logo_sistema ?>"  width="80px" 
+									id="target-logo">									
 								</div>
 							</div>
 
@@ -479,12 +505,14 @@ if($linhas > 0){
 							<div class="col-md-4">						
 								<div class="form-group"> 
 									<label>Ícone (*Png)</label> 
-									<input class="form-control" type="file" name="foto-icone" onChange="carregarImgIcone();" id="foto-icone">
+									<input class="form-control" type="file" name="foto-icone" 
+									onChange="carregarImgIcone();" id="foto-icone">
 								</div>						
 							</div>
 							<div class="col-md-2">
 								<div id="divImg">
-									<img src="../images/<?php echo $icone_sistema ?>"  width="50px" id="target-icone">									
+									<img src="../images/<?php echo $icone_sistema ?>"  width="50px" 
+									id="target-icone">									
 								</div>
 							</div>
 
@@ -498,12 +526,14 @@ if($linhas > 0){
 							<div class="col-md-4">						
 								<div class="form-group"> 
 									<label>Logo Relatório (*Jpg)</label> 
-									<input class="form-control" type="file" name="foto-logo-rel" onChange="carregarImgLogoRel();" id="foto-logo-rel">
+									<input class="form-control" type="file" name="foto-logo-rel" 
+									onChange="carregarImgLogoRel();" id="foto-logo-rel">
 								</div>						
 							</div>
 							<div class="col-md-2">
 								<div id="divImg">
-									<img src="../images/<?php echo @$logo_rel ?>"  width="80px" id="target-logo-rel">									
+									<img src="../images/<?php echo @$logo_rel ?>"  width="80px" 
+									id="target-logo-rel">									
 								</div>
 							</div>
 
