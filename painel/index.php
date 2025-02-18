@@ -157,6 +157,23 @@ if($linhas > 0){
 								</ul>
 							</li>
 
+							<li class="treeview">
+								<a href="#">
+									<i class="fa fa-plus"></i>
+									<span>Cadastros</span>
+									<i class="fa fa-angle-left pull-right"></i>
+								</a>
+								<ul class="treeview-menu">
+									<li><a href="index.php?pagina=grupo_acessos">
+										<i class="fa fa-angle-right"></i> Grupos</a></li>
+
+									<li><a href="index.php?pagina=acessos"><i class="fa fa-angle-right">										
+									</i> Acessos</a></li>
+									
+								</ul>
+							</li>
+
+
 						</ul>
 					</div>
 					<!-- /.navbar-collapse -->

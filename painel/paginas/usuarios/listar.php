@@ -22,7 +22,7 @@ $query = $pdo->query("SELECT * from usuarios order by id desc");
 	<tbody>	
 HTML;
 
-}
+
 for($i=0; $i < $linhas; $i++){	
     $id = $res[$i]['id'];
     $nome = $res[$i]['nome'];
@@ -99,7 +99,9 @@ echo <<<HTML
 <small><div align="center" id="mensagem-excluir"></div></small>
 </table>
 HTML;
-
+}else{
+   echo '<small>Nenhum Registro Encontrado</small>';
+}
 ?>
 
 <script type="text/javascript">
