@@ -30,7 +30,7 @@ $pag ='grupo_acessos';
 						<div class="col-md-6">							
 								<label>Nome</label>
 								<input type="text" class="form-control" id="nome" name="nome" 
-                                placeholder="Seu Nome" required>							
+                                placeholder="Nome do Grupo" required>							
 						</div>
 
 						<div class="col-md-6" style="margin-top: 22px">							

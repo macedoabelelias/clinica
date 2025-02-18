@@ -1,8 +1,10 @@
 <?php
-$tabela = 'grupo_acessos';
+$tabela = 'acessos';
 require_once("../../../conexao.php");
 
 $nome = $_POST['nome'];
+$chave = $_POST['chave'];
+$grupo = $_POST['grupo'];
 $id = $_POST['id'];
 
 
@@ -16,11 +18,13 @@ if(@count($res) > 0 and $id != $id_reg){
 }
    
 if($id == ""){
-$query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome");
+$query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome, chave = :chave, grupo = :grupo");
 }else{
-    $query = $pdo->prepare("UPDATE $tabela SET nome = :nome where id = '$id'"); 
+    $query = $pdo->prepare("UPDATE $tabela SET nome = :nome, chave = :chave, grupo = :grupo where id = '$id'"); 
 }
  $query->bindValue(":nome", "$nome");
+ $query->bindValue(":chave", "$chave");
+ $query->bindValue(":grupo", "$grupo");
 
  $query->execute();
 

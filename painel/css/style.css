@@ -8475,7 +8475,9 @@ h4.asd label {
 
   .profile_details ul li ul.dropdown-menu.drp-mnu {
        left:-70%;
-  }
+  }  
+}
 
-  
+.ocultar{
+  display: none;
 }
