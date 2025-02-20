@@ -203,7 +203,11 @@ HTML;
      $('#nome_permissoes').text(nome);
      
      $('#modalPermissoes').modal('show');
-  
+     listarPermissoes(id);  
   }
+
+  
+
+
 </script>
 

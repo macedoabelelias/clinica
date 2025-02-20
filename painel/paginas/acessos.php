@@ -1,6 +1,10 @@
 <?php
 $pag ='acessos';
 
+if($acessos == 'ocultar'){
+	echo "<script>window.location='../index.php'</script>";
+	exit();
+}
  ?>
 
 <a onclick="inserir()" type="button" class="btn btn-primary"><span class="fa fa-plus">	

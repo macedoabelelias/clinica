@@ -1,6 +1,11 @@
 <?php
 $pag ='usuarios';
 
+if(@$usuarios == 'ocultar'){
+	echo "<script>window.location='../index.php'</script>";
+	exit();
+}
+
  ?>
 
 <a onclick="inserir()" type="button" class="btn btn-primary"><span class="fa fa-plus"></span> Usuário</a>
@@ -142,19 +147,20 @@ $pag ='usuarios';
 </div>
 
 <!-- Modal Permissoes -->
-<div class="modal fade" id="modalPermissoes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalPermissoes" tabindex="-1" aria-labelledby="exampleModalLabel" 
+aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="exampleModalLabel"><span id="nome_permissoes"></span>
-
 					<span style="position:absolute; right:35px">
-						<input class="form-check-input" type="checkbox" id="input-todos" onchange="marcarTodos()">
+						<input class="form-check-input" type="checkbox" id="input-todos" 
+						onchange="marcarTodos()">
 						<label class="" >Marcar Todos</label>
 					</span>
-
 				</h4>
-				<button id="btn-fechar-permissoes" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px">
+				<button id="btn-fechar-permissoes" type="button" class="close" data-dismiss="modal" 
+				aria-label="Close" style="margin-top: -25px">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -163,7 +169,6 @@ $pag ='usuarios';
 				<div class="row" id="listar_permissoes">
 					
 				</div>
-
 				<br>
 				<input type="hidden" name="id" id="id_permissoes">
 				<small><div id="mensagem_permissao" align="center" class="mt-3"></div></small>		
@@ -179,23 +184,77 @@ $pag ='usuarios';
 <script src="js/ajax.js"></script>
 
 <script type="text/javascript">
-	function carregarImg() {
-    var target = document.getElementById('target');
-    var file = document.querySelector("#foto").files[0];
-    
-        var reader = new FileReader();
 
-        reader.onloadend = function () {
-            target.src = reader.result;
-        };
+function listarPermissoes(id){
+   $.ajax({
+        url: 'paginas/' + pag + "/listar_permissoes.php",
+        method: 'POST',
+        data: {id},
+        dataType: "html",
 
-        if (file) {
-            reader.readAsDataURL(file);
+         success:function(result){           
+                $('#listar_permissoes').html(result);
+                $('#mensagem-permissao').text('');
+         }
+   });
+  }
+	
 
-        } else {
-            target.src = "";
+function adicionarPermissao(id, usuario){
+	 $.ajax({
+	url: 'paginas/' + pag + "/add_permissao.php",
+	method: 'POST',
+	data: {id, usuario},
+	dataType: "html",
+
+	success:function(result){  	
+		listarPermissoes(usuario)
+	}
+});
+}
+
+function marcarTodos(){
+		let checkbox = document.getElementById('input-todos');
+		var usuario = $('#id_permissoes').val();
+		
+		if(checkbox.checked) {
+		    adicionarPermissoes(usuario);		    
+		} else {
+		    limparPermissoes(usuario);
+		}
+	}
+
+
+	function adicionarPermissoes(id_usuario){
+		
+		$.ajax({
+        url: 'paginas/' + pag + "/add_permissoes.php",
+        method: 'POST',
+        data: {id_usuario},
+        dataType: "html",
+
+        success:function(result){        	
+           listarPermissoes(id_usuario);
         }
-    }
+    });
+	}
+
+
+	function limparPermissoes(id_usuario){
+		
+		$.ajax({
+        url: 'paginas/' + pag + "/limpar_permissoes.php",
+        method: 'POST',
+        data: {id_usuario},
+        dataType: "html",
+
+        success:function(result){        	
+           listarPermissoes(id_usuario);
+        }
+    });
+	}
+
+
 </script>
 
 

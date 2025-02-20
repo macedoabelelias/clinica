@@ -1,3 +1,10 @@
+<?php
+if(@$home == 'ocultar'){
+	echo "<script>window.location='../index.php'</script>";
+	exit();
+}
+?>
+
 <div class="main-page">
 	<div class="col_3">
 		<div class="col-md-3 widget widget1">

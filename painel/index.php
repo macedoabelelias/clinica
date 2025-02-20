@@ -3,11 +3,15 @@
 require_once("../conexao.php");
 require_once("verificar.php");
 
+$pag_inicial = 'home';
+if(@$_SESSION['nivel'] != 'Administrador'){
+	require_once("verificar_permissoes.php");
+}
 
 if(@$_GET['pagina'] != ""){
 	$pagina = @$_GET['pagina'];
 }else{
-	$pagina = 'home';
+	$pagina = $pag_inicial;
 }
 
 $id_usuario = @$_SESSION['id'];
@@ -140,34 +144,35 @@ if($linhas > 0){
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="sidebar-menu">
 							<li class="header">MENU NAVEGAÇÃO</li>
-							<li class="treeview">
+							<li class="treeview <?php echo $home ?>">
 								<a href="index.php">
 									<i class="fa fa-dashboard"></i> <span>Home</span>
 								</a>
 							</li>
-							<li class="treeview">
+							<li class="treeview <?php echo $menu_pessoas ?>">
 								<a href="#">
 									<i class="fa fa-users"></i>
 									<span>Pessoas</span>
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
-									<li><a href="index.php?pagina=usuarios"><i class="fa fa-angle-right"></i> Usuários</a></li>
+									<li class="<?php echo $usuarios ?>"><a href="index.php?pagina=usuarios">
+										<i class="fa fa-angle-right"></i> Usuários</a></li>
 									
 								</ul>
 							</li>
 
-							<li class="treeview">
+							<li class="treeview <?php echo $menu_cadastros ?>">
 								<a href="#">
 									<i class="fa fa-plus"></i>
 									<span>Cadastros</span>
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
-									<li><a href="index.php?pagina=grupo_acessos">
+									<li class="<?php echo $grupo_acessos ?>"><a href="index.php?pagina=grupo_acessos">
 										<i class="fa fa-angle-right"></i> Grupos</a></li>
 
-									<li><a href="index.php?pagina=acessos"><i class="fa fa-angle-right">										
+									<li class="<?php echo $acessos ?>"><a href="index.php?pagina=acessos"><i class="fa fa-angle-right">										
 									</i> Acessos</a></li>
 									
 								</ul>
@@ -266,7 +271,7 @@ if($linhas > 0){
 								</div>	
 							</a>
 							<ul class="dropdown-menu drp-mnu">
-								<li> <a href="" data-toggle="modal" data-target="#modalConfig"><i class=
+								<li class="<?php echo $configuracoes ?>"> <a href="" data-toggle="modal" data-target="#modalConfig"><i class=
 								"fa fa-cog"></i> Configurações</a> </li> 
 								<li> <a href="" data-toggle="modal" data-target="#modalPerfil"><i class=
 								"fa fa-user"></i> Perfil</a> </li> 								
