@@ -6,6 +6,7 @@ $nome = $_POST['nome'];
 $chave = $_POST['chave'];
 $grupo = $_POST['grupo'];
 $id = $_POST['id'];
+$pagina = $_POST['pagina'];
 
 
 //validação nome
@@ -18,13 +19,16 @@ if(@count($res) > 0 and $id != $id_reg){
 }
    
 if($id == ""){
-$query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome, chave = :chave, grupo = :grupo");
+$query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome, chave = :chave, grupo = :grupo,
+    pagina = :pagina");
 }else{
-    $query = $pdo->prepare("UPDATE $tabela SET nome = :nome, chave = :chave, grupo = :grupo where id = '$id'"); 
+    $query = $pdo->prepare("UPDATE $tabela SET nome = :nome, chave = :chave, grupo = :grupo,
+    pagina = :pagina where id = '$id'"); 
 }
  $query->bindValue(":nome", "$nome");
  $query->bindValue(":chave", "$chave");
  $query->bindValue(":grupo", "$grupo");
+ $query->bindValue(":pagina", "$pagina");
 
  $query->execute();
 

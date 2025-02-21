@@ -60,8 +60,7 @@ $pag_inicial = '';
 if($home != 'ocultar'){
 	$pag_inicial = 'home';
 }else{
-	$query = $pdo->query("SELECT * FROM usuarios_permissoes where usuario = '$id_usuario'
-	order by id asc limit 1");
+	$query = $pdo->query("SELECT * FROM usuarios_permissoes where usuario = '$id_usuario'");
 	$res = $query->fetchAll(PDO::FETCH_ASSOC);
 	$total_reg = @count($res);	
 	if($total_reg > 0){

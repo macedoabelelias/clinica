@@ -1,7 +1,7 @@
 <?php
 $pag ='acessos';
 
-if($acessos == 'ocultar'){
+if(@$acessos == 'ocultar'){
 	echo "<script>window.location='../index.php'</script>";
 	exit();
 }
@@ -43,7 +43,7 @@ if($acessos == 'ocultar'){
                                 placeholder="Chave" required>								
 						</div>
 
-						<div class="col-md-3">							
+						<div class="col-md-2">							
 								<label>Grupo</label>
 								<select class="form-control" name="grupo" id="grupo">
 									<option value="0">Sem Grupo</option>
@@ -62,7 +62,16 @@ if($acessos == 'ocultar'){
 								</select>								
 						</div>
 
-						<div class="col-md-3" style="margin-top: 22px">							
+						<div class="col-md-2">
+						<label>Página</label>
+								<select class="form-control" name="pagina" id="pagina">
+									<option value="Sim">Sim</option>
+									<option value="Não">Não</option>
+									
+								</select>
+						</div>
+
+						<div class="col-md-1" style="margin-top: 22px">							
 						<button type="submit" class="btn btn-primary">Salvar</button>						
 						</div>
 					</div>
