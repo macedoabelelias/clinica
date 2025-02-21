@@ -7,7 +7,7 @@
  $senha_crip = md5($senha);
  if($linhas == 0){
     $pdo->query("INSERT INTO usuarios SET nome = '$nome_sistema', email = '$email_sistema', 
-    senha = '$senha', senha_crip = '$senha_crip', nivel = 'Administrador', ativo = 'Sim', 
+    senha = '', senha_crip = '$senha_crip', nivel = 'Administrador', ativo = 'Sim', 
     foto = 'sem-foto.jpg', telefone = '$telefone_sistema', data = curDate()");
  }
 ?>
@@ -16,9 +16,15 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $nome_sistema ?></title>    
+   
+    <title><?php echo $nome_sistema ?></title> 
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="images/icone.png">
     
 
@@ -32,11 +38,11 @@
                 <input type="password" name="senha" placeholder="Senha" required>
                
                 <button>Login</button>
-                <!-- <a href="cadastro.html" class="btn btn-secundary">Cadastre-se</a><br>
-                <a href="#" class="form__action__aside">Esqueci minha senha</a> -->
+                <!-- <a href="cadastro.html" class="btn btn-secundary">Cadastre-se</a><br> -->
+                <a href="#" class="form__action__aside">Recuperar senha</a>
            </form>
         </div>
     </div>
 </body>
 </html>
-          
+

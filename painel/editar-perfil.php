@@ -83,7 +83,7 @@ $query = $pdo->prepare("UPDATE $tabela SET nome = :nome, email = :email,
  $query->bindValue(":email", "$email");
  $query->bindValue(":telefone", "$telefone");
  $query->bindValue(":endereco", "$endereco");
- $query->bindValue(":senha", "$senha");
+ $query->bindValue(":senha", "");
  $query->execute();
 
  echo 'Editado com Sucesso';

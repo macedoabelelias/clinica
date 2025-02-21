@@ -32,7 +32,7 @@ if(@count($res) > 0 and $id != $id_reg){
    
 if($id == ""){
 $query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome, email = :email, 
-    senha = '$senha', senha_crip = '$senha_crip', nivel = '$nivel', ativo = 'Sim', 
+    senha = '', senha_crip = '$senha_crip', nivel = '$nivel', ativo = 'Sim', 
     foto = 'sem-foto.jpg', telefone = :telefone, data = curDate(), endereco = :endereco");
 }else{
     $query = $pdo->prepare("UPDATE $tabela SET nome = :nome, email = :email, nivel = '$nivel', 
