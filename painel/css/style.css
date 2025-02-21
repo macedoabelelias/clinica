@@ -8461,7 +8461,7 @@ h4.asd label {
 		width: 215px !important;
 	}
 	button#showLeftPush {
-		font-size: 1em;
+		font-size: 1em;    
 	}
 }
 /*--//responsive-design---*/
@@ -8486,10 +8486,10 @@ h4.asd label {
   margin-top: 70px;
 }
 
-/* .recuperar a{
+.recuperar a{
   margin-top:25px;
   font-size:13px;
   text-align:center;
   text-decoration: none;
-} */
+}
 

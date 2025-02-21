@@ -19,7 +19,8 @@
    
     <title><?php echo $nome_sistema ?></title> 
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" 
+        rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   
@@ -35,14 +36,86 @@
            <form method="post" action="autenticar.php">
                 <img src="images/logo.png" alt="Logomarca" class="img">
                 <input type="email" name="usuario" placeholder="E-mail" required>
-                <input type="password" name="senha" placeholder="Senha" required>
-               
-                <button>Login</button>
-                <!-- <a href="cadastro.html" class="btn btn-secundary">Cadastre-se</a><br> -->
-                <a href="#" class="form__action__aside">Recuperar senha</a>
+                <input type="password" name="senha" placeholder="Senha" required>               
+                <button>Login</button>                
            </form>
+           <br>
+           
+           <p class="recuperar"><a title="Clique para recupearar a senha" href="" 
+                data-bs-toggle="modal" data-bs-target="#exampleModal">Recuperar Senha</a></p>
         </div>
     </div>
 </body>
 </html>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+ aria-hidden="true">
+  <div class="modal-dialog" role="document" >
+    <div class="modal-content form">
+     
+      <form method="post" id="form-recuperar">     
+
+      <div class="modal-body"> 
+			
+			<form method="post" id="form-recuperar">
+				<input placeholder="Digite seu Email" class="form-control" type="email" 
+                name="email" id="email-recuperar" required> 
+				<button type="submit">Recuperar</button>
+			</form>				
+
+		</div>
+        	       	
+       
+       <br>
+       <small><div id="mensagem-recuperar" align="center"></div></small>
+   
+     
+  </form>
+    </div>
+  </div>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+ <script type="text/javascript">
+	$("#form-recuperar").submit(function () {
+
+        $('#mensagem-recuperar').text('Enviando...');
+
+		event.preventDefault();
+		var formData = new FormData(this);
+
+		$.ajax({
+			url: "recuperar-senha.php",
+			type: 'POST',
+			data: formData,
+
+			success: function (mensagem) {
+				$('#mensagem-recuperar').text('');
+				$('#mensagem-recuperar').removeClass()
+				if (mensagem.trim() == "Recuperado com Sucesso") {
+										
+					$('#email-recuperar').val('');
+					$('#mensagem-recuperar').addClass('text-success')
+					$('#mensagem-recuperar').text('Sua Senha foi enviada para o Email')			
+
+				} else {
+
+					$('#mensagem-recuperar').addClass('text-danger')
+					$('#mensagem-recuperar').text(mensagem)
+				}
+
+
+			},
+
+			cache: false,
+			contentType: false,
+			processData: false,
+
+		});
+
+	});
+</script>
 
