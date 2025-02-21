@@ -1,19 +1,19 @@
 <?php
 $pag ='grupo_acessos';
 
-if($grupo_acessos == 'ocultar'){
+if(@$grupo_acessos == 'ocultar'){
 	echo "<script>window.location='../index.php'</script>";
 	exit();
 }
  ?>
-
+<div class="main-page margin-mobile">
 <a onclick="inserir()" type="button" class="btn btn-primary"><span class="fa fa-plus">	
 </span> Grupo</a>
 
 
 
 <div class="bs-example widget-shadow" style="padding:15px" id="listar"></div>
-
+</div>
 <input type="hidden" id="ids">
 
 <!-- Modal Perfil -->

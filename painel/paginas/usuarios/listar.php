@@ -35,7 +35,7 @@ for($i=0; $i < $linhas; $i++){
     $ativo = $res[$i]['ativo']; 
     $data = $res[$i]['data']; 
     
-    $dataF = implode('/', array_reverse(explode('-', $data)));
+    $dataF = implode('/', array_reverse(@explode('-', $data)));
 
     if($ativo == 'Sim'){
       $icone = 'fa-check-square';

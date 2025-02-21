@@ -30,7 +30,8 @@ $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $linhas = @count($res);
 if($linhas == 0){
 	$pdo->query("INSERT INTO config SET nome = '$nome_sistema', email = '$email_sistema', 
-       telefone = '$telefone_sistema', endereco = '$endereco_sistema', instagram = '$instagram_sistema', logo = 'logo.png', logo_rel = 'logo.jpg', icone = 'icone.png'");
+       telefone = '$telefone_sistema', endereco = '$endereco_sistema', instagram = '$instagram_sistema', 
+       logo = 'logo.png', logo_rel = 'logo.jpg', icone = 'icone.png', ativo = 'Sim'");
 }else{
     $nome_sistema = $res[0]['nome'];
     $email_sistema = $res[0]['email'];
@@ -40,5 +41,21 @@ if($linhas == 0){
     $logo_sistema = $res[0]['logo'];
     $logo_rel = $res[0]['logo_rel'];
     $icone_sistema = $res[0]['icone'];
+    $ativo_sistema = $res[0]['ativo'];
+
+    if($ativo_sistema != 'Sim' and $ativo_sistema != ''){ ?>
+        <style type="text/css">
+            @media only screen and (max-width:700px){
+                .imgsistema_mobile{
+                    width: 300px;
+                }
+            }
+        </style>
+        <div style="text-align: center; margin-top: 100px">
+            <img src="images/bloqueio.png" class="imgsistema_mobile">
+        </div>
+    <?php 
+    exit();
+    } 
 } 
 ?>

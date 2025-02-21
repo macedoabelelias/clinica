@@ -156,7 +156,7 @@ if($linhas > 0){
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
-									<li class="<?php echo $usuarios ?>"><a href="index.php?pagina=usuarios">
+									<li class="<?php echo $usuarios ?>"><a href="usuarios">
 										<i class="fa fa-angle-right"></i> Usuários</a></li>
 									
 								</ul>
@@ -169,10 +169,10 @@ if($linhas > 0){
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
-									<li class="<?php echo $grupo_acessos ?>"><a href="index.php?pagina=grupo_acessos">
+									<li class="<?php echo $grupo_acessos ?>"><a href="grupo_acessos">
 										<i class="fa fa-angle-right"></i> Grupos</a></li>
 
-									<li class="<?php echo $acessos ?>"><a href="index.php?pagina=acessos"><i class="fa fa-angle-right">										
+									<li class="<?php echo $acessos ?>"><a href="acessos"><i class="fa fa-angle-right">										
 									</i> Acessos</a></li>
 									
 								</ul>

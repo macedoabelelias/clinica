@@ -8481,3 +8481,8 @@ h4.asd label {
 .ocultar{
   display: none;
 }
+
+.margin-mobile{
+  margin-top: 70px;
+}
+
