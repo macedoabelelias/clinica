@@ -60,7 +60,7 @@
 			
 			<form method="post" id="form-recuperar">
 				<input placeholder="Digite seu Email" class="form-control" type="email" 
-                name="email" id="email-recuperar" required> 
+                name="email" id="email-recuperar" style="margin-left:12px" required> 
 				<button type="submit">Recuperar</button>
 			</form>				
 

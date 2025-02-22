@@ -24,6 +24,8 @@ if($total_reg > 0){
     $cabecalhos = "From: ".$email_sistema;
    
     @mail($destinatario, $assunto, $mensagem, $cabecalhos);
+    echo $reset_link;
+    exit();
 
     echo 'Recuperado com Sucesso';
 }else{

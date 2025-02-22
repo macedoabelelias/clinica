@@ -113,13 +113,9 @@ if(@$usuarios == 'ocultar'){
 						<span><b>Telefone: </b></span><span id="telefone_dados"></span>
 					</div>
 
-					<div class="col-md-8" style="margin-bottom: 5px">
+					<div class="col-md-12" style="margin-bottom: 5px">
 						<span><b>Email: </b></span><span id="email_dados"></span>
 					</div>					
-
-					<div class="col-md-4" style="margin-bottom: 5px">
-						<span><b>Senha: </b></span><span id="senha_dados"></span>
-					</div>
 
 					<div class="col-md-6" style="margin-bottom: 5px">
 						<span><b>Nível: </b></span><span id="nivel_dados"></span>

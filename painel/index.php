@@ -387,7 +387,7 @@ if($linhas > 0){
 						<div class="col-md-6">							
 								<label>Email</label>
 								<input type="email" class="form-control" id="email_perfil" name="email" 
-								placeholder="Seu Nome" value="<?php echo $email_usuario ?>" required>							
+								placeholder="Seu E-mail" value="<?php echo $email_usuario ?>" required>							
 						</div>
 					</div>
 
