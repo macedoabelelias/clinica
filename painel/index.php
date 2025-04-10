@@ -138,8 +138,9 @@ if($linhas > 0){
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<h2><a class="navbar-brand" href="index.php"><span><img src="../images/dentistry1.png">
-						</span> <?php echo $nome_sistema ?><span class="dashboard_text"><?php echo $nome_sistema ?></span></a></h2>
+						
+						<h2><a class="navbar-brand" href="index.php"><span class="fa fa-stethoscope"></span> 
+						<?php echo $nome_sistema ?><span class="dashboard_text"><?php echo $nome_sistema ?></span></a></h2>
 					</div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="sidebar-menu">

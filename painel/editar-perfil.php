@@ -8,7 +8,7 @@ $telefone = $_POST['telefone'];
 $conf_senha = $_POST['conf_senha'];
 $endereco = $_POST['endereco'];
 $senha = $_POST['senha'];
-$senha_crip = md5($senha);
+$senha_crip = sha1($senha);
 $id = $_POST['id_usuario'];
 
 if($conf_senha != $senha){

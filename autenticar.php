@@ -3,7 +3,7 @@
     require_once("conexao.php"); //faz a conexão
     $usuario = $_POST['usuario'];
     $senha = $_POST['senha'];
-    $senha_crip = md5($senha);
+    $senha_crip = sha1($senha);
 
     $query = $pdo->prepare("SELECT * from usuarios where email = :email and senha_crip = :senha");
     $query->bindValue(":email", "$usuario");

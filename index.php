@@ -4,11 +4,11 @@
  $res = $query->fetchAll(PDO::FETCH_ASSOC);
  $linhas = @count($res);
  $senha = '123';
- $senha_crip = md5($senha);
+ $senha_crip = sha1($senha);//posso utilizar também o a codificação com "md5"
  if($linhas == 0){
     $pdo->query("INSERT INTO usuarios SET nome = '$nome_sistema', email = '$email_sistema', 
     senha = '', senha_crip = '$senha_crip', nivel = 'Administrador', ativo = 'Sim', 
-    foto = 'sem-foto.jpg', telefone = '$telefone_sistema', data = curDate()");
+    foto = 'sem-foto.jpg', telefone = '$telefone_sistema', endereco = '$endereco_sistema', data = curDate()");
  }
 ?>
 

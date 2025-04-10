@@ -8,7 +8,7 @@ $telefone = $_POST['telefone'];
 $nivel = $_POST['nivel'];
 $endereco = $_POST['endereco'];
 $senha = '123';
-$senha_crip = md5($senha);
+$senha_crip = sha1($senha);
 $id = $_POST['id'];
 
 
