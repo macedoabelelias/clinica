@@ -57,7 +57,7 @@
       <form method="post" id="form-recuperar">     
 
       <div class="modal-body"> 
-			
+			<h5>Recuperar Senha</h5>
 			<form method="post" id="form-recuperar">
 				<input placeholder="Digite seu Email" class="form-control" type="email" 
                 name="email" id="email-recuperar" style="margin-left:12px" required> 
