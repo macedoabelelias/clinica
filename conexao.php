@@ -2,7 +2,7 @@
 //definir fuso horario
 date_default_timezone_set('America/Sao_Paulo');
 
-$url_sistema = "http://$_SERVER[HTTP_HOST]/";
+$url_sistema = "http://$_SERVER[HTTP_HOST]/"; //busca o local onde está hospedado,ex: www.xxx..
 $url = explode("//", $url_sistema);
 if($url[1] == 'localhost/'){
 	$url_sistema = "http://$_SERVER[HTTP_HOST]/clinica/";
