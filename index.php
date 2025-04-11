@@ -30,8 +30,9 @@
     
 
 </head>
-<body>   
-    <div class="login">
+<body> 
+    
+    <div class="login">  
         <div class="form">
            <form method="post" action="autenticar.php">
                 <img src="images/logo.png" alt="Logomarca" class="img">

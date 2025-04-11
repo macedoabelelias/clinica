@@ -1,7 +1,7 @@
 body{   
-    background-color: rgb(221, 250, 240);
-
+    background-color: rgb(221, 250, 240); 
 }
+
 
 .login{
     width: 360px;
@@ -54,7 +54,7 @@ body{
 }
 
 .form button:hover, .form button:active, .form button:focus{
-    background-color: #336ce6;
+    background-color: #375a6b;
     color: white;    
 }
 
