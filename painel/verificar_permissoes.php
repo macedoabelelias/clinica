@@ -12,6 +12,7 @@ $usuarios = 'ocultar';
 //grupo cadastros
 $grupo_acessos = 'ocultar';
 $acessos = 'ocultar';
+$cargos = '';
 
 
 $query = $pdo->query("SELECT * FROM usuarios_permissoes where usuario = '$id_usuario'");
@@ -48,6 +49,10 @@ if($total_reg > 0){
 
 		if($chave == 'acessos'){
 			$acessos = '';
+		}
+
+		if($chave == 'cargos'){
+			$cargos = '';
 		}
 
 	}
@@ -93,7 +98,7 @@ if($usuarios == 'ocultar'){
 }
 
 
-if($grupo_acessos == 'ocultar' and $acessos == 'ocultar'){
+if($grupo_acessos == 'ocultar' and $acessos == 'ocultar' and $cargos == 'cargos'){
 	$menu_cadastros = 'ocultar';
 }else{
 	$menu_cadastros = '';

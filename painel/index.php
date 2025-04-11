@@ -170,11 +170,14 @@ if($linhas > 0){
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
-									<li class="<?php echo $grupo_acessos ?>"><a href="grupo_acessos">
+									<li class="<?php echo $cargos ?>"><a href="index.php?pagina=cargos">
+										<i class="fa fa-angle-right"></i> Cargos</a></li>
+
+									<li class="<?php echo $grupo_acessos ?>"><a href="index.php?pagina=grupo_acessos">
 										<i class="fa fa-angle-right"></i> Grupos</a></li>
 
-									<li class="<?php echo $acessos ?>"><a href="acessos"><i class="fa fa-angle-right">										
-									</i> Acessos</a></li>
+									<li class="<?php echo $acessos ?>"><a href="index.php?pagina=acessos">
+										<i class="fa fa-angle-right"></i> Acessos</a></li>
 									
 								</ul>
 							</li>
