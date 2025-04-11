@@ -157,8 +157,11 @@ if($linhas > 0){
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
-									<li class="<?php echo $usuarios ?>"><a href="usuarios">
+									<li class="<?php echo $usuarios ?>"><a href="index.php?pagina=usuarios">
 										<i class="fa fa-angle-right"></i> Usuários</a></li>
+
+									<li class="<?php echo $funcionarios ?>"><a href="index.php?pagina=funcionarios">
+										<i class="fa fa-angle-right"></i> Funcionários</a></li>
 									
 								</ul>
 							</li>

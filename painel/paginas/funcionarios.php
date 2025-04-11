@@ -1,14 +1,14 @@
 <?php
-$pag ='usuarios';
+$pag ='funcionarios';
 
-if(@$usuarios == 'ocultar'){
+if(@$funcionarios == 'ocultar'){
 	echo "<script>window.location='../index.php'</script>";
 	exit();
 }
 
  ?>
 <div class="main-page margin-mobile">
-<a onclick="inserir()" type="button" class="btn btn-primary"><span class="fa fa-plus"></span> Usuário</a>
+<a onclick="inserir()" type="button" class="btn btn-primary"><span class="fa fa-plus"></span> Funcionario</a>
 
 <li class="dropdown head-dpdn2" style="display: inline-block;">
 	<a href="#" data-toggle="dropdown" class="btn btn-danger dropdown-toggle" id="btn-deletar"
