@@ -2,7 +2,7 @@
 $tabela = 'usuarios';
 require_once("../../../conexao.php");
 
-$query = $pdo->query("SELECT * from usuarios order by id desc");
+$query = $pdo->query("SELECT * from usuarios where nivel != 'Administrador'");
  $res = $query->fetchAll(PDO::FETCH_ASSOC);
  $linhas = @count($res);
  if($linhas > 0){
@@ -39,6 +39,7 @@ for($i=0; $i < $linhas; $i++){
     $atendimento = $res[$i]['atendimento']; 
     $comissao = $res[$i]['comissao']; 
     $pagamento = $res[$i]['pagamento']; 
+    $cpf = $res[$i]['cpf']; 
     
     $dataF = implode('/', array_reverse(@explode('-', $data)));
 
@@ -74,7 +75,7 @@ for($i=0; $i < $linhas; $i++){
     <td class="esc"><img src="images/perfil/{$foto}" width="25px"></td>
     <td>
       <big><a href="#" onclick="editar('{$id}','{$nome}','{$email}','{$telefone}','{$endereco}',
-      '{$nivel}','{$atendimento}','{$comissao}','{$pagamento}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
+      '{$nivel}','{$atendimento}','{$comissao}','{$pagamento}','{$cpf}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
       
       <li class="dropdown head-dpdn2" style="display: inline-block;">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -91,7 +92,7 @@ for($i=0; $i < $linhas; $i++){
       </li>
 
       <big><a href="#" onclick="mostrar('{$nome}','{$email}','{$telefone}','{$endereco}','{$ativo}',
-      '{$dataF}', '{$senha}', '{$nivel}', '{$foto}','{$atendimento}','{$comissao}','{$pagamento}')" title="Mostrar Dados"><i class="fa fa-info-circle text-primary">         
+      '{$dataF}', '{$senha}', '{$nivel}', '{$foto}','{$atendimento}','{$comissao}','{$pagamento}','{$cpf}')" title="Mostrar Dados"><i class="fa fa-info-circle text-primary">         
       </i></a></big>
 
       <big><a href="#" onclick="ativar('{$id}', '{$acao}')" title="{$titulo_link}"><i class
@@ -131,7 +132,7 @@ HTML;
 </script>
 
 <script type="text/javascript">
-   function editar(id, nome, email, telefone, endereco, nivel, atendimento, comissao, pagamento){
+   function editar(id, nome, email, telefone, endereco, nivel, atendimento, comissao, pagamento, cpf){
       $('#mensagem').text('');
       $('#titulo_inserir').text('Editar Registro');
 
@@ -149,7 +150,7 @@ HTML;
    
    }
 
-   function mostrar(nome, email, telefone, endereco, ativo, data, senha, nivel, foto, atendimento, comissao, pagamento){
+   function mostrar(nome, email, telefone, endereco, ativo, data, senha, nivel, foto, atendimento, comissao, pagamento, cpf){
      
       $('#titulo_dados').text(nome);
       $('#email_dados').text(email);
@@ -162,6 +163,7 @@ HTML;
       $('#comissao_dados').text(comissao+'%');
       $('#pagamento_dados').text(pagamento);
       $('#foto_dados').attr("src", "images/perfil/" + foto);
+      $('#cpf_dados').text(cpf);
 
       $('#modalDados').modal('show');
    

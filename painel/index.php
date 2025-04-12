@@ -162,6 +162,9 @@ if($linhas > 0){
 
 									<li class="<?php echo $funcionarios ?>"><a href="index.php?pagina=funcionarios">
 										<i class="fa fa-angle-right"></i> Funcionários</a></li>
+
+									<li class="<?php echo $pacientes ?>"><a href="index.php?pagina=pacientes">
+										<i class="fa fa-angle-right"></i> Pacientes</a></li>
 									
 								</ul>
 							</li>
@@ -173,6 +176,9 @@ if($linhas > 0){
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
+									<li class="<?php echo $convenios ?>"><a href="index.php?pagina=convenios">
+										<i class="fa fa-angle-right"></i> Convênio</a></li>
+
 									<li class="<?php echo $cargos ?>"><a href="index.php?pagina=cargos">
 										<i class="fa fa-angle-right"></i> Cargos</a></li>
 

@@ -4,6 +4,12 @@ require_once("../../../conexao.php");
 
 $id = $_POST['id'];
 
+@session_start();
+if($_SESSION['nivel'] != 'Administrador' || $_SESSION['nivel'] != 'Gerente'){
+	echo 'Você não tem autorização para excluir Funcionário!';
+	exit();
+}
+
 $query = $pdo->query("SELECT * FROM $tabela where id = '$id'");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $foto = $res[0]['foto'];
