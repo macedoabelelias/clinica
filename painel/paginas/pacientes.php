@@ -76,7 +76,7 @@ if(@$funcionarios == 'ocultar'){
 								<input type="text" class="form-control" id="endereco" name="endereco" 
                                 placeholder="Endereço completo">							
 						</div>
-
+						
 						<div class="col-md-3">							
 								<label>Tipo Sanguíneo</label>
 								<select class="form-control" name="tipo_sanguineo" id="tipo_sanguineo">
@@ -115,10 +115,10 @@ if(@$funcionarios == 'ocultar'){
 					<div class="row">
 						
 
-						<div class="col-md-3">							
+						<!-- <div class="col-md-3">							
 								<label>Alergias</label>
 								<input type="text" class="form-control" id="alergia" name="alergia">							
-						</div>
+						</div> -->
 						
 						<div class="col-md-6">							
 								<label>Nome Responsável</label>
@@ -182,11 +182,11 @@ if(@$funcionarios == 'ocultar'){
 					<div class="col-md-6" style="margin-bottom: 5px">
 						<span><b>Data Cadastro: </b></span><span id="data_dados"></span>
 					</div>
-
+				    
 					<div class="col-md-12" style="margin-bottom: 5px">
 						<span><b>Endereço: </b></span><span id="endereco_dados"></span>
 					</div>
-
+					
 					<div class="col-md-6" style="margin-bottom: 5px">
 						<span><b>Nome Responsável: </b></span><span id="nome_responsavel_dados"></span>
 					</div>
