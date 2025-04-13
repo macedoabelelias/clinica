@@ -8,11 +8,14 @@ $configuracoes = 'ocultar';
 
 //grupo pessoas
 $usuarios = 'ocultar';
+$pacientes = 'ocultar';
+$funcionarios = 'ocultar';
 
 //grupo cadastros
 $grupo_acessos = 'ocultar';
 $acessos = 'ocultar';
-$cargos = '';
+$cargos = 'ocultar';
+$convenios = 'ocultar';
 
 
 $query = $pdo->query("SELECT * FROM usuarios_permissoes where usuario = '$id_usuario'");
@@ -42,6 +45,14 @@ if($total_reg > 0){
 			$usuarios = '';
 		}
 
+		if($chave == 'pacientes'){
+			$pacientes = '';
+		}
+
+		if($chave == 'funcionarios'){
+			$funcionarios = '';
+		}
+
 
 		if($chave == 'grupo_acessos'){
 			$grupo_acessos = '';
@@ -53,6 +64,11 @@ if($total_reg > 0){
 
 		if($chave == 'cargos'){
 			$cargos = '';
+		}
+
+
+		if($chave == 'convenios'){
+			$convenios = '';
 		}
 
 	}
@@ -91,14 +107,14 @@ if($home != 'ocultar'){
 
 
 
-if($usuarios == 'ocultar'){
+if($usuarios == 'ocultar' and $funcionarios = 'ocultar' and $pacientes = 'ocultar'){
 	$menu_pessoas = 'ocultar';
 }else{
 	$menu_pessoas = '';
 }
 
 
-if($grupo_acessos == 'ocultar' and $acessos == 'ocultar' and $cargos == 'cargos'){
+if($grupo_acessos == 'ocultar' and $acessos == 'ocultar' and $cargos == 'ocultar' and $convenios = 'ocultar'){
 	$menu_cadastros = 'ocultar';
 }else{
 	$menu_cadastros = '';

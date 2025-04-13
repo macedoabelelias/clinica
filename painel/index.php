@@ -176,6 +176,9 @@ if($linhas > 0){
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
+								<li class="<?php echo $procedimentos ?>"><a href="index.php?pagina=procedimentos">
+									<i class="fa fa-angle-right"></i> Procedimentos</a></li>
+
 									<li class="<?php echo $convenios ?>"><a href="index.php?pagina=convenios">
 										<i class="fa fa-angle-right"></i> Convênio</a></li>
 
