@@ -122,6 +122,25 @@ if($linhas > 0){
 
 <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/> 
  	<script src="DataTables/datatables.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+	 <style type="text/css">
+		.select2-selection__rendered {
+			line-height: 36px !important;
+			font-size:16px !important;
+			color:#666666 !important;
+
+		}
+
+		.select2-selection {
+			height: 36px !important;
+			font-size:16px !important;
+			color:#666666 !important;
+
+		}
+	</style> 
 	
 </head> 
 <body class="cbp-spmenu-push">

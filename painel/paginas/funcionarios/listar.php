@@ -215,13 +215,13 @@ HTML;
       limparCampos();
    }
 
-   function permissoes(id, nome){
+   function procedimentos(id, nome){
      
-     $('#id_permissoes').val(id);
-     $('#nome_permissoes').text(nome);
+     $('#id_procedimento').val(id);
+     $('#nome_procedimento').text(nome);
      
-     $('#modalPermissoes').modal('show');
-     listarPermissoes(id);  
+     $('#modalProcedimentos').modal('show');
+     listarProcedimentos(id);  
   }
 
   

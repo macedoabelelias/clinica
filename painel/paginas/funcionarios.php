@@ -7,7 +7,7 @@ if(@$funcionarios == 'ocultar'){
 }
 
  ?>
-<div class="main-page margin-mobile">
+
 <a onclick="inserir()" type="button" class="btn btn-primary"><span class="fa fa-plus"></span> Funcionario</a>
 
 <li class="dropdown head-dpdn2" style="display: inline-block;">
@@ -193,10 +193,64 @@ if(@$funcionarios == 'ocultar'){
 					</div>
 
 					<div class="col-md-12" style="margin-bottom: 5px">
-						<div align="center"><img src="" id="foto_dados" width="20%"></div>
+						<div align="center"><img src="" id="foto_dados" width="200px"></div>
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal Procedimentos -->
+<div class="modal fade" id="modalProcedimentos" tabindex="-1" aria-labelledby="exampleModalLabel" 
+aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="exampleModalLabel"><span id="nome_procedimento"></span></h4>
+
+				<button id="btn-fechar-procedimentos" type="button" class="close" data-dismiss="modal" 
+				aria-label="Close" style="margin-top: -25px">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			
+			<form id="form_procedimento">
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-8">
+					<select class="sel" name="procedimento" id="procedimento" required style="width:100%">
+								<?php 
+									$query = $pdo->query("SELECT * from procedimentos order by id asc");
+									$res = $query->fetchAll(PDO::FETCH_ASSOC);
+									$linhas = @count($res);
+									if($linhas > 0){
+									for($i=0; $i<$linhas; $i++){
+									?>
+									<option value="<?php echo $res[$i]['id'] ?>">
+										<?php  echo $res[$i]['nome']?></option>
+									
+
+									<?php }}else{ ?>
+										<option value="">Cadastre um Procedimento</option>
+									<?php }?>
+                                </select>
+					</div>
+
+					<div class="col-md-4">
+						<button id="btn_procedimento" type="submit" class="btn btn-primary">Inserir</button>
+					</div>
+				</div>
+				<div class="row" id="listar_procedimentos">
+					
+				</div>
+				<br>
+				<input type="hidden" name="id" id="id_procedimento">
+				<small><div id="mensagem_procedimento" align="center" class="mt-3"></div></small>		
+			</div>
+		</form>
+					
 		</div>
 	</div>
 </div>
@@ -206,6 +260,69 @@ if(@$funcionarios == 'ocultar'){
 
 <script type="text/javascript">var pag = "<?=$pag?>"</script>
 <script src="js/ajax.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.sel').select2({
+		dropdownParent:$('#modalProcedimentos')
+	});
+});
+</script>
+
+<script type="text/javascript">
+
+$("#form_procedimento").submit(function () {
+
+	var usuario = $('#id_procedimento').val();
+
+event.preventDefault();
+var formData = new FormData(this);
+
+$.ajax({
+	url: 'paginas/' + pag + "/inserir_procedimento.php",
+	type: 'POST',
+	data: formData,
+
+	success: function (mensagem) {
+		$('#mensagem_procedimento').text('');
+		$('#mensagem_procedimento').removeClass()
+		if (mensagem.trim() == "Salvo com Sucesso") {
+
+			//$('#btn-fechar-procedimentos').click();
+			listarProcedimentos(usuario);          
+
+		} else {
+
+			$('#mensagem_procedimento').addClass('text-danger')
+			$('#mensagem_procedimento').text(mensagem)
+		}
+
+
+	},
+
+	cache: false,
+	contentType: false,
+	processData: false,
+
+});
+
+});
+
+function listarProcedimentos(id){
+	$.ajax({
+        url: 'paginas/' + pag + "/listar_procedimentos.php",
+        method: 'POST',
+        data: {id},
+        dataType: "html",
+
+        success:function(result){
+            $("#listar_procedimentos").html(result);            
+        }
+    });
+}
+</script>
+
+
 
 
 
