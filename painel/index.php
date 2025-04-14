@@ -26,7 +26,10 @@ if($linhas > 0){
 	$nivel_usuario = $res[0]['nivel'];
 	$foto_usuario = $res[0]['foto'];
 	$endereco_usuario = $res[0]['endereco'];
+	$atendimento_usuario = $res[0]['atendimento'];
+
 }
+
 
 
 ?>
@@ -187,6 +190,13 @@ if($linhas > 0){
 									
 								</ul>
 							</li>
+							<?php if($atendimento_usuario == 'Sim'){ ?>
+							<li class="treeview">
+								<a href="index.php?pagina=horarios">
+									<i class="fa fa-clock-o"></i> <span>Dias / Horários</span>
+								</a>
+							</li>
+							<?php } ?>
 
 							<li class="treeview <?php echo $menu_cadastros ?>">
 								<a href="#">

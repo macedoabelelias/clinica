@@ -13,6 +13,7 @@ $atendimento = $_POST['atendimento'];
 $comissao = $_POST['comissao'];
 $pagamento = $_POST['pagamento'];
 $cpf = $_POST['cpf'];
+$intervalo = $_POST['intervalo'];
 $id = $_POST['id'];
 
 
@@ -38,11 +39,11 @@ if($id == ""){
 $query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome, email = :email, 
     senha = '', senha_crip = '$senha_crip', nivel = '$nivel', ativo = 'Sim', 
     foto = 'sem-foto.jpg', telefone = :telefone, data = curDate(), endereco = :endereco,
-    atendimento = :atendimento, comissao = :comissao, pagamento = :pagamento, cpf = :cpf");
+    atendimento = :atendimento, comissao = :comissao, pagamento = :pagamento, cpf = :cpf, intervalo = :intervalo");
 }else{
     $query = $pdo->prepare("UPDATE $tabela SET nome = :nome, email = :email, nivel = '$nivel', 
     telefone = :telefone, endereco = :endereco, atendimento = :atendimento, comissao = :comissao, 
-    pagamento = :pagamento, cpf = :cpf where id = '$id'"); 
+    pagamento = :pagamento, cpf = :cpf, intervalo = :intervalo where id = '$id'"); 
 }
  $query->bindValue(":nome", "$nome");
  $query->bindValue(":email", "$email");
@@ -52,6 +53,7 @@ $query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome, email = :email,
  $query->bindValue(":comissao", "$comissao");
  $query->bindValue(":pagamento", "$pagamento");
  $query->bindValue(":cpf", "$cpf");
+ $query->bindValue(":intervalo", "$intervalo");
  $query->execute();
 
  echo 'Salvo com Sucesso';

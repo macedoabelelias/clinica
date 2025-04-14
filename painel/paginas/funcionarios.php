@@ -59,10 +59,31 @@ if(@$funcionarios == 'ocultar'){
 
 
 					<div class="row">
-						<div class="col-md-12">							
+						<div class="col-md-9">							
 								<label>Endereço</label>
 								<input type="text" class="form-control" id="endereco" name="endereco" 
                                 placeholder="Endereço completo">							
+						</div>
+
+						<div class="col-md-3">							
+								<label>
+									Intervalo
+									<li title="Defina o tempo de atendimento" class="dropdown head-dpdn2" style="display: inline-block;">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<i class="fa fa-info-circle text-primary"></i></a>
+
+										<ul class="dropdown-menu" style="margin-left:-230px;">
+										<li>
+										<div class="notification_desc2">
+										<p><small>Tempo em minutos de atendimento do profissional</small></p>
+										</div>
+										</li>										
+										</ul>            
+									</li>
+
+								</label>
+								<input type="number" class="form-control" id="intervalo" name="intervalo" 
+                                placeholder="Minutos" required>							
 						</div>
                     </div>
 

@@ -40,6 +40,7 @@ for($i=0; $i < $linhas; $i++){
     $comissao = $res[$i]['comissao']; 
     $pagamento = $res[$i]['pagamento']; 
     $cpf = $res[$i]['cpf']; 
+    $intervalo = $res[$i]['intervalo']; 
     
     $dataF = implode('/', array_reverse(@explode('-', $data)));
 
@@ -78,7 +79,7 @@ for($i=0; $i < $linhas; $i++){
     <td class="esc"><img src="images/perfil/{$foto}" width="25px"></td>
     <td>
       <big><a href="#" onclick="editar('{$id}','{$nome}','{$email}','{$telefone}','{$endereco}',
-      '{$nivel}','{$atendimento}','{$comissao}','{$pagamento}','{$cpf}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
+      '{$nivel}','{$atendimento}','{$comissao}','{$pagamento}','{$cpf}','{$intervalo}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
       
       <li class="dropdown head-dpdn2" style="display: inline-block;">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -132,7 +133,7 @@ HTML;
 </script>
 
 <script type="text/javascript">
-   function editar(id, nome, email, telefone, endereco, nivel, atendimento, comissao, pagamento, cpf){
+   function editar(id, nome, email, telefone, endereco, nivel, atendimento, comissao, pagamento, cpf, intervalo){
       $('#mensagem').text('');
       $('#titulo_inserir').text('Editar Registro');
 
@@ -145,6 +146,8 @@ HTML;
       $('#comissao').val(comissao);
       $('#atendimento').val(atendimento).change();
       $('#pagamento').val(pagamento);
+      $('#cpf').val(cpf);
+      $('#intervalo').val(intervalo);
 
       $('#modalForm').modal('show');
    
