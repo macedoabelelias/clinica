@@ -5,6 +5,7 @@ $id_usuario = $_SESSION['id'];
 
 $home = 'ocultar';
 $configuracoes = 'ocultar';
+$horarios = 'ocultar';
 
 //grupo pessoas
 $usuarios = 'ocultar';
@@ -16,6 +17,7 @@ $grupo_acessos = 'ocultar';
 $acessos = 'ocultar';
 $cargos = 'ocultar';
 $convenios = 'ocultar';
+$procedimentos = 'ocultar';
 
 
 $query = $pdo->query("SELECT * FROM usuarios_permissoes where usuario = '$id_usuario'");
@@ -71,6 +73,15 @@ if($total_reg > 0){
 			$convenios = '';
 		}
 
+		if($chave == 'procedimentos'){
+			$procedimentos = '';
+		}
+
+		if($chave == 'horarios'){
+			$horarios = '';
+		}
+
+
 	}
 
 }
@@ -114,7 +125,7 @@ if($usuarios == 'ocultar' and $funcionarios = 'ocultar' and $pacientes = 'oculta
 }
 
 
-if($grupo_acessos == 'ocultar' and $acessos == 'ocultar' and $cargos == 'ocultar' and $convenios = 'ocultar'){
+if($grupo_acessos == 'ocultar' and $acessos == 'ocultar' and $cargos == 'ocultar' and $convenios = 'ocultar' and $procedimentos = 'ocultar'){
 	$menu_cadastros = 'ocultar';
 }else{
 	$menu_cadastros = '';

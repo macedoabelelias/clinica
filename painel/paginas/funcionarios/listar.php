@@ -104,7 +104,7 @@ for($i=0; $i < $linhas; $i++){
          <i class="fa fa-stethoscope text-success"></i></a></big>
 
          <big><a class="{$mostrar_func}" href="#" onclick="horarios('{$id}', '{$nome}')" title="Inserir Procedimento">
-         <i class="fa fa-stethoscope text-success"></i></a></big>
+         <i class="fa fa-calendar-o text-primary"></i></a></big>
     </td>
  </tr>
  HTML;
@@ -234,7 +234,7 @@ HTML;
      $('#nome_horario').text(nome);
      
      $('#modalHorarios').modal('show');
-     listarHorarios(id);  
+     listarDias(id);  
   }
 
   

@@ -436,6 +436,69 @@ function listarProcedimentos(id){
 }
 </script>
 
+<script type="text/javascript">
+	
+
+$("#form-dias").submit(function () {
+
+	var func = $("#id_dias").val();
+    event.preventDefault();
+    var formData = new FormData(this);
+
+    $.ajax({
+        url: 'paginas/' + pag + "/inserir-dias.php",
+        type: 'POST',
+        data: formData,
+
+        success: function (mensagem) {
+            $('#mensagem-dias').text('');
+            $('#mensagem-dias').removeClass()
+            if (mensagem.trim() == "Salvo com Sucesso") {
+
+                //$('#btn-fechar-horarios').click();
+                $("#id_d").val('');   
+                listarDias(func);
+
+
+            } else {
+
+                $('#mensagem-dias').addClass('text-danger')
+                $('#mensagem-dias').text(mensagem)
+            }
+
+
+        },
+
+        cache: false,
+        contentType: false,
+        processData: false,
+
+    });
+
+});
+
+
+</script>
+
+
+<script type="text/javascript">
+	function listarDias(func){
+		
+    $.ajax({
+        url: 'paginas/' + pag + "/listar-dias.php",
+        method: 'POST',
+        data: {func},
+        dataType: "html",
+
+        success:function(result){
+            $("#listar-dias").html(result);
+            $('#mensagem-dias-excluir').text('');
+        }
+    });
+}
+
+</script>
+
 
 
 

@@ -12,6 +12,7 @@ echo <<<HTML
 	<thead> 
 	<tr>
 	<th>Nome</th>	
+	<th>Chave</th>	
 	<th>Grupo</th>
 	<th>Ações</th>
 	</tr> 

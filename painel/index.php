@@ -191,7 +191,7 @@ if($linhas > 0){
 								</ul>
 							</li>
 							<?php if($atendimento_usuario == 'Sim'){ ?>
-							<li class="treeview">
+							<li class="treeview <?php echo $horarios ?>">
 								<a href="index.php?pagina=horarios">
 									<i class="fa fa-clock-o"></i> <span>Dias / Horários</span>
 								</a>
