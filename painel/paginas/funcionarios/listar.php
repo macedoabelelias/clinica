@@ -103,7 +103,8 @@ for($i=0; $i < $linhas; $i++){
       <big><a class="{$mostrar_func}" href="#" onclick="procedimentos('{$id}', '{$nome}')" title="Inserir Procedimento">
          <i class="fa fa-stethoscope text-success"></i></a></big>
 
-
+         <big><a class="{$mostrar_func}" href="#" onclick="horarios('{$id}', '{$nome}')" title="Inserir Procedimento">
+         <i class="fa fa-stethoscope text-success"></i></a></big>
     </td>
  </tr>
  HTML;
@@ -225,6 +226,15 @@ HTML;
      
      $('#modalProcedimentos').modal('show');
      listarProcedimentos(id);  
+  }
+
+  function horarios(id, nome){
+     
+     $('#id_dias').val(id);
+     $('#nome_horario').text(nome);
+     
+     $('#modalHorarios').modal('show');
+     listarHorarios(id);  
   }
 
   

@@ -276,6 +276,99 @@ aria-hidden="true">
 	</div>
 </div>
 
+<!-- Modal Horarios -->
+<div class="modal fade" id="modalHorarios" tabindex="-1" aria-labelledby="exampleModalLabel" 
+aria-hidden="true">
+	<div class="modal-dialog modal-lg" style="width:1100px">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="exampleModalLabel"><span id="nome_horario"></span></h4>
+
+				<button id="btn-fechar-horario" type="button" class="close" data-dismiss="modal" 
+				aria-label="Close" style="margin-top: -25px">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			
+			
+			<div class="modal-body">
+				
+			<form id="form-dias">
+				<div class="row">
+					<div class="col-md-2" style="margin-top:15px">						
+						<div class="form-group">
+							<label for="exampleInputEmail1">Dia da Semana</label>
+							<select class="form-control" id="dias" name="dias"  required> 
+                                    <option value="Segunda-Feira">Segunda-Feira</option>    
+                                    <option value="Terça-Feira">Terça-Feira</option>
+                                    <option value="Quarta-Feira">Quarta-Feira</option>
+                                    <option value="Quinta-Feira">Quinta-Feira</option>
+                                    <option value="Sexta-Feira">Sexta-Feira</option>
+                                    <option value="Sábado">Sábado</option>
+                                    <option value="Domingo">Domingo</option>
+                                                    
+
+                                </select>      
+						</div>
+
+                      
+
+                   
+					</div>
+
+                      <div class="col-md-4" align="center">  
+                      <label for="exampleInputEmail1">(Início) Jornada de Trabalho (Final)</label>                  
+                            <div class="row">
+                                <div class="col-md-6">
+ 								<input type="time" name="inicio" class="form-control" id="inicio" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    
+                                     <input type="time" name="final" class="form-control" id="final" required>
+
+                                </div>
+                            </div>                         
+                         
+                    </div>
+
+                    <div class="col-md-4" align="center">  
+                      <label for="exampleInputEmail1">(Início) Intervalo (Final)</label>                  
+                            <div class="row">
+                                <div class="col-md-6">
+ 								<input type="time" name="inicio_almoco" class="form-control" id="inicio_almoco" >
+                                </div>
+
+                                <div class="col-md-6">
+                                    
+                                     <input type="time" name="final_almoco" class="form-control" id="final_almoco" >
+
+                                </div>
+                            </div>                         
+                         
+                    </div>
+
+					<div class="col-md-2" style="margin-top:15px">						
+						<button type="submit" class="btn btn-primary" style="margin-top:20px">Salvar</button>
+					</div>
+
+					<input type="hidden" name="id" id="id_dias">
+
+                    <input type="hidden" name="id_d" id="id_d">
+
+				</div>
+				</form>
+
+				<small><div id="mensagem-dias"></div></small>
+
+				<big>
+				<div class="bs-example widget-shadow" style="padding:15px" id="listar-dias">
+					
+				</div>
+				</big>
+		
+			</div>
+		
 
 
 
