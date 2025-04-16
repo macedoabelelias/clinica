@@ -1,9 +1,11 @@
 <?php 
-// @session_start();
-// require_once("verificar.php");
-// require_once("../conexao.php");
-
 $pag = 'funcionarios';
+
+if(@$horarios == 'ocultar'){
+	echo "<script>window.location='../index.php'</script>";
+	exit();
+}
+
 ?>
 
 

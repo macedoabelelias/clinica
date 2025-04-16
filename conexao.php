@@ -21,6 +21,7 @@ if($url[1] == 'localhost/'){
         // echo '<br>';
         echo $e;
     } 
+   
     
    
 //variaveis globais
@@ -28,7 +29,7 @@ $nome_sistema = 'AM Systems';
 $email_sistema = 'contato@amsystems.com.br';
 $telefone_sistema = '(16) 99992-7427';
 $endereco_sistema = 'Rua Luiz Leporace, 1236 - Santo Agostinho - Franca (SP)';
-$instagram_sistema = 'abelmacedo61';
+$telefone_fixo = '(16)3403-5313';
     
 
 $query = $pdo->query("SELECT * from config");
@@ -36,18 +37,24 @@ $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $linhas = @count($res);
 if($linhas == 0){
 	$pdo->query("INSERT INTO config SET nome = '$nome_sistema', email = '$email_sistema', 
-       telefone = '$telefone_sistema', endereco = '$endereco_sistema', instagram = '$instagram_sistema', 
+       telefone = '$telefone_sistema', endereco = '$endereco_sistema', telefone_fixo = '$telefone_fixo', 
        logo = 'logo.png', logo_rel = 'logo.jpg', icone = 'icone.png', ativo = 'Sim'");
 }else{
     $nome_sistema = $res[0]['nome'];
     $email_sistema = $res[0]['email'];
     $telefone_sistema = $res[0]['telefone'];
     $endereco_sistema = $res[0]['endereco'];
-    $instagram_sistema = $res[0]['instagram'];
+    $telefone_fixo = $res[0]['telefone_fixo'];
     $logo_sistema = $res[0]['logo'];
     $logo_rel = $res[0]['logo_rel'];
     $icone_sistema = $res[0]['icone'];
     $ativo_sistema = $res[0]['ativo'];
+    $comissao_sistema = $res[0]['comissao'];
+    $token = $res[0]['token'];
+    $instancia = $res[0]['instancia'];
+    $horas_confirmacao = $res[0]['horas_confirmacao'];
+
+    $whatsapp_sistema = '55'.preg_replace('/[ ()-]+/' , '' , $telefone_sistema);
 
     if($ativo_sistema != 'Sim' and $ativo_sistema != ''){ ?>
         <style type="text/css">

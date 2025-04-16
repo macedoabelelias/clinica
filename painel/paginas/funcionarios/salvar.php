@@ -57,4 +57,21 @@ $query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome, email = :email,
  $query->execute();
 
  echo 'Salvo com Sucesso';
+
+ if($atendimento == 'Sim' and $id == "" and $token != ""){
+
+	
+    $telefone_envio = '55'.preg_replace('/[ ()-]+/' , '' , $telefone);
+
+    $mensagem = '*'.$nome_sistema.'* %0A';
+    $mensagem .= '_Você foi cadastrado em nosso Sistema_ %0A';
+    $mensagem .= '*Email:* '.$email.' %0A';	
+    $mensagem .= '*Senha:* '.$senha.' %0A%0A';
+
+    $mensagem .= '_Faça seu acesso e troque sua Senha_';
+    $mensagem .= '*Url de Acesso:* '.$url_sistema.' %0A';	
+    require("../../apis/texto.php");
+
+}	
+
 ?>

@@ -214,6 +214,11 @@ if($linhas > 0){
 									<li class="<?php echo $cargos ?>"><a href="index.php?pagina=cargos">
 										<i class="fa fa-angle-right"></i> Cargos</a></li>
 
+									
+									<li class="<?php echo $formas_pgtos ?>"><a href="index.php?pagina=formas_pgtos">
+										<i class="fa fa-angle-right"></i> Formas de Pagamentos</a></li>
+
+
 									<li class="<?php echo $grupo_acessos ?>"><a href="index.php?pagina=grupo_acessos">
 										<i class="fa fa-angle-right"></i> Grupos</a></li>
 
@@ -545,12 +550,21 @@ if($linhas > 0){
 								"<?php echo @$endereco_sistema ?>" >							
 						</div>
 
-						<div class="col-md-6">							
-								<label>Instagram</label>
-								<input type="text" class="form-control" id="instagram_sistema" name=
-								"instagram_sistema" placeholder="Link do Instagram" value=
-								"<?php echo @$instagram_sistema ?>">							
+						<div class="col-md-3">							
+								<label>Telefone Fixo</label>
+								<input type="text" class="form-control" id="telefone_fixo" name=
+								"telefone_fixo" placeholder="Telefone Fixo" value=
+								"<?php echo @$telefone_fixo ?>">							
 						</div>
+
+						<div class="col-md-3">							
+								<label>Comissão %</label>
+								<input type="text" class="form-control" id="comissao_sistema" name=
+								"comissao_sistema" placeholder="Procedimentos" value=
+								"<?php echo @$comissao_sistema ?>">							
+						</div>
+
+						
 					</div>
 
 					<div class="row">
@@ -602,11 +616,33 @@ if($linhas > 0){
 									<img src="../images/<?php echo @$logo_rel ?>"  width="80px" 
 									id="target-logo-rel">									
 								</div>
-							</div>
+							</div>							
+					</div>
+					
+					<div class="row">
 
+							
+						<div class="col-md-4">							
+								<label>Horas Confirmação</label>
+								<input type="text" class="form-control" id="horas_confirmacao" name=
+								"horas_confirmacao" placeholder="Mensagem Consulta" value=
+								"<?php echo @$horas_confirmacao ?>">							
+						</div>
 
-						
-					</div>					
+						<div class="col-md-4">							
+								<label>Token WhatsApp</label>
+								<input type="text" class="form-control" id="token" name=
+								"token" placeholder="Token API WhatsApp" value=
+								"<?php echo @$token ?>">							
+						</div>
+
+						<div class="col-md-4">							
+								<label>Instância WhatsApp</label>
+								<input type="text" class="form-control" id="instancia" name=
+								"instancia" placeholder="Instancia WhatsApp" value=
+								"<?php echo @$instancia ?>">							
+						</div>
+					</div>
 				
 
 				<br>

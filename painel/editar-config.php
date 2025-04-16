@@ -1,17 +1,20 @@
 <?php
-$tabela = 'usuarios';
+$tabela = 'config';
 require_once("../conexao.php");
 
 $nome = $_POST['nome_sistema'];
 $email = $_POST['email_sistema'];
 $telefone = $_POST['telefone_sistema'];
 $endereco = $_POST['endereco_sistema'];
-$instagram = $_POST['instagram_sistema'];
+$telefone_fixo = $_POST['telefone_fixo'];
+$comissao_sistema = $_POST['comissao_sistema'];
+$horas_confirmacao = $_POST['horas_confirmacao'];
+$token = $_POST['token'];
+$instancia = $_POST['instancia'];
 
 //foto logo
 
 $caminho = '../images/logo.png' ;
-
 $imagem_temp = @$_FILES['foto-logo']['tmp_name']; 
 
 if(@$_FILES['foto-logo']['name'] != ""){
@@ -58,14 +61,20 @@ if(@$_FILES['foto-icone']['name'] != ""){
 
 
 $query = $pdo->prepare("UPDATE $tabela SET nome = :nome, email = :email,  
-    telefone = :telefone, endereco = :endereco, instagram = :instagram where id = 1"); 
+    telefone = :telefone, endereco = :endereco, telefone_fixo = :telefone_fixo, token = :token, instancia = :instancia, 
+	horas_confirmacao = :horas_confirmacao, comissao = :comissao_sistema where id = 1"); 
 
  $query->bindValue(":nome", "$nome");
  $query->bindValue(":email", "$email");
  $query->bindValue(":telefone", "$telefone");
  $query->bindValue(":endereco", "$endereco");
- $query->bindValue(":instagram", "$instagram");
-//  $query->execute();
+ $query->bindValue(":telefone_fixo", "$telefone_fixo");
+ $query->bindValue(":comissao_sistema", "$comissao_sistema");
+ $query->bindValue(":horas_confirmacao", "$horas_confirmacao");
+ $query->bindValue(":token", "$token");
+ $query->bindValue(":instancia", "$instancia");
+
+ $query->execute();
 
  echo 'Editado com Sucesso';
 ?>
