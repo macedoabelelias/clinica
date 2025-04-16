@@ -38,7 +38,7 @@ $linhas = @count($res);
 if($linhas == 0){
 	$pdo->query("INSERT INTO config SET nome = '$nome_sistema', email = '$email_sistema', 
        telefone = '$telefone_sistema', endereco = '$endereco_sistema', telefone_fixo = '$telefone_fixo', 
-       logo = 'logo.png', logo_rel = 'logo.jpg', icone = 'icone.png', ativo = 'Sim'");
+       logo = 'logo.png', logo_rel = 'logo.jpg', icone = 'icone.png', ativo = 'Sim', marca_dagua = 'Sim' ");
 }else{
     $nome_sistema = $res[0]['nome'];
     $email_sistema = $res[0]['email'];
@@ -53,6 +53,8 @@ if($linhas == 0){
     $token = $res[0]['token'];
     $instancia = $res[0]['instancia'];
     $horas_confirmacao = $res[0]['horas_confirmacao'];
+    $marca_dagua = $res[0]['marca_dagua'];
+
 
     $whatsapp_sistema = '55'.preg_replace('/[ ()-]+/' , '' , $telefone_sistema);
 

@@ -10,6 +10,9 @@ if(@$usuarios == 'ocultar'){
 <div class="main-page margin-mobile">
 <a onclick="inserir()" type="button" class="btn btn-primary"><span class="fa fa-plus"></span> Procedimentos</a>
 
+<a target="_blank" href="rel/procedimentos_class.php" class="btn btn-success" style="position:absolute; right:30px">
+	<span class="fa fa-file-pdf-o"></span> Relatório</a>
+
 <li class="dropdown head-dpdn2" style="display: inline-block;">
 	<a href="#" data-toggle="dropdown" class="btn btn-danger dropdown-toggle" id="btn-deletar"
 	style="display:none"><span class="fa fa-trash-o"></span> Excluir</a>

@@ -11,6 +11,7 @@ $comissao_sistema = $_POST['comissao_sistema'];
 $horas_confirmacao = $_POST['horas_confirmacao'];
 $token = $_POST['token'];
 $instancia = $_POST['instancia'];
+$marca_dagua = $_POST['marca_dagua'];
 
 //foto logo
 
@@ -62,7 +63,7 @@ if(@$_FILES['foto-icone']['name'] != ""){
 
 $query = $pdo->prepare("UPDATE $tabela SET nome = :nome, email = :email,  
     telefone = :telefone, endereco = :endereco, telefone_fixo = :telefone_fixo, token = :token, instancia = :instancia, 
-	horas_confirmacao = :horas_confirmacao, comissao = :comissao_sistema where id = 1"); 
+	horas_confirmacao = :horas_confirmacao, comissao = :comissao_sistema, marca_dagua = :marca_dagua where id = 1"); 
 
  $query->bindValue(":nome", "$nome");
  $query->bindValue(":email", "$email");
@@ -73,6 +74,8 @@ $query = $pdo->prepare("UPDATE $tabela SET nome = :nome, email = :email,
  $query->bindValue(":horas_confirmacao", "$horas_confirmacao");
  $query->bindValue(":token", "$token");
  $query->bindValue(":instancia", "$instancia");
+ $query->bindValue(":marca_dagua", "$marca_dagua");
+
 
  $query->execute();
 

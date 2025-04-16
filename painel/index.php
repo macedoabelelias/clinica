@@ -616,8 +616,27 @@ if($linhas > 0){
 									<img src="../images/<?php echo @$logo_rel ?>"  width="80px" 
 									id="target-logo-rel">									
 								</div>
-							</div>							
+							</div>
+							
+							<div class="col-md-4">						
+								
+									<label>Marca D'ÁGua</label> 
+									<select class="form-control" name="marca_dagua" id="">
+										<option value="Sim" <?php if($marca_dagua == 'Sim'){ echo 'selected'; } ?>
+											>Sim</option>
+										<option value="Não" <?php if($marca_dagua == 'Não'){ echo 'selected'; } ?>>Não</option>
+									</select>
+														
+							</div>
+							<div class="col-md-2">
+								<div id="divImg">
+									<img src="../images/<?php echo @$logo_rel ?>"  width="80px" 
+									id="target-logo-rel">									
+								</div>
+							</div>
 					</div>
+
+					
 					
 					<div class="row">
 
