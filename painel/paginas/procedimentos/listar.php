@@ -13,7 +13,9 @@ $query = $pdo->query("SELECT * from $tabela order by id desc");
 	<tr> 
 	<th>Nome</th>	
 	<th class="esc">Valor</th>	
-	<th class="esc">Tempo</th>			
+	<th class="esc">Tempo</th>	
+   <th class="esc">Exame</th>	
+   <th class="esc">Convênio</th>			
 	<th>Ações</th>
 	</tr> 
 	</thead> 
@@ -27,6 +29,8 @@ for($i=0; $i < $linhas; $i++){
     $valor = $res[$i]['valor'];
     $tempo = $res[$i]['tempo']; 
     $ativo = $res[$i]['ativo']; 
+    $exame = $res[$i]['exame']; 
+    $convenio = $res[$i]['convenio']; 
     
     $valorF = number_format($valor, 2, ',', '.');    
    
@@ -54,7 +58,7 @@ for($i=0; $i < $linhas; $i++){
     <td class="esc">{$tempo} Minutos</td> 
     
     <td>
-      <big><a href="#" onclick="editar('{$id}','{$nome}','{$valor}','{$tempo}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
+      <big><a href="#" onclick="editar('{$id}','{$nome}','{$valor}','{$tempo}','{$exame}','{$convenio}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
       
       <li class="dropdown head-dpdn2" style="display: inline-block;">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -102,7 +106,7 @@ HTML;
 </script>
 
 <script type="text/javascript">
-   function editar(id, nome, valor, tempo){
+   function editar(id, nome, valor, tempo, exame, convenio){
       $('#mensagem').text('');
       $('#titulo_inserir').text('Editar Registro');
 
@@ -110,6 +114,8 @@ HTML;
       $('#nome').val(nome);
       $('#valor').val(valor);
       $('#tempo').val(tempo);
+      $('#exame').val(exame).change();
+      $('#convenio').val(convenio).change();
      
       $('#modalForm').modal('show');
    
@@ -119,7 +125,9 @@ HTML;
       $('#id').val('');
       $('#nome').val('');
       $('#valor').val('');
-      $('#tempo').val('');  
+      $('#tempo').val(''); 
+      $('#exame').val('Sim').change(); 
+      $('#convenio').val('Sim').change();  
       
       $('#ids').val(''); 
       $('#btn-deletar').hide(); 

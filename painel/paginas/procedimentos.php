@@ -66,6 +66,24 @@ if(@$usuarios == 'ocultar'){
 						</div>
                     </div>                   
 				
+					<div class="row">
+					<div class="col-md-4">	
+								<label>Aceita Convênio?</label>
+								<select class="form-control" name="convenio" id="convenio">
+									<option value="Sim">Sim</option>
+									<option value="Não">Não</option>	
+								</select>						
+							</div>	
+
+
+							<div class="col-md-4">	
+								<label>É Exame?</label>
+								<select class="form-control" name="exame" id="exame">
+									<option value="Sim">Sim</option>
+									<option value="Não">Não</option>	
+								</select>						
+							</div>	
+				</div>
 
 					<input type="hidden" class="form-control" id="id" name="id">				
 

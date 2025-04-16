@@ -224,6 +224,9 @@ if($linhas > 0){
 
 									<li class="<?php echo $acessos ?>"><a href="index.php?pagina=acessos">
 										<i class="fa fa-angle-right"></i> Acessos</a></li>
+
+									<li class="<?php echo $frequencias ?>"><a href="index.php?pagina=frequencias">
+										<i class="fa fa-angle-right"></i> Frequências</a></li>
 									
 								</ul>
 							</li>

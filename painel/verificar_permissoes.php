@@ -18,6 +18,8 @@ $acessos = 'ocultar';
 $cargos = 'ocultar';
 $convenios = 'ocultar';
 $procedimentos = 'ocultar';
+$formas_pgto = 'ocultar';
+$frequencias = 'ocultar';
 
 
 $query = $pdo->query("SELECT * FROM usuarios_permissoes where usuario = '$id_usuario'");
@@ -77,6 +79,14 @@ if($total_reg > 0){
 			$procedimentos = '';
 		}
 
+		if($chave == 'formas_pgto'){
+			$formas_pgto = '';
+		}
+
+		if($chave == 'frequencias'){
+			$frequencias = '';
+		}
+
 		if($chave == 'horarios'){
 			$horarios = '';
 		}
@@ -125,7 +135,8 @@ if($usuarios == 'ocultar' and $funcionarios = 'ocultar' and $pacientes = 'oculta
 }
 
 
-if($grupo_acessos == 'ocultar' and $acessos == 'ocultar' and $cargos == 'ocultar' and $convenios = 'ocultar' and $procedimentos = 'ocultar'){
+if($grupo_acessos == 'ocultar' and $acessos == 'ocultar' and $cargos == 'ocultar' and $convenios = 'ocultar'
+ and $procedimentos = 'ocultar' and $formas_pgto = 'ocultar' and $frequencias = 'ocultar'){
 	$menu_cadastros = 'ocultar';
 }else{
 	$menu_cadastros = '';
