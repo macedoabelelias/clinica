@@ -80,14 +80,14 @@ if(@$funcionarios == 'ocultar'){
 						<div class="col-md-2">							
 								<label>Tipo Sanguíneo</label>
 								<select class="form-control" name="tipo_sanguineo" id="tipo_sanguineo">
-									<option value="O">O+</option>
-									<option value="O">O-</option>
-									<option value="A">A+</option>
-									<option value="A">A-</option>
-									<option value="B">B+</option>
-									<option value="B">B-</option>
-									<option value="AB">AB+</option>
-									<option value="AB">AB-</option>
+									<option>O RH+</option>
+									<option>O RH-</option>
+									<option>A RH+</option>
+									<option>A RH-</option>
+									<option>B RH+</option>
+									<option>B RH-</option>
+									<option>AB RH+</option>
+									<option>AB RH-</option>
 									
 								</select>
 						</div>
@@ -131,8 +131,9 @@ if(@$funcionarios == 'ocultar'){
 						</div>
 						
 						<div class="col-md-9">							
-								<label>Observações</label>
-								<input type="text" class="form-control" id="obs" name="obs">							
+								<label>Observações:</label>
+								<textarea class="form-control" name="obs" id="obs"></textarea>
+														
 						</div>
 
 					</div>
@@ -202,17 +203,32 @@ if(@$funcionarios == 'ocultar'){
 					<div class="col-md-6" style="margin-bottom: 5px">
 						<span><b>Data Cadastro: </b></span><span id="data_dados"></span>
 					</div>
+
+					<div class="col-md-6" style="margin-bottom: 5px">
+						<span><b>Sexo: </b></span><span id="sexo_dados"></span>
+					</div>
+
+					
+
+					<div class="col-md-6" style="margin-bottom: 5px">
+						<span><b>Alergia: </b></span><span id="alergia_dados"></span>
+					</div><br><br>
 				    
 					<div class="col-md-12" style="margin-bottom: 5px">
 						<span><b>Endereço: </b></span><span id="endereco_dados"></span>
 					</div>
-					
-					<div class="col-md-6" style="margin-bottom: 5px">
+
+					<div class="col-md-8" style="margin-bottom: 5px; margin-top: 25px">
 						<span><b>Nome Responsável: </b></span><span id="nome_responsavel_dados"></span>
 					</div>
 
-					<div class="col-md-6" style="margin-bottom: 5px">
-						<span><b>CPF Responsável: </b></span><span id="cpf_responsavel_dados"></span>
+					<div class="col-md-4" style="margin-bottom: 5px; margin-top: 25px">
+						<span><b>CPF: </b></span><span id="cpf_responsavel_dados"></span>
+					</div>
+
+
+					<div class="col-md-12" style="margin-bottom: 5px; margin-top: 25px">
+						<span><b>Obs: </b></span><span id="obs_dados"></span>
 					</div>
 
 					<div class="col-md-12" style="margin-bottom: 5px">

@@ -11,6 +11,13 @@ $tipo_sanguineo = $_POST['tipo_sanguineo'];
 $convenio = $_POST['convenio'];
 $nome_responsavel = $_POST['nome_responsavel'];
 $cpf_responsavel = $_POST['cpf_responsavel'];
+$sexo = $_POST['sexo'];
+$alergia = $_POST['alergia'];
+$obs = $_POST['obs'];
+
+$obs = str_replace("'", " ", $obs);
+$obs = str_replace('"', ' ', $obs);
+
 $id = $_POST['id'];
 
 
@@ -26,11 +33,13 @@ if(@count($res) > 0 and $id != $id_reg){
 if($id == ""){
 $query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome, cpf = :cpf, 
     telefone = :telefone, endereco = :endereco, data_nasc = :data_nasc, tipo_sanguineo = :tipo_sanguineo, 
-    data_cad = curDate(), nome_responsavel = :nome_responsavel, cpf_responsavel = :cpf_responsavel, convenio = :convenio");
+    data_cad = curDate(), nome_responsavel = :nome_responsavel, cpf_responsavel = :cpf_responsavel, convenio = :convenio, 
+    obs = :obs, sexo = :sexo, alergia = :alergia");
 }else{
     $query = $pdo->prepare("UPDATE $tabela SET nome = :nome, cpf = :cpf, 
     telefone = :telefone, endereco = :endereco, data_nasc = :data_nasc, tipo_sanguineo = :tipo_sanguineo, 
-    nome_responsavel = :nome_responsavel, cpf_responsavel = :cpf_responsavel, convenio = :convenio where id = '$id'"); 
+    nome_responsavel = :nome_responsavel, cpf_responsavel = :cpf_responsavel, convenio = :convenio, obs = :obs, 
+    sexo = :sexo, alergia = :alergia where id = '$id'"); 
 }
  $query->bindValue(":nome", "$nome");
  $query->bindValue(":cpf", "$cpf");
@@ -41,6 +50,9 @@ $query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome, cpf = :cpf,
  $query->bindValue(":nome_responsavel", "$nome_responsavel");
  $query->bindValue(":cpf_responsavel", "$cpf_responsavel");
  $query->bindValue(":convenio", "$convenio");
+ $query->bindValue(":obs", "$obs");
+ $query->bindValue(":sexo", "$sexo");
+ $query->bindValue(":alergia", "$alergia");
  $query->execute();
 
  echo 'Salvo com Sucesso';

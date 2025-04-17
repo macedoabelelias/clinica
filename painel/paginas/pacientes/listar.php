@@ -36,8 +36,9 @@ for($i=0; $i<$linhas; $i++){
 	$tipo_sanguineo = $res[$i]['tipo_sanguineo'];
 	$nome_responsavel = $res[$i]['nome_responsavel'];
 	$cpf_responsavel = $res[$i]['cpf_responsavel'];
-	// $sexo = $res[$i]['sexo'];
-	// $obs = $res[$i]['obs'];
+	$sexo = $res[$i]['sexo'];
+	$obs = $res[$i]['obs'];
+	$alergia = $res[$i]['alergia'];
 
 	$data_nascF = implode('/', array_reverse(explode('-', $data_nasc)));
 	$data_cadF = implode('/', array_reverse(explode('-', $data_cad)));
@@ -65,7 +66,8 @@ echo <<<HTML
 <td class="esc">{$tipo_sanguineo}</td>
 <td>
 	<big><a href="#" onclick="editar('{$id}','{$nome}','{$telefone}','{$cpf}','{$endereco}',
-   '{$data_nasc}','{$tipo_sanguineo}','{$nome_responsavel}','{$cpf_responsavel}','{$convenio}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
+   '{$data_nasc}','{$tipo_sanguineo}','{$nome_responsavel}','{$cpf_responsavel}','{$convenio}',
+   '{$obs}','{$sexo}','{$alergia}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
 
 	<li class="dropdown head-dpdn2" style="display: inline-block;">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><big><i class="fa fa-trash-o text-danger"></i></big></a>
@@ -80,7 +82,8 @@ echo <<<HTML
 </li>
 
 <big><a href="#" onclick="mostrar('{$nome}','{$telefone}','{$cpf}','{$endereco}','{$data_nascF}',
-'{$tipo_sanguineo}','{$nome_responsavel}','{$cpf_responsavel}','{$nome_convenio}', '{$data_cadF}')" title="Mostrar Dados"><i class="fa fa-info-circle text-primary"></i></a></big>
+'{$tipo_sanguineo}','{$nome_responsavel}','{$cpf_responsavel}','{$nome_convenio}', '{$data_cadF}', 
+'{$obs}','{$sexo}','{$alergia}')" title="Mostrar Dados"><i class="fa fa-info-circle text-primary"></i></a></big>
 
 
 </td>
@@ -116,7 +119,8 @@ HTML;
 </script>
 
 <script type="text/javascript">
-	function editar(id, nome, telefone, cpf, endereco, data_nasc, tipo_sanguineo, nome_responsavel, cpf_responsavel, convenio){
+	function editar(id, nome, telefone, cpf, endereco, data_nasc, tipo_sanguineo, nome_responsavel, cpf_responsavel, 
+	convenio, obs, sexo, alergia){
 		$('#mensagem').text('');
     	$('#titulo_inserir').text('Editar Registro');
 
@@ -130,15 +134,16 @@ HTML;
     	$('#tipo_sanguineo').val(tipo_sanguineo).change();
     	$('#convenio').val(convenio).change();
     	$('#cpf_responsavel').val(cpf_responsavel);
-    	// $('#cpf').val(cpf);
-    	// $('#sexo').val(sexo).change();
-    	// $('#obs').val(obs);
+    	$('#alergia').val(alergia);
+    	$('#sexo').val(sexo).change();
+    	$('#obs').val(obs);
 
     	$('#modalForm').modal('show');
 	}
 
 
-	function mostrar(nome, telefone, cpf, endereco, data_nasc, tipo_sanguineo, nome_responsavel, cpf_responsavel, convenio, data_cad){
+	function mostrar(nome, telefone, cpf, endereco, data_nasc, tipo_sanguineo, nome_responsavel, cpf_responsavel, 
+	convenio, data_cad, obs, sexo, alergia){
 		    	
     	$('#titulo_dados').text(nome);
     	$('#cpf_dados').text(cpf);
@@ -150,8 +155,9 @@ HTML;
     	$('#cpf_responsavel_dados').text(cpf_responsavel);
     	$('#convenio_dados').text(convenio);
     	$('#data_cad_dados').text(data_cad);
-    	// $('#sexo_dados').text(sexo);
-    	// $('#obs_dados').text(obs);
+    	$('#sexo_dados').text(sexo);
+    	$('#obs_dados').text(obs);
+		$('#alergia_dados').text(alergia);
     	
 
     	$('#modalDados').modal('show');
@@ -166,7 +172,8 @@ HTML;
     	$('#data_nasc').val('');
     	$('#nome_responsavel').val('');
     	$('#cpf_responsavel').val('');
-    	// $('#obs').val('');
+    	$('#obs').val('');
+		
 
 
     	$('#ids').val('');
