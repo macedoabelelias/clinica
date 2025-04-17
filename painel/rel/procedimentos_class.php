@@ -1,8 +1,8 @@
 <?php 
 require_once("../../conexao.php");
+$exame = $_POST['exame'];
 
-
-$html = file_get_contents($url_sistema."painel/rel/procedimentos.php");
+$html = file_get_contents($url_sistema."painel/rel/procedimentos.php?exame=$exame");
 
 //CARREGAR DOMPDF
 require_once '../dompdf/autoload.inc.php';

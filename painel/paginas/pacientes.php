@@ -77,7 +77,7 @@ if(@$funcionarios == 'ocultar'){
                                 placeholder="Endereço completo">							
 						</div>
 						
-						<div class="col-md-3">							
+						<div class="col-md-2">							
 								<label>Tipo Sanguíneo</label>
 								<select class="form-control" name="tipo_sanguineo" id="tipo_sanguineo">
 									<option value="O">O+</option>
@@ -93,7 +93,7 @@ if(@$funcionarios == 'ocultar'){
 						</div>
 						
                         
-                        <div class="col-md-3">							
+                        <div class="col-md-2">							
 								<label>Convênio</label>
 								<select class="form-control" name="convenio" id="convenio">
 									<option value="0">Nenhum</option>
@@ -109,16 +109,36 @@ if(@$funcionarios == 'ocultar'){
 
 									<?php } }?>
                                 </select>
-						</div>						
+						</div>
+						<div class="col-md-2">							
+								<label>Alergias</label>
+								<input type="text" class="form-control" id="alergia" name="alergia">							
+						</div>
+						
 					</div>
 
 					<div class="row">
+						<div class="col-md-3">							
+								<label>Sexo</label>
+								<select class="form-control" name="sexo" id="sexo">
+									<option>Cisgênero Masc</option>
+									<option>Cisgênero Fem</option>
+									<option>Transgênero Masc</option>
+									<option>Transgênero Fem</option>
+									<option>Não-binário</option>		
+															
+								</select>
+						</div>
 						
+						<div class="col-md-9">							
+								<label>Observações</label>
+								<input type="text" class="form-control" id="obs" name="obs">							
+						</div>
 
-						<!-- <div class="col-md-3">							
-								<label>Alergias</label>
-								<input type="text" class="form-control" id="alergia" name="alergia">							
-						</div> -->
+					</div>
+					<hr>
+					<div class="row">					
+
 						
 						<div class="col-md-6">							
 								<label>Nome Responsável</label>

@@ -1,17 +1,27 @@
 <?php
 $pag ='procedimentos';
 
-if(@$usuarios == 'ocultar'){
+
+if(@$procedimentos == 'ocultar'){
 	echo "<script>window.location='../index.php'</script>";
 	exit();
 }
 
  ?>
 <div class="main-page margin-mobile">
-<a onclick="inserir()" type="button" class="btn btn-primary"><span class="fa fa-plus"></span> Procedimentos</a>
 
-<a target="_blank" href="rel/procedimentos_class.php" class="btn btn-success" style="position:absolute; right:30px">
-	<span class="fa fa-file-pdf-o"></span> Relatório</a>
+<form method="POST" action="rel/procedimentos_class.php" style="position:absolute; right:30px" target="_blank">
+	<button type="submit" class="btn btn-success">
+		<span class="fa fa-file-pdf-o"></span class="fa fa-file-pdf-o"> Relatório</button>
+		<input type="hidden" name="exame" id="filtro_exame">
+</form>
+
+<a style="margin-right:100px" onclick="inserir()" type="button" class="btn btn-primary"><span class="fa fa-plus"></span> Procedimentos</a>
+
+<a onclick="buscar('Sim')" type="button" class="btn btn-danger" style="background:green"> Exames</a>
+<a onclick="buscar('Não')" type="button" class="btn btn-primary" style="background:#06085c"> Consultas</a>
+<a onclick="buscar('')" type="button" class="btn btn-info" style="background:#494a4a"> Todos</a>
+
 
 <li class="dropdown head-dpdn2" style="display: inline-block;">
 	<a href="#" data-toggle="dropdown" class="btn btn-danger dropdown-toggle" id="btn-deletar"
@@ -38,7 +48,8 @@ if(@$usuarios == 'ocultar'){
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="exampleModalLabel"><span id="titulo_inserir"></span></h4>
-				<button id="btn-fechar" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px">
+				<button id="btn-fechar" type="button" class="close" data-dismiss="modal" aria-label="Close" 
+				style="margin-top: -25px">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -49,26 +60,27 @@ if(@$usuarios == 'ocultar'){
 					<div class="row">
 						<div class="col-md-6">							
 								<label>Nome</label>
-								<input type="text" class="form-control" id="nome" name="nome" 
-                                placeholder="Seu Nome" required>							
+								<input type="text" class="form-control" id="nome" name="nome" placeholder="Procedimento" required>							
 						</div>
 
 						<div class="col-md-3">							
 								<label>Valor</label>
-								<input type="text" class="form-control" id="valor" name="valor" 
-                                placeholder="Valor" required>							
+								<input type="text" class="form-control" id="valor" name="valor" placeholder="Valor"  required>							
 						</div>
+
 
 						<div class="col-md-3">							
 								<label>Tempo</label>
-								<input type="number" class="form-control" id="tempo" name="tempo" 
-                                placeholder="Minutos">							
+								<input type="number" class="form-control" id="tempo" name="tempo" placeholder="Minutos"  required>							
 						</div>
-                    </div>                   
-				
-					<div class="row">
+
+						
+					</div>
+
+
+				<div class="row">
 					<div class="col-md-4">	
-								<label>Aceita Convênio?</label>
+								<label>Aceita Convênio</label>
 								<select class="form-control" name="convenio" id="convenio">
 									<option value="Sim">Sim</option>
 									<option value="Não">Não</option>	
@@ -84,8 +96,10 @@ if(@$usuarios == 'ocultar'){
 								</select>						
 							</div>	
 				</div>
+					
 
-					<input type="hidden" class="form-control" id="id" name="id">				
+
+					<input type="hidden" class="form-control" id="id" name="id">					
 
 				<br>
 				<small><div id="mensagem" align="center"></div></small>
@@ -98,6 +112,16 @@ if(@$usuarios == 'ocultar'){
 	</div>
 </div>
 
+
+
+
+
 <script type="text/javascript">var pag = "<?=$pag?>"</script>
 <script src="js/ajax.js"></script>
 
+<script type="text/javascript">
+	function buscar(exame){
+		$('#filtro_exame').val(exame);
+		listar(exame)
+	}
+</script>

@@ -5,6 +5,16 @@ setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 date_default_timezone_set('America/Sao_Paulo');
 $data_hoje = utf8_encode(strftime('%A, %d de %B de %Y', strtotime('today')));
 
+$exame = $_GET['exame'];
+$texto_filtro = "";
+
+if($exame == "Sim"){
+	$texto_filtro = " SOMENTE EXAMES";
+}
+
+if($exame == "Não"){
+	$texto_filtro = " SOMENTE CONSULTAS";
+}
 
 ?>
 <!DOCTYPE html>
@@ -24,7 +34,7 @@ body {font-family: 'Tw Cen MT', sans-serif;}
 .marca{
 	position:fixed;
 	left:50;
-	top:180;
+	top:130;
 	width:80%;
 	opacity:8%;
 }
@@ -54,7 +64,10 @@ if($marca_dagua == 'Sim'){ ?>
 				
 				</td>
 				<td style="width: 40%; text-align: right; font-size: 9px;padding-right: 10px;">
-						<b><big>RELATÓRIO DE PROCEDIMENTOS</big></b><br><br> <?php echo mb_strtoupper($data_hoje) ?>
+						<b><big>RELATÓRIO DE PROCEDIMENTOS</big></b><br>
+						<?php echo $texto_filtro ?><br>
+						<?php echo mb_strtoupper($data_hoje) ?>
+						
 				</td>
 			</tr>		
 		</table>
@@ -67,10 +80,11 @@ if($marca_dagua == 'Sim'){ ?>
 			<thead>
 				
 				<tr id="cabeca" style="margin-left: 0px; background-color:#CCC">
-					<td style="width:70%">PROCEDIMENTO</td>
+					<<td style="width:55%">PROCEDIMENTO</td>
 					<td style="width:15%">R$ VALOR</td>
-                    <td style="width:15%">ATIVO</td>
-                    
+					<td style="width:10%">ATIVO</td>
+					<td style="width:10%">EXAME</td>
+					<td style="width:10%">CONVÊNIO</td>                   
 					
 				</tr>
 			</thead>
@@ -99,7 +113,7 @@ if($marca_dagua == 'Sim'){ ?>
 
 $ativos = 0;
 $inativos = 0;
-$query = $pdo->query("SELECT * from procedimentos order by id desc");
+$query = $pdo->query("SELECT * from procedimentos where exame LIKE '%$exame%' order by id desc");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $linhas = @count($res);
 if($linhas > 0){
@@ -107,7 +121,11 @@ for($i=0; $i<$linhas; $i++){
 	$id = $res[$i]['id'];
 	$nome = $res[$i]['nome'];
 	$valor = $res[$i]['valor'];	
+	$tempo = $res[$i]['tempo'];
 	$ativo = $res[$i]['ativo'];
+	$exame = $res[$i]['exame'];
+	$convenio = $res[$i]['convenio'];
+
 	
 
 	$valorF = number_format($valor, 2, ',', '.');
@@ -125,21 +143,31 @@ for($i=0; $i<$linhas; $i++){
 		$classe_ativo = '#c4c4c4';
         $inativos += 1;
 	}
+
+	if($exame == 'Sim'){
+		$classe_exame = 'red';
+	}else{
+		$classe_exame = 'blue';
+	}
+
+	$classe_convenio = '';
+	if($convenio == 'Não'){
+		$classe_convenio = 'red';
+	}
+
 	
   	?>
 
   	 
-<tr style="color:<?php echo $classe_ativo ?>">
-<td style="width:70%"><?php echo $nome ?></td>
-<td style="width:15%">R$ <?php echo $valorF ?></td>
-<td style="width:15%"><?php echo $ativo ?></td>
-
-
-    </tr>
-
-
+		<tr style="color:<?php echo $classe_ativo ?>">
+		<td style="width:55%; color:<?php echo $classe_exame ?>"><?php echo $nome ?></td>
+		<td style="width:15%">R$ <?php echo $valorF ?></td>
+		<td style="width:10%"><?php echo $ativo ?></td>
+		<td style="width:10%; color:<?php echo $classe_exame ?>"><?php echo $exame ?></td>
+		<td style="width:10%; color:<?php echo $classe_convenio ?>"><?php echo $convenio ?></td>
 
     </tr>
+
 
 <?php } } ?>
 				</tbody>

@@ -2,7 +2,11 @@
 $tabela = 'procedimentos';
 require_once("../../../conexao.php");
 
-$query = $pdo->query("SELECT * from $tabela order by id desc");
+$exame = @$_POST['p1'];
+
+$total_exames = 0;
+$total_consultas = 0;
+$query = $pdo->query("SELECT * from $tabela where exame LIKE '%$exame%' order by id desc");
  $res = $query->fetchAll(PDO::FETCH_ASSOC);
  $linhas = @count($res);
  if($linhas > 0){
@@ -47,15 +51,29 @@ for($i=0; $i < $linhas; $i++){
       $classe_ativo = '#c4c4c4';
    }
 
-   
+   if( $exame == 'Sim'){
+      $classe_exame = 'green';
+      $total_exames += 1;
+   }else{
+       $classe_exame = '#06085c';
+       $total_consultas += 1;
+   }
+   $classe_convenio = '';
+   if($convenio == 'Não'){
+      $classe_convenio = 'red';
+   }
+
  echo <<<HTML
  <tr style="color:{$classe_ativo}">
+ <tr style="color:{$classe_exame}">
     <td>
       <input type="checkbox" id="seletor-{$id}" class="form-check-input" onchange=
       "selecionar('{$id}')">
       {$nome}</td>
     <td class="esc">{$valor}</td>
     <td class="esc">{$tempo} Minutos</td> 
+    <td class="esc" style="color:{$classe_exame}">{$exame}</td> 
+    <td class="esc" style="color:{$classe_convenio}">{$convenio}</td> 
     
     <td>
       <big><a href="#" onclick="editar('{$id}','{$nome}','{$valor}','{$tempo}','{$exame}','{$convenio}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
@@ -87,6 +105,11 @@ echo <<<HTML
 </tbody>
 <small><div align="center" id="mensagem-excluir"></div></small>
 </table>
+<br>
+<div align="right">
+<span style="margin-right: 50px">Total Exames: <span style="color:green">{$total_exames}</span></span>
+<span style="">Total Consultas: <span style="color:blue">{$total_consultas}</span></span>
+</div>
 HTML;
 }else{
    echo '<small>Nenhum Registro Encontrado</small>';
