@@ -231,6 +231,24 @@ if($linhas > 0){
 								</ul>
 							</li>
 
+							<li class="treeview <?php echo $menu_cadastros ?>">
+								<a href="#">
+									<i class="fa fa-usd"></i>
+									<span>Financeiro</span>
+									<i class="fa fa-angle-left pull-right"></i>
+								</a>
+								<ul class="treeview-menu">
+								<li class="<?php echo $receber ?>"><a href="index.php?pagina=receber">
+									<i class="fa fa-angle-right"></i> Recebimentos</a></li>
+
+									<li class="<?php echo $pagar ?>"><a href="index.php?pagina=pagar">
+										<i class="fa fa-angle-right"></i> Despesas / Pagamentos</a></li>
+
+									
+									
+								</ul>
+							</li>
+
 
 						</ul>
 					</div>
