@@ -192,7 +192,9 @@ if($total > 0){
 
 <?php if($ativo_sistema == ''){ ?>
 <div style="background: #ffc341; color:#3e3e3e; padding:10px; font-size:14px; margin-bottom:10px">
-<div><i class="fa fa-info-circle"></i> <b>Aviso: </b> Prezado Cliente, não identificamos o pagamento de sua última mensalidade, entre em contato conosco o mais rápido possivel para regularizar o pagamento, caso contário seu acesso ao sistema será desativado.</div>
+<div><i class="fa fa-info-circle"></i> <b>Aviso: </b> Prezado Cliente, não identificamos o pagamento de sua 
+	última mensalidade, entre em contato conosco o mais rápido possivel para regularizar o pagamento, caso
+	 contário seu acesso ao sistema será desativado.</div>
 </div>
 <?php } ?>
 
@@ -266,7 +268,7 @@ if($total > 0){
 		<div class="col-md-8 content-top-2 card">
 			<div class="agileinfo-cdr">
 				<div class="card-header">
-					<h3>Entradas / Saídas</h3>
+					<h3>Receitas / Despesas</h3>
 				</div>
 				
 				<div id="Linegraph" style="width: 98%; height: 350px">

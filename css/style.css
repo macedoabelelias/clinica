@@ -1,6 +1,10 @@
 body{
-	background: rgb(221, 250, 240);
-}
+	/* background: rgb(221, 250, 240); */
+  background-image: url('../img/clinica2.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+} 
 
 .login{
   width: 360px;
