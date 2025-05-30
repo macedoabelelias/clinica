@@ -97,7 +97,9 @@ if(@$consultas == 'ocultar'){
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content ">
 			<div class="modal-header">
-				<h4 class="modal-title" id="exampleModalLabel"><span id="nome_dados"></span> <span style="margin-left: 25px; font-size: 15px"><a title="PDF da Ficha Paciente" href="" onclick="ficha()"><i class="fa fa-file-pdf-o text-danger"></i> Imprimir Ficha</a></span></h4>
+				<h4 class="modal-title" id="exampleModalLabel"><span id="nome_dados"></span> <span 
+				style="margin-left: 25px; font-size: 15px"><a title="PDF da Ficha Paciente" href="" onclick="ficha()">
+					<i class="fa fa-file-pdf-o text-danger"></i> Imprimir Ficha</a></span></h4>
 				<button id="btn-fechar-perfil" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
 					<span aria-hidden="true" >&times;</span>
 				</button>
@@ -108,37 +110,37 @@ if(@$consultas == 'ocultar'){
 				<div class="row">
 					<div class="col-md-7" style="font-size:14px">
 						<div style="margin-bottom: 5px; border-bottom:1px solid #cecece; padding-bottom:3px">		
-							<span style="margin-right: 20px"><b>Idade</b> <span id="idade_dados"></span></span>			
-						<span style="margin-right: 20px"><b>Telefone</b> <span id="telefone_dados"></span></span>
-						<span style=""><b>Nascimento</b> <span id="data_nasc_dados"></span></span>
+							<span style="margin-right: 20px"><b>Idade: </b> <span id="idade_dados"></span></span>			
+						<span style="margin-right: 20px"><b>Telefone: </b> <span id="telefone_dados"></span></span>
+						<span style=""><b>Nascimento: </b> <span id="data_nasc_dados"></span></span>
 						</div>
 
 
 
 						<div style="margin-bottom: 5px; border-bottom:1px solid #cecece; padding-bottom:3px">			
-							<span style="margin-right: 20px"><b>Tipo Sanguíneo</b> <span id="tipo_dados"></span></span>			
-						<span style="margin-right: 20px"><b>Sexo</b> <span id="sexo_dados"></span></span>
-						<span style=""><b>Convênio</b> <span id="convenio_dados"></span></span>
+							<span style="margin-right: 20px"><b>Tipo Sanguíneo: </b> <span id="tipo_dados"></span></span>			
+						<span style="margin-right: 20px"><b>Gênero: </b> <span id="sexo_dados"></span></span>
+						<span style=""><b>Convênio: </b> <span id="convenio_dados"></span></span>
 						</div>
 
 
 						<div style="margin-bottom: 5px; border-bottom:1px solid #cecece; padding-bottom:3px">			
-							<span id="responsavel_div" style="margin-right: 20px"><b>Responsável</b> <span id="responsavel_dados"></span></span>							
+							<span id="responsavel_div" style="margin-right: 20px"><b>Responsável: </b> <span id="responsavel_dados"></span></span>							
 
-						<span id="obs_div" style="margin-right: 20px"><b>OBS</b> <span id="obs_dados"></span></span>
+						<span id="obs_div" style="margin-right: 20px"><b>Obs: </b> <span id="obs_dados"></span></span>
 						
 						</div>
 
 
 						<div style="margin-bottom: 5px; border-bottom:1px solid #cecece; padding-bottom:3px">		
-							<span style="margin-right: 20px"><b>Endereço</b> <span id="endereco_dados"></span></span>
+							<span style="margin-right: 20px"><b>Endereço: </b> <span id="endereco_dados"></span></span>
 						
 						</div>
 
 							<div style="margin-bottom: 5px; border-bottom:1px solid #cecece; padding-bottom:3px">		
-							<span style="margin-right: 20px"><b>Estado Cívil</b> <span id="estado_civil_dados"></span></span>
+							<span style="margin-right: 20px"><b>Estado Cívil: </b> <span id="estado_civil_dados"></span></span>
 
-							<span style="margin-right: 20px"><b>Profissão</b> <span id="profissao_dados"></span></span>
+							<span style="margin-right: 20px"><b>Profissão: </b> <span id="profissao_dados"></span></span>
 						
 						</div>
 

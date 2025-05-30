@@ -56,20 +56,20 @@ HTML;
 for($i=0; $i < $total_reg; $i++){
 	foreach ($res[$i] as $key => $value){}
 	$id = $res[$i]['id'];
-$funcionario = $res[$i]['funcionario'];
-$cliente = $res[$i]['paciente'];
-$hora = $res[$i]['hora'];
-$data = $res[$i]['data'];
-$usuario = $res[$i]['usuario'];
-$data_lanc = $res[$i]['data_lanc'];
-$obs = $res[$i]['obs'];
-$status = $res[$i]['status'];
-$servico = $res[$i]['servico'];
-$pago = $res[$i]['pago'];
-$tipo_pagamento = $res[$i]['tipo_pagamento'];
+	$funcionario = $res[$i]['funcionario'];
+	$cliente = $res[$i]['paciente'];
+	$hora = $res[$i]['hora'];
+	$data = $res[$i]['data'];
+	$usuario = $res[$i]['usuario'];
+	$data_lanc = $res[$i]['data_lanc'];
+	$obs = $res[$i]['obs'];
+	$status = $res[$i]['status'];
+	$servico = $res[$i]['servico'];
+	$pago = $res[$i]['pago'];
+	$tipo_pagamento = $res[$i]['tipo_pagamento'];
 
-$dataF = implode('/', array_reverse(explode('-', $data)));
-$horaF = date("H:i", strtotime($hora));
+	$dataF = implode('/', array_reverse(explode('-', $data)));
+	$horaF = date("H:i", strtotime($hora));
 
 
 if($status == 'Concluído'){		

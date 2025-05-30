@@ -144,8 +144,8 @@ if($marca_dagua == 'Sim'){ ?>
 						<?php echo mb_strtoupper($telefone_paciente) ?>
 					</td>
 
-					<td style="width:5%; border-right: 1px solid #000;border-bottom: : 1px solid #000;">SEXO: </td>
-					<td style="width:5%; border-bottom: : 1px solid #000;">
+					<td style="width:5%; border-right: 1px solid #000;border-bottom: : 1px solid #000;">GÊNERO: </td>
+					<td style="width:10%; border-bottom: : 1px solid #000;">
 						<?php echo mb_strtoupper($sexo) ?>
 					</td>
     			</tr>
