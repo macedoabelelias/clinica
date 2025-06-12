@@ -149,7 +149,9 @@ if($marca_dagua == 'Sim'){ ?>
 <div id="content" style="margin-top: 70px;">
 
 <div style="font-size: 15px;">
-	Atesto para os devidos fins que o Sr(a) <b><?php echo $nome_paciente ?></b> portador do CPF <?php echo $cpf_paciente ?> esteve sob cuidados médicos no dia <?php echo $data_hoje ?> e deverá se afastar de suas atividades pelo período de <b><?php echo $datas ?></b> por motivo de <?php echo $motivo ?>
+	Declaro que o Sr(a) <b><?php echo $nome_paciente ?></b> inscrito sob o CPF nº <?php echo $cpf_paciente ?> 
+	esteve sob meus cuidados médicos no dia __/__/_____, precisando se afastar de suas atividades pelo 
+	período de ______ dias,  por motivo de <?php echo $motivo ?>
 </div>
 
 <?php if($obs != ""){ ?>

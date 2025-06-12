@@ -85,11 +85,9 @@ if(@$pacientes == 'ocultar'){
 							<div class="col-md-2">	
 								<label>Gênero</label>
 								<select class="form-control" name="sexo" id="sexo">
-									<option value="Masc">Cis Masc</option>
-									<option value="Fem">Cis Fem</option>
-									<option value="TransM">Trans Masc</option>
-									<option value="TransF">Trans Fem</option>
-									<option value="NaoB">Não Binário</option>
+									<option value="M">Masc</option>
+									<option value="F">Fem</option>
+									<option value="T">Trans</option>									
 									<option value="O">Outros</option>
 								</select>						
 							</div>

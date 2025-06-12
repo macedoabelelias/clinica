@@ -24,9 +24,9 @@ if($url[1] == 'localhost/'){
 
 
 //variaveis globais
-$nome_sistema = 'Nome Sistema';
-$email_sistema = 'contato@hugocursos.com.br';
-$telefone_sistema = '(31)97527-5084';
+$nome_sistema = 'MedClin';
+$email_sistema = 'contato@mediclin.com.br';
+$telefone_sistema = '(16)99992-7427';
 
 $query = $pdo->query("SELECT * from config");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);

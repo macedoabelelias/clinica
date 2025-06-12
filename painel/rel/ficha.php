@@ -195,7 +195,7 @@ if($marca_dagua == 'Sim'){ ?>
 
     			<tr >
 					<td style="width:8%; border-right: 1px solid #000;border-bottom: : 1px solid #000;">OBS </td>
-					<td colspan="3" style="width:30%; border-right: : 1px solid #000; border-bottom: : 1px solid #000;">
+					<td colspan="3" style="width:30%; border-right: : 1px solid #000; border-bottom: : 1px solid #000; color:red;">
 						<?php echo mb_strtoupper($obs_paciente) ?>
 					</td>
 					
