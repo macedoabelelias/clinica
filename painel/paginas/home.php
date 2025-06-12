@@ -277,7 +277,7 @@ $total_meses .= $total_mes.'*';
 <div class="main-page">
 	<div class="col_3">
 
-		<a href="index.php?pagina=pacientes">
+		<a href="pacientes">
 		<div class="col-md-3 widget widget1">
 			<div class="r3_counter_box">
 				<i class="pull-left fa fa-users icon-rounded" style="background:#2a2ea3"></i>
@@ -289,7 +289,7 @@ $total_meses .= $total_mes.'*';
 		</div>
 		</a>
 
-		<a href="index.php?pagina=pagar">
+		<a href="pagar">
 		<div class="col-md-3 widget widget1">
 			<div class="r3_counter_box">
 				<i class="pull-left fa fa-money user1 icon-rounded"></i>
@@ -301,7 +301,7 @@ $total_meses .= $total_mes.'*';
 		</div>
 		</a>
 
-		<a href="index.php?pagina=receber">
+		<a href="receber">
 		<div class="col-md-3 widget widget1">
 			<div class="r3_counter_box">
 				<i class="pull-left fa fa-money dollar2 icon-rounded"></i>
@@ -313,7 +313,7 @@ $total_meses .= $total_mes.'*';
 		</div>
 		</a>
 
-		<a href="index.php?pagina=receber">
+		<a href="receber">
 		<div class="col-md-3 widget widget1">
 			<div class="r3_counter_box">
 				<i class="pull-left fa fa-stethoscope icon-rounded" style="background:#3192d4"></i>
@@ -325,7 +325,7 @@ $total_meses .= $total_mes.'*';
 		</div>
 		</a>
 
-		<a href="index.php?pagina=pagar">
+		<a href="pagar">
 		<div class="col-md-3 widget">
 			<div class="r3_counter_box">
 				<i class="pull-left fa fa-stethoscope icon-rounded" style="background:#32e376"></i>

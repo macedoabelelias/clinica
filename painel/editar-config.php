@@ -12,6 +12,7 @@ $horas_confirmacao = $_POST['horas_confirmacao'];
 $token = $_POST['token'];
 $instancia = $_POST['instancia'];
 $marca_dagua = $_POST['marca_dagua'];
+$paciente_receita = $_POST['paciente_receita'];
 
 //foto logo
 $caminho = '../img/logo.png';
@@ -61,7 +62,9 @@ if(@$_FILES['foto-icone']['name'] != ""){
 }
 
 
-$query = $pdo->prepare("UPDATE $tabela SET nome = :nome, email = :email, telefone = :telefone, endereco = :endereco, telefone_fixo = :telefone_fixo, token = :token, instancia = :instancia, horas_confirmacao = :horas_confirmacao, comissao = :comissao_sistema, marca_dagua = :marca_dagua where id = 1");
+$query = $pdo->prepare("UPDATE $tabela SET nome = :nome, email = :email, telefone = :telefone, endereco = :endereco, 
+telefone_fixo = :telefone_fixo, token = :token, instancia = :instancia, horas_confirmacao = :horas_confirmacao,
+ comissao = :comissao_sistema, marca_dagua = :marca_dagua, paciente_receita = :paciente_receita where id = 1");
 
 $query->bindValue(":nome", "$nome");
 $query->bindValue(":email", "$email");
@@ -73,6 +76,7 @@ $query->bindValue(":token", "$token");
 $query->bindValue(":instancia", "$instancia");
 $query->bindValue(":horas_confirmacao", "$horas_confirmacao");
 $query->bindValue(":marca_dagua", "$marca_dagua");
+$query->bindValue(":paciente_receita", "$paciente_receita");
 
 $query->execute();
 
