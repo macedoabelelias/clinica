@@ -1,0 +1,27 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^usuarios(.*)$ index.php?pagina=usuarios [L]
+RewriteRule ^funcionarios(.*)$ index.php?pagina=funcionarios [L]
+RewriteRule ^pacientes(.*)$ index.php?pagina=pacientes [L]
+
+RewriteRule ^procedimentos(.*)$ index.php?pagina=procedimentos [L]
+RewriteRule ^convenios(.*)$ index.php?pagina=convenios [L]
+RewriteRule ^cargos(.*)$ index.php?pagina=cargos [L]
+RewriteRule ^formas_pgto(.*)$ index.php?pagina=formas_pgto [L]
+RewriteRule ^grupo_acessos(.*)$ index.php?pagina=grupo_acessos [L]
+RewriteRule ^acessos(.*)$ index.php?pagina=acessos [L]
+RewriteRule ^frequencias(.*)$ index.php?pagina=frequencias [L]
+RewriteRule ^grupos_ana(.*)$ index.php?pagina=grupos_ana [L]
+RewriteRule ^itens_ana(.*)$ index.php?pagina=itens_ana [L]
+
+RewriteRule ^receber(.*)$ index.php?pagina=receber [L]
+RewriteRule ^pagar(.*)$ index.php?pagina=pagar [L]
+RewriteRule ^comissoes(.*)$ index.php?pagina=comissoes [L]
+
+RewriteRule ^agendamentos(.*)$ index.php?pagina=agendamentos [L]
+
+RewriteRule ^consultas(.*)$ index.php?pagina=consultas [L]
+RewriteRule ^horarios(.*)$ index.php?pagina=horarios [L]
+RewriteRule ^minhas_comissoes(.*)$ index.php?pagina=minhas_comissoes [L]
