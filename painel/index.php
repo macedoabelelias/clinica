@@ -690,8 +690,15 @@ $data_atual = date('Y-m-d');
 								<option value="Não" <?php if($marca_dagua == 'Não'){ echo 'selected'; } ?>>Não</option>
 							</select>
 						</div>
-					</div>
 
+						<div class="col-md-3">
+							<label>Dados Paciente Receita</label>	
+								<select class="form-control" name="paciente_receita">
+									<option value="Sim" <?php if($paciente_receita == 'Sim'){ echo 'selected'; } ?>>Sim</option>
+									<option value="Não" <?php if($paciente_receita == 'Não'){ echo 'selected'; } ?>>Não</option>
+								</select>
+						</div>
+					</div>
 					
 
 					<div class="row">

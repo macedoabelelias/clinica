@@ -32,7 +32,8 @@ $query = $pdo->query("SELECT * from config");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $linhas = @count($res);
 if($linhas == 0){
-	$pdo->query("INSERT INTO config SET nome = '$nome_sistema', email = '$email_sistema', telefone = '$telefone_sistema', logo = 'logo.png', logo_rel = 'logo.jpg', icone = 'icone.png', marca_dagua = 'Sim', ativo = 'Sim'");
+	$pdo->query("INSERT INTO config SET nome = '$nome_sistema', email = '$email_sistema', telefone = '$telefone_sistema', 
+	logo = 'logo.png', logo_rel = 'logo.jpg', icone = 'icone.png', marca_dagua = 'Sim', ativo = 'Sim', paciente_receita = 'Sim'");
 }else{
 $nome_sistema = $res[0]['nome'];
 $email_sistema = $res[0]['email'];
@@ -48,13 +49,24 @@ $instancia = $res[0]['instancia'];
 $horas_confirmacao = $res[0]['horas_confirmacao'];
 $marca_dagua = $res[0]['marca_dagua'];
 $ativo_sistema = $res[0]['ativo'];
+$paciente_receita = $res[0]['paciente_receita'];
 
 $horas_confirmacaoF = $horas_confirmacao.':00:00';
 
-if($ativo_sistema != 'Sim' and $ativo_sistema != ""){
-	echo '<div align="center"><img src="painel/images/bloqueado.jpg" width="60%"></div>';
-	exit();
-}
+if($ativo_sistema != 'Sim' and $ativo_sistema != ''){ ?>
+	<style type="text/css">
+		@media only screen and (max-width: 700px) {
+		  .imgsistema_mobile{
+		    width:300px;
+		  }    
+		}
+	</style>
+	<div style="text-align: center; margin-top: 100px">
+	<img src="<?php echo $url_sistema ?>painel/images/bloqueio.png" class="imgsistema_mobile">	
+	</div>
+<?php 
+exit();
+} 
 
 $whatsapp_sistema = '55'.preg_replace('/[ ()-]+/' , '' , $telefone_sistema);
 

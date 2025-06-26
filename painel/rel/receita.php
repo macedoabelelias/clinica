@@ -47,6 +47,12 @@ if($linhas2 > 0){
 	$nome_convenio = 'Particular';
 }
 
+if($paciente_receita == 'Sim'){
+	$margem_tabela = 100;
+}else{
+	$margem_tabela = 80;
+}
+
 }
 
 
@@ -116,19 +122,32 @@ if($marca_dagua == 'Sim'){ ?>
 					<td colspan="8" style="width:100%; font-size: 10px"><b>DADOS DO PACIENTE</b> </td>					
 				</tr>
 				<tr >
-					<td style="width:10%; border-right: 1px solid #000;border-bottom: : 1px solid #000;">NOME: </td>
+					<td style="width:10%; border-bottom: : 1px solid #000;"><b>NOME:</b> </td>
 					<td style="width:35%; border-right: : 1px solid #000; border-bottom: : 1px solid #000;">
 						<?php echo mb_strtoupper($nome_paciente) ?>
 					</td>
 					
-					<td style="width:15%; border-right: 1px solid #000;border-bottom: : 1px solid #000;">DATA DA CONSULTA: </td>
+					<td style="width:15%; border-bottom: : 1px solid #000;"><b>DATA DA CONSULTA:</b> </td>
 					<td style="width:40%; border-bottom: : 1px solid #000; border-right: 1px solid #000;">
 						<?php echo mb_strtoupper($data_hoje) ?>
+					</td>					
+    			</tr>
+
+				<?php if($paciente_receita == 'Sim'){ ?>
+
+				<tr >
+					<td style="width:10%; border-bottom: : 1px solid #000;"><b>TELEFONE:</b> </td>
+					<td style="width:35%; border-right: : 1px solid #000; border-bottom: : 1px solid #000;">
+						<?php echo mb_strtoupper($telefone_paciente) ?>
 					</td>
-
-
+					
+					<td style="width:15%; border-bottom: : 1px solid #000;"><b>ENDEREÇO:</b> </td>
+					<td style="width:40%; border-bottom: : 1px solid #000; border-right: 1px solid #000;">
+						<?php echo mb_strtoupper($endereco_paciente) ?>
+					</td>
 					
     			</tr>
+				<?php } ?>
 
     			
 			</thead>
@@ -150,7 +169,7 @@ if($marca_dagua == 'Sim'){ ?>
 	</table>
 </div>
 
-<div id="content" style="margin-top: 70px;">
+<div id="content" style="margin-top: <?php echo $margem_tabela ?>px;">
 <?php 
 $query = $pdo->query("SELECT * FROM receita where paciente = '$id' order by id asc");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
