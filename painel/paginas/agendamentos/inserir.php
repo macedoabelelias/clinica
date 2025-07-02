@@ -14,6 +14,13 @@ $funcionario = $_POST['funcionario'];
 $servico = $_POST['servico'];
 $data_agd = $_POST['data'];
 $hash = '';
+$retorno = $_POST['retorno'];
+
+if($retorno == "Sim"){
+	$procedimento = 'Retorno';
+}else{
+	$procedimento = 'Consulta';
+}
 
 $hora_do_agd = $_POST['hora'];
 
@@ -157,7 +164,7 @@ $mensagem = '*'.$nome_sistema.'*%0A';
 $mensagem .= '_'.$texto_mensagem.'_ %0A %0A';
 
 $mensagem .= '*Paciente:* '.$nome_cliente.'%0A';
-$mensagem .= '*Procedimento:* '.$nome_servico.'%0A';
+$mensagem .= '*.$procedimento.* '.$nome_servico.'%0A';
 $mensagem .= '*Data:* '.$dataF.'%0A';
 $mensagem .= '*Hora:* '.$horaF.'%0A';
 $mensagem .= '*Profissional:* '.$nome_profissional.'%0A';
@@ -186,7 +193,9 @@ if(strtotime($hora_atual) < strtotime($nova_hora) or strtotime($data_atual) != s
 }
 
 
-$query = $pdo->prepare("INSERT INTO $tabela SET funcionario = '$funcionario', paciente = '$cliente', hora = '$hora', data = '$data_agd', usuario = '$usuario_logado', status = 'Agendado', obs = :obs, data_lanc = curDate(), servico = '$servico', hash = '$hash', pago = 'Não', convenio = '0'");
+$query = $pdo->prepare("INSERT INTO $tabela SET funcionario = '$funcionario', paciente = '$cliente', hora = '$hora', 
+data = '$data_agd', usuario = '$usuario_logado', status = 'Agendado', obs = :obs, data_lanc = curDate(), 
+servico = '$servico', hash = '$hash', pago = 'Não', convenio = '0', retorno = '$retorno'");
 
 $query->bindValue(":obs", "$obs");
 $query->execute();

@@ -175,14 +175,22 @@ if(@$agendamentos == 'ocultar'){
 							</div>						
 						</div>
 
-							<div class="col-md-9">						
+							<div class="col-md-7">						
 						<div class="form-group"> 
 							<label>OBS <small>(Máx 100 Caracteres)</small></label> 
 							<input maxlength="100" type="text" class="form-control" name="obs" id="obs">
 						</div>						
 					</div>
 
-
+					<div class="col-md-2">
+						<div class="form-group">
+							<label>Retorno</label>
+							<select class="form-control" name="retorno" id="retorno">
+								<option value="Não">Não</option>
+								<option value="Sim">Sim</option>
+							</select>
+						</div>
+					</div>
 
 
 					</div>
@@ -239,7 +247,7 @@ if(@$agendamentos == 'ocultar'){
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Procedimento: <span id="titulo_servico"></span></h4>
+				<h4 class="modal-title"><span id="procedimento"></span><span id="titulo_servico"></span></h4>
 				<button id="btn-fechar-servico" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
 					<span aria-hidden="true">&times;</span>
 				</button>

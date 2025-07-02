@@ -67,6 +67,7 @@ $status = $res[$i]['status'];
 $servico = $res[$i]['servico'];
 $pago = $res[$i]['pago'];
 $tipo_pagamento = $res[$i]['tipo_pagamento'];
+$retorno = $res[$i]['retorno'];
 
 $dataF = implode('/', array_reverse(explode('-', $data)));
 $horaF = date("H:i", strtotime($hora));
@@ -178,9 +179,14 @@ if($obs == ""){
 	$classe_obs = 'ocultar';
 }
 
+$classe_retorno = 'ocultar';
+if($retorno == "Sim"){
+	$classe_retorno = '';
+}
+
 echo <<<HTML
 <tr class="">
-<td><i class="fa fa-square {$imagem}"></i> {$nome_serv}</td>
+<td><i class="fa fa-square {$imagem}"></i> {$nome_serv} <span class="{$classe_retorno}" style="color:blue">(Retorno)</span></td>
 <td class="esc">
 <a title="Dados do Paciente" href="#" onclick="mostrar('{$nome_paciente}','{$telefone_paciente}','{$endereco_paciente}','{$data_nascF}','{$tipo_sanguineo}','{$nome_responsavel}','{$nome_convenio}', '{$sexo}','{$obs_paciente}','{$idade}','{$id}','{$cliente}','{$profissao}','{$estado_civil}')" title="Mostrar Dados">
 {$nome_paciente}
