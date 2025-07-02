@@ -6,6 +6,7 @@ $id_usuario = $_SESSION['id'];
 $home = 'ocultar';
 $configuracoes = 'ocultar';
 $horarios = 'ocultar';
+$calendario = 'ocultar';
 
 //grupo pessoas
 $usuarios = 'ocultar';
@@ -51,6 +52,10 @@ if($total_reg > 0){
 
 		if($chave == 'home'){
 			$home = '';
+		}
+
+		if($chave == 'calendario'){
+			$calendario = '';
 		}
 
 		if($chave == 'configuracoes'){

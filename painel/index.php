@@ -263,6 +263,12 @@ $data_atual = date('Y-m-d');
 								</ul>
 							</li>
 
+							<li class="treeview <?php echo @$calendario ?>">
+								<a href="calendario.php">
+									<i class="fa fa-calendar"></i> <span>Calendário Agenda</span>
+								</a>
+							</li>
+
 							<?php if(@$atendimento_usuario == 'Sim'){ ?>
 
 								<li class="treeview <?php echo @$consultas ?>">

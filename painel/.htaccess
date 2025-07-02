@@ -25,3 +25,5 @@ RewriteRule ^agendamentos(.*)$ index.php?pagina=agendamentos [L]
 RewriteRule ^consultas(.*)$ index.php?pagina=consultas [L]
 RewriteRule ^horarios(.*)$ index.php?pagina=horarios [L]
 RewriteRule ^minhas_comissoes(.*)$ index.php?pagina=minhas_comissoes [L]
+
+RewriteRule ^calendario(.*)$ index.php?pagina=calendario [L]
