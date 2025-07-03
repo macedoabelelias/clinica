@@ -36,7 +36,6 @@ $status = $res[$i]['status'];
 $servico = $res[$i]['servico'];
 $pago = $res[$i]['pago'];
 $tipo_pagamento = $res[$i]['tipo_pagamento'];
-$retorno = $res[$i]['retorno'];
 
 $dataF = implode('/', array_reverse(explode('-', $data)));
 $horaF = date("H:i", strtotime($hora));
@@ -167,11 +166,9 @@ echo <<<HTML
 
         	
 
-        			<a class="{$ocultar_pago}" href="#" onclick="baixar('{$id}', '{$cliente}', '{$nome_serv}', 
-					'{$valor_serv}','{$aceita_convenio}','{$funcionario}','{$servico}','{$retorno}')" title="Baixa no Pagamento" class=""> <img class="icon-rounded-vermelho" src="img/{$classe_pago}" width="15px" height="15px"></a>
+        			<a class="{$ocultar_pago}" href="#" onclick="baixar('{$id}', '{$cliente}', '{$nome_serv}', '{$valor_serv}','{$aceita_convenio}','{$funcionario}','{$servico}')" title="Baixa no Pagamento" class=""> <img class="icon-rounded-vermelho" src="img/{$classe_pago}" width="15px" height="15px"></a>
 
-        			<a class="" href="#" onclick="editar('{$id}','{$cliente}','{$funcionario}','{$servico}','{$data}',
-					'{$obs}','{$retorno}')" title="Editar Agendamento" class=""> <img class="icon-rounded-vermelho" src="img/editar.png" width="15px" height="15px"></a>
+        			<a class="" href="#" onclick="editar('{$id}','{$cliente}','{$funcionario}','{$servico}','{$data}','{$obs}')" title="Editar Agendamento" class=""> <img class="icon-rounded-vermelho" src="img/editar.png" width="15px" height="15px"></a>
 
         			
 
@@ -206,24 +203,16 @@ HTML;
 
 
 <script type="text/javascript">
-	function baixar(id, cliente, servico, valor_servico, convenio, funcionario, id_servico, retorno){
+	function baixar(id, cliente, servico, valor_servico, convenio, funcionario, id_servico){
 
 		if(convenio != "Sim"){
 			$('#div_convenio').hide();
 		}
-
-		$('#procedimento').text("Procedimento");
-
-		if(retorno == "Sim"){
-			$('#valor_serv_agd').val("0");
-			$('#procedimento').text("Retorno ");
-		}else{
-			$('#valor_serv_agd').val(valor_servico);
-		}
 	
 		$('#id_agd').val(id);
 		$('#cliente_agd').val(cliente);		
-		$('#servico_agd').val(id_servico);				
+		$('#servico_agd').val(id_servico);	
+		$('#valor_serv_agd').val(valor_servico);	
 		$('#funcionario_agd').val(funcionario).change();	
 		$('#titulo_servico').text(servico);
 		$('#descricao_serv_agd').text(servico);
@@ -251,13 +240,9 @@ HTML;
 	}
 
 
-	function editar(id, paciente, funcionario, servico, data, obs,retorno){
+	function editar(id, paciente, funcionario, servico, data, obs){
 		$('#mensagem').text('');
     	$('#titulo_inserir').text('Editar Registro');
-
-		if(retorno == ""){
-			retorno = 'Não'
-		}
 
     	$('#id').val(id);
     	$('#cliente').val(paciente).change();
@@ -265,7 +250,6 @@ HTML;
     	$('#funcionario_modal').val(funcionario).change();
     	$('#data-modal').val(data).change();
     	$('#obs').val(obs);
-		$('#retorno').val(retorno).change();
 
     	setTimeout(function(){
 			$('#servico').val(servico).change();	   

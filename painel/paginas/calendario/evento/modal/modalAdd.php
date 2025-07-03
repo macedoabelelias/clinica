@@ -1,5 +1,6 @@
 <!-- Modal -->
-<div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+ aria-hidden="true" data-backdrop="static">
 		  <div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 			
@@ -298,7 +299,8 @@
 				$('#mensagem').removeClass()
 				if (mensagem.trim() == "Salvo com Sucesso") {                    
 					$('#btn-fechar').click();					
-					chamarCalendario();
+					// chamarCalendario();
+					location.reload();
 				} else {
 					$('#mensagem').addClass('text-danger')
 					$('#mensagem').text(mensagem)

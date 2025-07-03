@@ -1,16 +1,10 @@
 <?php 
 
 require_once("verificar.php");
-
 require_once("../conexao.php");
-
 $pag = 'agendamentos';
 
 $data_atual = date('Y-m-d');
-
-
-
-
 
 //verificar se ele tem a permissão de estar nessa página
 
@@ -19,28 +13,17 @@ if(@$agendamentos == 'ocultar'){
 	echo "<script>window.location='../index.php'</script>";
 
 	exit();
-
 }
-
-
-
 ?>
 
-
-
 <div class="row">
-
 	<div class="col-md-4">
-
 		<button style="margin-bottom:10px" onclick="inserir()" type="button" class="btn btn-primary btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i> Novo Agendamento</button>
 
 	</div>
 
-
-
 	<?php 
-
-				if($atendimento_usuario == 'Sim' and $nivel_usuario != 'Administrador'){
+					if($atendimento_usuario == 'Sim' and $nivel_usuario != 'Administrador'){
 
 					$id_func = $id_usuario;
 
