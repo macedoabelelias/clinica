@@ -1,7 +1,7 @@
 <?php		
-	$query = $pdo->query("SELECT * FROM agendamentos where data >= curDate()");
-	$res = $query->fetchAll(PDO::FETCH_ASSOC);
-	$total_reg = @count($res);
+	$query_ini = $pdo->query("SELECT * FROM agendamentos where data >= curDate()");
+	$res_ini = $query_ini->fetchAll(PDO::FETCH_ASSOC);
+	$total_reg_ini = @count($res_ini);
 
 	//verificar se ele tem a permissão de estar nessa página
 	if(@$calendario == 'ocultar'){
@@ -59,3 +59,13 @@
 		<script src='paginas/calendario/locale/pt-br.js'></script>
 		<?php include ('paginas/calendario/calendario.php'); ?>
 		
+
+
+<script type="text/javascript">var pag = "agendamentos"</script>
+<script src="js/ajax.js"></script>
+
+<script type="text/javascript">
+	function chamarCalendario(){
+		document.getElementById('btn_calendario').click();
+	}
+</script>

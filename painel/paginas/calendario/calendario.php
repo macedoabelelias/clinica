@@ -21,24 +21,37 @@
 		selectHelper: true,
 		select: function(start, end) {
 			
-			$('#ModalAdd #inicio').val(moment(start).format('DD-MM-YYYY HH:mm:ss'));
-			$('#ModalAdd #termino').val(moment(end).format('DD-MM-YYYY HH:mm:ss'));
+			var inicio = start.format('YYYY-MM-DD');
+			$('#ModalAdd #data-modal').val(inicio);
+			listarHorarios()
+			$('#ModalAdd #botao_excluir').hide();
+			$('#ModalAdd #botao_confirmar').hide();
 			$('#ModalAdd').modal('show');
 		},
 		eventRender: function(event, element) {
-			return;
-			//alert(event.id)
+			
+			
 			element.bind('click', function() {
-				$('#ModalEdit #id_evento').val(event.id);
-				$('#ModalEdit #titulo').val(event.title);
-				$('#ModalEdit #descricao').val(event.description);
-				$('#ModalEdit #cor').val(event.color);
-				$('#ModalEdit #convidado').val(event.cliente);
-				$('#ModalEdit #remetente').val(event.servico);
-				$('#ModalEdit #status').val(event.status);
-				$('#ModalEdit #inicio').val(event.start.format('DD-MM-YYYY HH:mm:ss'));
+				$('#ModalAdd #botao_excluir').show();
+				$('#ModalAdd #botao_confirmar').show();
+				$('#ModalAdd #myModalLabel').text('Editar Agendamento');
+				$('#ModalAdd #id').val(event.id);
+				$('#ModalAdd #cliente').val(event.cliente).change();
+				$('#ModalAdd #funcionario_modal').val(event.profissional).change();
+
+				setTimeout(function(){
+					$('#ModalAdd #servico').val(event.servico).change();
+				}, 500); 	
+
+				$('#ModalAdd #data-modal').val(event.start.format('YYYY-MM-DD'));
+				$('#ModalAdd #obs').val(event.description);
+				$('#ModalAdd #retorno').val(event.retorno).change();
+				//$('#ModalAdd #hora').val(event.hora);
+				//$('#ModalEdit #inicio').val(event.start.format('DD-MM-YYYY HH:mm:ss'));
 				//$('#ModalEdit #termino').val(event.end.format('DD-MM-YYYY HH:mm:ss'));
-				$('#ModalEdit').modal('show');
+
+				listarHorarios();
+				$('#ModalAdd').modal('show');
 			});
 		},
 		eventDrop: function(event, delta, revertFunc) { 
@@ -52,26 +65,26 @@
 		},
 
 		events: [
-					<?php for($i=0; $i < $total_reg; $i++){
-						$data_inicio = $res[$i]['data']." ".$res[$i]['hora'];
-						$data_final = $res[$i]['data']." ".$res[$i]['hora'];
+					<?php for($i_ini=0; $i_ini < $total_reg_ini; $i_ini++){
+						$data_inicio = $res_ini[$i_ini]['data']." ".$res_ini[$i_ini]['hora'];
+						$data_final = $res_ini[$i_ini]['data']." ".$res_ini[$i_ini]['hora'];
 
-						$hora_inicio = $res[$i]['hora'];
-						$hora_final = $res[$i]['hora'];
+						$hora_inicio = $res_ini[$i_ini]['hora'];
+						$hora_final = $res_ini[$i_ini]['hora'];
 						
 						if($hora_inicio == '00:00:00' || $hora_inicio == ''){
-							$start = $res[$i]['data'];
+							$start = $res_ini[$i_ini]['data'];
 						}else{
 							$start = $data_inicio;
 						}
 						if($hora_final == '00:00:00' || $hora_inicio == ''){
-							$end = $res[$i]['data'];
+							$end = $res_ini[$i_ini]['data'];
 						}else{
 							$end = $data_final;
 						}
 
 						
-						$paciente = $res[$i]['paciente'];
+						$paciente = $res_ini[$i_ini]['paciente'];
 						$query2 = $pdo->query("SELECT * FROM pacientes where id = '$paciente'");
 						$res2 = $query2->fetchAll(PDO::FETCH_ASSOC);
 						if(@count($res2) > 0){
@@ -82,7 +95,7 @@
 						}
 
 
-						$funcionario = $res[$i]['funcionario'];
+						$funcionario = $res_ini[$i_ini]['funcionario'];
 						$query2 = $pdo->query("SELECT * FROM usuarios where id = '$funcionario'");
 						$res2 = $query2->fetchAll(PDO::FETCH_ASSOC);
 						if(@count($res2) > 0){
@@ -92,7 +105,7 @@
 							
 						}
 
-						$servico = $res[$i]['servico'];
+						$servico = $res_ini[$i_ini]['servico'];
 						$query2 = $pdo->query("SELECT * FROM procedimentos where id = '$servico'");
 						$res2 = $query2->fetchAll(PDO::FETCH_ASSOC);
 						if(@count($res2) > 0){
@@ -102,7 +115,7 @@
 							
 						}
 
-						if($res[$i]['status'] == "Agendado"){
+						if($res_ini[$i_ini]['status'] == "Agendado"){
 							$cor_agd = "#80050b";
 						}else{
 							$cor_agd = "#011436";
@@ -111,51 +124,53 @@
 
 					?>
 					{
-						id: '<?php echo $res[$i]['id'] ?>',
-						title: '<?php echo $nome_servico ?> / Paciente <?php echo $nome_cliente ?> / Profissional: <?php 
-						echo $profissional ?>',
-						description: '<?php echo $nome_servico ?>',
+						id: '<?php echo $res_ini[$i_ini]['id'] ?>',
+						title: '<?php echo $nome_servico ?> / Paciente <?php echo $nome_cliente ?> / Médico: <?php echo $profissional ?>',
+						description: '<?php echo $res_ini[$i_ini]['obs'] ?>',
 						start: '<?php echo $start; ?>',
 						end: '<?php echo $end; ?>',
 						color: '<?php echo $cor_agd ?>',
-						cliente: '<?php echo $res[$i]['paciente'] ?>',
-						servico: '<?php echo $res[$i]['servico'] ?>',
-						status:'<?php echo $res[$i]['status'] ?>',
+						cliente: '<?php echo $res_ini[$i_ini]['paciente'] ?>',
+						servico: '<?php echo $res_ini[$i_ini]['servico'] ?>',
+						status:'<?php echo $res_ini[$i_ini]['status'] ?>',
+						profissional:'<?php echo $funcionario ?>',
+						retorno:'<?php echo $res_ini[$i_ini]['retorno'] ?>',
+						hora:'<?php echo $res_ini[$i_ini]['hora'] ?>',
 					},
 					<?php } ?>
 				]
 			});
 				
 				function edit(event){
-					alert('recurso indisponível')
-					return;
-					start = event.start.format('DD-MM-YYYY HH:mm:ss');
-					if(event.end){
-						end = event.end.format('DD-MM-YYYY HH:mm:ss');
-					}else{
-						end = start;
-					}
-					
-					id_evento =  event.id;
-					
-					Event = [];
-					Event[0] = id_evento;
-					Event[1] = start;
-					Event[2] = end;
-					
-					$.ajax({
-					url: 'evento/action/eventoEditData.php',
-					type: "POST",
-					data: {Event:Event},
-					success: function(rep) {
-							if(rep == 'OK'){
-								alert('Modificação Salva!');
-							}else{
-								alert('Falha ao salvar, tente novamente!'); 
-							}
-						}
-				});
-			}
+					var id = event.id;
+					var cliente = event.cliente;
+					var funcionario = event.profissional;
+					var servico = event.servico;
+					var data = event.start.format('YYYY-MM-DD');
+					var obs = event.description;
+					var retorno = event.retorno;
+					var hora = event.hora;
+
+					 $.ajax({
+				        url: 'paginas/' + pag + "/inserir.php",
+				        method: 'POST',
+				        data: {id, cliente, funcionario, servico, data, obs, retorno, hora},
+				        dataType: "html",
+
+				        success:function(mensagem){
+				             //alert(mensagem)
+				            if (mensagem.trim() == "Salvo com Sucesso") { 
+				            	
+				            } else {
+				               alert(mensagem);
+
+				            }
+
+				            chamarCalendario();
+				        }
+				    });
+
+				}
 		});
 
 </script>
