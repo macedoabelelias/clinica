@@ -15,9 +15,9 @@ $servico = $_POST['servico'];
 $data_agd = $_POST['data'];
 $hash = '';
 
-$hora_do_agd = $_POST['hora'];
+$hora_do_agd = @$_POST['hora'];
 
-if(@$hora == ""){
+if(@$hora == "" and $id == ""){
 	echo 'Selecione um Horário antes de agendar!';
 	exit();
 }
@@ -27,6 +27,8 @@ if($id != ""){
 	$query = $pdo->query("SELECT * FROM $tabela where id = '$id'");
 	$res = $query->fetchAll(PDO::FETCH_ASSOC);
 	$hash = $res[0]['hash'];
+	$hora = $res[0]['hora'];
+	$hora_do_agd =  $res[0]['hora'];
 
 	$pdo->query("DELETE FROM $tabela where id = '$id'");
 	$pdo->query("DELETE FROM horarios_agd where agendamento = '$id'");
