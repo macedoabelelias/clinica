@@ -68,7 +68,7 @@ body {font-family: 'Tw Cen MT', sans-serif;}
 .marca{
 	position:fixed;
 	left:50;
-	top:130;
+	top:200;
 	width:80%;
 	opacity:10%;
 }
@@ -89,7 +89,7 @@ if($marca_dagua == 'Sim'){ ?>
 		<table style="width: 100%; border: 0px solid #ccc;">
 			<tr>
 				<td style="border: 1px; solid #000; width: 20%; text-align: left;">
-					<img style="margin-top: 5px; margin-left: 7px;" id="imag" src="<?php echo $url_sistema ?>img/logo.jpg" width="140px">
+					<img style="margin-top: 2px; margin-left: 7px;" id="imag" src="<?php echo $url_sistema ?>img/logo.jpg" width="90px">
 				</td>
 				<td style="width: 20%; text-align: left; font-size: 13px;">
 				
