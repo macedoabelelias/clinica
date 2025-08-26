@@ -164,7 +164,7 @@ $data_atual = date('Y-m-d');
 							<li class="header">MENU NAVEGAÇÃO</li>
 							<li class="treeview <?php echo $home ?>">
 								<a href="index.php">
-									<i class="fa fa-dashboard"></i> <span>Home</span>
+									<i class="fa fa-home"></i> <span>Home</span>
 								</a>
 							</li>
 							<li class="treeview <?php echo $menu_pessoas ?>">
@@ -174,41 +174,41 @@ $data_atual = date('Y-m-d');
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
-									<li class="<?php echo $usuarios ?>"><a href="index.php?pagina=usuarios"><i class="fa fa-angle-right"></i> Usuários</a></li>
+									<li class="<?php echo $usuarios ?>"><a href="index.php?pagina=usuarios"><i class="fa fa-folder-o"></i> Usuários</a></li>
 									
-									<li class="<?php echo $funcionarios ?>"><a href="index.php?pagina=funcionarios"><i class="fa fa-angle-right"></i> Funcionários</a></li>
+									<li class="<?php echo $funcionarios ?>"><a href="index.php?pagina=funcionarios"><i class="fa fa-newspaper-o"></i> Funcionários</a></li>
 
-									<li class="<?php echo $pacientes ?>"><a href="index.php?pagina=pacientes"><i class="fa fa-angle-right"></i> Pacientes</a></li>
+									<li class="<?php echo $pacientes ?>"><a href="index.php?pagina=pacientes"><i class="fa fa-folder-open-o"></i> Pacientes</a></li>
 								</ul>
 							</li>
 
 							<li class="treeview <?php echo $menu_cadastros ?>">
 								<a href="#">
-									<i class="fa fa-plus"></i>
+									<i class="fa fa-user-plus"></i>
 									<span>Cadastros</span>
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
 
-									<li class="<?php echo $procedimentos ?>"><a href="index.php?pagina=procedimentos"><i class="fa fa-angle-right"></i> Procedimentos</a></li>
+									<li class="<?php echo $procedimentos ?>"><a href="index.php?pagina=procedimentos"><i class="fa fa-medkit"></i> Procedimentos</a></li>
 
-									<li class="<?php echo $convenios ?>"><a href="index.php?pagina=convenios"><i class="fa fa-angle-right"></i> Convênio / Plano</a></li>
+									<li class="<?php echo $convenios ?>"><a href="index.php?pagina=convenios"><i class="fa fa-user-md"></i> Convênio / Plano</a></li>
 
-									<li class="<?php echo $cargos ?>"><a href="index.php?pagina=cargos"><i class="fa fa-angle-right"></i> Cargos</a></li>
+									<li class="<?php echo $cargos ?>"><a href="index.php?pagina=cargos"><i class="fa fa-sitemap"></i> Cargos</a></li>
 
-									<li class="<?php echo $formas_pgto ?>"><a href="index.php?pagina=formas_pgto"><i class="fa fa-angle-right"></i> Formas de Pagamento</a></li>
+									<li class="<?php echo $formas_pgto ?>"><a href="index.php?pagina=formas_pgto"><i class="fa fa-credit-card"></i> Formas de Pagamento</a></li>
 
-									<li class="<?php echo $grupo_acessos ?>"><a href="index.php?pagina=grupo_acessos"><i class="fa fa-angle-right"></i> Grupos</a></li>
+									<li class="<?php echo $grupo_acessos ?>"><a href="index.php?pagina=grupo_acessos"><i class="fa fa-clipboard"></i> Grupos</a></li>
 
-									<li class="<?php echo $acessos ?>"><a href="index.php?pagina=acessos"><i class="fa fa-angle-right"></i> Acessos</a></li>
-
-
-									<li class="<?php echo $frequencias ?>"><a href="index.php?pagina=frequencias"><i class="fa fa-angle-right"></i> Frequências</a></li>
+									<li class="<?php echo $acessos ?>"><a href="index.php?pagina=acessos"><i class="fa fa-folder-open"></i> Acessos</a></li>
 
 
-									<li class="<?php echo $grupos_ana ?>"><a href="index.php?pagina=grupos_ana"><i class="fa fa-angle-right"></i> Grupos Anamnese</a></li>
+									<li class="<?php echo $frequencias ?>"><a href="index.php?pagina=frequencias"><i class="fa fa-dashboard"></i> Frequências</a></li>
 
-									<li class="<?php echo $itens_ana ?>"><a href="index.php?pagina=itens_ana"><i class="fa fa-angle-right"></i> Itens Anamnese</a></li>
+
+									<li class="<?php echo $grupos_ana ?>"><a href="index.php?pagina=grupos_ana"><i class="fa fa-user-times"></i> Grupos Anamnese</a></li>
+
+									<li class="<?php echo $itens_ana ?>"><a href="index.php?pagina=itens_ana"><i class="fa fa-building-o"></i> Itens Anamnese</a></li>
 									
 								</ul>
 							</li>
@@ -217,27 +217,27 @@ $data_atual = date('Y-m-d');
 
 							<li class="treeview <?php echo $menu_financeiro ?>">
 								<a href="#">
-									<i class="fa fa-usd"></i>
+									<i class="fa fa-money"></i>
 									<span>Financeiro</span>
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
 
-									<li class="<?php echo $receber ?>"><a href="index.php?pagina=receber"><i class="fa fa-angle-right"></i> Recebimentos</a></li>
+									<li class="<?php echo $receber ?>"><a href="index.php?pagina=receber"><i class="fa fa-dollar"></i> Recebimentos</a></li>
 
-									<li class="<?php echo $pagar ?>"><a href="index.php?pagina=pagar"><i class="fa fa-angle-right"></i> Despesas / Pagamentos</a></li>
-
-
-									<li class="<?php echo $comissoes ?>"><a href="index.php?pagina=comissoes"><i class="fa fa-angle-right"></i> Comissões</a></li>
+									<li class="<?php echo $pagar ?>"><a href="index.php?pagina=pagar"><i class="fa fa-credit-card-alt"></i> Despesas / Pagamentos</a></li>
 
 
-									<li class="<?php echo $recebimento_convenio ?>"><a href="" data-toggle="modal" data-target="#modalReceb"><i class="fa fa-angle-right"></i> Recebimento Convênio</a></li>
+									<li class="<?php echo $comissoes ?>"><a href="index.php?pagina=comissoes"><i class="fa fa-line-chart"></i> Comissões</a></li>
 
 
-									<li class="<?php echo $rel_lucro ?>"><a href="" data-toggle="modal" data-target="#modalRelLucro"><i class="fa fa-angle-right"></i> Demonstrativo de Lucro</a></li>
+									<li class="<?php echo $recebimento_convenio ?>"><a href="" data-toggle="modal" data-target="#modalReceb"><i class="fa fa-dollar"></i> Recebimento Convênio</a></li>
 
 
-									<li class="<?php echo $rel_financeiro ?>"><a href="" data-toggle="modal" data-target="#modalRelFin"><i class="fa fa-angle-right"></i> Relatórios Financeiro</a></li>
+									<li class="<?php echo $rel_lucro ?>"><a href="" data-toggle="modal" data-target="#modalRelLucro"><i class="fa fa-file-pdf-o"></i> Demonstrativo de Lucro</a></li>
+
+
+									<li class="<?php echo $rel_financeiro ?>"><a href="" data-toggle="modal" data-target="#modalRelFin"><i class="fa fa-file-pdf-o"></i> Relatórios Financeiro</a></li>
 
 									
 									
@@ -254,10 +254,10 @@ $data_atual = date('Y-m-d');
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
-									<li class="<?php echo $agendamentos ?>"><a href="index.php?pagina=agendamentos"><i class="fa fa-angle-right"></i> Agendamentos</a></li>
+									<li class="<?php echo $agendamentos ?>"><a href="index.php?pagina=agendamentos"><i class="fa fa-calendar-plus-o"></i> Agendamentos</a></li>
 
 
-									<li class="<?php echo $rel_agendamentos ?>"><a href="" data-toggle="modal" data-target="#modalRelAgendamento"><i class="fa fa-angle-right"></i> Relatórios Agendamentos</a></li>
+									<li class="<?php echo $rel_agendamentos ?>"><a href="" data-toggle="modal" data-target="#modalRelAgendamento"><i class="fa fa-file-pdf-o"></i> Relatórios Agendamentos</a></li>
 									
 									
 								</ul>
@@ -280,7 +280,7 @@ $data_atual = date('Y-m-d');
 
 							<li class="treeview <?php echo $minhas_comissoes ?>">
 								<a href="index.php?pagina=minhas_comissoes">
-									<i class="fa fa-money"></i> <span>Minhas Comissões</span>
+									<i class="fa fa-bar-chart"></i> <span>Minhas Comissões</span>
 								</a>
 							</li>
 							<?php } ?>
