@@ -1,0 +1,1168 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+
+    background:#f5f7fb;
+
+    color:#101828;
+
+    overflow:hidden;
+
+}
+
+/* =========================================
+   LAYOUT
+========================================= */
+
+.patients-layout{
+
+    display:flex;
+
+    width:100%;
+
+    height:100vh;
+
+}
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.sidebar{
+
+    width:190px;
+
+    background:#fff;
+
+    border-right:1px solid #eef2f7;
+
+    padding:18px 14px;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:space-between;
+
+}
+
+/* LOGO */
+
+.logo-area{
+
+    padding:8px 6px 24px;
+
+}
+
+.logo-area img{
+
+    width:155px;
+
+    border-radius:14px;
+
+}
+
+/* MENU */
+
+.sidebar-menu{
+
+    list-style:none;
+
+    padding:0;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:6px;
+
+}
+
+.sidebar-menu li{
+
+    height:44px;
+
+    border-radius:14px;
+
+    padding:0 14px;
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    color:#64748b;
+
+    font-weight:500;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.sidebar-menu li:hover{
+
+    background:#f4f7fb;
+
+    color:#2563eb;
+
+}
+
+.sidebar-menu li.active{
+
+    background:linear-gradient(
+        135deg,
+        #4d8dff,
+        #2563eb
+    );
+
+    color:#fff;
+
+    box-shadow:
+    0 6px 16px rgba(37,99,235,.16);
+
+}
+
+/* =========================================
+   PREMIUM BOX
+========================================= */
+
+.premium-box{
+
+    background:#eeeded;
+
+    border:1px solid #eef2f7;
+
+    border-radius:22px;
+
+    padding:18px;
+
+    margin-top:auto;
+
+}
+
+.premium-box i{
+
+    font-size:18px;
+
+    color:#2563eb;
+
+    margin-bottom:14px;
+
+}
+
+.premium-box h5{
+
+    font-size:14px;
+
+    font-weight:600;
+
+    margin-bottom:10px;
+
+}
+
+.premium-box p{
+
+    font-size:12px;
+
+    color:#64748b;
+
+    line-height:1.6;
+
+}
+
+.premium-box a{
+
+    display:inline-block;
+
+    margin-top:10px;
+
+    text-decoration:none;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.main-content{
+
+    flex:1;
+
+    padding:4px 14px;
+
+    overflow-y:auto;
+
+}
+
+/* =========================================
+   TOPBAR
+========================================= */
+
+.topbar{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding-bottom:18px;
+
+    margin-bottom:22px;
+
+    border-bottom:1px solid #eef2f7;
+
+}
+
+/* SEARCH */
+
+.search-box{
+
+    width:420px;
+    height:50px;
+
+    background:#fff;
+
+    border:1px solid #eef2f7;
+
+    border-radius:16px;
+
+    display:flex;
+    align-items:center;
+
+    padding:0 18px;
+
+    gap:12px;
+    box-shadow:
+    0 2px 10px rgba(15,23,42,0.44);
+}
+
+.search-box i{
+
+    color:#64748b;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    border:none;
+
+    outline:none;
+
+    background:none;
+    
+
+}
+
+/* RIGHT */
+
+.topbar-right{
+
+    display:flex;
+    align-items:center;
+
+    gap:14px;
+    
+
+}
+
+/* ICON */
+
+.top-icon{
+
+    width:48px;
+    height:48px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#fff;
+
+    color:#2563eb;
+
+    font-size:18px;
+
+    box-shadow:
+    0 2px 10px rgba(15,23,42,0.44);
+
+}
+
+/* PROFILE */
+
+.profile-box{
+
+    background:#fff;
+
+    padding:8px 12px;
+
+    border-radius:16px;
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    box-shadow:
+    0 2px 10px rgba(15,23,42,0.44);
+
+}
+
+.profile-box img{
+
+    width:44px;
+    height:44px;
+
+    border-radius:14px;
+
+}
+
+.profile-box h6{
+
+    margin:0;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.profile-box span{
+
+    font-size:12px;
+
+    color:#64748b;
+
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:10px;
+
+}
+
+.page-header h1{
+
+    font-size:18px;
+
+    font-weight:700;
+
+    margin-bottom:4px;
+
+}
+
+.page-header p{
+
+    color:#64748b;
+
+    font-size:12px;
+
+}
+
+/* BUTTON */
+
+.new-btn{
+
+    height:48px;
+
+    border:none;
+
+    border-radius:16px;
+
+    padding:0 20px;
+
+    background:linear-gradient(
+        135deg,
+        #4d8dff,
+        #2563eb
+    );
+
+    color:#fff;
+
+    font-weight:600;
+
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    box-shadow:
+    0 6px 16px rgba(37,99,235,.16);
+
+}
+
+/* =========================================
+   STATS
+========================================= */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:18px;
+
+    margin-bottom:24px;
+
+}
+
+.stats-card{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:22px;
+
+    box-shadow:
+    0 2px 8px rgba(15,23,42,.44);
+
+}
+
+.stats-card h3{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    margin-bottom:6px;
+
+}
+
+.stats-card p{
+
+    color:#64748b;
+
+    margin:0;
+
+}
+
+/* =========================================
+   TABLE CARD
+========================================= */
+
+.table-card{
+
+    background:#fff;
+
+    border-radius:24px;
+
+    padding:20px;
+
+    box-shadow:
+    0 4px 20px rgba(15,23,42,.44);
+
+    width:100%;
+
+    max-width:100%;
+
+}
+
+/* TABLE */
+
+.table{
+
+    margin:0;
+
+}
+
+.table thead th{
+
+    border:none;
+
+    color:#64748b;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    padding-bottom:18px;
+
+}
+
+.table tbody tr{
+
+    border-top:1px solid #eef2f7;
+
+}
+
+.table tbody td{
+
+    padding:18px 0;
+
+    border:none;
+
+}
+
+/* PATIENT */
+
+.patient-info{
+
+    display:flex;
+    align-items:center;
+
+    gap:14px;
+
+}
+
+.patient-avatar{
+
+    width:46px;
+    height:46px;
+
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        #4d8dff,
+        #2563eb
+    );
+
+    color:#fff;
+
+    font-weight:700;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+.patient-info h6{
+
+    margin:0;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.patient-info span{
+
+    font-size:12px;
+
+    color:#64748b;
+
+}
+
+/* STATUS */
+
+.status{
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+
+.status.active{
+
+    background:#dcfce7;
+
+    color:#16a34a;
+
+}
+
+/* ACTIONS */
+
+.actions{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.actions button{
+
+    width:38px;
+    height:38px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#f4f7fb;
+
+    color:#2563eb;
+
+}
+
+/* MODAL */
+
+.modal-content{
+
+    border-radius:28px;
+
+}
+
+.form-control{
+
+    height:52px;
+
+    border:1px solid #e2e8f0;
+
+    padding:0 16px;
+
+}
+
+.form-control:focus{
+
+    box-shadow:none;
+
+    border-color:#2563eb;
+
+}
+
+/* =========================================
+FOTO PERFIL
+========================================= */
+
+.avatar-paciente{
+
+    width:90px !important;
+    height:90px !important;
+
+    min-width:90px;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    font-size:32px;
+
+    font-weight:700;
+
+}
+
+.foto-perfil{
+
+    width:100% !important;
+    height:100% !important;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    display:block;
+
+}
+
+/* =========================================
+FORMULÁRIO PREMIUM
+========================================= */
+
+.premium-form-body{
+
+    max-height:65vh;
+
+    overflow-y:auto;
+
+    overflow-x:hidden;
+
+    padding:10px 12px 4px;
+
+    scroll-behavior:smooth;
+
+}
+
+/* =========================================
+SCROLL PREMIUM
+========================================= */
+
+.premium-form-body::-webkit-scrollbar{
+
+    width:7px;
+
+}
+
+.premium-form-body::-webkit-scrollbar-track{
+
+    background:transparent;
+
+}
+
+.premium-form-body::-webkit-scrollbar-thumb{
+
+    background:#cbd5e1;
+
+    border-radius:999px;
+
+}
+
+.premium-form-body::-webkit-scrollbar-thumb:hover{
+
+    background:#94a3b8;
+
+}
+
+/* =========================================
+SEÇÕES
+========================================= */
+
+.form-section{
+
+    background:#f8fafc;
+
+    border-radius:14px;
+
+    padding:12px;
+
+    margin-bottom:10px;
+
+    border:1px solid #eef2f7;
+
+}
+
+/* =========================================
+HEADER DA SEÇÃO
+========================================= */
+
+.section-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-bottom:10px;
+
+}
+
+.section-header i{
+
+    font-size:13px;
+
+    color:#2563eb;
+
+}
+
+.section-header h5{
+
+    margin:0;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#0f172a;
+
+}
+
+/* =========================================
+LABELS
+========================================= */
+
+.form-label{
+
+    font-size:14px;
+
+    font-weight:500;
+
+    color:#64748b;
+
+    margin-bottom:4px;
+
+}
+
+/* =========================================
+INPUTS
+========================================= */
+
+.premium-input{
+
+    height:36px;
+
+    border-radius:10px !important;
+
+    border:1px solid #dbe3ee;
+
+    font-size:12px;
+
+    padding:6px 10px;
+
+    box-shadow:none !important;
+
+}
+
+.premium-input:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:
+    0 0 0 3px rgba(37,99,235,.08) !important;
+
+}
+
+/* =========================================
+TEXTAREA
+========================================= */
+
+textarea.premium-input{
+
+    min-height:60px;
+
+    resize:none;
+
+    padding-top:8px;
+
+}
+
+/* =========================================
+UPLOAD FOTO
+========================================= */
+
+.photo-upload-area{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-bottom:10px;
+
+}
+
+.upload-photo{
+
+    text-align:center;
+
+    cursor:pointer;
+
+}
+
+.photo-circle{
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:50%;
+
+    background:#eff6ff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin:0 auto 2px;
+
+    border:2px dashed #bfdbfe;
+
+    overflow:hidden;
+
+}
+
+.photo-circle i{
+
+    font-size:16px;
+
+    color:#2563eb;
+
+}
+
+.upload-photo span{
+
+    font-size:11px;
+
+    color:#64748b;
+
+}
+
+/* =========================================
+PREVIEW FOTO
+========================================= */
+
+#previewFoto{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+#cameraIcon{
+
+    font-size:18px;
+
+    color:#2563eb;
+
+}
+
+/* =========================================
+FOTO PACIENTE
+========================================= */
+
+.patient-avatar img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+}
+
+.avatar-paciente img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+
+}
+
+/* =========================================
+MODAL
+========================================= */
+
+.modal-content{
+
+    border:none;
+
+    border-radius:24px;
+
+}
+
+.modal-header{
+
+    padding:8px 12px 2px;
+
+}
+
+.modal-header h3{
+
+    font-size:20px;
+
+    font-weight:700;
+
+}
+
+.modal-body{
+
+    padding:0;
+
+}
+
+.modal-footer{
+
+    padding:6px 12px 10px;
+
+}
+
+/* =========================================
+BOTÕES
+========================================= */
+
+.modal-footer .btn{
+
+    height:36px;
+
+    padding:0 18px;
+
+    border-radius:10px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+
+/* =========================================
+VALIDAÇÃO
+========================================= */
+
+.is-valid{
+
+    border-color:#22c55e !important;
+
+    background-image:none !important;
+
+}
+
+.is-invalid{
+
+    border-color:#ef4444 !important;
+
+    background-image:none !important;
+
+}
+
+/* =========================================
+PERFIL PACIENTE
+========================================= */
+
+/* AVATAR */
+
+.avatar-paciente{
+
+    width:78px;
+
+    height:78px;
+
+    min-width:78px;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    font-size:24px;
+
+    font-weight:700;
+
+    box-shadow:
+    0 2px 8px rgba(15,23,42,.08);
+
+}
+
+.avatar-paciente img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+/* NOME */
+
+.patient-name{
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+    margin-bottom:2px;
+
+    line-height:1.2;
+
+}
+
+/* CONTATO */
+
+.patient-contact{
+
+    font-size:13px;
+
+    color:#64748b;
+
+    margin-bottom:2px;
+
+}
+
+/* STATUS */
+
+.patient-status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:4px 10px;
+
+    border-radius:999px;
+
+    background:#dcfce7;
+
+    color:#16a34a;
+
+    font-size:11px;
+
+    font-weight:600;
+
+}
+
+/* =========================================
+RESPONSIVO
+========================================= */
+
+@media(max-width:768px){
+
+    .premium-form-body{
+
+        max-height:75vh;
+
+        padding:10px;
+
+    }
+
+    .form-section{
+
+        padding:10px;
+
+    }
+
+}
+
+.table-responsive{
+
+    overflow-x:auto;
+
+}
+
+.table{
+
+    min-width:1000px;
+
+}
