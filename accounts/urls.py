@@ -50,13 +50,19 @@ urlpatterns = [
     # =========================================
 
     path(
-
         'pacientes/editar/<int:id>/',
-
         views.editar_paciente,
-
         name='editar_paciente'
+    ),
 
+    # =========================================
+    # ODONTOGRAMA
+    # =========================================
+
+    path(
+        'pacientes/<int:id>/odontograma/',
+        views.odontograma,
+        name='odontograma'
     ),
 
     # =========================================

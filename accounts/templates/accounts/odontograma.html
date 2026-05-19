@@ -1,0 +1,189 @@
+{% extends 'accounts/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- =========================================
+HEADER
+========================================= -->
+
+<div class="page-header mb-4">
+
+    <div>
+
+        <h3 class="paciente-nome">
+            {{ paciente.nome }}
+        </h3>
+
+        <p class="paciente-info">
+            Prontuário odontológico • {{ paciente.telefone }}
+        </p>
+
+    </div>
+
+</div>
+
+<!-- =========================================
+CARD PRINCIPAL
+========================================= -->
+
+<div class="odontograma-card">
+
+    <!-- =========================================
+    HEADER INTERNO
+    ========================================= -->
+
+    <div class="odontograma-header">
+
+        <h4>
+            Odontograma Clínico
+        </h4>
+
+        <p>
+            Clique sobre um dente para registrar tratamentos.
+        </p>
+
+    </div>
+
+    <!-- =========================================
+    BOX INTERNA
+    ========================================= -->
+
+    <div class="odontograma-box">
+
+        <!-- =========================================
+        TÍTULO PERMANENTE
+        ========================================= -->
+
+        <div class="secao-titulo">
+
+            Dentição Permanente
+
+        </div>
+
+        <!-- =========================================
+        ARCADA SUPERIOR
+        ========================================= -->
+
+        <div class="arcada">
+
+            {% for numero in superiores %}
+
+            <div class="dente-box">              
+
+                
+                <!-- DENTE -->
+
+                <img
+                    src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
+                    class="dente-img"
+                    data-dente="{{ numero }}"
+                    alt="Dente {{ numero }}"
+                >
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <!-- =========================================
+        ARCADA INFERIOR
+        ========================================= -->
+
+        <div class="arcada inferior">
+
+            {% for numero in inferiores %}
+
+            <div class="dente-box">
+
+                <!-- DENTE -->
+
+                <img
+                    src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
+                    class="dente-img"
+                    data-dente="{{ numero }}"
+                    alt="Dente {{ numero }}"
+                >
+
+                
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+        <hr>      
+        <hr>
+
+        <!-- =========================================
+        TÍTULO DECÍDUOS
+        ========================================= -->
+
+        <div class="secao-titulo">
+
+            Dentição Decídua
+
+        </div>
+
+        <!-- =========================================
+        DECÍDUOS SUPERIORES
+        ========================================= -->
+
+        <div class="arcada decidua">
+
+            {% for numero in dec_superiores %}
+
+            <div class="dente-box">
+
+                
+
+                <!-- DENTE -->
+
+                <img
+                    src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
+                    class="dente-img deciduo"
+                    data-dente="{{ numero }}"
+                    alt="Dente {{ numero }}"
+                >
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <!-- =========================================
+        DECÍDUOS INFERIORES
+        ========================================= -->
+
+        <div class="arcada decidua inferior">
+
+            {% for numero in dec_inferiores %}
+
+            <div class="dente-box">
+
+                <!-- DENTE -->
+
+                <img
+                    src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
+                    class="dente-img deciduo"
+                    data-dente="{{ numero }}"
+                    alt="Dente {{ numero }}"
+                >
+        
+
+               
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

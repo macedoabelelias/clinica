@@ -410,3 +410,46 @@ def editar_paciente(request, id):
         }
 
     )
+
+# =========================================
+# ODONTOGRAMA
+# =========================================
+
+@login_required
+def odontograma(request, id):
+
+    paciente = get_object_or_404(Paciente, id=id)
+
+    context = {
+
+        'paciente': paciente,
+
+        # PERMANENTES
+        'superiores': [
+            '18','17','16','15','14','13','12','11',
+            '21','22','23','24','25','26','27','28'
+        ],
+
+        'inferiores': [
+            '48','47','46','45','44','43','42','41',
+            '31','32','33','34','35','36','37','38'
+        ],
+
+        # DECÍDUOS
+        'dec_superiores': [
+            '55','54','53','52','51',
+            '61','62','63','64','65'
+        ],
+
+        'dec_inferiores': [
+            '85','84','83','82','81',
+            '71','72','73','74','75'
+        ],
+
+    }
+
+    return render(
+        request,
+        'accounts/odontograma.html',
+        context
+    )

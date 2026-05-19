@@ -1,0 +1,393 @@
+/* =========================================
+LAYOUT PRINCIPAL
+========================================= */
+
+.dashboard-wrapper{
+
+    display:flex;
+
+    min-height:100vh;
+
+    background:#f4f7fb;
+
+}
+
+/* =========================================
+SIDEBAR PREMIUM
+========================================= */
+
+.sidebar{
+
+    width:240px;
+
+    min-width:220px;
+
+    background:#ffffff;
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    height:100vh;
+
+    overflow-y:auto;
+
+    z-index:1000;
+
+    border-right:1px solid #e5e7eb;
+
+    padding-top:10px;
+
+}
+
+/* =========================================
+LOGO
+========================================= */
+
+.logo-area{
+
+    padding:20px;
+
+}
+
+.logo-area img{
+
+    width:100%;
+
+    border-radius:18px;
+
+}
+
+/* =========================================
+MENU
+========================================= */
+
+.sidebar-menu{
+
+    list-style:none;
+
+    padding:10px 16px;
+
+    margin:0;
+
+}
+
+.sidebar-menu li{
+
+    margin-bottom:10px;
+
+}
+
+.sidebar-menu a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:16px 18px;
+
+    border-radius:18px;
+
+    color:#64748b;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    font-size:15px;
+
+    transition:.2s;
+
+}
+
+/* HOVER */
+
+.sidebar-menu a:hover{
+
+    background:#edf4ff;
+
+    color:#2563eb;
+
+}
+
+/* ITEM ATIVO */
+
+.sidebar-menu li.active a,
+
+.sidebar-menu a.active{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    box-shadow:0 10px 20px rgba(37,99,235,.20);
+
+}
+/* =========================================
+CONTEÚDO
+========================================= */
+
+.main-content{
+
+    margin-left:260px;
+
+    width:calc(100% - 260px);
+
+    padding:35px;
+
+}
+
+/* =========================================
+HEADER
+========================================= */
+
+.page-title{
+
+    font-size:52px;
+
+    font-weight:800;
+
+    color:#0f172a;
+
+    margin-bottom:6px;
+
+}
+
+.page-subtitle{
+
+    color:#64748b;
+
+    font-size:18px;
+
+}
+
+/* =========================================
+CARD PRINCIPAL
+========================================= */
+
+.odontograma-card{
+
+    background:#ffffff;
+
+    border-radius:28px;
+
+    padding:30px;
+
+    box-shadow:
+    0 10px 35px rgba(15,23,42,.06);
+
+}
+
+/* =========================================
+HEADER INTERNO
+========================================= */
+
+.odontograma-header{
+
+    margin-bottom:25px;
+
+}
+
+.odontograma-header h3{
+
+    font-size:38px;
+
+    font-weight:800;
+
+    color:#0f172a;
+
+    margin-bottom:6px;
+
+}
+
+.odontograma-header p{
+
+    color:#64748b;
+
+    margin:0;
+
+    font-size:16px;
+
+}
+
+/* =========================================
+BOX ODONTOGRAMA
+========================================= */
+
+.odontograma-box{
+
+    background:#f8fbff;
+
+    border:2px solid #b9c8db;
+
+    border-radius:22px;
+
+    padding:18px 12px;
+
+    max-width:760px;
+
+    margin:auto;
+
+}
+
+/* =========================================
+TÍTULOS
+========================================= */
+
+.secao-titulo{
+
+    text-align:center;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+    margin-bottom:18px;
+
+}
+
+/* =========================================
+ARCADAS
+========================================= */
+
+.arcada{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-end;
+
+    gap:1px;
+
+    flex-wrap:nowrap;
+
+    margin-bottom:2px;
+
+}
+
+/* =========================================
+DENTE BOX
+========================================= */
+
+.dente-box{
+
+    width:41px;
+
+    min-width:41px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:flex-end;
+
+}
+
+/* =========================================
+NUMERAÇÃO
+========================================= */
+
+.numero-dente{
+
+    font-size:11px;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+    margin-bottom:2px;
+
+    line-height:1;
+
+}
+.inferior-numero{
+
+    margin-top:2px;
+
+}
+
+/* =========================================
+DENTES PERMANENTES
+========================================= */
+
+.dente-img{
+
+    width:54px;
+
+    height:92px;
+
+    object-fit:contain;
+
+    cursor:pointer;
+
+    transition:.2s ease;
+
+    filter:drop-shadow(0 2px 3px rgba(0,0,0,.10));
+
+}
+
+/* =========================================
+DECÍDUOS
+========================================= */
+
+.dente-img.deciduo{
+
+    width:44px;
+
+    height:70px;
+
+}
+
+/* =========================================
+HOVER
+========================================= */
+
+.dente-img:hover{
+
+    transform:
+    translateY(-3px)
+    scale(1.06);
+
+    filter:
+    drop-shadow(0 8px 12px rgba(37,99,235,.18));
+
+}
+
+.arcada.inferior{
+
+    margin-top:-8px;
+
+}
+
+.arcada.decidua.inferior{
+
+    margin-top:-6px;
+
+}
+
+/* =========================================
+RESPONSIVO
+========================================= */
+
+@media(max-width:1200px){
+
+    .arcada{
+
+        overflow-x:auto;
+
+        justify-content:flex-start;
+
+        padding-bottom:10px;
+
+    }
+
+}
