@@ -5,19 +5,23 @@
 {% block content %}
 
 <!-- =========================================
-HEADER
+TOPO PACIENTE
 ========================================= -->
 
 <div class="page-header mb-4">
 
     <div>
 
-        <h3 class="paciente-nome">
+        <h4 class="paciente-nome">
+
             {{ paciente.nome }}
-        </h3>
+
+        </h4>
 
         <p class="paciente-info">
+
             Prontuário odontológico • {{ paciente.telefone }}
+
         </p>
 
     </div>
@@ -25,165 +29,521 @@ HEADER
 </div>
 
 <!-- =========================================
-CARD PRINCIPAL
+ABAS
 ========================================= -->
 
-<div class="odontograma-card">
+<div class="abas-prontuario">
 
-    <!-- =========================================
-    HEADER INTERNO
-    ========================================= -->
+    <a
+        href="{% url 'perfil_paciente' paciente.id %}"
+        class="aba-item"
+    >
+        Visão Geral
+    </a>
 
-    <div class="odontograma-header">
+    <a
+        href="{% url 'anamnese' paciente.id %}"
+        class="aba-item"
+    >
+        Anamnese
+    </a>
 
-        <h4>
-            Odontograma Clínico
-        </h4>
+    <a
+        href="{% url 'odontograma' paciente.id %}"
+        class="aba-item active"
+    >
+        Odontograma
+    </a>
 
-        <p>
-            Clique sobre um dente para registrar tratamentos.
-        </p>
+    <a
+        href="{% url 'ficha_clinica' paciente.id %}"
+        class="aba-item"
+    >
+        Ficha Clínica
+    </a>
+
+</div>
+
+<!-- =========================================
+LAYOUT
+========================================= -->
+
+<div class="odontograma-layout">
+
+    <!-- ODONTOGRAMA -->
+
+    <div class="odontograma-wrapper">
+
+        <div class="odontograma-card">
+
+            <div class="odontograma-header">
+
+                <h6>
+                    Odontograma Clínico
+                </h6>
+
+                <p>
+                    Clique sobre um dente para registrar tratamentos.
+                </p>
+
+            </div>
+
+            <div class="odontograma-box">
+
+                <!-- DENTIÇÃO PERMANENTE -->
+
+                <div class="secao-titulo">
+                    Dentição Permanente
+                </div>
+
+                <!-- SUPERIOR -->
+
+                <div class="arcada">
+
+                    {% for numero in superiores %}
+
+                    <div class="dente-box dente-{{ numero }}">
+
+                        <img
+                            src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
+                            class="dente-img"
+                            data-dente="{{ numero }}"
+                            alt="Dente {{ numero }}"
+                        >
+
+                        <div class="procedimentos-dente">
+
+                            {% for evolucao in evolucoes %}
+
+                                {% if evolucao.dente == numero and evolucao.procedimento.icone %}
+
+                                <img
+                                    src="{% static 'img/procedimentos/' %}{{ evolucao.procedimento.icone }}"
+                                    class="icone-procedimento-dente posicao-{{ evolucao.procedimento.posicao_icone }}"
+                                    title="{{ evolucao.procedimento.nome }}"
+                                >
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <!-- INFERIOR -->
+
+                <div class="arcada inferior">
+
+                    {% for numero in inferiores %}
+
+                    <div class="dente-box dente-{{ numero }}">
+
+                        <img
+                            src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
+                            class="dente-img inferior"
+                            data-dente="{{ numero }}"
+                            alt="Dente {{ numero }}"
+                        >
+
+                        <div class="procedimentos-dente">
+
+                            {% for evolucao in evolucoes %}
+
+                                {% if evolucao.dente == numero and evolucao.procedimento.icone %}
+
+                                <img
+                                    src="{% static 'img/procedimentos/' %}{{ evolucao.procedimento.icone }}"
+                                    class="icone-procedimento-dente posicao-{{ evolucao.procedimento.posicao_icone }}"
+                                    title="{{ evolucao.procedimento.nome }}"
+                                >
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <div class="linha-divisao"></div>
+
+                <!-- DENTIÇÃO DECÍDUA -->
+
+                <div class="secao-titulo">
+                    Dentição Decídua
+                </div>
+
+                <!-- SUPERIOR -->
+
+                <div class="arcada decidua">
+
+                    {% for numero in dec_superiores %}
+
+                    <div class="dente-box dente-{{ numero }}">
+
+                        <img
+                            src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
+                            class="dente-img deciduo"
+                            data-dente="{{ numero }}"
+                            alt="Dente {{ numero }}"
+                        >
+
+                        <div class="procedimentos-dente">
+
+                            {% for evolucao in evolucoes %}
+
+                                {% if evolucao.dente == numero and evolucao.procedimento.icone %}
+
+                                <img
+                                    src="{% static 'img/procedimentos/' %}{{ evolucao.procedimento.icone }}"
+                                    class="icone-procedimento-dente posicao-{{ evolucao.procedimento.posicao_icone }}"
+                                    title="{{ evolucao.procedimento.nome }}"
+                                >
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <!-- INFERIOR -->
+
+                <div class="arcada decidua inferior">
+
+                    {% for numero in dec_inferiores %}
+
+                    <div class="dente-box dente-{{ numero }}">
+
+                        <img
+                            src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
+                            class="dente-img deciduo inferior"
+                            data-dente="{{ numero }}"
+                            alt="Dente {{ numero }}"
+                        >
+
+                        <div class="procedimentos-dente">
+
+                            {% for evolucao in evolucoes %}
+
+                                {% if evolucao.dente == numero and evolucao.procedimento.icone %}
+
+                                <img
+                                    src="{% static 'img/procedimentos/' %}{{ evolucao.procedimento.icone }}"
+                                    class="icone-procedimento-dente posicao-{{ evolucao.procedimento.posicao_icone }}"
+                                    title="{{ evolucao.procedimento.nome }}"
+                                >
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
-    <!-- =========================================
-    BOX INTERNA
-    ========================================= -->
+    <!-- TIMELINE -->
 
-    <div class="odontograma-box">
+    <div class="timeline-container">
 
-        <!-- =========================================
-        TÍTULO PERMANENTE
-        ========================================= -->
+        <div class="timeline-card">
 
-        <div class="secao-titulo">
+            <div class="timeline-header">
 
-            Dentição Permanente
+                <h5>
+                    Ficha Clínica
+                </h5>
 
-        </div>
-
-        <!-- =========================================
-        ARCADA SUPERIOR
-        ========================================= -->
-
-        <div class="arcada">
-
-            {% for numero in superiores %}
-
-            <div class="dente-box">              
-
-                
-                <!-- DENTE -->
-
-                <img
-                    src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
-                    class="dente-img"
-                    data-dente="{{ numero }}"
-                    alt="Dente {{ numero }}"
-                >
+                <p>
+                    Evolução clínica do paciente
+                </p>
 
             </div>
 
-            {% endfor %}
+            <div class="timeline-body">
 
-        </div>
+                {% for evolucao in evolucoes %}
 
-        <!-- =========================================
-        ARCADA INFERIOR
-        ========================================= -->
+                <div class="timeline-item">
 
-        <div class="arcada inferior">
+                    <div class="timeline-dot"></div>
 
-            {% for numero in inferiores %}
+                    <div class="timeline-content">
 
-            <div class="dente-box">
+                        <div class="timeline-top">
 
-                <!-- DENTE -->
+                            <div class="timeline-procedimento">
 
-                <img
-                    src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
-                    class="dente-img"
-                    data-dente="{{ numero }}"
-                    alt="Dente {{ numero }}"
-                >
+                                {% if evolucao.procedimento.icone %}
 
-                
+                                <img
+                                    src="{% static 'img/procedimentos/' %}{{ evolucao.procedimento.icone }}"
+                                    class="timeline-icone"
+                                    alt="{{ evolucao.procedimento.nome }}"
+                                >
 
-            </div>
+                                {% endif %}
 
-            {% endfor %}
+                                <strong>
+                                    {{ evolucao.procedimento.nome }}
+                                </strong>
 
-        </div>
-        <hr>      
-        <hr>
+                            </div>
 
-        <!-- =========================================
-        TÍTULO DECÍDUOS
-        ========================================= -->
+                            <span>
+                                {{ evolucao.criado_em|date:"d/m/Y" }}
+                            </span>
 
-        <div class="secao-titulo">
+                        </div>
 
-            Dentição Decídua
+                        {% if evolucao.dente %}
 
-        </div>
+                        <div class="timeline-dente">
+                            Dente {{ evolucao.dente }}
+                        </div>
 
-        <!-- =========================================
-        DECÍDUOS SUPERIORES
-        ========================================= -->
+                        {% endif %}
 
-        <div class="arcada decidua">
+                        {% if evolucao.descricao %}
 
-            {% for numero in dec_superiores %}
+                        <p>
+                            {{ evolucao.descricao }}
+                        </p>
 
-            <div class="dente-box">
+                        {% endif %}
 
-                
+                    </div>
 
-                <!-- DENTE -->
+                </div>
 
-                <img
-                    src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
-                    class="dente-img deciduo"
-                    data-dente="{{ numero }}"
-                    alt="Dente {{ numero }}"
-                >
+                {% empty %}
 
-            </div>
+                <div class="empty-timeline">
 
-            {% endfor %}
+                    Nenhuma evolução clínica cadastrada.
 
-        </div>
+                </div>
 
-        <!-- =========================================
-        DECÍDUOS INFERIORES
-        ========================================= -->
-
-        <div class="arcada decidua inferior">
-
-            {% for numero in dec_inferiores %}
-
-            <div class="dente-box">
-
-                <!-- DENTE -->
-
-                <img
-                    src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
-                    class="dente-img deciduo"
-                    data-dente="{{ numero }}"
-                    alt="Dente {{ numero }}"
-                >
-        
-
-               
+                {% endfor %}
 
             </div>
-
-            {% endfor %}
 
         </div>
 
     </div>
 
 </div>
+
+<!-- =========================================
+MODAL EVOLUÇÃO CLÍNICA
+========================================= -->
+
+<div
+    class="modal fade"
+    id="modalEvolucao"
+    tabindex="-1"
+>
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content modal-evolucao">
+
+            <div class="modal-header border-0">
+
+                <div>
+
+                    <h5 class="modal-title">
+
+                        Nova Evolução Clínica
+
+                    </h5>
+
+                    <p class="modal-subtitle">
+
+                        Registro clínico do odontograma
+
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                ></button>
+
+            </div>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="modal-body">
+
+                    <div class="mb-4">
+
+                        <label class="anamnese-label">
+
+                            Dente
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="denteSelecionado"
+                            name="dente"
+                            class="anamnese-input"
+                            readonly
+                        >
+
+                    </div>
+
+                    <div class="mb-4">
+
+                        <label class="anamnese-label">
+
+                            Procedimento
+
+                        </label>
+
+                        <select
+                            name="procedimento"
+                            class="anamnese-input"
+                            required
+                        >
+
+                            <option value="">
+
+                                Selecione um procedimento
+
+                            </option>
+
+                            {% regroup procedimentos by categoria as categorias %}
+
+                            {% for categoria in categorias %}
+
+                                <optgroup label="{{ categoria.grouper }}">
+
+                                    {% for procedimento in categoria.list %}
+
+                                        <option value="{{ procedimento.id }}">
+
+                                            {{ procedimento.nome }}
+
+                                        </option>
+
+                                    {% endfor %}
+
+                                </optgroup>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        <label class="anamnese-label">
+
+                            Descrição
+
+                        </label>
+
+                        <textarea
+                            name="descricao"
+                            class="anamnese-textarea"
+                            placeholder="Descreva o procedimento..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer border-0">
+
+                    <button
+                        type="button"
+                        class="btn-anamnese-outline"
+                        data-bs-dismiss="modal"
+                    >
+
+                        Cancelar
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn-anamnese"
+                    >
+
+                        Salvar Evolução
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+document
+.querySelectorAll('.dente-img')
+
+.forEach(dente => {
+
+    dente.addEventListener('click', function(){
+
+        const numero = this.dataset.dente
+
+        document.getElementById(
+            'denteSelecionado'
+        ).value = numero
+
+        const modal = new bootstrap.Modal(
+
+            document.getElementById(
+                'modalEvolucao'
+            )
+
+        )
+
+        modal.show()
+
+    })
+
+})
+
+</script>
 
 {% endblock %}

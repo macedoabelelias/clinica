@@ -1,0 +1,342 @@
+/* =========================================
+LAYOUT
+========================================= */
+
+.ficha-layout{
+
+    display:grid;
+
+    grid-template-columns:1.1fr .9fr;
+
+    gap:24px;
+
+    align-items:start;
+
+}
+
+/* =========================================
+CARDS
+========================================= */
+
+.ficha-form-card,
+.timeline-card{
+
+    background:#fff;
+
+    border-radius:24px;
+
+    padding:24px;
+
+    box-shadow:
+    0 4px 20px rgba(15,23,42,.08);
+
+}
+
+/* =========================================
+TIMELINE
+========================================= */
+
+.timeline-card{
+
+    position:sticky;
+
+    top:20px;
+
+    max-height:88vh;
+
+    overflow:hidden;
+
+    border:1px solid #eef2f7;
+
+}
+
+/* =========================================
+HEADER
+========================================= */
+
+.timeline-header{
+
+    margin-bottom:24px;
+
+}
+
+.timeline-header h5{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+    margin-bottom:4px;
+
+}
+
+.timeline-header p{
+
+    color:#64748b;
+
+    font-size:13px;
+
+    margin:0;
+
+}
+
+/* =========================================
+BODY
+========================================= */
+
+.timeline-body{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+    overflow-y:auto;
+
+    max-height:72vh;
+
+    padding-right:6px;
+
+}
+
+/* =========================================
+ITEM
+========================================= */
+
+.timeline-item{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:14px;
+
+}
+
+/* =========================================
+DOT
+========================================= */
+
+.timeline-dot{
+
+    width:12px;
+
+    height:12px;
+
+    min-width:12px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    margin-top:8px;
+
+}
+
+/* =========================================
+CONTENT
+========================================= */
+
+.timeline-content{
+
+    flex:1;
+
+    background:#f8fafc;
+
+    border:1px solid #e2e8f0;
+
+    border-radius:18px;
+
+    padding:18px;
+
+}
+
+/* =========================================
+TOP
+========================================= */
+
+.timeline-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:10px;
+
+}
+
+.timeline-top strong{
+
+    font-size:15px;
+
+    color:#0f172a;
+
+}
+
+.timeline-top span{
+
+    font-size:12px;
+
+    color:#64748b;
+
+}
+
+/* =========================================
+DENTE
+========================================= */
+
+.timeline-dente{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+}
+
+/* =========================================
+EXTRAS
+========================================= */
+
+.timeline-extra{
+
+    margin-top:12px;
+
+    font-size:13px;
+
+    color:#475569;
+
+    line-height:1.5;
+
+}
+
+/* =========================================
+RETORNO
+========================================= */
+
+.timeline-retorno{
+
+    margin-top:14px;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    background:#dcfce7;
+
+    color:#16a34a;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+/* =========================================
+PARÁGRAFOS
+========================================= */
+
+.timeline-content p{
+
+    margin:0;
+
+    font-size:14px;
+
+    line-height:1.6;
+
+    color:#475569;
+
+}
+
+/* =========================================
+EMPTY
+========================================= */
+
+.empty-timeline{
+
+    background:#f8fafc;
+
+    border:2px dashed #cbd5e1;
+
+    border-radius:18px;
+
+    padding:40px 20px;
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+/* =========================================
+RESPONSIVO
+========================================= */
+
+@media(max-width:1200px){
+
+    .ficha-layout{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .timeline-card{
+
+        position:relative;
+
+        top:auto;
+
+        max-height:none;
+
+    }
+
+    .timeline-body{
+
+        max-height:none;
+
+        overflow:visible;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .ficha-form-card,
+    .timeline-card{
+
+        padding:18px;
+
+        border-radius:20px;
+
+    }
+
+}

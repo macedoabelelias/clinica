@@ -1,0 +1,357 @@
+{% extends 'accounts/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- =========================================
+HEADER
+========================================= -->
+
+<div class="page-header mb-4">
+
+    <div>
+
+        <h2 class="patient-name">
+
+            {{ paciente.nome }}
+
+        </h2>
+
+        <p class="patient-contact">
+
+            Evolução Clínica do Paciente
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- =========================================
+ABAS
+========================================= -->
+
+<div class="abas-prontuario">
+
+    <a
+        href="{% url 'perfil_paciente' paciente.id %}"
+        class="aba-item"
+    >
+        Visão Geral
+    </a>
+
+    <a
+        href="{% url 'anamnese' paciente.id %}"
+        class="aba-item"
+    >
+        Anamnese
+    </a>
+
+    <a
+        href="{% url 'odontograma' paciente.id %}"
+        class="aba-item"
+    >
+        Odontograma
+    </a>
+
+    <a
+        href="{% url 'ficha_clinica' paciente.id %}"
+        class="aba-item active"
+    >
+        Ficha Clínica
+    </a>
+
+</div>
+
+<!-- =========================================
+LAYOUT
+========================================= -->
+
+<div class="ficha-layout">
+
+    <!-- =========================================
+    FORM NOVA EVOLUÇÃO
+    ========================================== -->
+
+    <div class="ficha-form-card">
+
+        <div class="section-header-premium">
+
+            <div class="section-icon blue">
+
+                <i class="fa-solid fa-notes-medical"></i>
+
+            </div>
+
+            <div>
+
+                <h5>
+                    Nova Evolução
+                </h5>
+
+                <p>
+                    Registre procedimentos e evolução clínica.
+                </p>
+
+            </div>
+
+        </div>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="anamnese-grid">
+
+                <div>
+
+                    <label class="anamnese-label">
+
+                        Dente
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="dente"
+                        class="anamnese-input"
+                        placeholder="Ex: 16"
+                    >
+
+                </div>
+
+                <div>
+
+                    <label class="anamnese-label">
+
+                        Procedimento
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="procedimento"
+                        class="anamnese-input"
+                        placeholder="Ex: Profilaxia"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+
+                <label class="anamnese-label">
+
+                    Descrição
+
+                </label>
+
+                <textarea
+                    name="descricao"
+                    class="anamnese-textarea"
+                    placeholder="Descreva a evolução clínica..."
+                ></textarea>
+
+            </div>
+
+            <div class="anamnese-grid mt-4">
+
+                <div>
+
+                    <label class="anamnese-label">
+
+                        Materiais
+
+                    </label>
+
+                    <textarea
+                        name="materiais"
+                        class="anamnese-textarea"
+                    ></textarea>
+
+                </div>
+
+                <div>
+
+                    <label class="anamnese-label">
+
+                        Anestesia
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="anestesia"
+                        class="anamnese-input"
+                    >
+
+                </div>
+
+            </div>
+
+            <div class="anamnese-grid mt-4">
+
+                <div>
+
+                    <label class="anamnese-label">
+
+                        Retorno
+
+                    </label>
+
+                    <input
+                        type="date"
+                        name="retorno"
+                        class="anamnese-input"
+                    >
+
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+
+                <button
+                    type="submit"
+                    class="btn-anamnese"
+                >
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Salvar Evolução
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- =========================================
+    TIMELINE
+    ========================================== -->
+
+    <div class="timeline-card">
+
+        <div class="timeline-header">
+
+            <h5>
+
+                Timeline Clínica
+
+            </h5>
+
+            <p>
+
+                Histórico completo do paciente
+
+            </p>
+
+        </div>
+
+        <div class="timeline-body">
+
+            {% for evolucao in evolucoes %}
+
+            <div class="timeline-item">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-content">
+
+                    <div class="timeline-top">
+
+                        <strong>
+
+                            {{ evolucao.procedimento }}
+
+                        </strong>
+
+                        <span>
+
+                            {{ evolucao.criado_em|date:"d/m/Y H:i" }}
+
+                        </span>
+
+                    </div>
+
+                    {% if evolucao.dente %}
+
+                    <div class="timeline-dente">
+
+                        Dente {{ evolucao.dente }}
+
+                    </div>
+
+                    {% endif %}
+
+                    {% if evolucao.descricao %}
+
+                    <p>
+
+                        {{ evolucao.descricao }}
+
+                    </p>
+
+                    {% endif %}
+
+                    {% if evolucao.materiais %}
+
+                    <div class="timeline-extra">
+
+                        <strong>Materiais:</strong>
+
+                        {{ evolucao.materiais }}
+
+                    </div>
+
+                    {% endif %}
+
+                    {% if evolucao.anestesia %}
+
+                    <div class="timeline-extra">
+
+                        <strong>Anestesia:</strong>
+
+                        {{ evolucao.anestesia }}
+
+                    </div>
+
+                    {% endif %}
+
+                    {% if evolucao.retorno %}
+
+                    <div class="timeline-retorno">
+
+                        Retorno:
+                        {{ evolucao.retorno|date:"d/m/Y" }}
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="empty-timeline">
+
+                Nenhuma evolução clínica cadastrada.
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

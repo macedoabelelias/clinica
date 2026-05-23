@@ -1,4 +1,25 @@
 /* =========================================
+RESET
+========================================= */
+
+html,
+body{
+
+    margin:0;
+
+    padding:0;
+
+    min-height:100%;
+
+    background:#f1f5f9;
+
+    font-family:'Segoe UI', sans-serif;
+
+    overflow-y:auto;
+
+}
+
+/* =========================================
 LAYOUT PRINCIPAL
 ========================================= */
 
@@ -8,19 +29,19 @@ LAYOUT PRINCIPAL
 
     min-height:100vh;
 
-    background:#f4f7fb;
-
 }
 
 /* =========================================
-SIDEBAR PREMIUM
+SIDEBAR
 ========================================= */
 
 .sidebar{
 
-    width:240px;
+    width:260px;
 
-    min-width:220px;
+    min-width:260px;
+
+    max-width:260px;
 
     background:#ffffff;
 
@@ -34,11 +55,13 @@ SIDEBAR PREMIUM
 
     overflow-y:auto;
 
+    overflow-x:hidden;
+
     z-index:1000;
 
     border-right:1px solid #e5e7eb;
 
-    padding-top:10px;
+    padding:18px 16px;
 
 }
 
@@ -48,13 +71,19 @@ LOGO
 
 .logo-area{
 
-    padding:20px;
+    padding:0;
+
+    margin:0 0 4px 0;
 
 }
 
 .logo-area img{
 
-    width:100%;
+    width:92%;
+
+    margin:auto;
+
+    display:block;
 
     border-radius:18px;
 
@@ -68,7 +97,7 @@ MENU
 
     list-style:none;
 
-    padding:10px 16px;
+    padding:0;
 
     margin:0;
 
@@ -76,11 +105,13 @@ MENU
 
 .sidebar-menu li{
 
-    margin-bottom:10px;
+    margin-bottom:8px;
 
 }
 
-.sidebar-menu a{
+.sidebar-menu li a{
+
+    width:100%;
 
     display:flex;
 
@@ -102,11 +133,13 @@ MENU
 
     transition:.2s;
 
+    box-sizing:border-box;
+
 }
 
 /* HOVER */
 
-.sidebar-menu a:hover{
+.sidebar-menu li a:hover{
 
     background:#edf4ff;
 
@@ -114,19 +147,21 @@ MENU
 
 }
 
-/* ITEM ATIVO */
+/* ATIVO */
 
 .sidebar-menu li.active a,
-
 .sidebar-menu a.active{
 
     background:#2563eb;
 
     color:#fff;
 
-    box-shadow:0 10px 20px rgba(37,99,235,.20);
+    box-shadow:none !important;
+
+    transform:none !important;
 
 }
+
 /* =========================================
 CONTEÚDO
 ========================================= */
@@ -137,7 +172,7 @@ CONTEÚDO
 
     width:calc(100% - 260px);
 
-    padding:35px;
+    padding:30px;
 
 }
 
@@ -145,58 +180,17 @@ CONTEÚDO
 HEADER
 ========================================= */
 
-.page-title{
-
-    font-size:52px;
-
-    font-weight:800;
-
-    color:#0f172a;
-
-    margin-bottom:6px;
-
-}
-
-.page-subtitle{
-
-    color:#64748b;
-
-    font-size:18px;
-
-}
-
-/* =========================================
-CARD PRINCIPAL
-========================================= */
-
-.odontograma-card{
-
-    background:#ffffff;
-
-    border-radius:28px;
-
-    padding:30px;
-
-    box-shadow:
-    0 10px 35px rgba(15,23,42,.06);
-
-}
-
-/* =========================================
-HEADER INTERNO
-========================================= */
-
-.odontograma-header{
+.page-header{
 
     margin-bottom:25px;
 
 }
 
-.odontograma-header h3{
+.paciente-nome{
 
-    font-size:38px;
+    font-size:24px;
 
-    font-weight:800;
+    font-weight:700;
 
     color:#0f172a;
 
@@ -204,18 +198,86 @@ HEADER INTERNO
 
 }
 
-.odontograma-header p{
+.paciente-info{
 
     color:#64748b;
 
-    margin:0;
-
-    font-size:16px;
+    font-size:15px;
 
 }
 
 /* =========================================
-BOX ODONTOGRAMA
+ABAS PRONTUÁRIO
+========================================= */
+
+.abas-prontuario{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-bottom:30px;
+
+    border-bottom:1px solid #e5e7eb;
+
+    padding-bottom:15px;
+
+}
+
+.aba-item{
+
+    text-decoration:none;
+
+    color:#64748b;
+
+    padding:12px 20px;
+
+    border-radius:12px;
+
+    transition:.2s;
+
+    font-weight:600;
+
+}
+
+.aba-item:hover{
+
+    background:#edf4ff;
+
+    color:#2563eb;
+
+}
+
+.aba-item.active{
+
+    background:#2563eb;
+
+    color:#fff;
+
+}
+
+/* =========================================
+CARDS
+========================================= */
+
+.card-premium,
+.odontograma-card{
+
+    background:#fff;
+
+    border-radius:24px;
+
+    padding:30px;
+
+    box-shadow:
+    0 10px 35px rgba(15,23,42,.05);
+
+    margin-bottom:25px;
+
+}
+
+/* =========================================
+ODONTOGRAMA
 ========================================= */
 
 .odontograma-box{
@@ -224,19 +286,15 @@ BOX ODONTOGRAMA
 
     border:2px solid #b9c8db;
 
-    border-radius:22px;
+    border-radius:24px;
 
-    padding:18px 12px;
+    padding:20px;
 
     max-width:760px;
 
     margin:auto;
 
 }
-
-/* =========================================
-TÍTULOS
-========================================= */
 
 .secao-titulo{
 
@@ -246,9 +304,9 @@ TÍTULOS
 
     font-weight:700;
 
-    color:#0f172a;
+    margin-bottom:20px;
 
-    margin-bottom:18px;
+    color:#0f172a;
 
 }
 
@@ -264,101 +322,9 @@ ARCADAS
 
     align-items:flex-end;
 
-    gap:1px;
+    gap:2px;
 
-    flex-wrap:nowrap;
-
-    margin-bottom:2px;
-
-}
-
-/* =========================================
-DENTE BOX
-========================================= */
-
-.dente-box{
-
-    width:41px;
-
-    min-width:41px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:flex-end;
-
-}
-
-/* =========================================
-NUMERAÇÃO
-========================================= */
-
-.numero-dente{
-
-    font-size:11px;
-
-    font-weight:700;
-
-    color:#0f172a;
-
-    margin-bottom:2px;
-
-    line-height:1;
-
-}
-.inferior-numero{
-
-    margin-top:2px;
-
-}
-
-/* =========================================
-DENTES PERMANENTES
-========================================= */
-
-.dente-img{
-
-    width:54px;
-
-    height:92px;
-
-    object-fit:contain;
-
-    cursor:pointer;
-
-    transition:.2s ease;
-
-    filter:drop-shadow(0 2px 3px rgba(0,0,0,.10));
-
-}
-
-/* =========================================
-DECÍDUOS
-========================================= */
-
-.dente-img.deciduo{
-
-    width:44px;
-
-    height:70px;
-
-}
-
-/* =========================================
-HOVER
-========================================= */
-
-.dente-img:hover{
-
-    transform:
-    translateY(-3px)
-    scale(1.06);
-
-    filter:
-    drop-shadow(0 8px 12px rgba(37,99,235,.18));
+    margin-bottom:5px;
 
 }
 
@@ -375,18 +341,112 @@ HOVER
 }
 
 /* =========================================
+DENTES
+========================================= */
+
+.dente-box{
+
+    width:42px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+}
+
+.dente-img{
+
+    width:54px;
+
+    height:92px;
+
+    object-fit:contain;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.dente-img.deciduo{
+
+    width:44px;
+
+    height:70px;
+
+}
+
+.dente-img:hover{
+
+    transform:
+    translateY(-3px)
+    scale(1.05);
+
+}
+
+/* =========================================
+FORMULÁRIOS
+========================================= */
+
+.form-control{
+
+    border-radius:14px !important;
+
+    padding:12px !important;
+
+}
+
+.btn-salvar{
+
+    padding:14px 28px;
+
+    border-radius:14px;
+
+    font-weight:600;
+
+}
+
+/* =========================================
+SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#cbd5e1;
+
+    border-radius:20px;
+
+}
+
+/* =========================================
 RESPONSIVO
 ========================================= */
 
-@media(max-width:1200px){
+@media(max-width:992px){
 
-    .arcada{
+    .sidebar{
 
-        overflow-x:auto;
+        width:100%;
 
-        justify-content:flex-start;
+        height:auto;
 
-        padding-bottom:10px;
+        position:relative;
+
+    }
+
+    .main-content{
+
+        margin-left:0;
+
+        width:100%;
 
     }
 

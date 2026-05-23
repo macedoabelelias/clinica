@@ -1,0 +1,910 @@
+/* =========================================
+LAYOUT PRINCIPAL
+========================================= */
+
+.odontograma-layout{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:28px;
+
+    width:100%;
+
+}
+
+/* =========================================
+ODONTOGRAMA
+========================================= */
+
+.odontograma-wrapper{
+
+    flex:1;
+
+    min-width:0;
+
+}
+
+/* =========================================
+TIMELINE
+========================================= */
+
+.timeline-container{
+
+    width:300px;
+
+    min-width:300px;
+
+    align-self:flex-start;
+
+    padding:4px;
+
+}
+
+.timeline-card{
+
+    position:sticky;
+
+    top:20px;
+
+    background:#fff;
+
+    border-radius:24px;
+
+    padding:22px;
+
+    border:none;
+
+    box-shadow:
+    0 2px 6px rgba(15,23,42,.04),
+    0 14px 35px rgba(15,23,42,.10);
+
+    height:640px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    overflow:hidden;
+
+}
+
+/* =========================================
+HEADER
+========================================= */
+
+.timeline-header{
+
+    margin-bottom:20px;
+
+}
+
+.timeline-header h5{
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+    margin-bottom:6px;
+
+}
+
+.timeline-header p{
+
+    color:#64748b;
+
+    font-size:13px;
+
+    margin:0;
+
+}
+
+/* =========================================
+BODY
+========================================= */
+
+.timeline-body{
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+    overflow-y:auto;
+
+    padding-right:4px;    
+
+}
+
+/* =========================================
+ITEM
+========================================= */
+
+.timeline-item{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:12px;
+
+}
+
+.timeline-dot{
+
+    width:10px;
+
+    height:10px;
+
+    min-width:10px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    margin-top:8px;
+
+}
+
+.timeline-content{
+
+    flex:1;
+
+    background:#f8fafc;
+
+    border:1px solid #e2e8f0;
+
+    border-radius:18px;
+
+    padding:14px;
+
+}
+
+.timeline-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:8px;
+
+}
+
+.timeline-top strong{
+
+    font-size:14px;
+
+    color:#0f172a;
+
+}
+
+.timeline-top span{
+
+    font-size:11px;
+
+    color:#64748b;
+
+}
+
+.timeline-dente{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:4px 10px;
+
+    border-radius:999px;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    font-size:11px;
+
+    font-weight:700;
+
+}
+
+.timeline-procedimento{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.timeline-icone{
+
+    width:28px;
+
+    height:28px;
+
+    object-fit:contain;
+
+}
+
+/* =========================================
+CARD ODONTOGRAMA
+========================================= */
+
+.odontograma-card{
+
+    background:#ffffff;
+
+    border-radius:32px;
+
+    padding:28px;
+
+    border:1px solid #e2e8f0;
+
+    box-shadow:
+    0 10px 35px rgba(15,23,42,.25);
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+/* brilho suave */
+
+.odontograma-card::before{
+
+    content:'';
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:6px;
+
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #3b82f6
+    );
+
+}
+
+/* =========================================
+HEADER
+========================================= */
+
+.odontograma-header{
+
+    margin-bottom:20px;
+
+}
+
+.odontograma-header h6{
+
+    font-size:22px;
+
+    font-weight:800;
+
+    color:#0f172a;
+
+    margin-bottom:6px;
+
+    letter-spacing:-1px;
+
+}
+
+.odontograma-header p{
+
+    font-size:13px;
+
+    color:#64748b;
+
+    margin-bottom:26px;
+
+}
+
+/* =========================================
+ÁREA INTERNA ODONTOGRAMA
+========================================= */
+
+.odontograma-box{
+
+    border:4px solid #dbe4f0;
+
+    border-radius:28px;
+
+    padding:36px;
+
+    background:linear-gradient(
+        180deg,
+        #f8fafc,
+        #f1f5f9
+    );
+
+    box-shadow:
+    inset 0 10px 35px rgba(15,23,42,.15);
+
+}
+
+/* =========================================
+SEÇÃO
+========================================= */
+
+.secao-titulo{
+
+    font-size:16px;
+
+    font-weight:700;
+
+    text-align:center;
+
+    color:#0f172a;
+
+    margin-bottom:6px;
+
+}
+
+/* =========================================
+ARCADAS
+========================================= */
+
+.arcada{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-start;
+
+    gap:6px;
+
+    flex-wrap:nowrap;
+
+}
+
+.arcada.inferior{
+
+    margin-top:4px;
+
+}
+
+/* =========================================
+DIVISÃO
+========================================= */
+
+.linha-divisao{
+
+    height:4px;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #a2a9b3,
+        transparent
+    );
+
+    margin:34px 0;
+
+    border-radius:999px;
+
+}
+
+/* =========================================
+DENTES
+========================================= */
+
+.dente-box{
+
+    position:relative;
+
+    width:44px;
+
+    height:92px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.dente-img{
+
+    width:34px;
+
+    position:relative;
+
+    z-index:1;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.dente-img:hover{
+
+    transform:
+    translateY(-2px)
+    scale(1.03);
+
+}
+
+.dente-img.deciduo{
+
+    width:30px;
+
+}
+
+/* =========================================
+PROCEDIMENTOS
+========================================= */
+
+.procedimentos-dente{
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+}
+
+.icone-procedimento-dente{
+
+    width:34px;
+
+    height:34px;
+
+    object-fit:contain;
+
+    position:absolute;
+
+    z-index:10;
+
+}
+
+/* =========================================
+BASE DOS ÍCONES
+========================================= */
+
+.icone-procedimento-dente{
+
+    width:34px;
+    height:34px;
+
+    object-fit:contain;
+
+    position:absolute;
+
+    z-index:10;
+
+}
+
+/* =========================================
+ROTAÇÃO DOS ÍCONES INFERIORES
+========================================= */
+
+.arcada.inferior .icone-procedimento-dente{
+
+    rotate:180deg;
+
+}
+
+/* =========================================
+POSICIONAMENTO INDIVIDUAL
+========================================= */
+
+/* =========================================
+PERMANENTES SUPERIORES
+========================================= */
+
+.dente-11 .posicao-raiz{ top:28px; left:1px; }
+.dente-11 .posicao-centro{ top:42px; left:0px; }
+.dente-11 .posicao-coroa{ top:54px; left:1px; }
+.dente-11 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-12 .posicao-raiz{ top:30px; left:0px; }
+.dente-12 .posicao-centro{ top:42px; left:0px; }
+.dente-12 .posicao-coroa{ top:54px; left:0px; }
+.dente-12 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-13 .posicao-raiz{ top:30px; left:0px; }
+.dente-13 .posicao-centro{ top:42px; left:0px; }
+.dente-13 .posicao-coroa{ top:56px; left:0px; }
+.dente-13 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-14 .posicao-raiz{ top:18px; left:1px; }
+.dente-14 .posicao-centro{ top:42px; left:1px; }
+.dente-14 .posicao-coroa{ top:58px; left:0px; }
+.dente-14 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-15 .posicao-raiz{ top:38px; left:2px; }
+.dente-15 .posicao-centro{ top:42px; left:0px; }
+.dente-15 .posicao-coroa{ top:58px; left:0px; }
+.dente-15 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-16 .posicao-raiz{ top:38px; left:0px; }
+.dente-16 .posicao-centro{ top:40px; left:0px; }
+.dente-16 .posicao-coroa{ top:58px; left:0px; }
+.dente-16 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-17 .posicao-raiz{ top:38px; left:0px; }
+.dente-17 .posicao-centro{ top:40px; left:0px; }
+.dente-17 .posicao-coroa{ top:58px; left:0px; }
+.dente-17 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-18 .posicao-raiz{ top:34px; left:0px; }
+.dente-18 .posicao-centro{ top:40px; left:1px; }
+.dente-18 .posicao-coroa{ top:58px; left:3px; }
+.dente-18 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-21 .posicao-raiz{ top:30px; left:1px; }
+.dente-21 .posicao-centro{ top:42px; left:2px; }
+.dente-21 .posicao-coroa{ top:54px; left:0px; }
+.dente-21 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-22 .posicao-raiz{ top:32px; left:1px; }
+.dente-22 .posicao-centro{ top:42px; left:0px; }
+.dente-22 .posicao-coroa{ top:58px; left:0px; }
+.dente-22 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-23 .posicao-raiz{ top:32px; left:0px; }
+.dente-23 .posicao-centro{ top:42px; left:0px; }
+.dente-23 .posicao-coroa{ top:56px; left:0px; }
+.dente-23 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-24 .posicao-raiz{ top:32px; left:0px; }
+.dente-24 .posicao-centro{ top:42px; left:0px; }
+.dente-24 .posicao-coroa{ top:58px; left:0px; }
+.dente-24 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-25 .posicao-raiz{ top:36px; left:0px; }
+.dente-25 .posicao-centro{ top:42px; left:0px; }
+.dente-25 .posicao-coroa{ top:58px; left:0px; }
+.dente-25 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-26 .posicao-raiz{ top:38px; left:0px; }
+.dente-26 .posicao-centro{ top:42px; left:0px; }
+.dente-26 .posicao-coroa{ top:58px; left:0px; }
+.dente-26 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-27 .posicao-raiz{ top:38px; left:0px; }
+.dente-27 .posicao-centro{ top:42px; left:0px; }
+.dente-27 .posicao-coroa{ top:58px; left:0px; }
+.dente-27 .posicao-oclusal{ top:12px; left:5px; }
+
+.dente-28 .posicao-raiz{ top:38px; left:0px; }
+.dente-28 .posicao-centro{ top:42px; left:0px; }
+.dente-28 .posicao-coroa{ top:60px; left:0px; }
+.dente-28 .posicao-oclusal{ top:12px; left:5px; }
+
+/* =========================================
+PERMANENTES INFERIORES
+========================================= */
+
+/* =========================================
+31
+========================================= */
+
+.dente-31 .posicao-raiz{ bottom:32px; left:1px; }
+.dente-31 .posicao-centro{ bottom:42px; left:1px; }
+.dente-31 .posicao-coroa{ bottom:58px; left:1px; }
+.dente-31 .posicao-oclusal{ bottom:12px; left:5px; }
+
+/* =========================================
+32
+========================================= */
+
+.dente-32 .posicao-raiz{ bottom:34px; left:1px; }
+.dente-32 .posicao-centro{ bottom:42px; left:0px; }
+.dente-32 .posicao-coroa{ bottom:58px; left:1px; }
+.dente-32 .posicao-oclusal{ bottom:12px; left:5px; }
+
+/* =========================================
+33
+========================================= */
+
+.dente-33 .posicao-raiz{ bottom:34px; left:1px; }
+.dente-33 .posicao-centro{ bottom:42px; left:0px; }
+.dente-33 .posicao-coroa{ bottom:56px; left:0px; }
+.dente-33 .posicao-oclusal{ bottom:12px; left:5px; }
+
+/* =========================================
+34
+========================================= */
+
+.dente-34 .posicao-raiz{ bottom:34px; left:0px; }
+.dente-34 .posicao-centro{ bottom:42px; left:0px; }
+.dente-34 .posicao-coroa{ bottom:58px; left:1px; }
+.dente-34 .posicao-oclusal{ bottom:12px; left:5px; }
+
+/* =========================================
+35
+========================================= */
+
+.dente-35 .posicao-raiz{ bottom:34px; left:0px; }
+.dente-35 .posicao-centro{ bottom:42px; left:0px; }
+.dente-35 .posicao-coroa{ bottom:58px; left:0px; }
+.dente-35 .posicao-oclusal{ bottom:12px; left:5px; }
+
+/* =========================================
+36
+========================================= */
+
+.dente-36 .posicao-raiz{ bottom:36px; left:0px; }
+.dente-36 .posicao-centro{ bottom:42px; left:0px; }
+.dente-36 .posicao-coroa{ bottom:58px; left:0px; }
+.dente-36 .posicao-oclusal{ bottom:12px; left:5px; }
+
+/* =========================================
+37
+========================================= */
+
+.dente-37 .posicao-raiz{ bottom:36px; left:1px; }
+.dente-37 .posicao-centro{ bottom:42px; left:1px; }
+.dente-37 .posicao-coroa{ bottom:58px; left:0px; }
+.dente-37 .posicao-oclusal{ bottom:12px; left:5px; }
+
+/* =========================================
+38
+========================================= */
+
+.dente-38 .posicao-raiz{ bottom:38px; left:1px; }
+.dente-38 .posicao-centro{ bottom:42px; left:1px; }
+.dente-38 .posicao-coroa{ bottom:58px; left:0px; }
+.dente-38 .posicao-oclusal{ bottom:12px; left:5px; }
+
+.dente-48 .posicao-raiz{ bottom:40px; left:0px; }
+.dente-48 .posicao-centro{ bottom:42px; left:1px; }
+.dente-48 .posicao-coroa{ bottom:58px; left:1px; }
+.dente-48 .posicao-oclusal{ bottom:12px; left:5px; }
+
+.dente-47 .posicao-raiz{ bottom:38px; left:0px; }
+.dente-47 .posicao-centro{ bottom:42px; left:0px; }
+.dente-47 .posicao-coroa{ bottom:56px; left:1px; }
+.dente-47 .posicao-oclusal{ bottom:12px; left:5px; }
+
+.dente-46 .posicao-raiz{ bottom:38px; left:0px; }
+.dente-46 .posicao-centro{ bottom:42px; left:0px; }
+.dente-46 .posicao-coroa{ bottom:56px; left:1px; }
+.dente-46 .posicao-oclusal{ bottom:12px; left:5px; }
+
+.dente-45 .posicao-raiz{ bottom:38px; left:0px; }
+.dente-45 .posicao-centro{ bottom:42px; left:0px; }
+.dente-45 .posicao-coroa{ bottom:58px; left:0px; }
+.dente-45 .posicao-oclusal{ bottom:12px; left:5px; }
+
+.dente-44 .posicao-raiz{ bottom:38px; left:0px; }
+.dente-44 .posicao-centro{ bottom:42px; left:0px; }
+.dente-44 .posicao-coroa{ bottom:58px; left:0px; }
+.dente-44 .posicao-oclusal{ bottom:12px; left:5px; }
+
+.dente-43 .posicao-raiz{ bottom:34px; left:1px; }
+.dente-43 .posicao-centro{ bottom:42px; left:0px; }
+.dente-43 .posicao-coroa{ bottom:54px; left:1px; }
+.dente-43 .posicao-oclusal{ bottom:12px; left:5px; }
+
+.dente-42 .posicao-raiz{ bottom:34px; left:1px; }
+.dente-42 .posicao-centro{ bottom:38px; left:1px; }
+.dente-42 .posicao-coroa{ bottom:56px; left:1px; }
+.dente-42 .posicao-oclusal{ bottom:12px; left:5px; }
+
+.dente-41 .posicao-raiz{ bottom:36px; left:0px; }
+.dente-41 .posicao-centro{ bottom:38px; left:0px; }
+.dente-41 .posicao-coroa{ bottom:56px; left:0px; }
+.dente-41 .posicao-oclusal{ bottom:12px; left:5px; }
+
+/* =========================================
+DECÍDUOS SUPERIORES
+========================================= */
+
+.dente-51 .posicao-raiz{ top:34px; left:4px; }
+.dente-51 .posicao-centro{ top:40px; left:4px; }
+.dente-51 .posicao-coroa{ top:52px; left:3px; }
+.dente-51 .posicao-oclusal{ top:10px; left:4px; }
+
+.dente-52 .posicao-raiz{ top:34px; left:4px; }
+.dente-52 .posicao-centro{ top:40px; left:4px; }
+.dente-52 .posicao-coroa{ top:52px; left:4px; }
+.dente-52 .posicao-oclusal{ top:10px; left:4px; }
+
+.dente-53 .posicao-raiz{ top:34px; left:4px; }
+.dente-53 .posicao-centro{ top:40px; left:4px; }
+.dente-53 .posicao-coroa{ top:50px; left:4px; }
+.dente-53 .posicao-oclusal{ top:10px; left:4px; }
+
+.dente-54 .posicao-raiz{ top:36px; left:4px; }
+.dente-54 .posicao-centro{ top:44px; left:5px; }
+.dente-54 .posicao-coroa{ top:50px; left:5px; }
+.dente-54 .posicao-oclusal{ top:10px; left:4px; }
+
+.dente-55 .posicao-raiz{ top:36px; left:5px; }
+.dente-55 .posicao-centro{ top:42px; left:5px; }
+.dente-55 .posicao-coroa{ top:50px; left:5px; }
+.dente-55 .posicao-oclusal{ top:10px; left:4px; }
+
+/* =========================================
+61
+========================================= */
+
+.dente-61 .posicao-raiz{ top:34px; left: 5px; }
+.dente-61 .posicao-centro{ top:40px; left:5px; }
+.dente-61 .posicao-coroa{ top:52px; left:6px; }
+.dente-61 .posicao-oclusal{ top:10px; left:4px; }
+
+/* =========================================
+62
+========================================= */
+
+.dente-62 .posicao-raiz{ top:34px; left:5px; }
+.dente-62 .posicao-centro{ top:40px; left:5px; }
+.dente-62 .posicao-coroa{ top:52px; left:5px; }
+.dente-62 .posicao-oclusal{ top:10px; left:4px; }
+
+/* =========================================
+63
+========================================= */
+
+.dente-63 .posicao-raiz{ top:32px; left:4px; }
+.dente-63 .posicao-centro{ top:40px; left:4px; }
+.dente-63 .posicao-coroa{ top:50px; left:4px; }
+.dente-63 .posicao-oclusal{ top:10px; left:4px; }
+
+/* =========================================
+64
+========================================= */
+
+.dente-64 .posicao-raiz{ top:34px; left:5px; }
+.dente-64 .posicao-centro{ top:40px; left:5px; }
+.dente-64 .posicao-coroa{ top:50px; left:5px; }
+.dente-64 .posicao-oclusal{ top:10px; left:4px; }
+
+/* =========================================
+65
+========================================= */
+
+.dente-65 .posicao-raiz{ top:32px; left:5px; }
+.dente-65 .posicao-centro{ top:40px; left:5px; }
+.dente-65 .posicao-coroa{ top:50px; left:5px; }
+.dente-65 .posicao-oclusal{ top:10px; left:4px; }
+
+/* =========================================
+DECÍDUOS INFERIORES
+========================================= */
+
+.dente-71 .posicao-raiz{ bottom:34px; left:6px; }
+.dente-71 .posicao-centro{ bottom:40px; left:6px; }
+.dente-71 .posicao-coroa{ bottom:52px; left:5px; }
+.dente-71 .posicao-oclusal{ bottom:10px; left:4px; }
+
+.dente-72 .posicao-raiz{ bottom:34px; left:6px; }
+.dente-72 .posicao-centro{ bottom:40px; left:5px; }
+.dente-72 .posicao-coroa{ bottom:52px; left:5px; }
+.dente-72 .posicao-oclusal{ bottom:10px; left:4px; }
+
+.dente-73 .posicao-raiz{ bottom:34px; left:5px; }
+.dente-73 .posicao-centro{ bottom:40px; left:5px; }
+.dente-73 .posicao-coroa{ bottom:50px; left:5px; }
+.dente-73 .posicao-oclusal{ bottom:10px; left:4px; }
+
+.dente-74 .posicao-raiz{ bottom:34px; left:5px  ; }
+.dente-74 .posicao-centro{ bottom:40px; left:5px; }
+.dente-74 .posicao-coroa{ bottom:48px; left:4px; }
+.dente-74 .posicao-oclusal{ bottom:10px; left:4px; }
+
+.dente-75 .posicao-raiz{ bottom:34px; left:5px; }
+.dente-75 .posicao-centro{ bottom:38px; left:5px; }
+.dente-75 .posicao-coroa{ bottom:48px; left:5px; }
+.dente-75 .posicao-oclusal{ bottom:10px; left:4px; }
+
+/* =========================================
+81
+========================================= */
+
+.dente-81 .posicao-raiz{ bottom:34px; left:5px; }
+.dente-81 .posicao-centro{ bottom:38px; left:5px; }
+.dente-81 .posicao-coroa{ bottom:50px; left:5px; }
+.dente-81 .posicao-oclusal{ bottom:10px; left:4px; }
+
+/* =========================================
+82
+========================================= */
+
+.dente-82 .posicao-raiz{ bottom:34px; left:5px; }
+.dente-82 .posicao-centro{ bottom:38px; left:5px; }
+.dente-82 .posicao-coroa{ bottom:50px; left:5px; }
+.dente-82 .posicao-oclusal{ bottom:10px; left:4px; }
+
+/* =========================================
+83
+========================================= */
+
+.dente-83 .posicao-raiz{ bottom:34px; left:5px; }
+.dente-83 .posicao-centro{ bottom:40px; left:5px; }
+.dente-83 .posicao-coroa{ bottom:50px; left:5px; }
+.dente-83 .posicao-oclusal{ bottom:10px; left:4px; }
+
+/* =========================================
+84
+========================================= */
+
+.dente-84 .posicao-raiz{ bottom:34px; left:5px; }
+.dente-84 .posicao-centro{ bottom:40px; left:5px; }
+.dente-84 .posicao-coroa{ bottom:50px; left:5px; }
+.dente-84 .posicao-oclusal{ bottom:10px; left:4px; }
+
+/* =========================================
+85
+========================================= */
+
+.dente-85 .posicao-raiz{ bottom:34px; left:5px; }
+.dente-85 .posicao-centro{ bottom:40px; left:6px; }
+.dente-85 .posicao-coroa{ bottom:50px; left:6px; }
+.dente-85 .posicao-oclusal{ bottom:10px; left:4px; }
+
+/* =========================================
+OCLUSAL PADRÃO
+========================================= */
+
+.posicao-oclusal{
+
+    z-index:20;
+
+}
+
+
+/* =========================================
+RESPONSIVO
+========================================= */
+
+@media(max-width:1200px){
+
+    .odontograma-layout{
+
+        flex-direction:column;
+
+    }
+
+    .timeline-container{
+
+        width:100%;
+
+    }
+
+    .timeline-card{
+
+        position:relative;
+
+        top:auto;
+
+        height:640px;
+
+        max-height:none;
+
+    }
+
+    .timeline-body{
+
+        max-height:none;
+
+    }
+
+}

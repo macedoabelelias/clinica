@@ -14,13 +14,6 @@
 
     <title>AM Systems</title>
 
-    <!-- CSS -->
-
-    <link
-        rel="stylesheet"
-        href="{% static 'css/style.css' %}"
-    >
-
     <!-- Bootstrap -->
 
     <link
@@ -35,6 +28,41 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
 
+    <!-- CSS GLOBAL -->
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+    <!-- CSS PACIENTES -->
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/pacientes.css' %}"
+    >
+
+    <!-- CSS ODONTOGRAMA -->
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/odontograma.css' %}"
+    >
+
+    <!-- CSS ANAMNESE -->
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/anamnese.css' %}"
+    >
+
+    <!-- CSS FICHA CLÍNICA -->
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/ficha_clinica.css' %}"
+    >
+
 </head>
 
 <body>
@@ -43,7 +71,7 @@
 
     <!-- =========================================
     SIDEBAR
-    ========================================= -->
+    ========================================== -->
 
     <aside class="sidebar">
 
@@ -60,85 +88,84 @@
 
         <!-- MENU -->
 
-        <ul class="sidebar-menu">
+    <ul class="sidebar-menu">
 
-            <!-- DASHBOARD -->
+    <!-- DASHBOARD -->
 
-            <li class="{% if 'dashboard' in request.path %}active{% endif %}">
+    <li class="{% if 'dashboard' in request.path %}active{% endif %}">
 
-                <a href="/dashboard/">
+        <a href="/dashboard/">
 
-                    <i class="fa-solid fa-chart-line"></i>
+            <i class="fa-solid fa-chart-line"></i>
 
-                    <span>Dashboard</span>
+            <span>Dashboard</span>
 
-                </a>
+        </a>
 
-            </li>
+    </li>
 
-            <!-- PACIENTES -->
+    <!-- PACIENTES -->
 
-            <li class="{% if 'pacientes' in request.path and 'odontograma' not in request.path %}active{% endif %}">
+    <li class="{% if 'pacientes' in request.path and 'odontograma' not in request.path %}active{% endif %}">
 
-                <a href="/pacientes/">
+        <a href="/pacientes/">
 
-                    <i class="fa-solid fa-users"></i>
+            <i class="fa-solid fa-users"></i>
 
-                    <span>Pacientes</span>
+            <span>Pacientes</span>
 
-                </a>
+        </a>
 
-            </li>
+    </li>
 
-            <!-- AGENDA -->
+    <!-- PROCEDIMENTOS -->
 
-            <li class="{% if 'agenda' in request.path %}active{% endif %}">
+    <li class="{% if 'procedimentos' in request.path %}active{% endif %}">
 
-                <a href="/agenda/">
+        <a href="/procedimentos/">
 
-                    <i class="fa-solid fa-calendar"></i>
+            <i class="fa-solid fa-tooth"></i>
 
-                    <span>Agenda</span>
+            <span>Procedimentos</span>
 
-                </a>
+        </a>
 
-            </li>
+    </li>
 
-            <!-- FINANCEIRO -->
+    <!-- AGENDA -->
 
-            <li class="{% if 'financeiro' in request.path %}active{% endif %}">
+    <li class="{% if 'agenda' in request.path %}active{% endif %}">
 
-                <a href="/financeiro/">
+        <a href="/agenda/">
 
-                    <i class="fa-solid fa-wallet"></i>
+            <i class="fa-solid fa-calendar"></i>
 
-                    <span>Financeiro</span>
+            <span>Agenda</span>
 
-                </a>
+        </a>
 
-            </li>
+    </li>
 
-            <!-- ODONTOGRAMA -->
+    <!-- FINANCEIRO -->
 
-            <li class="{% if 'odontograma' in request.path %}active{% endif %}">
+    <li class="{% if 'financeiro' in request.path %}active{% endif %}">
 
-                <a href="/odontograma/">
+        <a href="/financeiro/">
 
-                    <i class="fa-solid fa-tooth"></i>
+            <i class="fa-solid fa-wallet"></i>
 
-                    <span>Odontograma</span>
+            <span>Financeiro</span>
 
-                </a>
+        </a>
 
-            </li>
+    </li>
 
-        </ul>
-
+</ul>    
     </aside>
 
     <!-- =========================================
     MAIN CONTENT
-    ========================================= -->
+    ========================================== -->
 
     <main class="main-content">
 

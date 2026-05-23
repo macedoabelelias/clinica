@@ -66,6 +66,36 @@ urlpatterns = [
     ),
 
     # =========================================
+    # ANAMNESE
+    # =========================================
+
+    path(
+        'pacientes/<int:id>/anamnese/',
+        views.anamnese,
+        name='anamnese'
+    ),
+
+    # =========================================
+    # FICHA CLÍNICA
+    # =========================================
+
+    path(
+        'pacientes/<int:id>/ficha-clinica/',
+        views.ficha_clinica,
+        name='ficha_clinica'
+    ),
+
+    # =========================================
+    # PROCEDIMENTOS
+    # =========================================
+
+    path(
+        'procedimentos/',
+        views.procedimentos,
+        name='procedimentos'
+    ),
+
+    # =========================================
     # LOGOUT
     # =========================================
 

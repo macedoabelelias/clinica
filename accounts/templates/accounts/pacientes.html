@@ -1,275 +1,177 @@
+{% extends 'accounts/base.html' %}
+
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="pt-br">
+{% block content %}
 
-<head>
+<!-- =========================================
+CSS
+========================================= -->
 
-    <meta charset="UTF-8">
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- =========================================
+TOPBAR
+========================================= -->
 
-    <title>Pacientes | AM Systems</title>
+<div class="topbar">
 
-    <!-- Bootstrap -->
+    <!-- BUSCA -->
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <div class="search-box">
 
-    <!-- Bootstrap Icons -->
+        <i class="fa-solid fa-magnifying-glass"></i>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <input
+            type="text"
+            placeholder="Buscar paciente..."
+        >
 
-    <!-- Fonte -->
+    </div>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- DIREITA -->
 
-    <!-- CSS -->
+    <div class="topbar-right">
 
-    <link rel="stylesheet" href="{% static 'css/pacientes.css' %}">
+        <button class="top-icon">
 
-</head>
+            <i class="fa-regular fa-bell"></i>
 
-<body>
+        </button>
 
-<div class="patients-layout">
+        <div class="profile-box">
 
-    <!-- =========================================
-         SIDEBAR
-    ========================================== -->
-
-    <aside class="sidebar">
-
-        <div>
-
-            <!-- LOGO -->
-
-            <div class="logo-area">
-
-                <img src="{% static 'img/logo.png' %}">
-
-            </div>
-            <hr>
-
-            <!-- MENU -->
-
-            <ul class="sidebar-menu">
-
-                <li onclick="window.location.href='/dashboard/'">
-
-                    <i class="bi bi-grid-fill"></i>
-
-                    <span>Dashboard</span>
-
-                </li>
-
-                <li class="active">
-
-                    <i class="bi bi-people-fill"></i>
-
-                    <span>Pacientes</span>
-
-                </li>
-
-                <li>
-
-                    <i class="bi bi-calendar-check-fill"></i>
-
-                    <span>Agenda</span>
-
-                </li>
-
-                <li>
-
-                    <i class="bi bi-cash-stack"></i>
-
-                    <span>Financeiro</span>
-
-                </li>
-
-                <li>
-
-                    <i class="bi bi-heart-pulse-fill"></i>
-
-                    <span>Tratamentos</span>
-
-                </li>
-
-                <li>
-
-                    <i class="bi bi-box-seam"></i>
-
-                    <span>Estoque</span>
-
-                </li>
-
-                <li>
-
-                    <i class="bi bi-bar-chart-fill"></i>
-
-                    <span>Relatórios</span>
-
-                </li>
-
-                <li>
-
-                    <i class="bi bi-gear-fill"></i>
-
-                    <span>Configurações</span>
-
-                </li>
-
-            </ul>
-
-        </div>
-
-        <!-- PREMIUM -->
-
-        <div class="premium-box">
-
-            <i class="bi bi-gem"></i>
-
-            <h5>Plano Premium</h5>
-
-            <p>
-
-                Seu plano expira em
-                <strong>23/08/2026</strong>
-
-            </p>
-
-            <a href="#">
-                Ver detalhes
-            </a>
-
-        </div>
-
-    </aside>
-
-    <!-- =========================================
-         MAIN
-    ========================================== -->
-
-    <main class="main-content">
-
-        <!-- TOPBAR -->
-
-        <div class="topbar">
-
-            <div class="search-box">
-
-                <i class="bi bi-search"></i>
-
-                <input 
-                    type="text"
-                    placeholder="Buscar paciente..."
-                >
-
-            </div>
-
-            <div class="topbar-right">
-
-                <button class="top-icon">
-
-                    <i class="bi bi-bell"></i>
-
-                </button>
-
-                <div class="profile-box">
-
-                    <img src="https://i.pravatar.cc/100">
-
-                    <div>
-
-                        <h6>Abel Macedo</h6>
-
-                        <span>Administrador</span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-        <hr>
-
-        <!-- HEADER -->
-
-        <div class="page-header">
+            <img
+                src="https://i.pravatar.cc/100"
+                alt="Perfil"
+            >
 
             <div>
 
-                <h5>
-                    Pacientes 👥
-                </h5>
+                <h6>
+                    Abel Macedo
+                </h6>
 
-                <p>
-                    Gerencie os pacientes da clínica.
-                </p>
-
-            </div>
-
-            <button 
-                class="new-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#modalPaciente"
-            >
-
-                <i class="bi bi-plus-lg"></i>
-
-                Novo Paciente
-
-            </button>
-
-        </div>
-
-        <!-- STATS -->
-
-        <div class="stats-grid">
-
-            <div class="stats-card">
-
-                <h3>
-                    {{ pacientes|length }}
-                </h3>
-
-                <p>
-                    Pacientes cadastrados
-                </p>
-
-            </div>
-
-            <div class="stats-card">
-
-                <h3>
-                    28
-                </h3>
-
-                <p>
-                    Consultas hoje
-                </p>
-
-            </div>
-
-            <div class="stats-card">
-
-                <h3>
-                    94%
-                </h3>
-
-                <p>
-                    Taxa de retorno
-                </p>
+                <span>
+                    Administrador
+                </span>
 
             </div>
 
         </div>
 
-     <!-- TABLE CARD -->
+    </div>
+
+</div>
+
+<hr class="page-divider">
+
+<!-- =========================================
+HEADER
+========================================= -->
+
+<div class="page-header">
+
+    <div>
+
+        <h2 class="page-title">
+
+            Pacientes 👥
+
+        </h2>
+
+        <p class="page-subtitle">
+
+            Gerencie os pacientes da clínica.
+
+        </p>
+
+    </div>
+
+    <button
+        class="new-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#modalPaciente"
+    >
+
+        <i class="fa-solid fa-plus"></i>
+
+        Novo Paciente
+
+    </button>
+
+</div>
+
+<!-- =========================================
+CARDS
+========================================= -->
+
+<div class="stats-grid">
+
+    <!-- CARD -->
+
+    <div class="stats-card">
+
+        <h3>
+
+            {{ pacientes|length }}
+
+        </h3>
+
+        <p>
+
+            Pacientes cadastrados
+
+        </p>
+
+    </div>
+
+    <!-- CARD -->
+
+    <div class="stats-card">
+
+        <h3>
+
+            28
+
+        </h3>
+
+        <p>
+
+            Consultas hoje
+
+        </p>
+
+    </div>
+
+    <!-- CARD -->
+
+    <div class="stats-card">
+
+        <h3>
+
+            94%
+
+        </h3>
+
+        <p>
+
+            Taxa de retorno
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- =========================================
+TABELA
+========================================= -->
 
 <div class="table-card">
-
-    <!-- TABLE -->
 
     <div class="table-responsive">
 
@@ -280,13 +182,9 @@
                 <tr>
 
                     <th>Paciente</th>
-
                     <th>Telefone</th>
-
                     <th>Convênio</th>
-
                     <th>Status</th>
-
                     <th>Ações</th>
 
                 </tr>
@@ -305,9 +203,9 @@
 
                         <div class="patient-info">
 
-                            <!-- AVATAR -->
+                            <!-- FOTO -->
 
-                           <div class="patient-avatar">
+                            <div class="patient-avatar">
 
                                 {% if paciente.foto %}
 
@@ -324,15 +222,15 @@
 
                             </div>
 
-                            <!-- INFO -->
+                            <!-- DADOS -->
 
                             <div>
 
-                                <h6 class="mb-1">
+                                <h6 class="patient-name">
 
                                     <a
                                         href="{% url 'perfil_paciente' paciente.id %}"
-                                        class="text-decoration-none fw-semibold">
+                                    >
 
                                         {{ paciente.nome }}
 
@@ -340,7 +238,7 @@
 
                                 </h6>
 
-                                <span>
+                                <span class="patient-email">
 
                                     {{ paciente.email }}
 
@@ -384,33 +282,29 @@
 
                     <td>
 
-                        <div class="actions d-flex gap-2">
+                        <div class="actions">
 
                             <!-- VISUALIZAR -->
 
                             <a
                                 href="{% url 'perfil_paciente' paciente.id %}"
-                                class="btn btn-light rounded-circle">
+                                class="action-btn"
+                            >
 
-                                <i class="bi bi-eye"></i>
+                                <i class="fa-regular fa-eye"></i>
 
                             </a>
 
                             <!-- EDITAR -->
 
-                            <button
-                                class="btn btn-light rounded-circle">
+                            <a
+                                href="{% url 'editar_paciente' paciente.id %}"
+                                class="action-btn"
+                            >
 
-                                <a
-                                    href="{% url 'editar_paciente' paciente.id %}"
-                                    class="btn btn-light btn-sm rounded-circle"
-                                >
+                                <i class="fa-regular fa-pen-to-square"></i>
 
-                                    <i class="bi bi-pencil"></i>
-
-                                </a>
-
-                            </button>
+                            </a>
 
                         </div>
 
@@ -438,739 +332,6 @@
 
     </div>
 
-</div>  
-
-    </main>
-
 </div>
 
-<!-- =========================================
-     MODAL
-========================================= -->
-
-<div class="modal fade" id="modalPaciente">
-
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-
-        <div class="modal-content border-0 rounded-5">
-
-            <div class="modal-header border-0 p-4">
-
-                <h4 class="fw-bold">
-
-                    Novo Paciente
-
-                </h4>
-
-                <button 
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                ></button>
-
-            </div>
-
-            <!-- FORM -->
-
-<form
-    method="POST"
-    enctype="multipart/form-data">
-
-    {% csrf_token %}
-
- <div class="modal-body premium-form-body">
-
-    <!-- =========================================
-    FOTO
-    ========================================== -->
-
-    <div class="photo-upload-area">
-
-        <label class="upload-photo">
-
-            <input
-                type="file"
-                name="foto"
-                hidden
-            >
-
-            <div class="photo-circle">
-
-                <img
-                    id="previewFoto"
-                    src=""
-                    style="display:none;"
-                >
-
-                <i
-                    class="bi bi-camera-fill"
-                    id="cameraIcon"></i>
-
-            </div>
-
-            <span>
-
-                Adicionar foto
-
-            </span>
-
-        </label>
-
-    </div>
-
-    <!-- =========================================
-    DADOS PESSOAIS
-    ========================================== -->
-
-    <div class="form-section">
-
-        <div class="section-header">
-
-            <i class="bi bi-person-vcard-fill"></i>
-
-            <h5>
-
-                Dados Pessoais
-
-            </h5>
-
-        </div>
-
-        <div class="row g-3">
-
-            <!-- NOME -->
-
-            <div class="col-md-12">
-
-                <label class="form-label">
-
-                    Nome completo
-
-                </label>
-
-                <input
-                    type="text"
-                    name="nome"
-                    class="form-control premium-input"
-                    required
-                >
-
-            </div>
-
-            <!-- CPF -->
-
-            <div class="col-md-4">
-
-                <label class="form-label">
-
-                    CPF
-
-                </label>
-
-                <input
-                    type="text"
-                    name="cpf"
-                    id="cpf"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-           <!-- NASCIMENTO -->
-
-<div class="col-md-3">
-
-    <label class="form-label">
-
-        Data nascimento
-
-    </label>
-
-    <input
-        type="date"
-        name="nascimento"
-        class="form-control premium-input"
-    >
-
-</div>
-
-<!-- IDADE -->
-
-<div class="col-md-2">
-
-    <label class="form-label">
-
-        Idade
-
-    </label>
-
-    <input
-        type="text"
-        id="idade"
-        class="form-control premium-input"
-        readonly
-    >
-
-</div>
-
-            <!-- GÊNERO -->
-
-            <div class="col-md-3">
-
-                <label class="form-label">
-
-                    Gênero
-
-                </label>
-
-                <select
-                    name="genero"
-                    class="form-select premium-input">
-
-                    <option value="">
-
-                        Selecione
-
-                    </option>
-
-                    <option>
-
-                        Cis Masculino
-
-                    </option>
-
-                    <option>
-
-                        Cis Feminino
-
-                    </option>
-
-                    <option>
-
-                        Transgênero
-
-                    </option>
-
-                    <option>
-
-                        Não-binário
-
-                    </option>
-
-                    <option>
-
-                        Outros
-
-                    </option>
-
-
-                </select>
-
-            </div>
-
-            <!-- PROFISSÃO -->
-
-            <div class="col-md-6">
-
-                <label class="form-label">
-
-                    Profissão
-
-                </label>
-
-                <input
-                    type="text"
-                    name="profissao"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-            <!-- ESTADO CIVIL -->
-
-            <div class="col-md-6">
-
-                <label class="form-label">
-
-                    Estado Civil
-
-                </label>
-
-                <select
-                    name="estado_civil"
-                    class="form-select premium-input">
-
-                    <option value="">
-
-                        Selecione
-
-                    </option>
-
-                    <option>
-
-                        Solteiro(a)
-
-                    </option>
-
-                    <option>
-
-                        Casado(a)
-
-                    </option>
-
-                    <option>
-
-                        Divorciado(a)
-
-                    </option>
-
-                    <option>
-
-                        Viúvo(a)
-
-                    </option>
-
-                    <option>
-
-                        Outros
-
-                    </option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- =========================================
-    CONTATO
-    ========================================== -->
-
-    <div class="form-section">
-
-        <div class="section-header">
-
-            <i class="bi bi-telephone-fill"></i>
-
-            <h5>
-
-                Contato
-
-            </h5>
-
-        </div>
-
-        <div class="row g-3">
-
-            <div class="col-md-3">
-
-                <label class="form-label">
-
-                    Telefone
-
-                </label>
-
-                <input
-                    type="text"
-                    name="telefone"
-                    id="telefone"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-            <div class="col-md-3">
-
-                <label class="form-label">
-
-                    WhatsApp
-
-                </label>
-
-                <input
-                    type="text"
-                    name="whatsapp"
-                    id="whatsapp"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-            <div class="col-md-6">
-
-                <label class="form-label">
-
-                    Email
-
-                </label>
-
-                <input
-                    type="email"
-                    name="email"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- =========================================
-    ENDEREÇO
-    ========================================== -->
-
-    <div class="form-section">
-
-        <div class="section-header">
-
-            <i class="bi bi-geo-alt-fill"></i>
-
-            <h5>
-
-                Endereço
-
-            </h5>
-
-        </div>
-
-        <div class="row g-3">
-
-            <div class="col-md-2">
-
-                <label class="form-label">
-
-                    CEP
-
-                </label>
-
-                <input
-                    type="text"
-                    name="cep"
-                    id="cep"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-            <div class="col-md-6">
-
-                <label class="form-label">
-
-                    Endereço
-
-                </label>
-
-                <input
-                    type="text"
-                    name="endereco"
-                    id="endereco"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-            <div class="col-md-2">
-
-                <label class="form-label">
-
-                    Número
-
-                </label>
-
-                <input
-                    type="text"
-                    name="numero"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-            <div class="col-md-2">
-
-                <label class="form-label">
-
-                    Complemento
-
-                </label>
-
-                <input
-                    type="text"
-                    name="complemento"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-
-            <div class="col-md-4">
-
-                <label class="form-label">
-
-                    Bairro
-
-                </label>
-
-                <input
-                    type="text"
-                    name="bairro"
-                    id="bairro"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-            <div class="col-md-4">
-
-                <label class="form-label">
-
-                    Cidade
-
-                </label>
-
-                <input
-                    type="text"
-                    name="cidade"
-                    id="cidade"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-            <div class="col-md-4">
-
-                <label class="form-label">
-
-                    Estado
-
-                </label>
-
-                <input
-                    type="text"
-                    name="estado"
-                    id="estado"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- =========================================
-    RESPONSÁVEL
-    ========================================== -->
-
-    <div
-        class="form-section responsavel-section"
-        style="display:none;">
-
-        <div class="section-header">
-
-            <i class="bi bi-person-heart"></i>
-
-            <h5>
-
-                Responsável Legal
-
-            </h5>
-
-        </div>
-
-        <div class="row g-3">
-
-            <div class="col-md-4">
-
-                <label class="form-label">
-
-                    Nome responsável
-
-                </label>
-
-                <input
-                    type="text"
-                    name="responsavel"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-            <div class="col-md-4">
-
-                <label class="form-label">
-
-                    CPF responsável
-
-                </label>
-
-                <input
-                    type="text"
-                    name="cpf_responsavel"
-                    id="cpf_responsavel"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-            <div class="col-md-4">
-
-                <label class="form-label">
-
-                    Telefone responsável
-
-                </label>
-
-                <input
-                    type="text"
-                    name="telefone_responsavel"
-                    id="telefone_responsavel"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- =========================================
-    DADOS CLÍNICOS
-    ========================================== -->
-
-    <div class="form-section">
-
-        <div class="section-header">
-
-            <i class="bi bi-heart-pulse-fill"></i>
-
-            <h5>
-
-                Dados Clínicos
-
-            </h5>
-
-        </div>
-
-        <div class="row g-3">
-
-            <div class="col-md-6">
-
-                <label class="form-label">
-
-                    Convênio
-
-                </label>
-
-                <input
-                    type="text"
-                    name="convenio"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-            <div class="col-md-6">
-
-                <label class="form-label">
-
-                    Carteirinha
-
-                </label>
-
-                <input
-                    type="text"
-                    name="carteirinha"
-                    class="form-control premium-input"
-                >
-
-            </div>
-
-            <div class="col-md-6">
-
-                <label class="form-label">
-
-                    Alergias
-
-                </label>
-
-                <textarea
-                    name="alergias"
-                    rows="3"
-                    class="form-control premium-input"></textarea>
-
-            </div>
-
-            <div class="col-md-6">
-
-                <label class="form-label">
-
-                    Medicamentos contínuos
-
-                </label>
-
-                <textarea
-                    name="medicamentos"
-                    rows="3"
-                    class="form-control premium-input"></textarea>
-
-            </div>
-
-            <div class="col-md-12">
-
-                <label class="form-label">
-
-                    Observações clínicas
-
-                </label>
-
-                <textarea
-                    name="observacoes"
-                    rows="4"
-                    class="form-control premium-input"></textarea>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-    <!-- FOOTER -->
-
-    <div class="modal-footer border-0 p-4">
-
-        <button
-            type="button"
-            class="btn btn-light rounded-4 px-4"
-            data-bs-dismiss="modal">
-
-            Cancelar
-
-        </button>
-
-        <button
-            type="submit"
-            class="btn btn-primary rounded-4 px-4">
-
-            Salvar Paciente
-
-        </button>
-
-    </div>
-
-</form>
-        </div>
-
-    </div>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{% static 'js/pacientes.js' %}"></script>
-
-</body>
-</html>
+{% endblock %}
