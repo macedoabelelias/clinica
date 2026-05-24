@@ -117,6 +117,20 @@ class ProcedimentoForm(forms.ModelForm):
         }
 
     ),
+
+    'valor_convenio': forms.NumberInput(
+
+        attrs={
+
+            'class': 'form-control shadow-sm',
+
+            'step': '0.01',
+
+            'placeholder': 'Valor Convênio'
+
+        }
+
+    ),
     
 
     'tempo_estimado': forms.NumberInput(

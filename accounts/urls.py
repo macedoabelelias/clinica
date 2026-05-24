@@ -132,4 +132,29 @@ urlpatterns = [
 
 ),
 
+path(
+    'procedimentos/editar/<int:id>/',
+    views.editar_procedimento,
+    name='editar_procedimento'
+),
+
+path(
+    'procedimentos/excluir/<int:id>/',
+    views.excluir_procedimento,
+    name='excluir_procedimento'
+),
+
+
+path(
+    'convenios/editar/<int:id>/',
+    views.editar_convenio,
+    name='editar_convenio'
+),
+
+path(
+    'convenios/excluir/<int:id>/',
+    views.excluir_convenio,
+    name='excluir_convenio'
+),
+
 ]

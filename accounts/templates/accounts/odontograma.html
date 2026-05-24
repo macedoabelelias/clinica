@@ -556,6 +556,40 @@ document
 
 })
 
+
+function atualizarPreviewIcone() {
+
+    const input = document.getElementById('id_icone');
+
+    const preview = document.getElementById('preview-icone');
+
+    const nomeIcone = input.value;
+
+    if (nomeIcone) {
+
+        // TENTA FULL PRIMEIRO
+        preview.src = `/static/img/procedimentos/full/${nomeIcone}`;
+
+        preview.style.display = 'block';
+
+        // SE NÃO EXISTIR NO FULL
+        preview.onerror = function () {
+
+            preview.src = `/static/img/procedimentos/mini/${nomeIcone}`;
+
+        };
+
+    } else {
+
+        preview.style.display = 'none';
+
+    }
+
+}
+
+window.onload = atualizarPreviewIcone;
+
+
 </script>
 
 {% endblock %}

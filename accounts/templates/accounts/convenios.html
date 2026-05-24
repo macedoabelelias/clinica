@@ -117,73 +117,111 @@
                             <th>Índice</th>
                             <th>Telefone</th>
                             <th>Status</th>
+                             <th width="140">Ações</th>
 
                         </tr>
 
                     </thead>
 
-                    <tbody>
+                   <tbody>
 
-                        {% for convenio in convenios %}
+    {% for convenio in convenios %}
 
-                        <tr>
+    <tr>
 
-                            <td>
+        <!-- NOME -->
+        <td>
 
-                                <strong>
-                                    {{ convenio.nome }}
-                                </strong>
+            <strong>
+                {{ convenio.nome }}
+            </strong>
 
-                            </td>
+        </td>
 
-                            <td>
+        <!-- ÍNDICE -->
+        <td>
 
-                                {{ convenio.indice }}
+            {{ convenio.indice }}
 
-                            </td>
+        </td>
 
-                            <td>
+        <!-- TELEFONE -->
+        <td>
 
-                                {{ convenio.telefone }}
+            {{ convenio.telefone }}
 
-                            </td>
+        </td>
 
-                            <td>
+        <!-- STATUS -->
+        <td>
 
-                                {% if convenio.ativo %}
+            {% if convenio.ativo %}
 
-                                    <span class="badge bg-success rounded-pill px-3">
-                                        Ativo
-                                    </span>
+                <span class="badge bg-success">
 
-                                {% else %}
+                    Ativo
 
-                                    <span class="badge bg-danger rounded-pill px-3">
-                                        Inativo
-                                    </span>
+                </span>
 
-                                {% endif %}
+            {% else %}
 
-                            </td>
+                <span class="badge bg-secondary">
 
-                        </tr>
+                    Inativo
 
-                        {% empty %}
+                </span>
 
-                        <tr>
+            {% endif %}
 
-                            <td colspan="4" class="text-center text-muted py-4">
+        </td>
 
-                                Nenhum convênio cadastrado.
+        <!-- AÇÕES -->
+        <td>
 
-                            </td>
+            <div class="d-flex gap-2">
 
-                        </tr>
+                <!-- EDITAR -->
+                <a
+                    href="{% url 'editar_convenio' convenio.id %}"
+                    class="btn btn-sm btn-light border"
+                >
 
-                        {% endfor %}
+                    <i class="fa-solid fa-pen"></i>
 
-                    </tbody>
+                </a>
 
+                <!-- EXCLUIR -->
+                <a
+                    href="{% url 'excluir_convenio' convenio.id %}"
+                    class="btn btn-sm btn-light border"
+                    onclick="return confirm('Deseja excluir este convênio?')"
+                >
+
+                    <i class="fa-solid fa-trash"></i>
+
+                </a>
+
+            </div>
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+
+        <td colspan="5">
+
+            Nenhum convênio cadastrado.
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</tbody>
                 </table>
 
             </div>

@@ -16,6 +16,9 @@ from django.contrib.auth.decorators import (
     login_required
 )
 
+from django.conf import settings
+print(settings.BASE_DIR)
+
 from .models import (
 
     Convenio,
@@ -812,55 +815,24 @@ def ficha_clinica(request, id):
     )
 
 # =========================================
-# GERENCIAR PROCEDIMENTOS
+# PROCEDIMENTOS
 # =========================================
 
 @login_required(login_url='/')
 def procedimentos(request):
 
-    # =========================================
-    # SALVAR
-    # =========================================
-
-    if request.method == 'POST':
-
-        form = ProcedimentoForm(
-
-            request.POST
-
-        )
-
-        if form.is_valid():
-
-            form.save()
-
-            return redirect(
-
-                'procedimentos'
-
-            )
-
-    else:
-
-        form = ProcedimentoForm()
-
-    # =========================================
-    # LISTAGEM
-    # =========================================
-
     procedimentos = Procedimento.objects.all().order_by(
-
         'ordem',
         'nome'
-
     )
 
     # =========================================
     # ÍCONES DISPONÍVEIS
     # =========================================
 
-    caminho_icones = os.path.join(
+    pasta_icones = os.path.join(
 
+        settings.BASE_DIR,
         'static',
         'img',
         'procedimentos',
@@ -870,27 +842,61 @@ def procedimentos(request):
 
     icones = []
 
-    if os.path.exists(caminho_icones):
+    if os.path.exists(pasta_icones):
 
         icones = sorted([
 
             arquivo
 
-            for arquivo in os.listdir(caminho_icones)
+            for arquivo in os.listdir(pasta_icones)
 
-            if arquivo.endswith('.png')
+            if arquivo.lower().endswith((
+                '.png',
+                '.svg',
+                '.webp',
+                '.jpg',
+                '.jpeg'
+            ))
 
         ])
+
+    print(pasta_icones)
+    print(icones)
     # =========================================
-    # CONTEXT
+    # FORMULÁRIO
     # =========================================
+
+    form = ProcedimentoForm()
+
+    # =========================================
+    # SALVAR
+    # =========================================
+
+    if request.method == 'POST':
+
+        form = ProcedimentoForm(request.POST)
+
+        if form.is_valid():
+
+            procedimento = form.save(commit=False)
+
+            # VALOR CONVÊNIO AUTOMÁTICO
+            if not procedimento.valor_convenio:
+
+                procedimento.valor_convenio = 0
+
+            procedimento.save()
+
+            return redirect('procedimentos')
+
+        else:
+
+            print(form.errors)
 
     context = {
 
         'form': form,
-
         'procedimentos': procedimentos,
-
         'icones': icones
 
     }
@@ -903,7 +909,105 @@ def procedimentos(request):
 
         context
 
+    )  
+
+# =========================================
+# EDITAR PROCEDIMENTO
+# =========================================
+
+@login_required(login_url='/')
+def editar_procedimento(request, id):
+
+    procedimento = get_object_or_404(
+
+        Procedimento,
+
+        id=id
+
     )
+
+    procedimentos = Procedimento.objects.all().order_by(
+        'ordem',
+        'nome'
+    )
+
+    pasta_icones = os.path.join(
+
+        settings.BASE_DIR,
+        'static',
+        'img',
+        'procedimentos',
+        'mini'
+
+    )
+    icones = []
+
+    if os.path.exists(pasta_icones):
+
+        icones = os.listdir(pasta_icones)
+
+    if request.method == 'POST':
+
+        form = ProcedimentoForm(
+
+            request.POST,
+
+            instance=procedimento
+
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('procedimentos')
+
+    else:
+
+        form = ProcedimentoForm(
+            instance=procedimento
+        )
+
+    context = {
+
+        'form': form,
+        'procedimentos': procedimentos,
+        'icones': icones,
+        'editando': True
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/procedimentos.html',
+
+        context
+
+    )
+
+
+# =========================================
+# EXCLUIR PROCEDIMENTO
+# =========================================
+
+@login_required(login_url='/')
+def excluir_procedimento(request, id):
+
+    procedimento = get_object_or_404(
+
+        Procedimento,
+
+        id=id
+
+    )
+
+    procedimento.delete()
+
+    return redirect('procedimentos')
+
+
 
 # =========================================
 # ORÇAMENTO
@@ -990,10 +1094,6 @@ def orcamento(request, id):
 # CONVÊNIOS
 # =========================================
 
-from .models import Convenio
-from .forms import ConvenioForm
-
-
 @login_required(login_url='/')
 def convenios(request):
 
@@ -1025,3 +1125,68 @@ def convenios(request):
         context
 
     )
+
+# =========================================
+# EDITAR CONVÊNIO
+# =========================================
+
+@login_required(login_url='/')
+def editar_convenio(request, id):
+
+    convenio = get_object_or_404(
+        Convenio,
+        id=id
+    )
+
+    if request.method == 'POST':
+
+        form = ConvenioForm(
+            request.POST,
+            instance=convenio
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('convenios')
+
+    else:
+
+        form = ConvenioForm(
+            instance=convenio
+        )
+
+    convenios = Convenio.objects.all()
+
+    return render(
+
+        request,
+
+        'accounts/convenios.html',
+
+        {
+
+            'form': form,
+            'convenios': convenios
+
+        }
+
+    )
+
+
+# =========================================
+# EXCLUIR CONVÊNIO
+# =========================================
+
+@login_required(login_url='/')
+def excluir_convenio(request, id):
+
+    convenio = get_object_or_404(
+        Convenio,
+        id=id
+    )
+
+    convenio.delete()
+
+    return redirect('convenios')

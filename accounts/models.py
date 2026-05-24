@@ -702,54 +702,6 @@ class Procedimento(models.Model):
     )
 
     # =========================================
-    # TEMPO ESTIMADO
-    # =========================================
-
-    tempo_estimado = models.IntegerField(
-
-        default=60
-
-    )
-
-    # =========================================
-    # CUSTO CLÍNICO
-    # =========================================
-
-    custo_clinico = models.DecimalField(
-
-        max_digits=10,
-
-        decimal_places=2,
-
-        default=0
-
-    )
-
-    # =========================================
-    # ATIVO
-    # =========================================
-
-    ativo = models.BooleanField(
-
-        default=True
-
-    )
-
-    # =========================================
-    # VALOR PARTICULAR
-    # =========================================
-
-    valor_particular = models.DecimalField(
-
-        max_digits=10,
-
-        decimal_places=2,
-
-        default=0
-
-    )
-
-    # =========================================
     # VALOR CONVÊNIO
     # =========================================
 
@@ -759,7 +711,11 @@ class Procedimento(models.Model):
 
         decimal_places=2,
 
-        default=0
+        default=0,
+
+        blank=True,
+
+        null=True
 
     )
 
@@ -786,6 +742,16 @@ class Procedimento(models.Model):
         decimal_places=2,
 
         default=0
+
+    )
+
+    # =========================================
+    # ATIVO
+    # =========================================
+
+    ativo = models.BooleanField(
+
+        default=True
 
     )
 

@@ -129,23 +129,36 @@
         </datalist>
 
         <!-- PREVIEW -->
-        <div class="preview-icone-box mt-3">
+    <div class="preview-icone-box mt-3">
 
-            <div class="preview-icone-card">
+    <div class="preview-icone-card">
 
-                <img
-                    id="preview-icone"
-                    src=""
-                    alt="Preview"
-                >
+        <img
 
-            </div>
+            id="preview-icone"
 
-            <small class="text-muted mt-2 d-block">
-                Pré-visualização do ícone
-            </small>
+            src=""
 
-        </div>
+            alt="Preview"
+
+            style="
+                width:90px;
+                height:90px;
+                object-fit:contain;
+                display:none;
+            "
+
+        >
+
+    </div>
+
+    <small class="text-muted mt-2 d-block">
+
+        Pré-visualização do ícone
+
+    </small>
+
+</div>   
 
     </div>
 
@@ -187,7 +200,7 @@
 <div class="row g-3 mt-1">
 
     <!-- VALOR PARTICULAR -->
-    <div class="col-md-4">
+    <div class="col-md-3">
 
         <label class="form-label fw-semibold">
             Valor Particular
@@ -197,8 +210,22 @@
 
     </div>
 
+    <!-- VALOR CONVÊNIO -->
+
+<div class="col-md-3">
+
+    <label class="form-label">
+
+        Valor Convênio
+
+    </label>
+
+    {{ form.valor_convenio }}
+
+</div>
+
     <!-- TEMPO -->
-    <div class="col-md-3">
+    <div class="col-md-2">
 
         <label class="form-label fw-semibold">
             Tempo (min)
@@ -209,7 +236,7 @@
     </div>
 
     <!-- CUSTO -->
-    <div class="col-md-3">
+    <div class="col-md-2">
 
         <label class="form-label fw-semibold">
             Custo Clínico
@@ -276,125 +303,150 @@
 
     </div>
 
-    <!-- ========================================= -->
-    <!-- LISTAGEM -->
-    <!-- ========================================= -->
+ <!-- ========================================= -->
+<!-- LISTAGEM -->
+<!-- ========================================= -->
 
-    <div class="card shadow-sm border-0 rounded-4">
+<div class="card shadow-sm border-0 rounded-4">
 
-        <div class="card-body p-4">
+    <div class="card-body p-4">
 
-            <div class="table-responsive">
+        <div class="table-responsive">
 
-                <table class="table align-middle">
+            <table class="table align-middle">
 
-                    <thead>
+                <thead>
 
-                        <tr>
+                    <tr>
 
-                            <th>Ícone</th>
-                            <th>Nome</th>
-                            <th>Categoria</th>
-                            <th>Posição</th>
-                            <th>Status</th>
+                        <th>Ícone</th>
+                        <th>Nome</th>
+                        <th>Categoria</th>
+                        <th>Posição</th>
+                        <th>Status</th>
+                        <th width="140">Ações</th>
 
-                        </tr>
+                    </tr>
 
-                    </thead>
+                </thead>
 
-                    <tbody>
+                <tbody>
 
-                        {% for procedimento in procedimentos %}
+                    {% for procedimento in procedimentos %}
 
-                        <tr>
+                    <tr>
 
-                            <!-- ÍCONE -->
+                        <!-- ÍCONE -->
+                        <td width="80">
 
-                            <td width="80">
+                            <img
+                                src="{% static 'img/procedimentos/mini/' %}{{ procedimento.icone }}"
+                                width="34"
+                            >
 
-                                <img
+                        </td>
 
-                                    src="{% static 'img/procedimentos/mini/' %}{{ procedimento.icone }}"
+                        <!-- NOME -->
+                        <td>
 
-                                    width="34"
+                            {{ procedimento.nome }}
 
+                        </td>
+
+                        <!-- CATEGORIA -->
+                        <td>
+
+                            {{ procedimento.categoria }}
+
+                        </td>
+
+                        <!-- POSIÇÃO -->
+                        <td>
+
+                            {{ procedimento.get_posicao_icone_display }}
+
+                        </td>
+
+                        <!-- STATUS -->
+                        <td>
+
+                            {% if procedimento.ativo %}
+
+                                <span class="badge bg-success">
+
+                                    Ativo
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-secondary">
+
+                                    Inativo
+
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <!-- AÇÕES -->
+                        <td>
+
+                            <div class="d-flex gap-2">
+
+                                <!-- EDITAR -->
+                                <a
+                                    href="{% url 'editar_procedimento' procedimento.id %}"
+                                    class="btn btn-sm btn-light border"
+                                    title="Editar"
                                 >
 
-                            </td>
+                                    <i class="fa-solid fa-pen"></i>
 
-                            <!-- NOME -->
+                                </a>
 
-                            <td>
+                                <!-- EXCLUIR -->
+                                <a
+                                    href="{% url 'excluir_procedimento' procedimento.id %}"
+                                    class="btn btn-sm btn-light border"
+                                    title="Excluir"
+                                    onclick="return confirm('Deseja excluir este procedimento?')"
+                                >
 
-                                {{ procedimento.nome }}
+                                    <i class="fa-solid fa-trash"></i>
 
-                            </td>
+                                </a>
 
-                            <!-- CATEGORIA -->
+                            </div>
 
-                            <td>
+                        </td>
 
-                                {{ procedimento.categoria }}
+                    </tr>
 
-                            </td>
+                    {% empty %}
 
-                            <!-- POSIÇÃO -->
+                    <tr>
 
-                            <td>
+                        <td colspan="6" class="text-center text-muted py-4">
 
-                                {{ procedimento.get_posicao_icone_display }}
+                            Nenhum procedimento cadastrado.
 
-                            </td>
+                        </td>
 
-                            <!-- STATUS -->
+                    </tr>
 
-                            <td>
+                    {% endfor %}
 
-                                {% if procedimento.ativo %}
+                </tbody>
 
-                                    <span class="badge bg-success">
-
-                                        Ativo
-
-                                    </span>
-
-                                {% else %}
-
-                                    <span class="badge bg-secondary">
-
-                                        Inativo
-
-                                    </span>
-
-                                {% endif %}
-
-                            </td>
-
-                        </tr>
-
-                        {% empty %}
-
-                        <tr>
-
-                            <td colspan="5">
-
-                                Nenhum procedimento cadastrado.
-
-                            </td>
-
-                        </tr>
-
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
-
-            </div>
+            </table>
 
         </div>
 
     </div>
+
+</div>   
 
 </div>
 
@@ -406,13 +458,23 @@ function atualizarPreviewIcone() {
 
     const preview = document.getElementById('preview-icone');
 
-    const nomeIcone = input.value;
+    if (!input || !preview) return;
 
-    if(nomeIcone){
+    const nomeIcone = input.value.trim();
 
-        preview.src = `/static/img/procedimentos/mini/${nomeIcone}`;
+    if (nomeIcone !== '') {
 
         preview.style.display = 'block';
+
+        preview.src = `/static/img/procedimentos/full/${nomeIcone}`;
+
+        preview.onerror = function () {
+
+            preview.onerror = null;
+
+            preview.src = `/static/img/procedimentos/mini/${nomeIcone}`;
+
+        };
 
     } else {
 
@@ -422,7 +484,10 @@ function atualizarPreviewIcone() {
 
 }
 
-window.onload = atualizarPreviewIcone;
+document.addEventListener(
+    'DOMContentLoaded',
+    atualizarPreviewIcone
+);
 
 </script>
 
