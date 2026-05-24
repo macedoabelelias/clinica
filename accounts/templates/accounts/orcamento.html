@@ -1,0 +1,202 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+<div class="container-fluid p-4">
+
+    <!-- TÍTULO -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h1 class="fw-bold">
+
+                Orçamento
+
+            </h1>
+
+            <p class="text-muted mb-0">
+
+                Paciente: {{ paciente.nome }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- FORM -->
+
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+        <div class="card-body p-4">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="row g-3 align-items-end">
+
+                    <!-- PROCEDIMENTO -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+
+                            Procedimento
+
+                        </label>
+
+                        {{ item_form.procedimento }}
+
+                    </div>
+
+                    <!-- QUANTIDADE -->
+
+                    <div class="col-md-2">
+
+                        <label class="form-label">
+
+                            Quantidade
+
+                        </label>
+
+                        {{ item_form.quantidade }}
+
+                    </div>
+
+                    <!-- BOTÃO -->
+
+                    <div class="col-md-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100 rounded-pill"
+                        >
+
+                            Adicionar
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- TABELA -->
+
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-body p-4">
+
+            <table class="table align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+
+                            Procedimento
+
+                        </th>
+
+                        <th>
+
+                            Quantidade
+
+                        </th>
+
+                        <th>
+
+                            Valor
+
+                        </th>
+
+                        <th>
+
+                            Total
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for item in orcamento.itens.all %}
+
+                    <tr>
+
+                        <td>
+
+                            {{ item.procedimento.nome }}
+
+                        </td>
+
+                        <td>
+
+                            {{ item.quantidade }}
+
+                        </td>
+
+                        <td>
+
+                            R$ {{ item.valor_unitario }}
+
+                        </td>
+
+                        <td>
+
+                            R$ {{ item.total }}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="4">
+
+                            Nenhum item adicionado.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <!-- TOTAL -->
+
+            <div class="text-end mt-4">
+
+                <h4 class="fw-bold">
+
+                    Total:
+
+                    R$ {{ orcamento.total }}
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

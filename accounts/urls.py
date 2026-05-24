@@ -2,6 +2,9 @@ from django.urls import path
 
 from . import views
 
+from .views import convenios
+
+
 
 urlpatterns = [
 
@@ -86,6 +89,20 @@ urlpatterns = [
     ),
 
     # =========================================
+    # ORÇAMENTO
+    # =========================================
+
+    path(
+
+        'pacientes/<int:id>/orcamento/',
+
+        views.orcamento,
+
+        name='orcamento'
+
+    ),
+
+    # =========================================
     # PROCEDIMENTOS
     # =========================================
 
@@ -104,5 +121,15 @@ urlpatterns = [
         views.logout_view,
         name='logout'
     ),
+
+    path(
+
+    'convenios/',
+
+    convenios,
+
+    name='convenios'
+
+),
 
 ]

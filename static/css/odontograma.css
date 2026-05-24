@@ -908,3 +908,42 @@ RESPONSIVO
     }
 
 }
+
+/* =========================================
+STATUS DOS PROCEDIMENTOS
+========================================= */
+
+.status-realizar {
+
+    filter:
+    drop-shadow(0 0 3px #ef4444);
+
+}
+
+.status-andamento {
+
+    filter:
+    drop-shadow(0 0 3px #facc15);
+
+}
+
+.status-realizado {
+
+    filter:
+    drop-shadow(0 0 3px #2563eb);
+
+}
+
+.status-cancelado {
+
+    filter:
+    drop-shadow(0 0 3px #9333ea);
+
+}
+
+.status-reavaliar {
+
+    filter:
+    drop-shadow(0 0 3px #22c55e);
+
+}

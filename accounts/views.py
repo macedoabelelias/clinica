@@ -1,25 +1,41 @@
-from urllib import request
+import os
 
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import (
+    render,
+    redirect,
+    get_object_or_404
+)
 
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import (
+    authenticate,
+    login,
+    logout
+)
 
-from django.contrib.auth.decorators import login_required
-
-from .forms import ProcedimentoForm 
+from django.contrib.auth.decorators import (
+    login_required
+)
 
 from .models import (
+
+    Convenio,
     EvolucaoClinica,
     Paciente,
     Anamnese,
-    Procedimento
+    Procedimento,
+    Orcamento,
+    ItemOrcamento
+
 )
 
-import os
+from .forms import (
 
-from urllib import request
+    ProcedimentoForm,
+    OrcamentoForm,
+    ItemOrcamentoForm,
+    ConvenioForm
 
-from django.shortcuts import render, redirect, get_object_or_404
+)
 
 
 # =========================================
@@ -84,7 +100,6 @@ def dashboard_view(request):
 
     )
 
-
 # =========================================
 # PACIENTES
 # =========================================
@@ -101,75 +116,45 @@ def pacientes_view(request):
         Paciente.objects.create(
 
             # FOTO
-
             foto=request.FILES.get('foto'),
 
             # DADOS PESSOAIS
-
             nome=request.POST.get('nome'),
-
             cpf=request.POST.get('cpf'),
-
             rg=request.POST.get('rg'),
-
             nascimento=request.POST.get('nascimento') or None,
-
             genero=request.POST.get('genero'),
-
             estado_civil=request.POST.get('estado_civil'),
-
             profissao=request.POST.get('profissao'),
 
             # CONTATO
-
             telefone=request.POST.get('telefone'),
-
             whatsapp=request.POST.get('whatsapp'),
-
             email=request.POST.get('email'),
 
             # ENDEREÇO
-
             cep=request.POST.get('cep'),
-
             endereco=request.POST.get('endereco'),
-
             numero=request.POST.get('numero'),
-
             complemento=request.POST.get('complemento'),
-
             bairro=request.POST.get('bairro'),
-
             cidade=request.POST.get('cidade'),
-
             estado=request.POST.get('estado'),
 
             # CLÍNICO
-
             convenio=request.POST.get('convenio'),
-
             carteirinha=request.POST.get('carteirinha'),
-
             alergias=request.POST.get('alergias'),
-
             medicamentos=request.POST.get('medicamentos'),
-
             observacoes=request.POST.get('observacoes'),
 
             # RESPONSÁVEL
-
             responsavel=request.POST.get('responsavel'),
-
             cpf_responsavel=request.POST.get(
-
                 'cpf_responsavel'
-
             ),
-
             telefone_responsavel=request.POST.get(
-
                 'telefone_responsavel'
-
             )
 
         )
@@ -182,17 +167,24 @@ def pacientes_view(request):
 
     pacientes = Paciente.objects.all().order_by('-id')
 
+    convenios = Convenio.objects.filter(
+        ativo=True
+    ).order_by('nome')
+
+    context = {
+
+        'pacientes': pacientes,
+        'convenios': convenios
+
+    }
+
     return render(
 
         request,
 
         'accounts/pacientes.html',
 
-        {
-
-            'pacientes': pacientes
-
-        }
+        context
 
     )
 
@@ -253,164 +245,122 @@ def editar_paciente(request, id):
     if request.method == 'POST':
 
         # FOTO
-
         if request.FILES.get('foto'):
 
             paciente.foto = request.FILES.get(
-
                 'foto'
-
             )
 
-        # DADOS
-
+        # DADOS PESSOAIS
         paciente.nome = request.POST.get('nome')
-
         paciente.cpf = request.POST.get('cpf')
-
         paciente.rg = request.POST.get('rg')
 
         paciente.nascimento = (
-
             request.POST.get('nascimento')
-
             or None
-
         )
 
         paciente.genero = request.POST.get(
-
             'genero'
-
         )
 
         paciente.estado_civil = request.POST.get(
-
             'estado_civil'
-
         )
 
         paciente.profissao = request.POST.get(
-
             'profissao'
-
         )
 
         # CONTATO
-
         paciente.telefone = request.POST.get(
-
             'telefone'
-
         )
 
         paciente.whatsapp = request.POST.get(
-
             'whatsapp'
-
         )
 
         paciente.email = request.POST.get(
-
             'email'
-
         )
 
         # ENDEREÇO
-
         paciente.cep = request.POST.get('cep')
 
         paciente.endereco = request.POST.get(
-
             'endereco'
-
         )
 
         paciente.numero = request.POST.get(
-
             'numero'
-
         )
 
         paciente.complemento = request.POST.get(
-
             'complemento'
-
         )
 
         paciente.bairro = request.POST.get(
-
             'bairro'
-
         )
 
         paciente.cidade = request.POST.get(
-
             'cidade'
-
         )
 
         paciente.estado = request.POST.get(
-
             'estado'
-
         )
 
         # CLÍNICO
-
         paciente.convenio = request.POST.get(
-
             'convenio'
-
         )
 
         paciente.carteirinha = request.POST.get(
-
             'carteirinha'
-
         )
 
         paciente.alergias = request.POST.get(
-
             'alergias'
-
         )
 
         paciente.medicamentos = request.POST.get(
-
             'medicamentos'
-
         )
 
         paciente.observacoes = request.POST.get(
-
             'observacoes'
-
         )
 
         # RESPONSÁVEL
-
         paciente.responsavel = request.POST.get(
-
             'responsavel'
-
         )
 
         paciente.cpf_responsavel = request.POST.get(
-
             'cpf_responsavel'
-
         )
 
         paciente.telefone_responsavel = request.POST.get(
-
             'telefone_responsavel'
-
         )
 
         paciente.save()
 
         return redirect('pacientes')
+
+    convenios = Convenio.objects.filter(
+        ativo=True
+    ).order_by('nome')
+
+    context = {
+
+        'paciente': paciente,
+        'convenios': convenios
+
+    }
 
     return render(
 
@@ -418,11 +368,7 @@ def editar_paciente(request, id):
 
         'accounts/editar_paciente.html',
 
-        {
-
-            'paciente': paciente
-
-        }
+        context
 
     )
 
@@ -926,7 +872,7 @@ def procedimentos(request):
 
     if os.path.exists(caminho_icones):
 
-        icones = [
+        icones = sorted([
 
             arquivo
 
@@ -934,8 +880,7 @@ def procedimentos(request):
 
             if arquivo.endswith('.png')
 
-        ]
-
+        ])
     # =========================================
     # CONTEXT
     # =========================================
@@ -956,6 +901,127 @@ def procedimentos(request):
 
         'accounts/procedimentos.html',
 
+        context
+
+    )
+
+# =========================================
+# ORÇAMENTO
+# =========================================
+
+@login_required(login_url='/')
+def orcamento(request, id):
+
+    paciente = get_object_or_404(
+
+        Paciente,
+
+        id=id
+
+    )
+
+    # =========================================
+    # CRIA ORÇAMENTO
+    # =========================================
+
+    orcamento, created = Orcamento.objects.get_or_create(
+
+        paciente=paciente
+
+    )
+
+    # =========================================
+    # ADICIONAR ITEM
+    # =========================================
+
+    if request.method == 'POST':
+
+        item_form = ItemOrcamentoForm(
+
+            request.POST
+
+        )
+
+        if item_form.is_valid():
+
+            item = item_form.save(
+
+                commit=False
+
+            )
+
+            item.orcamento = orcamento
+
+            item.save()
+
+            return redirect(
+
+                'orcamento',
+
+                id=paciente.id
+
+            )
+
+    else:
+
+        item_form = ItemOrcamentoForm()
+
+    context = {
+
+        'paciente': paciente,
+
+        'orcamento': orcamento,
+
+        'item_form': item_form
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/orcamento.html',
+
+        context
+
+    )
+
+# =========================================
+# CONVÊNIOS
+# =========================================
+
+from .models import Convenio
+from .forms import ConvenioForm
+
+
+@login_required(login_url='/')
+def convenios(request):
+
+    convenios = Convenio.objects.all().order_by('nome')
+
+    form = ConvenioForm()
+
+    if request.method == 'POST':
+
+        form = ConvenioForm(request.POST)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('convenios')
+
+    context = {
+
+        'form': form,
+        'convenios': convenios
+
+    }
+
+    return render(
+
+        request,
+        'accounts/convenios.html',
         context
 
     )

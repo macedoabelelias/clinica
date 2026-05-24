@@ -222,7 +222,7 @@ class Paciente(models.Model):
             )
 
         return None
-
+    
     # =========================================
     # STATUS
     # =========================================
@@ -231,7 +231,7 @@ class Paciente(models.Model):
     def status(self):
 
         return 'Ativo' if self.ativo else 'Inativo'
-
+    
     # =========================================
     # STRING
     # =========================================
@@ -594,6 +594,20 @@ class Procedimento(models.Model):
     ]
 
     # =========================================
+    # STATUS CLÍNICO
+    # =========================================
+
+    STATUS = [
+
+        ('realizar', 'A Realizar'),
+        ('andamento', 'Em Andamento'),
+        ('realizado', 'Realizado'),
+        ('cancelado', 'Cancelado'),
+        ('reavaliar', 'Reavaliar')
+
+    ]
+
+    # =========================================
     # NOME
     # =========================================
 
@@ -632,14 +646,16 @@ class Procedimento(models.Model):
     )
 
     # =========================================
-    # COR
+    # STATUS
     # =========================================
 
-    cor = models.CharField(
+    status = models.CharField(
 
-        max_length=20,
+        max_length=30,
 
-        default='#2563eb'
+        choices=STATUS,
+
+        default='realizar'
 
     )
 
@@ -672,12 +688,104 @@ class Procedimento(models.Model):
     )
 
     # =========================================
-    # STATUS
+    # VALOR PARTICULAR
+    # =========================================
+
+    valor_particular = models.DecimalField(
+
+        max_digits=10,
+
+        decimal_places=2,
+
+        default=0
+
+    )
+
+    # =========================================
+    # TEMPO ESTIMADO
+    # =========================================
+
+    tempo_estimado = models.IntegerField(
+
+        default=60
+
+    )
+
+    # =========================================
+    # CUSTO CLÍNICO
+    # =========================================
+
+    custo_clinico = models.DecimalField(
+
+        max_digits=10,
+
+        decimal_places=2,
+
+        default=0
+
+    )
+
+    # =========================================
+    # ATIVO
     # =========================================
 
     ativo = models.BooleanField(
 
         default=True
+
+    )
+
+    # =========================================
+    # VALOR PARTICULAR
+    # =========================================
+
+    valor_particular = models.DecimalField(
+
+        max_digits=10,
+
+        decimal_places=2,
+
+        default=0
+
+    )
+
+    # =========================================
+    # VALOR CONVÊNIO
+    # =========================================
+
+    valor_convenio = models.DecimalField(
+
+        max_digits=10,
+
+        decimal_places=2,
+
+        default=0
+
+    )
+
+    # =========================================
+    # TEMPO ESTIMADO
+    # =========================================
+
+    tempo_estimado = models.IntegerField(
+
+        default=60,
+
+        help_text='Tempo em minutos'
+
+    )
+
+    # =========================================
+    # CUSTO CLÍNICO
+    # =========================================
+
+    custo_clinico = models.DecimalField(
+
+        max_digits=10,
+
+        decimal_places=2,
+
+        default=0
 
     )
 
@@ -817,4 +925,191 @@ class EvolucaoClinica(models.Model):
 
         return f'{self.paciente.nome} - {procedimento}'
     
-   
+    # =========================================
+# ORÇAMENTO
+# =========================================
+
+class Orcamento(models.Model):
+
+    paciente = models.ForeignKey(
+
+        Paciente,
+
+        on_delete=models.CASCADE,
+
+        related_name='orcamentos'
+
+    )
+
+    desconto = models.DecimalField(
+
+        max_digits=10,
+
+        decimal_places=2,
+
+        default=0
+
+    )
+
+    observacoes = models.TextField(
+
+        blank=True,
+
+        null=True
+
+    )
+
+    criado_em = models.DateTimeField(
+
+        auto_now_add=True
+
+    )
+
+    # =========================================
+    # TOTAL
+    # =========================================
+
+    @property
+    def total(self):
+
+        total = sum(
+
+            item.total
+
+            for item in self.itens.all()
+
+        )
+
+        return total - self.desconto
+
+    def __str__(self):
+
+        return f'Orçamento #{self.id}'
+
+
+ # =========================================
+# ITENS DO ORÇAMENTO
+# =========================================
+
+class ItemOrcamento(models.Model):
+
+    orcamento = models.ForeignKey(
+
+        Orcamento,
+
+        on_delete=models.CASCADE,
+
+        related_name='itens'
+
+    )
+
+    procedimento = models.ForeignKey(
+
+        Procedimento,
+
+        on_delete=models.SET_NULL,
+
+        null=True
+
+    )
+
+    quantidade = models.IntegerField(
+
+        default=1
+
+    )
+
+    valor_unitario = models.DecimalField(
+
+        max_digits=10,
+
+        decimal_places=2,
+
+        default=0
+
+    )
+
+    # =========================================
+    # TOTAL
+    # =========================================
+
+    @property
+    def total(self):
+
+        return self.quantidade * self.valor_unitario
+
+    # =========================================
+    # SAVE AUTOMÁTICO
+    # =========================================
+
+    def save(self, *args, **kwargs):
+
+        if self.procedimento:
+
+            self.valor_unitario = (
+
+                self.procedimento.valor_particular
+
+            )
+
+        super().save(*args, **kwargs)
+
+    # =========================================
+    # STRING
+    # =========================================
+
+    def __str__(self):
+
+        return f'{self.procedimento}'  
+    
+
+    # =========================================
+# CONVÊNIOS
+# =========================================
+
+class Convenio(models.Model):
+
+    nome = models.CharField(
+
+        max_length=150
+
+    )
+
+    indice = models.DecimalField(
+
+        max_digits=5,
+        decimal_places=2,
+        default=1.00
+
+    )
+
+    telefone = models.CharField(
+
+        max_length=20,
+        blank=True,
+        null=True
+
+    )
+
+    observacoes = models.TextField(
+
+        blank=True,
+        null=True
+
+    )
+
+    ativo = models.BooleanField(
+
+        default=True
+
+    )
+
+    criado_em = models.DateTimeField(
+
+        auto_now_add=True
+
+    )
+
+    def __str__(self):
+
+        return self.nome

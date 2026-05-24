@@ -46,7 +46,7 @@
 
                     <!-- NOME -->
 
-                    <div class="col-md-4">
+                    <div class="col-md-5">
 
                         <label class="form-label">
 
@@ -54,7 +54,19 @@
 
                         </label>
 
-                        {{ form.nome }}
+                        <input
+
+                            type="text"
+
+                            name="nome"
+
+                            class="form-control"
+
+                            placeholder="Nome do procedimento"
+
+                            value="{{ form.nome.value|default:'' }}"
+
+                        >
 
                     </div>
 
@@ -74,7 +86,7 @@
 
                     <!-- TIPO -->
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
 
                         <label class="form-label">
 
@@ -86,92 +98,139 @@
 
                     </div>
 
-                    
-                    <!-- ÍCONE -->
+<!-- LINHA ÍCONE / POSIÇÃO / STATUS -->
+<div class="row g-4 align-items-start mt-2">
 
-<div class="col-md-4">
+    <!-- ÍCONE -->
+    <div class="col-md-5">
 
-    <label class="form-label">
+        <label class="form-label fw-semibold text-dark">
+            Ícone
+        </label>
 
-        Ícone
+        <input
+            type="text"
+            name="icone"
+            id="id_icone"
+            class="form-control shadow-sm"
+            list="lista-icones"
+            autocomplete="off"
+            placeholder="Digite ou pesquise um ícone"
+            value="{{ form.icone.value|default:'' }}"
+            oninput="atualizarPreviewIcone()"
+        >
 
-    </label>
+        <datalist id="lista-icones">
 
-    {{ form.icone }}
+            {% for icone in icones %}
+                <option value="{{ icone }}">
+            {% endfor %}
 
-    <!-- ========================================= -->
-    <!-- BIBLIOTECA DE ÍCONES -->
-    <!-- ========================================= -->
+        </datalist>
 
-    <div class="icones-grid mt-3">
+        <!-- PREVIEW -->
+        <div class="preview-icone-box mt-3">
 
-        {% for icone in icones %}
-
-            <div
-
-                class="icone-item"
-
-                onclick="selecionarIcone('{{ icone }}')"
-
-            >
+            <div class="preview-icone-card">
 
                 <img
-
-                    src="{% static 'img/procedimentos/mini/' %}{{ icone }}"
-
-                    width="42"
-
+                    id="preview-icone"
+                    src=""
+                    alt="Preview"
                 >
 
             </div>
 
-        {% endfor %}
+            <small class="text-muted mt-2 d-block">
+                Pré-visualização do ícone
+            </small>
+
+        </div>
+
+    </div>
+
+    <!-- POSIÇÃO -->
+    <div class="col-md-4">
+
+        <label class="form-label fw-semibold text-dark mb-2">
+            Posição do Ícone
+        </label>
+
+        <div class="select-premium">
+            {{ form.posicao_icone }}
+        </div>
+
+        <small class="text-muted d-block mt-2">
+            Define onde o ícone será exibido no dente.
+        </small>
+
+    </div>
+
+    <!-- STATUS -->
+    <div class="col-md-3">
+
+        <label class="form-label fw-semibold text-dark">
+            Status
+        </label>
+
+        {{ form.status }}
+
+        <small class="text-muted d-block mt-2">
+            Situação inicial do procedimento.
+        </small>
 
     </div>
 
 </div>
 
-                    <!-- POSIÇÃO -->
+<!-- LINHA FINANCEIRA -->
+<div class="row g-3 mt-1">
 
-                    <div class="col-md-4">
+    <!-- VALOR PARTICULAR -->
+    <div class="col-md-4">
 
-                        <label class="form-label">
+        <label class="form-label fw-semibold">
+            Valor Particular
+        </label>
 
-                            Posição do Ícone
+        {{ form.valor_particular }}
 
-                        </label>
+    </div>
 
-                        {{ form.posicao_icone }}
+    <!-- TEMPO -->
+    <div class="col-md-3">
 
-                    </div>
+        <label class="form-label fw-semibold">
+            Tempo (min)
+        </label>
 
-                    <!-- COR -->
+        {{ form.tempo_estimado }}
 
-                    <div class="col-md-2">
+    </div>
 
-                        <label class="form-label">
+    <!-- CUSTO -->
+    <div class="col-md-3">
 
-                            Cor
+        <label class="form-label fw-semibold">
+            Custo Clínico
+        </label>
 
-                        </label>
+        {{ form.custo_clinico }}
 
-                        {{ form.cor }}
+    </div>
 
-                    </div>
+    <!-- ORDEM -->
+    <div class="col-md-2">
 
-                    <!-- ORDEM -->
+        <label class="form-label fw-semibold">
+            Ordem
+        </label>
 
-                    <div class="col-md-2">
+        {{ form.ordem }}
 
-                        <label class="form-label">
+    </div>
 
-                            Ordem
-
-                        </label>
-
-                        {{ form.ordem }}
-
-                    </div>
+</div>
 
                     <!-- ATIVO -->
 
@@ -197,7 +256,13 @@
 
                 <div class="mt-4">
 
-                    <button type="submit" class="btn btn-primary rounded-pill px-4">
+                    <button
+
+                        type="submit"
+
+                        class="btn btn-primary rounded-pill px-4"
+
+                    >
 
                         Salvar Procedimento
 
@@ -249,7 +314,7 @@
 
                                 <img
 
-                                    src="{% static 'img/procedimentos/' %}{{ procedimento.icone }}"
+                                    src="{% static 'img/procedimentos/mini/' %}{{ procedimento.icone }}"
 
                                     width="34"
 
@@ -269,7 +334,7 @@
 
                             <td>
 
-                                {{ procedimento.get_categoria_display }}
+                                {{ procedimento.categoria }}
 
                             </td>
 
@@ -335,15 +400,29 @@
 
 <script>
 
-function selecionarIcone(nome) {
+function atualizarPreviewIcone() {
 
-    document.getElementById(
+    const input = document.getElementById('id_icone');
 
-        'id_icone'
+    const preview = document.getElementById('preview-icone');
 
-    ).value = nome
+    const nomeIcone = input.value;
+
+    if(nomeIcone){
+
+        preview.src = `/static/img/procedimentos/mini/${nomeIcone}`;
+
+        preview.style.display = 'block';
+
+    } else {
+
+        preview.style.display = 'none';
+
+    }
 
 }
+
+window.onload = atualizarPreviewIcone;
 
 </script>
 

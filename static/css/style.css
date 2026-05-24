@@ -451,3 +451,28 @@ RESPONSIVO
     }
 
 }
+
+.form-select,
+.form-control{
+
+    height:48px;
+
+    border-radius:14px !important;
+
+    border:1px solid #dbe2ea !important;
+
+    font-size:15px;
+
+    transition:all .2s ease;
+
+}
+
+.form-select:focus,
+.form-control:focus{
+
+    border-color:#2563eb !important;
+
+    box-shadow:
+        0 0 0 0.18rem rgba(37,99,235,.15) !important;
+
+}

@@ -118,10 +118,22 @@ LAYOUT
                                 {% if evolucao.dente == numero and evolucao.procedimento.icone %}
 
                                 <img
-                                    src="{% static 'img/procedimentos/' %}{{ evolucao.procedimento.icone }}"
-                                    class="icone-procedimento-dente posicao-{{ evolucao.procedimento.posicao_icone }}"
-                                    title="{{ evolucao.procedimento.nome }}"
-                                >
+
+    src="{% static 'img/procedimentos/full/' %}{{ evolucao.procedimento.icone }}"
+
+    class="
+
+        icone-procedimento-dente
+
+        posicao-{{ evolucao.procedimento.posicao_icone }}
+
+        status-{{ evolucao.procedimento.status }}
+
+    "
+
+    title="{{ evolucao.procedimento.nome }}"
+
+>
 
                                 {% endif %}
 

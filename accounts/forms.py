@@ -1,6 +1,13 @@
 from django import forms
 
-from .models import Procedimento
+from .models import (
+
+    Procedimento,
+    Orcamento,
+    ItemOrcamento,
+    Convenio
+
+)
 
 
 # =========================================
@@ -18,11 +25,253 @@ class ProcedimentoForm(forms.ModelForm):
             'nome',
             'categoria',
             'tipo',
-            'cor',
+            'status',
             'icone',
             'posicao_icone',
+
+            'valor_particular',
+            'valor_convenio',
+            'tempo_estimado',
+            'custo_clinico',
+
             'ativo',
             'ordem'
+
+        ]
+
+        widgets = {
+
+    'nome': forms.TextInput(
+
+        attrs={
+
+            'class': 'form-control shadow-sm'
+
+        }
+
+    ),
+
+    'categoria': forms.Select(
+
+        attrs={
+
+            'class': 'form-select shadow-sm'
+
+        }
+
+    ),
+
+    'tipo': forms.Select(
+
+        attrs={
+
+            'class': 'form-select shadow-sm'
+
+        }
+
+    ),
+
+    'status': forms.Select(
+
+        attrs={
+
+            'class': 'form-select shadow-sm'
+
+        }
+
+    ),
+
+    # ===== POSIÇÃO ÍCONE =====
+    'posicao_icone': forms.Select(
+
+        attrs={
+
+            'class': 'form-select shadow-sm'
+
+        }
+
+    ),
+
+    'icone': forms.TextInput(
+
+        attrs={
+
+            'class': 'form-control shadow-sm',
+
+            'placeholder': 'Digite ou pesquise um ícone'
+
+        }
+
+    ),
+
+    'valor_particular': forms.NumberInput(
+
+        attrs={
+
+            'class': 'form-control shadow-sm',
+
+            'step': '0.01',
+
+            'placeholder': 'Valor Particular'
+
+        }
+
+    ),
+    
+
+    'tempo_estimado': forms.NumberInput(
+
+        attrs={
+
+            'class': 'form-control shadow-sm',
+
+            'placeholder': 'Tempo em minutos'
+
+        }
+
+    ),
+
+    'custo_clinico': forms.NumberInput(
+
+        attrs={
+
+            'class': 'form-control shadow-sm',
+
+            'step': '0.01',
+
+            'placeholder': 'Custo Clínico'
+
+        }
+
+    ),
+
+    'ativo': forms.CheckboxInput(
+
+        attrs={
+
+            'class': 'form-check-input'
+
+        }
+
+    ),
+
+    'ordem': forms.NumberInput(
+
+        attrs={
+
+            'class': 'form-control shadow-sm'
+
+        }
+
+    )
+
+}
+
+
+# =========================================
+# ORÇAMENTO
+# =========================================
+
+class OrcamentoForm(forms.ModelForm):
+
+    class Meta:
+
+        model = Orcamento
+
+        fields = [
+
+            'desconto',
+            'observacoes'
+
+        ]
+
+        widgets = {
+
+            'desconto': forms.NumberInput(
+
+                attrs={
+
+                    'class': 'form-control',
+
+                    'step': '0.01'
+
+                }
+
+            ),
+
+            'observacoes': forms.Textarea(
+
+                attrs={
+
+                    'class': 'form-control',
+
+                    'rows': 3
+
+                }
+
+            )
+
+        }
+
+
+# =========================================
+# ITEM ORÇAMENTO
+# =========================================
+
+class ItemOrcamentoForm(forms.ModelForm):
+
+    class Meta:
+
+        model = ItemOrcamento
+
+        fields = [
+
+            'procedimento',
+            'quantidade'
+
+        ]
+
+        widgets = {
+
+            'procedimento': forms.Select(
+
+                attrs={
+
+                    'class': 'form-select'
+
+                }
+
+            ),
+
+            'quantidade': forms.NumberInput(
+
+                attrs={
+
+                    'class': 'form-control'
+
+                }
+
+            )
+
+        }
+
+ # =========================================
+# FORM CONVÊNIO
+# =========================================
+
+class ConvenioForm(forms.ModelForm):
+
+    class Meta:
+
+        model = Convenio
+
+        fields = [
+
+            'nome',
+            'indice',
+            'telefone',
+            'observacoes',
+            'ativo'
 
         ]
 
@@ -32,61 +281,39 @@ class ProcedimentoForm(forms.ModelForm):
 
                 attrs={
 
-                    'class': 'form-control'
+                    'class': 'form-control shadow-sm'
 
                 }
 
             ),
 
-            'categoria': forms.Select(
+            'indice': forms.NumberInput(
 
                 attrs={
 
-                    'class': 'form-select'
+                    'class': 'form-control shadow-sm',
+                    'step': '0.01'
 
                 }
 
             ),
 
-            'tipo': forms.Select(
+            'telefone': forms.TextInput(
 
                 attrs={
 
-                    'class': 'form-select'
+                    'class': 'form-control shadow-sm'
 
                 }
 
             ),
 
-            'cor': forms.TextInput(
+            'observacoes': forms.Textarea(
 
                 attrs={
 
-                    'class': 'form-control',
-
-                    'type': 'color'
-
-                }
-
-            ),
-
-            'icone': forms.TextInput(
-
-                attrs={
-
-                    'class': 'form-control',
-
-                    'placeholder': 'Ex: canal.png'
-
-                }
-
-            ),
-
-            'posicao_icone': forms.Select(
-
-                attrs={
-
-                    'class': 'form-select'
+                    'class': 'form-control shadow-sm',
+                    'rows': 3
 
                 }
 
@@ -100,16 +327,6 @@ class ProcedimentoForm(forms.ModelForm):
 
                 }
 
-            ),
-
-            'ordem': forms.NumberInput(
-
-                attrs={
-
-                    'class': 'form-control'
-
-                }
-
             )
 
-        }
+        }       
