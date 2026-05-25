@@ -90,102 +90,133 @@ LAYOUT
 
             <div class="odontograma-box">
 
-                <!-- DENTIÇÃO PERMANENTE -->
+            <!-- DENTIÇÃO PERMANENTE -->
 
-                <div class="secao-titulo">
-                    Dentição Permanente
-                </div>
+<div class="secao-titulo">
+    Dentição Permanente
+</div>
 
-                <!-- SUPERIOR -->
+<!-- SUPERIOR -->
 
-                <div class="arcada">
+<div class="arcada">
 
-                    {% for numero in superiores %}
+    {% for numero in superiores %}
 
-                    <div class="dente-box dente-{{ numero }}">
+    <div class="dente-box dente-{{ numero }}">
 
-                        <img
-                            src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
-                            class="dente-img"
-                            data-dente="{{ numero }}"
-                            alt="Dente {{ numero }}"
-                        >
+        <img
+            src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
+            class="dente-img"
+            data-dente="{{ numero }}"
+            alt="Dente {{ numero }}"
+        >
 
-                        <div class="procedimentos-dente">
+        <div class="procedimentos-dente">
 
-                            {% for evolucao in evolucoes %}
+            {% for evolucao in evolucoes %}
 
-                                {% if evolucao.dente == numero and evolucao.procedimento.icone %}
+                {% if evolucao.dente == numero %}
 
-                                <img
+                    <!-- ÍCONE -->
 
-    src="{% static 'img/procedimentos/full/' %}{{ evolucao.procedimento.icone }}"
+                    {% if evolucao.procedimento.icone %}
 
-    class="
+                    <img
+                        src="{% static 'img/procedimentos/full/' %}{{ evolucao.procedimento.icone }}"
+                        class="
+                            icone-procedimento-dente
+                            posicao-{{ evolucao.procedimento.posicao_icone }}
+                            status-{{ evolucao.procedimento.status }}
+                        "
+                        title="{{ evolucao.procedimento.nome }}"
+                    >
 
-        icone-procedimento-dente
+                    {% endif %}
 
-        posicao-{{ evolucao.procedimento.posicao_icone }}
+                    <!-- FACE -->
 
-        status-{{ evolucao.procedimento.status }}
+                    {% if evolucao.face %}
 
-    "
+                    <span class="face-badge">
 
-    title="{{ evolucao.procedimento.nome }}"
+                        {{ evolucao.face }}
 
->
+                    </span>
 
-                                {% endif %}
+                    {% endif %}
 
-                            {% endfor %}
+                {% endif %}
 
-                        </div>
+            {% endfor %}
 
-                    </div>
+        </div>
 
-                    {% endfor %}
+    </div>
 
-                </div>
+    {% endfor %}
 
-                <!-- INFERIOR -->
+</div>
 
-                <div class="arcada inferior">
+<!-- INFERIOR -->
 
-                    {% for numero in inferiores %}
+<div class="arcada inferior">
 
-                    <div class="dente-box dente-{{ numero }}">
+    {% for numero in inferiores %}
 
-                        <img
-                            src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
-                            class="dente-img inferior"
-                            data-dente="{{ numero }}"
-                            alt="Dente {{ numero }}"
-                        >
+    <div class="dente-box dente-{{ numero }}">
 
-                        <div class="procedimentos-dente">
+        <img
+            src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
+            class="dente-img inferior"
+            data-dente="{{ numero }}"
+            alt="Dente {{ numero }}"
+        >
 
-                            {% for evolucao in evolucoes %}
+        <div class="procedimentos-dente">
 
-                                {% if evolucao.dente == numero and evolucao.procedimento.icone %}
+            {% for evolucao in evolucoes %}
 
-                                <img
-                                    src="{% static 'img/procedimentos/' %}{{ evolucao.procedimento.icone }}"
-                                    class="icone-procedimento-dente posicao-{{ evolucao.procedimento.posicao_icone }}"
-                                    title="{{ evolucao.procedimento.nome }}"
-                                >
+                {% if evolucao.dente == numero %}
 
-                                {% endif %}
+                    <!-- ÍCONE -->
 
-                            {% endfor %}
+                    {% if evolucao.procedimento.icone %}
 
-                        </div>
+                    <img
+                        src="{% static 'img/procedimentos/full/' %}{{ evolucao.procedimento.icone }}"
+                        class="
+                            icone-procedimento-dente
+                            posicao-{{ evolucao.procedimento.posicao_icone }}
+                            status-{{ evolucao.procedimento.status }}
+                        "
+                        title="{{ evolucao.procedimento.nome }}"
+                    >
 
-                    </div>
+                    {% endif %}
 
-                    {% endfor %}
+                    <!-- FACE -->
 
-                </div>
+                    {% if evolucao.face %}
 
+                    <span class="face-badge">
+
+                        {{ evolucao.face }}
+
+                    </span>
+
+                    {% endif %}
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>    
                 <div class="linha-divisao"></div>
 
                 <!-- DENTIÇÃO DECÍDUA -->

@@ -10,84 +10,219 @@
 
         <div>
 
-            <h1 class="fw-bold">
-
+            <h1 class="fw-bold mb-1">
                 Orçamento
-
             </h1>
 
             <p class="text-muted mb-0">
-
                 Paciente: {{ paciente.nome }}
-
             </p>
 
         </div>
 
     </div>
 
-    <!-- FORM -->
+    <!-- CARD ADICIONAR PROCEDIMENTO -->
 
     <div class="card border-0 shadow-sm rounded-4 mb-4">
 
         <div class="card-body p-4">
 
+            <!-- CABEÇALHO -->
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+
+                    <h5 class="fw-bold mb-1">
+                        Procedimentos do Orçamento
+                    </h5>
+
+                    <small class="text-muted">
+                        Adicione procedimentos clínicos ao orçamento
+                    </small>
+
+                </div>
+
+            </div>
+
+            <!-- FORM -->
+
             <form method="POST">
 
                 {% csrf_token %}
 
-                <div class="row g-3 align-items-end">
+             <div class="row g-3 align-items-end">
 
-                    <!-- PROCEDIMENTO -->
+<!-- PROCEDIMENTO -->
 
-                    <div class="col-md-6">
+<div class="col-md-4">
 
-                        <label class="form-label">
+    <label class="form-label fw-semibold">
+        Procedimento
+    </label>
 
-                            Procedimento
+    {{ item_form.procedimento }}
 
-                        </label>
+</div>
 
-                        {{ item_form.procedimento }}
+<!-- DENTE -->
 
-                    </div>
+<div class="col-md-2">
 
-                    <!-- QUANTIDADE -->
+    <label class="form-label fw-semibold">
+        Dente
+    </label>
 
-                    <div class="col-md-2">
+    <select
+        name="dente"
+        class="form-select rounded-3"
+    >
 
-                        <label class="form-label">
+        <option value="">
+            Selecione
+        </option>
 
-                            Quantidade
+        <!-- SUPERIOR DIREITO -->
 
-                        </label>
+        <optgroup label="Superior Direito">
 
-                        {{ item_form.quantidade }}
+            <option value="18">18</option>
+            <option value="17">17</option>
+            <option value="16">16</option>
+            <option value="15">15</option>
+            <option value="14">14</option>
+            <option value="13">13</option>
+            <option value="12">12</option>
+            <option value="11">11</option>
 
-                    </div>
+        </optgroup>
 
-                    <!-- BOTÃO -->
+        <!-- SUPERIOR ESQUERDO -->
 
-                    <div class="col-md-2">
+        <optgroup label="Superior Esquerdo">
 
-                        <button
-                            type="submit"
-                            class="btn btn-primary w-100 rounded-pill"
-                        >
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
 
-                            Adicionar
+        </optgroup>
 
-                        </button>
+        <!-- INFERIOR ESQUERDO -->
 
-                    </div>
+        <optgroup label="Inferior Esquerdo">
 
-                </div>
+            <option value="31">31</option>
+            <option value="32">32</option>
+            <option value="33">33</option>
+            <option value="34">34</option>
+            <option value="35">35</option>
+            <option value="36">36</option>
+            <option value="37">37</option>
+            <option value="38">38</option>
 
-            </form>
+        </optgroup>
 
-        </div>
+        <!-- INFERIOR DIREITO -->
 
-    </div>
+        <optgroup label="Inferior Direito">
+
+            <option value="41">41</option>
+            <option value="42">42</option>
+            <option value="43">43</option>
+            <option value="44">44</option>
+            <option value="45">45</option>
+            <option value="46">46</option>
+            <option value="47">47</option>
+            <option value="48">48</option>
+
+        </optgroup>
+
+    </select>
+
+</div>
+
+<!-- FACE -->
+
+<div class="col-md-2">
+
+    <label class="form-label fw-semibold">
+        Face
+    </label>
+
+    <select
+        name="face"
+        class="form-select rounded-3"
+    >
+
+        <option value="">
+            --
+         <!-- SIMPLES -->
+
+        <option value="O">O</option>
+        <option value="M">M</option>
+        <option value="D">D</option>
+        <option value="V">V</option>
+        <option value="L">L</option>
+        <option value="P">P</option>
+
+        <!-- COMPOSTAS -->
+
+        <option value="MO">MO</option>
+        <option value="DO">DO</option>
+        <option value="MOD">MOD</option>
+
+        <option value="MV">MV</option>
+        <option value="DV">DV</option>
+
+        <option value="ML">ML</option>
+        <option value="DL">DL</option>
+
+        <option value="OV">OV</option>
+        <option value="OL">OL</option>
+
+        <option value="VP">VP</option>
+        <option value="LP">LP</option>
+
+        <option value="MD">MD</option>
+
+    </select>
+
+</div>
+
+<!-- QUANTIDADE -->
+
+<div class="col-md-2">
+
+    <label class="form-label fw-semibold">
+        Quantidade
+    </label>
+
+    {{ item_form.quantidade }}
+
+</div>
+
+<!-- BOTÃO -->
+
+<div class="col-md-2">
+
+    <button
+        type="submit"
+        class="btn btn-primary w-100 rounded-pill shadow-sm"
+    >
+
+        <i class="fas fa-plus me-2"></i>
+
+        Adicionar
+
+    </button>
+
+</div>    
 
     <!-- TABELA -->
 
@@ -97,85 +232,187 @@
 
             <table class="table align-middle">
 
-                <thead>
+                <thead class="table-light">
 
-                    <tr>
+    <tr>
 
-                        <th>
+        <th>
+            Dente
+        </th>
 
-                            Procedimento
+        <th>
+            Face
+        </th>
 
-                        </th>
+        <th>
+            Procedimento
+        </th>
 
-                        <th>
+        <th>
+            Quantidade
+        </th>
 
-                            Quantidade
+        <th>
+            Valor
+        </th>
 
-                        </th>
+        <th>
+            Total
+        </th>
 
-                        <th>
+        <th class="text-center">
+            Status
+        </th>
 
-                            Valor
+        <th class="text-end">
+            Ações
+        </th>
 
-                        </th>
+    </tr>
 
-                        <th>
+</thead>
 
-                            Total
+             <tbody>
 
-                        </th>
+    {% for item in orcamento.itens.all %}
 
-                    </tr>
+    <tr>
 
-                </thead>
+        <!-- DENTE -->
 
-                <tbody>
+        <td>
 
-                    {% for item in orcamento.itens.all %}
+            <span class="badge bg-light text-dark border">
 
-                    <tr>
+                {{ item.dente|default:"--" }}
 
-                        <td>
+            </span>
 
-                            {{ item.procedimento.nome }}
+        </td>
 
-                        </td>
+        <!-- FACE -->
 
-                        <td>
+<td>
 
-                            {{ item.quantidade }}
+    <span class="badge bg-primary rounded-pill px-3">
 
-                        </td>
+        {{ item.face|default:"--" }}
 
-                        <td>
+    </span>
 
-                            R$ {{ item.valor_unitario }}
+</td>
 
-                        </td>
+        <!-- PROCEDIMENTO -->
 
-                        <td>
+        <td>
 
-                            R$ {{ item.total }}
+            <div class="fw-semibold">
 
-                        </td>
+                {{ item.procedimento.nome }}
 
-                    </tr>
+            </div>
 
-                    {% empty %}
+            <small class="text-muted">
 
-                    <tr>
+                {{ item.procedimento.codigo|default:"Sem código" }}
 
-                        <td colspan="4">
+            </small>
 
-                            Nenhum item adicionado.
+        </td>
 
-                        </td>
+        <!-- QUANTIDADE -->
 
-                    </tr>
+        <td>
 
-                    {% endfor %}
+            {{ item.quantidade }}
 
-                </tbody>
+        </td>
+
+        <!-- VALOR -->
+
+        <td>
+
+            R$ {{ item.valor_unitario }}
+
+        </td>
+
+        <!-- TOTAL -->
+
+        <td>
+
+            <span class="fw-bold text-success">
+
+                R$ {{ item.total }}
+
+            </span>
+
+        </td>
+
+        <!-- STATUS -->
+
+        <td class="text-center">
+
+            <span class="badge bg-warning text-dark rounded-pill px-3">
+
+                Planejado
+
+            </span>
+
+        </td>
+
+        <!-- AÇÕES -->
+
+        <td class="text-end">
+
+            <div class="d-flex justify-content-end gap-2">
+
+                <!-- EDITAR -->
+<a
+    href="{% url 'editar_item_orcamento' item.id %}"
+    class="btn btn-sm btn-light border rounded-circle"
+    title="Editar"
+>
+
+    <i class="fas fa-edit text-primary"></i>
+
+</a>
+                <!-- EXCLUIR -->
+
+               
+
+                    <a
+                        href="{% url 'excluir_item_orcamento' item.id %}"
+                        class="btn btn-sm btn-light border rounded-circle"
+                        title="Excluir"
+                    >
+
+                        <i class="fas fa-trash text-danger"></i>
+
+                    </a>
+
+               
+
+            </div>
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+
+        <td colspan="7" class="text-center text-muted py-4">
+
+            Nenhum item adicionado.
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</tbody>
 
             </table>
 
@@ -186,10 +423,45 @@
                 <h4 class="fw-bold">
 
                     Total:
-
-                    R$ {{ orcamento.total }}
+                    <span class="text-success">
+                        R$ {{ orcamento.total }}
+                    </span>
 
                 </h4>
+
+            </div>
+
+            <!-- BOTÕES -->
+
+            <div class="d-flex justify-content-end gap-2 mt-4 flex-wrap">
+
+                <button class="btn btn-success rounded-pill px-4">
+
+                    <i class="fas fa-save me-1"></i>
+                    Salvar
+
+                </button>
+
+                <button class="btn btn-primary rounded-pill px-4">
+
+                    <i class="fas fa-edit me-1"></i>
+                    Editar
+
+                </button>
+
+                <button class="btn btn-danger rounded-pill px-4">
+
+                    <i class="fas fa-trash me-1"></i>
+                    Excluir
+
+                </button>
+
+                <button class="btn btn-secondary rounded-pill px-4">
+
+                    <i class="fas fa-times me-1"></i>
+                    Cancelar
+
+                </button>
 
             </div>
 

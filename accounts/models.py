@@ -960,49 +960,77 @@ class Orcamento(models.Model):
 class ItemOrcamento(models.Model):
 
     orcamento = models.ForeignKey(
-
         Orcamento,
-
         on_delete=models.CASCADE,
-
         related_name='itens'
-
     )
 
     procedimento = models.ForeignKey(
-
         Procedimento,
-
         on_delete=models.SET_NULL,
-
         null=True
-
     )
+
+    # DENTE
+
+    dente = models.CharField(
+        max_length=5,
+        blank=True,
+        null=True
+    )
+
+    # FACE
+
+    face = models.CharField(
+        max_length=10,
+        blank=True,
+        null=True
+    )
+
+    # QUANTIDADE
 
     quantidade = models.IntegerField(
-
         default=1
-
     )
+
+    # VALOR UNITÁRIO
 
     valor_unitario = models.DecimalField(
-
         max_digits=10,
-
         decimal_places=2,
-
         default=0
-
     )
 
-    # =========================================
+    # STATUS
+
+    STATUS_CHOICES = (
+        ('planejado', 'Planejado'),
+        ('andamento', 'Em andamento'),
+        ('finalizado', 'Finalizado'),
+        ('cancelado', 'Cancelado'),
+    )
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='planejado'
+    )
+
+    # OBSERVAÇÕES
+
+    observacoes = models.TextField(
+        blank=True,
+        null=True
+    )
+
     # TOTAL
-    # =========================================
 
     @property
     def total(self):
-
         return self.quantidade * self.valor_unitario
+
+    def __str__(self):
+        return f'{self.procedimento} - {self.orcamento}'
 
     # =========================================
     # SAVE AUTOMÁTICO

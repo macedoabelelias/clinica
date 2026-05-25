@@ -157,4 +157,24 @@ path(
     name='excluir_convenio'
 ),
 
+path(
+
+    'orcamento/item/<int:id>/excluir/',
+
+    views.excluir_item_orcamento,
+
+    name='excluir_item_orcamento'
+
+),
+
+path(
+
+    'orcamento/item/<int:id>/editar/',
+
+    views.editar_item_orcamento,
+
+    name='editar_item_orcamento'
+
+),
+
 ]

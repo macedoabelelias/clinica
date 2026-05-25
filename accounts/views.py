@@ -17,6 +17,7 @@ from django.contrib.auth.decorators import (
 )
 
 from django.conf import settings
+
 print(settings.BASE_DIR)
 
 from .models import (
@@ -383,11 +384,8 @@ def editar_paciente(request, id):
 def odontograma(request, id):
 
     paciente = get_object_or_404(
-
         Paciente,
-
         id=id
-
     )
 
     # =========================================
@@ -397,15 +395,11 @@ def odontograma(request, id):
     if request.method == 'POST':
 
         procedimento_id = request.POST.get(
-
             'procedimento'
-
         )
 
         procedimento = Procedimento.objects.get(
-
             id=procedimento_id
-
         )
 
         EvolucaoClinica.objects.create(
@@ -421,11 +415,8 @@ def odontograma(request, id):
         )
 
         return redirect(
-
             'odontograma',
-
             id=paciente.id
-
         )
 
     # =========================================
@@ -433,20 +424,24 @@ def odontograma(request, id):
     # =========================================
 
     evolucoes = EvolucaoClinica.objects.filter(
-
         paciente=paciente
-
     ).order_by('-criado_em')
+
+    # =========================================
+    # ITENS DO ORÇAMENTO
+    # =========================================
+
+    itens_orcamento = ItemOrcamento.objects.filter(
+        orcamento__paciente=paciente
+    )
 
     # =========================================
     # PROCEDIMENTOS
     # =========================================
 
     procedimentos = Procedimento.objects.all().order_by(
-
         'categoria',
         'nome'
-
     )
 
     # =========================================
@@ -498,6 +493,12 @@ def odontograma(request, id):
         # =========================================
 
         'evolucoes': evolucoes,
+
+        # =========================================
+        # ITENS ORÇAMENTO
+        # =========================================
+
+        'itens_orcamento': itens_orcamento,
 
         # =========================================
         # PROCEDIMENTOS
@@ -1008,7 +1009,6 @@ def excluir_procedimento(request, id):
     return redirect('procedimentos')
 
 
-
 # =========================================
 # ORÇAMENTO
 # =========================================
@@ -1017,11 +1017,8 @@ def excluir_procedimento(request, id):
 def orcamento(request, id):
 
     paciente = get_object_or_404(
-
         Paciente,
-
         id=id
-
     )
 
     # =========================================
@@ -1029,9 +1026,7 @@ def orcamento(request, id):
     # =========================================
 
     orcamento, created = Orcamento.objects.get_or_create(
-
         paciente=paciente
-
     )
 
     # =========================================
@@ -1040,55 +1035,62 @@ def orcamento(request, id):
 
     if request.method == 'POST':
 
-        item_form = ItemOrcamentoForm(
-
-            request.POST
-
-        )
+        item_form = ItemOrcamentoForm(request.POST)
 
         if item_form.is_valid():
 
-            item = item_form.save(
+            item = item_form.save(commit=False)
 
-                commit=False
-
-            )
+            # ORÇAMENTO
 
             item.orcamento = orcamento
+
+            # DENTE
+
+            item.dente = request.POST.get('dente')
+
+            # FACE
+
+            item.face = request.POST.get('face')
+
+            # STATUS
+
+            item.status = 'planejado'
+
+            # VALOR
+
+            item.valor_unitario = item.procedimento.valor_particular
+
+            # SALVAR
 
             item.save()
 
             return redirect(
-
                 'orcamento',
-
                 id=paciente.id
-
             )
-
     else:
 
         item_form = ItemOrcamentoForm()
 
+    # =========================================
+    # CONTEXT
+    # =========================================
+
     context = {
 
         'paciente': paciente,
-
         'orcamento': orcamento,
-
-        'item_form': item_form
+        'item_form': item_form,
 
     }
 
     return render(
-
         request,
-
         'accounts/orcamento.html',
-
         context
-
     )
+
 
 # =========================================
 # CONVÊNIOS
@@ -1190,3 +1192,86 @@ def excluir_convenio(request, id):
     convenio.delete()
 
     return redirect('convenios')
+
+# =========================================
+# EXCLUIR ITEM ORÇAMENTO
+# =========================================
+
+@login_required(login_url='/')
+def excluir_item_orcamento(request, id):
+
+    item = get_object_or_404(
+        ItemOrcamento,
+        id=id
+    )
+
+    paciente_id = item.orcamento.paciente.id
+
+    item.delete()
+
+    return redirect(
+        'orcamento',
+        id=paciente_id
+    )
+
+# =========================================
+# EDITAR ITEM ORÇAMENTO
+# =========================================
+
+@login_required(login_url='/')
+def editar_item_orcamento(request, id):
+
+    item = get_object_or_404(
+        ItemOrcamento,
+        id=id
+    )
+
+    if request.method == 'POST':
+
+        item.procedimento_id = request.POST.get(
+            'procedimento'
+        )
+
+        item.dente = request.POST.get(
+            'dente'
+        )
+
+        item.face = request.POST.get(
+            'face'
+        )
+
+        item.quantidade = request.POST.get(
+            'quantidade'
+        )
+
+        procedimento = Procedimento.objects.get(
+            id=item.procedimento_id
+        )
+
+        item.valor_unitario = procedimento.valor_particular
+
+        item.save()
+
+        return redirect(
+            'orcamento',
+            id=item.orcamento.paciente.id
+        )
+
+    procedimentos = Procedimento.objects.all()
+
+    context = {
+
+        'item': item,
+        'procedimentos': procedimentos,
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/editar_item_orcamento.html',
+
+        context
+
+    )

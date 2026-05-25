@@ -251,7 +251,7 @@ class ItemOrcamentoForm(forms.ModelForm):
 
                 attrs={
 
-                    'class': 'form-select'
+                    'class': 'form-select rounded-3 shadow-sm'
 
                 }
 
@@ -261,14 +261,15 @@ class ItemOrcamentoForm(forms.ModelForm):
 
                 attrs={
 
-                    'class': 'form-control'
+                    'class': 'form-control rounded-3 shadow-sm',
+                    'min': 1
 
                 }
 
             )
 
         }
-
+        
  # =========================================
 # FORM CONVÊNIO
 # =========================================
