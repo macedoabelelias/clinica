@@ -660,12 +660,26 @@ class Procedimento(models.Model):
     )
 
     # =========================================
-    # ÍCONE
+    # ÍCONE ANTIGO
     # =========================================
 
     icone = models.CharField(
 
         max_length=100,
+
+        blank=True,
+
+        null=True
+
+    )
+
+    # =========================================
+    # NOVO ARQUIVO DO ÍCONE
+    # =========================================
+
+    arquivo_icone = models.CharField(
+
+        max_length=255,
 
         blank=True,
 
@@ -711,11 +725,7 @@ class Procedimento(models.Model):
 
         decimal_places=2,
 
-        default=0,
-
-        blank=True,
-
-        null=True
+        default=0
 
     )
 
@@ -776,6 +786,18 @@ class Procedimento(models.Model):
     )
 
     # =========================================
+    # META
+    # =========================================
+
+    class Meta:
+
+        ordering = ['categoria', 'ordem', 'nome']
+
+        verbose_name = 'Procedimento'
+
+        verbose_name_plural = 'Procedimentos'
+
+    # =========================================
     # STRING
     # =========================================
 
@@ -817,7 +839,7 @@ class EvolucaoClinica(models.Model):
 
     procedimento = models.ForeignKey(
 
-        Procedimento,
+        'Procedimento',
 
         on_delete=models.SET_NULL,
 
@@ -890,12 +912,15 @@ class EvolucaoClinica(models.Model):
         )
 
         return f'{self.paciente.nome} - {procedimento}'
-    
+
     # =========================================
 # ORÇAMENTO
 # =========================================
-
 class Orcamento(models.Model):
+
+    # =========================================
+    # PACIENTE
+    # =========================================
 
     paciente = models.ForeignKey(
 
@@ -907,6 +932,33 @@ class Orcamento(models.Model):
 
     )
 
+    # =========================================
+    # STATUS
+    # =========================================
+
+    STATUS_CHOICES = (
+
+        ('rascunho', 'Rascunho'),
+        ('aprovado', 'Aprovado'),
+        ('finalizado', 'Finalizado'),
+        ('cancelado', 'Cancelado'),
+
+    )
+
+    status = models.CharField(
+
+        max_length=20,
+
+        choices=STATUS_CHOICES,
+
+        default='rascunho'
+
+    )
+
+    # =========================================
+    # DESCONTO
+    # =========================================
+
     desconto = models.DecimalField(
 
         max_digits=10,
@@ -917,6 +969,10 @@ class Orcamento(models.Model):
 
     )
 
+    # =========================================
+    # OBSERVAÇÕES
+    # =========================================
+
     observacoes = models.TextField(
 
         blank=True,
@@ -924,6 +980,10 @@ class Orcamento(models.Model):
         null=True
 
     )
+
+    # =========================================
+    # DATA CRIAÇÃO
+    # =========================================
 
     criado_em = models.DateTimeField(
 
@@ -948,113 +1008,13 @@ class Orcamento(models.Model):
 
         return total - self.desconto
 
-    def __str__(self):
-
-        return f'Orçamento #{self.id}'
-
-
- # =========================================
-# ITENS DO ORÇAMENTO
-# =========================================
-
-class ItemOrcamento(models.Model):
-
-    orcamento = models.ForeignKey(
-        Orcamento,
-        on_delete=models.CASCADE,
-        related_name='itens'
-    )
-
-    procedimento = models.ForeignKey(
-        Procedimento,
-        on_delete=models.SET_NULL,
-        null=True
-    )
-
-    # DENTE
-
-    dente = models.CharField(
-        max_length=5,
-        blank=True,
-        null=True
-    )
-
-    # FACE
-
-    face = models.CharField(
-        max_length=10,
-        blank=True,
-        null=True
-    )
-
-    # QUANTIDADE
-
-    quantidade = models.IntegerField(
-        default=1
-    )
-
-    # VALOR UNITÁRIO
-
-    valor_unitario = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        default=0
-    )
-
-    # STATUS
-
-    STATUS_CHOICES = (
-        ('planejado', 'Planejado'),
-        ('andamento', 'Em andamento'),
-        ('finalizado', 'Finalizado'),
-        ('cancelado', 'Cancelado'),
-    )
-
-    status = models.CharField(
-        max_length=20,
-        choices=STATUS_CHOICES,
-        default='planejado'
-    )
-
-    # OBSERVAÇÕES
-
-    observacoes = models.TextField(
-        blank=True,
-        null=True
-    )
-
-    # TOTAL
-
-    @property
-    def total(self):
-        return self.quantidade * self.valor_unitario
-
-    def __str__(self):
-        return f'{self.procedimento} - {self.orcamento}'
-
-    # =========================================
-    # SAVE AUTOMÁTICO
-    # =========================================
-
-    def save(self, *args, **kwargs):
-
-        if self.procedimento:
-
-            self.valor_unitario = (
-
-                self.procedimento.valor_particular
-
-            )
-
-        super().save(*args, **kwargs)
-
     # =========================================
     # STRING
     # =========================================
 
     def __str__(self):
 
-        return f'{self.procedimento}'  
+        return f'Orçamento #{self.id}' 
     
 
     # =========================================
@@ -1107,3 +1067,136 @@ class Convenio(models.Model):
     def __str__(self):
 
         return self.nome
+    
+
+# =========================================
+# ITEM ORÇAMENTO
+# =========================================
+
+class ItemOrcamento(models.Model):
+
+    STATUS_CHOICES = (
+
+        ('planejado', 'Planejado'),
+        ('andamento', 'Em andamento'),
+        ('finalizado', 'Finalizado'),
+        ('cancelado', 'Cancelado'),
+
+    )
+
+    # =========================================
+    # ORÇAMENTO
+    # =========================================
+
+    orcamento = models.ForeignKey(
+
+        Orcamento,
+
+        on_delete=models.CASCADE,
+
+        related_name='itens'
+
+    )
+
+    # =========================================
+    # PROCEDIMENTO
+    # =========================================
+
+    procedimento = models.ForeignKey(
+
+        Procedimento,
+
+        on_delete=models.SET_NULL,
+
+        null=True
+
+    )
+
+    # =========================================
+    # DENTE
+    # =========================================
+
+    dente = models.CharField(
+
+        max_length=10,
+
+        blank=True,
+
+        null=True
+
+    )
+
+    # =========================================
+    # FACE
+    # =========================================
+
+    face = models.CharField(
+
+        max_length=10,
+
+        blank=True,
+
+        null=True
+
+    )
+
+    # =========================================
+    # QUANTIDADE
+    # =========================================
+
+    quantidade = models.IntegerField(
+
+        default=1
+
+    )
+
+    # =========================================
+    # VALOR
+    # =========================================
+
+    valor_unitario = models.DecimalField(
+
+        max_digits=10,
+
+        decimal_places=2,
+
+        default=0
+
+    )
+
+    # =========================================
+    # STATUS
+    # =========================================
+
+    status = models.CharField(
+
+        max_length=20,
+
+        choices=STATUS_CHOICES,
+
+        default='planejado'
+
+    )
+
+    # =========================================
+    # TOTAL
+    # =========================================
+
+    @property
+    def total(self):
+
+        return self.quantidade * self.valor_unitario
+
+    # =========================================
+    # STRING
+    # =========================================
+
+    def __str__(self):
+
+        procedimento = (
+            self.procedimento.nome
+            if self.procedimento
+            else 'Procedimento'
+        )
+
+        return f'{procedimento} - {self.orcamento.paciente.nome}'

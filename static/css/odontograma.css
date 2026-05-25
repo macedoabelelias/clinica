@@ -259,6 +259,8 @@ CARD ODONTOGRAMA
 
     overflow:hidden;
 
+    min-height:auto;
+
 }
 
 /* brilho suave */
@@ -457,23 +459,21 @@ DENTES
 
     position: absolute;
 
-    bottom: -8px;
+    top: 28px;
+
     right: -6px;
 
-    background: #0d6efd;
+    background: #2563eb;
+
     color: white;
-
-    border-radius: 12px;
-
-    padding: 2px 6px;
 
     font-size: 10px;
 
     font-weight: 700;
 
-    line-height: 1;
+    padding: 2px 6px;
 
-    box-shadow: 0 2px 6px rgba(0,0,0,.2);
+    border-radius: 20px;
 
     z-index: 20;
 
@@ -483,44 +483,69 @@ DENTES
 PROCEDIMENTOS
 ========================================= */
 
-.procedimentos-dente{
+.procedimentos-dente {
 
-    position:absolute;
+    position: absolute;
 
-    inset:0;
+    top: 2;
 
-    pointer-events:none;
+    left: 0;
 
-}
+    width: 100%;
 
-.icone-procedimento-dente{
+    height: 100%;
 
-    width:34px;
-
-    height:34px;
-
-    object-fit:contain;
-
-    position:absolute;
-
-    z-index:10;
+    pointer-events: none;
 
 }
 
 /* =========================================
-BASE DOS ÍCONES
+ÍCONES DOS PROCEDIMENTOS
 ========================================= */
 
-.icone-procedimento-dente{
+.icone-procedimento-dente {
 
-    width:34px;
-    height:34px;
+    position: absolute;
 
-    object-fit:contain;
+    width: 38px;
 
-    position:absolute;
+    height: 38px;
 
-    z-index:10;
+    object-fit: contain;
+
+    z-index: 15;
+
+    transition: 0.2s ease;
+
+}
+
+/* =========================================
+BADGE
+========================================= */
+
+.procedimento-badge {
+
+    position: absolute;
+
+    bottom: -8px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: #111827;
+
+    color: white;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    padding: 2px 5px;
+
+    border-radius: 10px;
+
+    z-index: 20;
 
 }
 
@@ -542,20 +567,20 @@ POSICIONAMENTO INDIVIDUAL
 PERMANENTES SUPERIORES
 ========================================= */
 
-.dente-11 .posicao-raiz{ top:28px; left:1px; }
-.dente-11 .posicao-centro{ top:42px; left:0px; }
-.dente-11 .posicao-coroa{ top:54px; left:1px; }
+.dente-11 .posicao-raiz{ top:28px; left:0px; }
+.dente-11 .posicao-centro{ top:42px; left:1px; }
+.dente-11 .posicao-coroa{ top:54px; left:0px; }
 .dente-11 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-12 .posicao-raiz{ top:30px; left:0px; }
+.dente-12 .posicao-raiz{ top:30px; left:-1px; }
 .dente-12 .posicao-centro{ top:42px; left:0px; }
 .dente-12 .posicao-coroa{ top:54px; left:0px; }
 .dente-12 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-13 .posicao-raiz{ top:30px; left:0px; }
+.dente-13 .posicao-raiz{ top:30px; left:5px; }
 .dente-13 .posicao-centro{ top:42px; left:0px; }
-.dente-13 .posicao-coroa{ top:56px; left:0px; }
-.dente-13 .posicao-oclusal{ top:12px; left:5px; }
+.dente-13 .posicao-coroa{ top:60px; left:6px; }
+.dente-13 .posicao-oclusal{ top:12px; left:7px; }
 
 .dente-14 .posicao-raiz{ top:18px; left:1px; }
 .dente-14 .posicao-centro{ top:42px; left:1px; }
@@ -563,12 +588,12 @@ PERMANENTES SUPERIORES
 .dente-14 .posicao-oclusal{ top:12px; left:5px; }
 
 .dente-15 .posicao-raiz{ top:38px; left:2px; }
-.dente-15 .posicao-centro{ top:42px; left:0px; }
+.dente-15 .posicao-centro{ top:46px; left:1px; }
 .dente-15 .posicao-coroa{ top:58px; left:0px; }
 .dente-15 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-16 .posicao-raiz{ top:38px; left:0px; }
-.dente-16 .posicao-centro{ top:40px; left:0px; }
+.dente-16 .posicao-raiz{ top:34px; left:-2px; }
+.dente-16 .posicao-centro{ top:48px; left:-2px; }
 .dente-16 .posicao-coroa{ top:58px; left:0px; }
 .dente-16 .posicao-oclusal{ top:12px; left:5px; }
 
@@ -577,9 +602,9 @@ PERMANENTES SUPERIORES
 .dente-17 .posicao-coroa{ top:58px; left:0px; }
 .dente-17 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-18 .posicao-raiz{ top:34px; left:0px; }
-.dente-18 .posicao-centro{ top:40px; left:1px; }
-.dente-18 .posicao-coroa{ top:58px; left:3px; }
+.dente-18 .posicao-raiz{ top:34px; left:-1px; }
+.dente-18 .posicao-centro{ top:44px; left:-1px; }
+.dente-18 .posicao-coroa{ top:58px; left:2px; }
 .dente-18 .posicao-oclusal{ top:12px; left:5px; }
 
 .dente-21 .posicao-raiz{ top:30px; left:1px; }
@@ -597,7 +622,7 @@ PERMANENTES SUPERIORES
 .dente-23 .posicao-coroa{ top:56px; left:0px; }
 .dente-23 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-24 .posicao-raiz{ top:32px; left:0px; }
+.dente-24 .posicao-raiz{ top:40px; left:6px; }
 .dente-24 .posicao-centro{ top:42px; left:0px; }
 .dente-24 .posicao-coroa{ top:58px; left:0px; }
 .dente-24 .posicao-oclusal{ top:12px; left:5px; }

@@ -26,16 +26,20 @@ class ProcedimentoForm(forms.ModelForm):
             'categoria',
             'tipo',
             'status',
+
             'icone',
+            'arquivo_icone',
+
             'posicao_icone',
 
             'valor_particular',
             'valor_convenio',
+
             'tempo_estimado',
             'custo_clinico',
 
             'ativo',
-            'ordem'
+            'ordem',
 
         ]
 

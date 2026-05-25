@@ -1240,6 +1240,10 @@ def editar_item_orcamento(request, id):
             'face'
         )
 
+        item.status = request.POST.get(
+            'status'
+        )
+
         item.quantidade = request.POST.get(
             'quantidade'
         )

@@ -110,8 +110,8 @@
 
         <input
             type="text"
-            name="icone"
-            id="id_icone"
+            name="arquivo_icone"
+            id="id_arquivo_icone"
             class="form-control shadow-sm"
             list="lista-icones"
             autocomplete="off"
@@ -340,8 +340,8 @@
                         <td width="80">
 
                             <img
-                                src="{% static 'img/procedimentos/mini/' %}{{ procedimento.icone }}"
-                                width="34"
+                            src="{% static 'img/procedimentos/mini/' %}{{ procedimento.arquivo_icone }}"
+                            width="34"
                             >
 
                         </td>
@@ -454,7 +454,7 @@
 
 function atualizarPreviewIcone() {
 
-    const input = document.getElementById('id_icone');
+    const input = document.getElementById('id_arquivo_icone');
 
     const preview = document.getElementById('preview-icone');
 
