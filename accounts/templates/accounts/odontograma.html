@@ -29,40 +29,10 @@ TOPO PACIENTE
 </div>
 
 <!-- =========================================
-ABAS
+MENU CLÍNICO GLOBAL
 ========================================= -->
 
-<div class="abas-prontuario">
-
-    <a
-        href="{% url 'perfil_paciente' paciente.id %}"
-        class="aba-item"
-    >
-        Visão Geral
-    </a>
-
-    <a
-        href="{% url 'anamnese' paciente.id %}"
-        class="aba-item"
-    >
-        Anamnese
-    </a>
-
-    <a
-        href="{% url 'odontograma' paciente.id %}"
-        class="aba-item active"
-    >
-        Odontograma
-    </a>
-
-    <a
-        href="{% url 'ficha_clinica' paciente.id %}"
-        class="aba-item"
-    >
-        Ficha Clínica
-    </a>
-
-</div>
+{% include 'accounts/components/menu_paciente.html' %}
 
 <!-- =========================================
 LAYOUT

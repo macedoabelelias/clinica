@@ -399,92 +399,11 @@
 ABAS DO PERFIL
 ========================================= -->
 
-<div class="card border-0 shadow-sm rounded-4">
+<!-- =========================================
+MENU CLÍNICO
+========================================= -->
 
-    <div class="card-body p-4">
-
-        <!-- MENU -->
-
-        <ul class="nav nav-tabs border-0 mb-4" id="perfilTabs">
-
-            <li class="nav-item">
-
-                <button
-                    class="nav-link active"
-                    data-bs-toggle="tab"
-                    data-bs-target="#visao-geral">
-
-                    Visão Geral
-
-                </button>
-
-            </li>
-
-<li class="nav-item">
-
-    <a
-        href="{% url 'ficha_clinica' paciente.id %}"
-        class="nav-link"
-    >
-
-        Histórico Clínico
-
-    </a>
-
-</li>
-
-            <li class="nav-item">
-
-                <button
-                    class="nav-link"
-                    data-bs-toggle="tab"
-                    data-bs-target="#financeiro">
-
-                    Financeiro
-
-                </button>
-
-            </li>
-
-            <li class="nav-item">
-
-                <button
-                    class="nav-link"
-                    data-bs-toggle="tab"
-                    data-bs-target="#documentos">
-
-                    Documentos
-
-                </button>
-
-            </li>
-
-            <li class="nav-item">
-
-    <a
-        href="{% url 'odontograma' paciente.id %}"
-        class="nav-link"
-    >
-
-        Odontograma
-
-    </a>
-
-</li>
-
-<li class="nav-item">
-
-    <a
-        href="{% url 'orcamento' paciente.id %}"
-        class="nav-link"
-    >
-
-        Orçamento
-
-    </a>
-
-</li>
-        </ul>
+{% include 'accounts/components/menu_paciente.html' %}
 
         <!-- CONTEÚDO -->
 

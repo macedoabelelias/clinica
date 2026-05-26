@@ -1,0 +1,47 @@
+<div class="menu-clinico-wrapper">
+
+    <div class="menu-clinico">
+
+        <a
+            href="{% url 'perfil_paciente' paciente.id %}"
+            class="menu-clinico-btn active"
+        >
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Perfil</span>
+        </a>
+
+        <a
+            href="{% url 'odontograma' paciente.id %}"
+            class="menu-clinico-btn"
+        >
+            <i class="bi bi-heart-pulse-fill"></i>
+            <span>Odontograma</span>
+        </a>
+
+        <a
+            href="{% url 'orcamento' paciente.id %}"
+            class="menu-clinico-btn"
+        >
+            <i class="bi bi-cash-coin"></i>
+            <span>Orçamento</span>
+        </a>
+
+        <a
+            href="{% url 'ficha_clinica' paciente.id %}"
+            class="menu-clinico-btn"
+        >
+            <i class="bi bi-file-earmark-medical-fill"></i>
+            <span>Ficha Clínica</span>
+        </a>
+
+        <a
+            href="{% url 'anamnese' paciente.id %}"
+            class="menu-clinico-btn"
+        >
+            <i class="bi bi-clipboard2-pulse-fill"></i>
+            <span>Anamnese</span>
+        </a>
+
+    </div>
+
+</div>
