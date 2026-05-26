@@ -177,4 +177,10 @@ path(
 
 ),
 
+path(
+    'procedimento/<int:id>/status/',
+    views.alterar_status_procedimento,
+    name='alterar_status_procedimento'
+),
+
 ]

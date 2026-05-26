@@ -91,17 +91,34 @@ LAYOUT
 
                 {% if item.dente == numero %}
 
-                    <!-- ÍCONE -->
-
                     {% if item.procedimento.arquivo_icone or item.procedimento.icone %}
 
                     <img
+
                         src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}"
+
                         class="
                             icone-procedimento-dente
-                            posicao-{{ item.procedimento.posicao_icone }}
-                            status-{{ item.status }}
+
+                            {% if item.procedimento.tipo == 'dente' %}
+                                status-{{ item.status }}
+                            {% endif %}
+
+                            {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+                                posicao-topo
+                            {% else %}
+                                posicao-{{ item.procedimento.posicao_icone }}
+                            {% endif %}
+
+                            {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+                                sem-rotacao
+                            {% endif %}
                         "
+
+                        data-id="{{ item.id }}"
+
+                        data-status="{{ item.status }}"
+
                         title="{{ item.procedimento.nome }}"
                     >
 
@@ -152,23 +169,34 @@ LAYOUT
 
                 {% if item.dente == numero %}
 
-                    <!-- ÍCONE -->
-
                     {% if item.procedimento.arquivo_icone or item.procedimento.icone %}
 
                     <img
+
                         src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}"
+
                         class="
                             icone-procedimento-dente
+
+                            {% if item.procedimento.tipo == 'dente' %}
+                                status-{{ item.status }}
+                            {% endif %}
+
                             posicao-{{ item.procedimento.posicao_icone }}
-                            status-{{ item.status }}
+
+                            {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+                                sem-rotacao
+                            {% endif %}
                         "
+
+                        data-id="{{ item.id }}"
+
+                        data-status="{{ item.status }}"
+
                         title="{{ item.procedimento.nome }}"
                     >
 
                     {% endif %}
-
-                    <!-- FACE -->
 
                     {% if item.face %}
 
@@ -224,14 +252,41 @@ LAYOUT
                     {% if item.procedimento.arquivo_icone or item.procedimento.icone %}
 
                     <img
-                        src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}"
-                        class="
-                            icone-procedimento-dente
-                            posicao-{{ item.procedimento.posicao_icone }}
-                            status-{{ item.status }}
-                        "
-                        title="{{ item.procedimento.nome }}"
-                    >
+
+    src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}"
+
+    class="
+        icone-procedimento-dente
+
+        {% if item.procedimento.tipo == 'dente' %}
+            status-{{ item.status }}
+        {% endif %}
+
+        {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+
+            {% if numero|stringformat:'s'|first in '123456' %}
+                posicao-topo
+            {% else %}
+                posicao-base
+            {% endif %}
+
+        {% else %}
+
+            posicao-{{ item.procedimento.posicao_icone }}
+
+        {% endif %}
+
+        {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+            sem-rotacao
+        {% endif %}
+    "
+
+    data-id="{{ item.id }}"
+
+    data-status="{{ item.status }}"
+
+    title="{{ item.procedimento.nome }}"
+>
 
                     {% endif %}
 
@@ -271,14 +326,41 @@ LAYOUT
                     {% if item.procedimento.arquivo_icone or item.procedimento.icone %}
 
                     <img
-                        src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}"
-                        class="
-                            icone-procedimento-dente
-                            posicao-{{ item.procedimento.posicao_icone }}
-                            status-{{ item.status }}
-                        "
-                        title="{{ item.procedimento.nome }}"
-                    >
+
+    src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}"
+
+    class="
+        icone-procedimento-dente
+
+        {% if item.procedimento.tipo == 'dente' %}
+            status-{{ item.status }}
+        {% endif %}
+
+        {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+
+            {% if numero|stringformat:'s'|first in '123456' %}
+                posicao-topo
+            {% else %}
+                posicao-base
+            {% endif %}
+
+        {% else %}
+
+            posicao-{{ item.procedimento.posicao_icone }}
+
+        {% endif %}
+
+        {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+            sem-rotacao
+        {% endif %}
+    "
+
+    data-id="{{ item.id }}"
+
+    data-status="{{ item.status }}"
+
+    title="{{ item.procedimento.nome }}"
+>
 
                     {% endif %}
 
@@ -292,13 +374,13 @@ LAYOUT
 
     {% endfor %}
 
-</div> 
+</div>
 
-   </div> <!-- odontograma-box -->
+</div> <!-- odontograma-box -->
 
-        </div> <!-- odontograma-card -->
+</div> <!-- odontograma-card -->
 
-    </div> <!-- odontograma-wrapper -->
+</div> <!-- odontograma-wrapper -->
     
     <!-- TIMELINE -->
 
@@ -464,6 +546,54 @@ MODAL EVOLUÇÃO CLÍNICA
 
                         </label>
 
+ <div class="mb-4">
+
+    <label class="anamnese-label">
+
+        Status
+
+    </label>
+
+    <select
+        name="status"
+        class="anamnese-input"
+        required
+    >
+
+        <option value="planejado">
+
+            Planejado
+
+        </option>
+
+        <option value="andamento">
+
+            Em andamento
+
+        </option>
+
+        <option value="finalizado">
+
+            Finalizado
+
+        </option>
+
+        <option value="urgencia">
+
+            Urgência
+
+        </option>
+
+        <option value="cancelado">
+
+            Cancelado
+
+        </option>
+
+    </select>
+
+</div>                       
+
                         <select
                             name="procedimento"
                             class="anamnese-input"
@@ -581,23 +711,34 @@ document
 
 function atualizarPreviewIcone() {
 
-    const input = document.getElementById('id_icone');
+    const input =
+        document.getElementById(
+            'id_icone'
+        );
 
-    const preview = document.getElementById('preview-icone');
+    const preview =
+        document.getElementById(
+            'preview-icone'
+        );
+
+    // PROTEÇÃO
+    if(!input || !preview) return;
 
     const nomeIcone = input.value;
 
     if (nomeIcone) {
 
         // TENTA FULL PRIMEIRO
-        preview.src = `/static/img/procedimentos/full/${nomeIcone}`;
+        preview.src =
+        `/static/img/procedimentos/full/${nomeIcone}`;
 
         preview.style.display = 'block';
 
         // SE NÃO EXISTIR NO FULL
         preview.onerror = function () {
 
-            preview.src = `/static/img/procedimentos/mini/${nomeIcone}`;
+            preview.src =
+            `/static/img/procedimentos/mini/${nomeIcone}`;
 
         };
 
@@ -612,6 +753,95 @@ function atualizarPreviewIcone() {
 window.onload = atualizarPreviewIcone;
 
 
+
+
+console.log('STATUS ATIVO')
+
+/* =========================================
+ALTERAR STATUS
+========================================= */
+
+document.addEventListener(
+
+    'contextmenu',
+
+    function(e){
+
+        console.log(e.target)
+
+        if(
+
+            e.target.classList.contains(
+                'icone-procedimento-dente'
+            )
+
+        ){
+
+            e.preventDefault()
+
+            const procedimentoId =
+                e.target.dataset.id
+
+            const novoStatus = prompt(
+
+                'ALTERAR STATUS\n\n' +
+
+                'planejado\n' +
+
+                'andamento\n' +
+
+                'realizado\n' +
+
+                'reavaliar\n' +
+
+                'cancelado'
+
+            )
+
+            if(!novoStatus) return
+
+            fetch(
+
+                `/procedimento/${procedimentoId}/status/`,
+
+                {
+
+                    method:'POST',
+
+                    headers:{
+
+                        'Content-Type':'application/json',
+
+                        'X-CSRFToken':
+                        '{{ csrf_token }}'
+
+                    },
+
+                    body:JSON.stringify({
+
+                        status:novoStatus
+
+                    })
+
+                }
+
+            )
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                location.reload()
+
+            })
+
+        }
+
+    }
+
+)
+
 </script>
+
 
 {% endblock %}

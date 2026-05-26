@@ -1279,3 +1279,34 @@ def editar_item_orcamento(request, id):
         context
 
     )
+
+# =========================================
+# ALTERAR STATUS PROCEDIMENTO
+# =========================================
+
+import json
+
+from django.http import JsonResponse
+
+@login_required(login_url='/')
+def alterar_status_procedimento(request, id):
+
+    item = get_object_or_404(
+
+        ItemOrcamento,
+
+        id=id
+
+    )
+
+    data = json.loads(request.body)
+
+    item.status = data['status']
+
+    item.save()
+
+    return JsonResponse({
+
+        'success': True
+
+    })

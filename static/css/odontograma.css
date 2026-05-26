@@ -483,19 +483,17 @@ DENTES
 PROCEDIMENTOS
 ========================================= */
 
-.procedimentos-dente {
+.procedimentos-dente{
 
-    position: absolute;
+    position:absolute;
 
-    top: 2;
+    top:0;
 
-    left: 0;
+    left:0;
 
-    width: 100%;
+    width:100%;
 
-    height: 100%;
-
-    pointer-events: none;
+    height:100%;
 
 }
 
@@ -516,6 +514,10 @@ PROCEDIMENTOS
     z-index: 15;
 
     transition: 0.2s ease;
+
+    pointer-events: auto;
+
+    cursor: pointer;
 
 }
 
@@ -553,7 +555,7 @@ BADGE
 ROTAÇÃO DOS ÍCONES INFERIORES
 ========================================= */
 
-.arcada.inferior .icone-procedimento-dente{
+.arcada.inferior .icone-procedimento-dente:not(.sem-rotacao){
 
     rotate:180deg;
 
@@ -587,12 +589,12 @@ PERMANENTES SUPERIORES
 .dente-14 .posicao-coroa{ top:58px; left:0px; }
 .dente-14 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-15 .posicao-raiz{ top:38px; left:2px; }
+.dente-15 .posicao-raiz{ top:48px; left:2px; }
 .dente-15 .posicao-centro{ top:46px; left:1px; }
 .dente-15 .posicao-coroa{ top:58px; left:0px; }
 .dente-15 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-16 .posicao-raiz{ top:34px; left:-2px; }
+.dente-16 .posicao-raiz{ top:48px; left:-2px; }
 .dente-16 .posicao-centro{ top:48px; left:-2px; }
 .dente-16 .posicao-coroa{ top:58px; left:0px; }
 .dente-16 .posicao-oclusal{ top:12px; left:5px; }
@@ -602,7 +604,7 @@ PERMANENTES SUPERIORES
 .dente-17 .posicao-coroa{ top:58px; left:0px; }
 .dente-17 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-18 .posicao-raiz{ top:34px; left:-1px; }
+.dente-18 .posicao-raiz{ top:48px; left:-1px; }
 .dente-18 .posicao-centro{ top:44px; left:-1px; }
 .dente-18 .posicao-coroa{ top:58px; left:2px; }
 .dente-18 .posicao-oclusal{ top:12px; left:5px; }
@@ -748,7 +750,7 @@ PERMANENTES INFERIORES
 .dente-44 .posicao-coroa{ bottom:58px; left:0px; }
 .dente-44 .posicao-oclusal{ bottom:12px; left:5px; }
 
-.dente-43 .posicao-raiz{ bottom:34px; left:1px; }
+.dente-43 .posicao-raiz{ bottom:30px; left:0px; }
 .dente-43 .posicao-centro{ bottom:42px; left:0px; }
 .dente-43 .posicao-coroa{ bottom:54px; left:1px; }
 .dente-43 .posicao-oclusal{ bottom:12px; left:5px; }
@@ -912,6 +914,18 @@ DECÍDUOS INFERIORES
 .dente-85 .posicao-oclusal{ bottom:10px; left:4px; }
 
 /* =========================================
+ÍCONE TOPO
+SUPERIORES
+========================================= */
+
+.posicao-topo{
+
+    top:-18px !important;
+
+}
+
+
+/* =========================================
 OCLUSAL PADRÃO
 ========================================= */
 
@@ -920,6 +934,7 @@ OCLUSAL PADRÃO
     z-index:20;
 
 }
+
 
 
 /* =========================================
@@ -961,40 +976,186 @@ RESPONSIVO
 }
 
 /* =========================================
-STATUS DOS PROCEDIMENTOS
+STATUS VISUAL PREMIUM
 ========================================= */
 
-.status-realizar {
+/* =========================================
+ÍCONE BASE
+========================================= */
 
-    filter:
-    drop-shadow(0 0 3px #ef4444);
+.icone-procedimento-dente{
 
-}
-
-.status-andamento {
-
-    filter:
-    drop-shadow(0 0 3px #facc15);
+    transition:.2s ease;
 
 }
 
-.status-realizado {
+/* =========================================
+PLANEJADO
+VERMELHO
+========================================= */
+
+.status-planejado{
 
     filter:
-    drop-shadow(0 0 3px #2563eb);
+    brightness(0)
+    saturate(100%)
+    invert(18%)
+    sepia(91%)
+    saturate(7481%)
+    hue-rotate(356deg)
+    brightness(101%)
+    contrast(119%);
 
 }
 
-.status-cancelado {
+/* =========================================
+ANDAMENTO
+AMARELO
+========================================= */
+
+.status-andamento{
 
     filter:
-    drop-shadow(0 0 3px #9333ea);
+    brightness(0)
+    saturate(100%)
+    invert(84%)
+    sepia(60%)
+    saturate(929%)
+    hue-rotate(356deg)
+    brightness(103%)
+    contrast(102%);
 
 }
 
-.status-reavaliar {
+/* =========================================
+REALIZADO
+AZUL
+========================================= */
+
+.status-realizado{
 
     filter:
-    drop-shadow(0 0 3px #22c55e);
+    brightness(0)
+    saturate(100%)
+    invert(32%)
+    sepia(97%)
+    saturate(1807%)
+    hue-rotate(206deg)
+    brightness(97%)
+    contrast(101%);
+
+}
+
+/* =========================================
+CANCELADO
+ROXO
+========================================= */
+
+.status-cancelado{
+
+    filter:
+    brightness(0)
+    saturate(100%)
+    invert(23%)
+    sepia(93%)
+    saturate(2407%)
+    hue-rotate(264deg)
+    brightness(88%)
+    contrast(101%);
+
+}
+
+/* =========================================
+POSIÇÕES ESPECIAIS
+RX / EXTRAÇÃO
+========================================= */
+
+/* SUPERIORES */
+
+.posicao-topo{
+
+    top:8px !important;
+
+    left:50% !important;
+
+    transform:translateX(-50%) !important;
+
+}
+
+/* INFERIORES */
+
+.posicao-base{
+
+    top:78px !important;
+
+    left:50% !important;
+
+    transform:translateX(-50%) !important;
+
+}
+
+/* =========================================
+DECÍDUOS SUPERIORES
+========================================= */
+
+.arcada.decidua .posicao-topo{
+
+    top:10px !important;
+
+}
+
+/* =========================================
+DECÍDUOS INFERIORES
+========================================= */
+
+.arcada.decidua.inferior .posicao-base{
+
+    bottom:-20px !important;
+
+}
+
+/* =========================================
+SEM ROTAÇÃO
+========================================= */
+
+.sem-rotacao{
+
+    rotate:0deg !important;
+
+    transform:none !important;
+
+}
+
+/* =========================================
+SEM ROTAÇÃO NOS INFERIORES
+========================================= */
+
+.arcada.inferior .sem-rotacao{
+
+    rotate:0deg !important;
+
+}
+
+/* =========================================
+ÍCONE RX
+========================================= */
+
+.icone-procedimento-dente[src*="rx_dente"]{
+
+    width:34px;
+
+    height:34px;
+
+}
+
+/* =========================================
+ÍCONE EXTRAÇÃO INCLUSO
+========================================= */
+
+.icone-procedimento-dente[src*="extracao_incluso"]{
+
+    width:34px;
+
+    height:34px;
 
 }
