@@ -831,7 +831,7 @@ def procedimentos(request):
     # ÍCONES DISPONÍVEIS
     # =========================================
 
-    pasta_icones = os.path.join(
+    mini_path = os.path.join(
 
         settings.BASE_DIR,
         'static',
@@ -841,28 +841,79 @@ def procedimentos(request):
 
     )
 
-    icones = []
+    full_path = os.path.join(
 
-    if os.path.exists(pasta_icones):
+        settings.BASE_DIR,
+        'static',
+        'img',
+        'procedimentos',
+        'full'
 
-        icones = sorted([
+    )
+
+    mini_icons = []
+    full_icons = []
+
+    # MINI
+
+    if os.path.exists(mini_path):
+
+        mini_icons = [
 
             arquivo
 
-            for arquivo in os.listdir(pasta_icones)
+            for arquivo in os.listdir(mini_path)
 
             if arquivo.lower().endswith((
+
                 '.png',
                 '.svg',
                 '.webp',
                 '.jpg',
                 '.jpeg'
+
             ))
 
-        ])
+        ]
 
-    print(pasta_icones)
+    # FULL
+
+    if os.path.exists(full_path):
+
+        full_icons = [
+
+            arquivo
+
+            for arquivo in os.listdir(full_path)
+
+            if arquivo.lower().endswith((
+
+                '.png',
+                '.svg',
+                '.webp',
+                '.jpg',
+                '.jpeg'
+
+            ))
+
+        ]
+
+    # REMOVE DUPLICADOS
+
+    icones = sorted(
+
+        list(
+
+            set(
+                mini_icons + full_icons
+            )
+
+        )
+
+    )
+
     print(icones)
+
     # =========================================
     # FORMULÁRIO
     # =========================================
@@ -882,6 +933,7 @@ def procedimentos(request):
             procedimento = form.save(commit=False)
 
             # VALOR CONVÊNIO AUTOMÁTICO
+
             if not procedimento.valor_convenio:
 
                 procedimento.valor_convenio = 0
@@ -910,7 +962,7 @@ def procedimentos(request):
 
         context
 
-    )  
+    )
 
 # =========================================
 # EDITAR PROCEDIMENTO
@@ -941,11 +993,57 @@ def editar_procedimento(request, id):
         'mini'
 
     )
-    icones = []
+    # =========================================
+    # ÍCONES DOS PROCEDIMENTOS
+    # =========================================
 
-    if os.path.exists(pasta_icones):
+    mini_path = os.path.join(
 
-        icones = os.listdir(pasta_icones)
+        settings.BASE_DIR,
+        'static',
+        'img',
+        'procedimentos',
+        'mini'
+
+    )
+
+    full_path = os.path.join(
+
+        settings.BASE_DIR,
+        'static',
+        'img',
+        'procedimentos',
+        'full'
+
+    )
+
+    mini_icons = []
+    full_icons = []
+
+    # MINI
+    if os.path.exists(mini_path):
+
+        mini_icons = os.listdir(mini_path)
+
+    # FULL
+    if os.path.exists(full_path):
+
+        full_icons = os.listdir(full_path)
+
+    # REMOVE DUPLICADOS
+    icones = sorted(
+
+        list(
+
+            set(
+                mini_icons + full_icons
+            )
+
+        )
+
+    )
+
+    
 
     if request.method == 'POST':
 

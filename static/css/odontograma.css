@@ -1010,23 +1010,32 @@ VERMELHO
 
 /* =========================================
 ANDAMENTO
-AMARELO
+VERDE
 ========================================= */
+
+/* EM ANDAMENTO */
 
 .status-andamento{
 
     filter:
+
     brightness(0)
+
     saturate(100%)
-    invert(84%)
-    sepia(60%)
-    saturate(929%)
-    hue-rotate(356deg)
-    brightness(103%)
-    contrast(102%);
+
+    invert(42%)
+
+    sepia(91%)
+
+    saturate(479%)
+
+    hue-rotate(127deg)
+
+    brightness(95%)
+
+    contrast(101%);
 
 }
-
 /* =========================================
 REALIZADO
 AZUL
@@ -1157,5 +1166,166 @@ SEM ROTAÇÃO NOS INFERIORES
     width:34px;
 
     height:34px;
+
+}
+
+/* =========================================
+MENU STATUS PREMIUM REFINADO
+========================================= */
+
+.menu-status{
+
+    position: fixed;
+
+    width: 190px;
+
+    background: rgba(235, 232, 232, 0.92);
+
+    backdrop-filter: blur(12px);
+
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 2px solid rgba(95, 93, 93, 0.45);
+
+    border-radius: 16px;
+
+    padding: 8px;
+
+    box-shadow:
+    0 8px 25px rgba(15,23,42,1.02);
+
+    z-index: 999999;
+
+    display: none;
+
+}
+
+/* ITENS */
+
+.status-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 10px;
+
+    border-radius:12px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.18s ease;
+
+    color:#0f172a;
+
+}
+
+/* HOVER */
+
+.status-item:hover{
+
+    transform: translateX(3px);
+
+}
+
+/* BADGE */
+
+.status-item::before{
+
+    content:'';
+
+    width:12px;
+
+    height:12px;
+
+    border-radius:4px;
+
+    display:block;
+
+}
+
+/* PLANEJADO */
+
+.status-planejado{
+
+    color:#dc2626;
+
+}
+
+.status-planejado::before{
+
+    background:#dbd8d8;
+
+}
+
+.status-planejado:hover{
+
+    background:#fef2f2;
+
+}
+
+/* ANDAMENTO */
+
+.status-andamento{
+
+    color:#059669;
+
+}
+
+.status-andamento::before{
+
+    background:#10b981;
+
+}
+
+.status-andamento:hover{
+
+    background:#ecfdf5;
+
+}
+
+/* REALIZADO */
+
+.status-realizado{
+
+    color:#2563eb;
+
+}
+
+.status-realizado::before{
+
+    background:#2563eb;
+
+}
+
+.status-realizado:hover{
+
+    background:#eff6ff;
+
+}
+
+/* CANCELADO */
+
+.status-cancelado{
+
+    color:#9333ea;
+
+}
+
+.status-cancelado::before{
+
+    background:#9333ea;
+
+}
+
+.status-cancelado:hover{
+
+    background:#faf5ff;
 
 }

@@ -95,32 +95,42 @@ LAYOUT
 
                     <img
 
-                        src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}"
+    src="
+    {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemi' %}
 
-                        class="
-                            icone-procedimento-dente
+        {% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
 
-                            {% if item.procedimento.tipo == 'dente' %}
-                                status-{{ item.status }}
-                            {% endif %}
+    {% else %}
 
-                            {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-                                posicao-topo
-                            {% else %}
-                                posicao-{{ item.procedimento.posicao_icone }}
-                            {% endif %}
+        {% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
 
-                            {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-                                sem-rotacao
-                            {% endif %}
-                        "
+    {% endif %}
+    "
 
-                        data-id="{{ item.id }}"
+    class="
+        icone-procedimento-dente
 
-                        data-status="{{ item.status }}"
+        {% if item.procedimento.tipo == 'dente' %}
+            status-{{ item.status }}
+        {% endif %}
 
-                        title="{{ item.procedimento.nome }}"
-                    >
+        {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+            posicao-topo
+        {% else %}
+            posicao-{{ item.procedimento.posicao_icone }}
+        {% endif %}
+
+        {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+            sem-rotacao
+        {% endif %}
+    "
+
+    data-id="{{ item.id }}"
+
+    data-status="{{ item.status }}"
+
+    title="{{ item.procedimento.nome }}"
+>
 
                     {% endif %}
 
@@ -173,28 +183,42 @@ LAYOUT
 
                     <img
 
-                        src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}"
+    src="
+    {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemi' %}
 
-                        class="
-                            icone-procedimento-dente
+        {% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
 
-                            {% if item.procedimento.tipo == 'dente' %}
-                                status-{{ item.status }}
-                            {% endif %}
+    {% else %}
 
-                            posicao-{{ item.procedimento.posicao_icone }}
+        {% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
 
-                            {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-                                sem-rotacao
-                            {% endif %}
-                        "
+    {% endif %}
+    "
 
-                        data-id="{{ item.id }}"
+    class="
+        icone-procedimento-dente
 
-                        data-status="{{ item.status }}"
+        {% if item.procedimento.tipo == 'dente' %}
+            status-{{ item.status }}
+        {% endif %}
 
-                        title="{{ item.procedimento.nome }}"
-                    >
+        {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+            posicao-topo
+        {% else %}
+            posicao-{{ item.procedimento.posicao_icone }}
+        {% endif %}
+
+        {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+            sem-rotacao
+        {% endif %}
+    "
+
+    data-id="{{ item.id }}"
+
+    data-status="{{ item.status }}"
+
+    title="{{ item.procedimento.nome }}"
+>
 
                     {% endif %}
 
@@ -253,7 +277,17 @@ LAYOUT
 
                     <img
 
-    src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}"
+    src="
+    {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemi' %}
+
+        {% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
+
+    {% else %}
+
+        {% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
+
+    {% endif %}
+    "
 
     class="
         icone-procedimento-dente
@@ -263,17 +297,9 @@ LAYOUT
         {% endif %}
 
         {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-
-            {% if numero|stringformat:'s'|first in '123456' %}
-                posicao-topo
-            {% else %}
-                posicao-base
-            {% endif %}
-
+            posicao-topo
         {% else %}
-
             posicao-{{ item.procedimento.posicao_icone }}
-
         {% endif %}
 
         {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
@@ -287,7 +313,6 @@ LAYOUT
 
     title="{{ item.procedimento.nome }}"
 >
-
                     {% endif %}
 
                 {% endif %}
@@ -325,9 +350,19 @@ LAYOUT
 
                     {% if item.procedimento.arquivo_icone or item.procedimento.icone %}
 
-                    <img
+ <img
 
-    src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}"
+    src="
+    {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemi' %}
+
+        {% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
+
+    {% else %}
+
+        {% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
+
+    {% endif %}
+    "
 
     class="
         icone-procedimento-dente
@@ -337,17 +372,9 @@ LAYOUT
         {% endif %}
 
         {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-
-            {% if numero|stringformat:'s'|first in '123456' %}
-                posicao-topo
-            {% else %}
-                posicao-base
-            {% endif %}
-
+            posicao-topo
         {% else %}
-
             posicao-{{ item.procedimento.posicao_icone }}
-
         {% endif %}
 
         {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
@@ -412,23 +439,37 @@ LAYOUT
 
                         <div class="timeline-top">
 
-                            <div class="timeline-procedimento">
+<div class="timeline-procedimento">
 
-                                {% if evolucao.procedimento.arquivo_icone or evolucao.procedimento.icone %}
+    {% if evolucao.procedimento.arquivo_icone or evolucao.procedimento.icone %}
 
-                                <img
-                                    src="{% static 'img/procedimentos/' %}{{ evolucao.procedimento.arquivo_icone }}"
-                                    class="timeline-icone"
-                                    alt="{{ evolucao.procedimento.nome }}"
-                                >
+    <img
 
-                                {% endif %}
+        src="
+        {% if evolucao.procedimento.tipo == 'geral' or evolucao.procedimento.tipo == 'hemi' %}
 
-                                <strong>
-                                    {{ evolucao.procedimento.nome }}
-                                </strong>
+            {% static 'img/procedimentos/full/' %}{{ evolucao.procedimento.arquivo_icone }}
 
-                            </div>
+        {% else %}
+
+            {% static 'img/procedimentos/mini/' %}{{ evolucao.procedimento.arquivo_icone }}
+
+        {% endif %}
+        "
+
+        class="timeline-icone"
+
+        alt="{{ evolucao.procedimento.nome }}"
+
+    >
+
+    {% endif %}
+
+    <strong>
+        {{ evolucao.procedimento.nome }}
+    </strong>
+
+</div>                            
 
                             <span>
                                 {{ evolucao.criado_em|date:"d/m/Y" }}
@@ -510,7 +551,8 @@ MODAL EVOLUÇÃO CLÍNICA
                     type="button"
                     class="btn-close"
                     data-bs-dismiss="modal"
-                ></button>
+                >
+            </button>
 
             </div>
 
@@ -679,7 +721,45 @@ MODAL EVOLUÇÃO CLÍNICA
 
 </div>
 
+<!-- MENU STATUS PREMIUM -->
+
+<div id="menuStatus" class="menu-status">
+
+    <div
+        class="status-item status-planejado"
+        data-status="planejado"
+    >
+        Planejado
+    </div>
+
+    <div
+        class="status-item status-andamento"
+        data-status="andamento"
+    >
+        Em andamento
+    </div>
+
+    <div
+        class="status-item status-realizado"
+        data-status="realizado"
+    >
+        Realizado
+    </div>
+
+    <div
+        class="status-item status-cancelado"
+        data-status="cancelado"
+    >
+        Cancelado
+    </div>
+
+</div>
+
 <script>
+
+/* =========================================
+SELEÇÃO DO DENTE
+========================================= */
 
 document
 .querySelectorAll('.dente-img')
@@ -688,11 +768,11 @@ document
 
     dente.addEventListener('click', function(){
 
-        const numero = this.dataset.dente
+        const numero = this.dataset.dente;
 
         document.getElementById(
             'denteSelecionado'
-        ).value = numero
+        ).value = numero;
 
         const modal = new bootstrap.Modal(
 
@@ -700,14 +780,18 @@ document
                 'modalEvolucao'
             )
 
-        )
+        );
 
-        modal.show()
+        modal.show();
 
-    })
+    });
 
-})
+});
 
+
+/* =========================================
+PREVIEW DOS ÍCONES
+========================================= */
 
 function atualizarPreviewIcone() {
 
@@ -734,7 +818,7 @@ function atualizarPreviewIcone() {
 
         preview.style.display = 'block';
 
-        // SE NÃO EXISTIR NO FULL
+        // FALLBACK MINI
         preview.onerror = function () {
 
             preview.src =
@@ -753,13 +837,19 @@ function atualizarPreviewIcone() {
 window.onload = atualizarPreviewIcone;
 
 
-
-
-console.log('STATUS ATIVO')
-
 /* =========================================
-ALTERAR STATUS
+MENU STATUS PREMIUM
 ========================================= */
+
+const menuStatus =
+    document.getElementById(
+        'menuStatus'
+    );
+
+let procedimentoAtual = null;
+
+
+/* CLICK DIREITO */
 
 document.addEventListener(
 
@@ -767,42 +857,50 @@ document.addEventListener(
 
     function(e){
 
-        console.log(e.target)
+        const icone = e.target.closest(
+            '.icone-procedimento-dente'
+        );
 
-        if(
+        if(!icone) return;
 
-            e.target.classList.contains(
-                'icone-procedimento-dente'
-            )
+        e.preventDefault();
 
-        ){
+        procedimentoAtual =
+            icone.dataset.id;
 
-            e.preventDefault()
+        menuStatus.style.display =
+            'block';
 
-            const procedimentoId =
-                e.target.dataset.id
+        menuStatus.style.left =
+            e.pageX + 'px';
 
-            const novoStatus = prompt(
+        menuStatus.style.top =
+            e.pageY + 'px';
 
-                'ALTERAR STATUS\n\n' +
+    }
 
-                'planejado\n' +
+);
 
-                'andamento\n' +
 
-                'realizado\n' +
+/* ALTERAR STATUS */
 
-                'reavaliar\n' +
+document
+.querySelectorAll('.status-item')
 
-                'cancelado'
+.forEach(item => {
 
-            )
+    item.addEventListener(
 
-            if(!novoStatus) return
+        'click',
+
+        function(){
+
+            const status =
+                this.dataset.status;
 
             fetch(
 
-                `/procedimento/${procedimentoId}/status/`,
+                `/procedimento/${procedimentoAtual}/status/`,
 
                 {
 
@@ -819,7 +917,7 @@ document.addEventListener(
 
                     body:JSON.stringify({
 
-                        status:novoStatus
+                        status:status
 
                     })
 
@@ -831,15 +929,31 @@ document.addEventListener(
 
             .then(data => {
 
-                location.reload()
+                location.reload();
 
-            })
+            });
 
         }
 
+    );
+
+});
+
+
+/* FECHAR MENU */
+
+document.addEventListener(
+
+    'click',
+
+    function(){
+
+        menuStatus.style.display =
+            'none';
+
     }
 
-)
+);
 
 </script>
 
