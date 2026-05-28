@@ -1,4 +1,4 @@
-{% extends 'accounts/base.html' %}
+icone-hemi{% extends 'accounts/base.html' %}
 
 {% load static %}
 
@@ -60,11 +60,95 @@ LAYOUT
 
             <div class="odontograma-box">
 
+
+<!-- =========================================
+PROCEDIMENTOS GERAIS
+========================================= -->
+
+<div class="procedimentos-gerais-wrapper">
+
+    {% for item in itens_orcamento %}
+
+        {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemiarcada'%}
+
+            <div class="procedimento-geral-chip status-{{ item.status }}">
+
+                <img
+                    src="{% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:'default.png' }}"
+                    class="icone-geral"
+                    alt="{{ item.procedimento.nome }}"
+                >
+
+                <span>
+                    {{ item.procedimento.nome }}
+                </span>
+
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+</div>
+
+
 <!-- DENTIÇÃO PERMANENTE -->
 
 <div class="secao-titulo">
     Dentição Permanente
 </div>
+
+
+<!-- =========================================
+HEMI ARCADA
+========================================= -->
+<!-- 
+<div class="hemi-wrapper">
+
+    {% for item in itens_orcamento %}
+
+        {% if item.procedimento.tipo == 'hemiarcada' %}
+
+            <div class="hemi-item
+
+                {% if item.hemi_arcada == 'sup_dir' %}
+                    hemi-sup_dir
+
+                {% elif item.hemi_arcada == 'sup_centro' %}
+                    hemi-sup_centro
+
+                {% elif item.hemi_arcada == 'sup_esq' %}
+                    hemi-sup_esq
+
+                {% elif item.hemi_arcada == 'inf_dir' %}
+                    hemi-inf_dir
+
+                {% elif item.hemi_arcada == 'inf_centro' %}
+                    hemi-inf_centro
+
+                {% elif item.hemi_arcada == 'inf_esq' %}
+                    hemi-inf_esq
+                {% endif %}
+            ">
+
+                <img
+                    src="{% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:'default.png' }}"
+                    class="icone-hemi"
+                    alt="{{ item.procedimento.nome }}"
+                >
+
+                <span>
+                    {{ item.procedimento.nome }}
+                </span>
+
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+</div> -->
+
 
 <!-- SUPERIOR -->
 
@@ -74,8 +158,6 @@ LAYOUT
 
     <div class="dente-box dente-{{ numero }}">
 
-        <!-- DENTE -->
-
         <img
             src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
             class="dente-img"
@@ -83,66 +165,51 @@ LAYOUT
             alt="Dente {{ numero }}"
         >
 
-        <!-- PROCEDIMENTOS -->
-
         <div class="procedimentos-dente">
 
             {% for item in itens_orcamento %}
 
                 {% if item.dente == numero %}
 
-                    {% if item.procedimento.arquivo_icone or item.procedimento.icone %}
+                    {% if item.procedimento.tipo == 'dente' %}
 
-                    <img
+                        {% if item.procedimento.arquivo_icone %}
 
-    src="
-    {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemi' %}
+                        <img
 
-        {% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
+                            src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
 
-    {% else %}
+                            class="
+                                icone-procedimento-dente
+                                status-{{ item.status }}
 
-        {% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
+                                {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+                                    posicao-topo
+                                {% else %}
+                                    posicao-{{ item.procedimento.posicao_icone }}
+                                {% endif %}
 
-    {% endif %}
-    "
+                                {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+                                    sem-rotacao
+                                {% endif %}
+                            "
 
-    class="
-        icone-procedimento-dente
+                            data-id="{{ item.id }}"
+                            data-status="{{ item.status }}"
+                            title="{{ item.procedimento.nome }}"
+                        >
 
-        {% if item.procedimento.tipo == 'dente' %}
-            status-{{ item.status }}
-        {% endif %}
+                        {% endif %}
 
-        {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-            posicao-topo
-        {% else %}
-            posicao-{{ item.procedimento.posicao_icone }}
-        {% endif %}
+                        {% if item.face %}
 
-        {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-            sem-rotacao
-        {% endif %}
-    "
+                        <span class="face-badge status-{{ item.status }}">
 
-    data-id="{{ item.id }}"
+                            {{ item.face }}
 
-    data-status="{{ item.status }}"
+                        </span>
 
-    title="{{ item.procedimento.nome }}"
->
-
-                    {% endif %}
-
-                    <!-- FACE -->
-
-                    {% if item.face %}
-
-                    <span class="face-badge status-{{ item.status }}">
-
-                        {{ item.face }}
-
-                    </span>
+                        {% endif %}
 
                     {% endif %}
 
@@ -157,6 +224,7 @@ LAYOUT
     {% endfor %}
 
 </div>
+
 
 <!-- INFERIOR -->
 
@@ -179,56 +247,45 @@ LAYOUT
 
                 {% if item.dente == numero %}
 
-                    {% if item.procedimento.arquivo_icone or item.procedimento.icone %}
+                    {% if item.procedimento.tipo == 'dente' %}
 
-                    <img
+                        {% if item.procedimento.arquivo_icone %}
 
-    src="
-    {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemi' %}
+                        <img
 
-        {% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
+                            src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
 
-    {% else %}
+                            class="
+                                icone-procedimento-dente
+                                status-{{ item.status }}
 
-        {% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
+                                {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+                                    posicao-topo
+                                {% else %}
+                                    posicao-{{ item.procedimento.posicao_icone }}
+                                {% endif %}
 
-    {% endif %}
-    "
+                                {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+                                    sem-rotacao
+                                {% endif %}
+                            "
 
-    class="
-        icone-procedimento-dente
+                            data-id="{{ item.id }}"
+                            data-status="{{ item.status }}"
+                            title="{{ item.procedimento.nome }}"
+                        >
 
-        {% if item.procedimento.tipo == 'dente' %}
-            status-{{ item.status }}
-        {% endif %}
+                        {% endif %}
 
-        {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-            posicao-topo
-        {% else %}
-            posicao-{{ item.procedimento.posicao_icone }}
-        {% endif %}
+                        {% if item.face %}
 
-        {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-            sem-rotacao
-        {% endif %}
-    "
+                        <span class="face-badge status-{{ item.status }}">
 
-    data-id="{{ item.id }}"
+                            {{ item.face }}
 
-    data-status="{{ item.status }}"
+                        </span>
 
-    title="{{ item.procedimento.nome }}"
->
-
-                    {% endif %}
-
-                    {% if item.face %}
-
-                    <span class="face-badge status-{{ item.status }}">
-
-                        {{ item.face }}
-
-                    </span>
+                        {% endif %}
 
                     {% endif %}
 
@@ -246,11 +303,13 @@ LAYOUT
 
 <div class="linha-divisao"></div>
 
+
 <!-- DENTIÇÃO DECÍDUA -->
 
 <div class="secao-titulo">
     Dentição Decídua
 </div>
+
 
 <!-- SUPERIOR -->
 
@@ -260,6 +319,8 @@ LAYOUT
 
     <div class="dente-box dente-{{ numero }}">
 
+        <!-- DENTE -->
+
         <img
             src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
             class="dente-img deciduo"
@@ -267,52 +328,54 @@ LAYOUT
             alt="Dente {{ numero }}"
         >
 
+        <!-- PROCEDIMENTOS -->
+
         <div class="procedimentos-dente">
 
             {% for item in itens_orcamento %}
 
                 {% if item.dente == numero %}
 
-                    {% if item.procedimento.arquivo_icone or item.procedimento.icone %}
+                    {% if item.procedimento.tipo == 'dente' %}
 
-                    <img
+                        {% if item.procedimento.arquivo_icone %}
 
-    src="
-    {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemi' %}
+                        <img
 
-        {% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
+                            src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
 
-    {% else %}
+                            class="
+                                icone-procedimento-dente
+                                status-{{ item.status }}
 
-        {% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
+                                {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+                                    posicao-topo
+                                {% else %}
+                                    posicao-{{ item.procedimento.posicao_icone }}
+                                {% endif %}
 
-    {% endif %}
-    "
+                                {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+                                    sem-rotacao
+                                {% endif %}
+                            "
 
-    class="
-        icone-procedimento-dente
+                            data-id="{{ item.id }}"
+                            data-status="{{ item.status }}"
+                            title="{{ item.procedimento.nome }}"
+                        >
 
-        {% if item.procedimento.tipo == 'dente' %}
-            status-{{ item.status }}
-        {% endif %}
+                        {% endif %}
 
-        {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-            posicao-topo
-        {% else %}
-            posicao-{{ item.procedimento.posicao_icone }}
-        {% endif %}
+                        {% if item.face %}
 
-        {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-            sem-rotacao
-        {% endif %}
-    "
+                        <span class="face-badge status-{{ item.status }}">
 
-    data-id="{{ item.id }}"
+                            {{ item.face }}
 
-    data-status="{{ item.status }}"
+                        </span>
 
-    title="{{ item.procedimento.nome }}"
->
+                        {% endif %}
+
                     {% endif %}
 
                 {% endif %}
@@ -327,6 +390,7 @@ LAYOUT
 
 </div>
 
+
 <!-- INFERIOR -->
 
 <div class="arcada decidua inferior">
@@ -335,6 +399,8 @@ LAYOUT
 
     <div class="dente-box dente-{{ numero }}">
 
+        <!-- DENTE -->
+
         <img
             src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
             class="dente-img deciduo inferior"
@@ -342,52 +408,53 @@ LAYOUT
             alt="Dente {{ numero }}"
         >
 
+        <!-- PROCEDIMENTOS -->
+
         <div class="procedimentos-dente">
 
             {% for item in itens_orcamento %}
 
                 {% if item.dente == numero %}
 
-                    {% if item.procedimento.arquivo_icone or item.procedimento.icone %}
+                    {% if item.procedimento.tipo == 'dente' %}
 
- <img
+                        {% if item.procedimento.arquivo_icone %}
 
-    src="
-    {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemi' %}
+                        <img
 
-        {% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
+                            src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
 
-    {% else %}
+                            class="
+                                icone-procedimento-dente
+                                status-{{ item.status }}
 
-        {% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone|default:item.procedimento.icone }}
+                                {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+                                    posicao-topo
+                                {% else %}
+                                    posicao-{{ item.procedimento.posicao_icone }}
+                                {% endif %}
 
-    {% endif %}
-    "
+                                {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+                                    sem-rotacao
+                                {% endif %}
+                            "
 
-    class="
-        icone-procedimento-dente
+                            data-id="{{ item.id }}"
+                            data-status="{{ item.status }}"
+                            title="{{ item.procedimento.nome }}"
+                        >
 
-        {% if item.procedimento.tipo == 'dente' %}
-            status-{{ item.status }}
-        {% endif %}
+                        {% endif %}
 
-        {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-            posicao-topo
-        {% else %}
-            posicao-{{ item.procedimento.posicao_icone }}
-        {% endif %}
+                        {% if item.face %}
 
-        {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-            sem-rotacao
-        {% endif %}
-    "
+                        <span class="face-badge status-{{ item.status }}">
 
-    data-id="{{ item.id }}"
+                            {{ item.face }}
 
-    data-status="{{ item.status }}"
+                        </span>
 
-    title="{{ item.procedimento.nome }}"
->
+                        {% endif %}
 
                     {% endif %}
 
@@ -408,6 +475,8 @@ LAYOUT
 </div> <!-- odontograma-card -->
 
 </div> <!-- odontograma-wrapper -->
+
+
     
     <!-- TIMELINE -->
 
@@ -446,7 +515,7 @@ LAYOUT
     <img
 
         src="
-        {% if evolucao.procedimento.tipo == 'geral' or evolucao.procedimento.tipo == 'hemi' %}
+        {% if evolucao.procedimento.tipo == 'geral' or evolucao.procedimento.tipo == 'hemiarcada' %}
 
             {% static 'img/procedimentos/full/' %}{{ evolucao.procedimento.arquivo_icone }}
 

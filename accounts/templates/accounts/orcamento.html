@@ -59,477 +59,575 @@
 
                 {% csrf_token %}
 
-             <div class="row g-3 align-items-end">
+                <div class="row g-2 align-items-end">
 
-<!-- PROCEDIMENTO -->
+                    <!-- PROCEDIMENTO -->
 
-<div class="col-md-4">
+                    <div class="col-md-3">
 
-    <label class="form-label fw-semibold">
-        Procedimento
-    </label>
+                        <label class="form-label fw-semibold">
+                            Procedimento
+                        </label>
 
-    {{ item_form.procedimento }}
+                        {{ item_form.procedimento }}
 
-</div>
+                    </div>
 
-<!-- DENTE -->
+                    <!-- TIPO LOCAL -->
 
-<div class="col-md-2">
+                    <div class="col-md-2">
 
-    <label class="form-label fw-semibold">
-        Dente
-    </label>
+                        <label class="form-label fw-semibold">
+                            Tipo
+                        </label>
 
-    <select
-        name="dente"
-        class="form-select rounded-3"
-    >
+                        <select name="tipo_local" id="id_tipo_local" class="form-select rounded-3">
+
+                            <option value="dente">
+                                Dente
+                            </option>
+
+                            <option value="hemiarcada">
+                                Hemi Arcada
+                            </option>
+
+                            <option value="geral">
+                                Geral
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- DENTE -->
+
+                    <div class="col-md-2" id="campo-dente">
+
+                        <label class="form-label fw-semibold">
+                            Dente
+                        </label>
+
+                        <select name="dente" id="campo-dente-select" class="form-select rounded-3">
+
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+                            <!-- DENTIÇÃO PERMANENTE -->
+
+                            <optgroup label="Superior Direito">
+
+                                <option value="18">18</option>
+                                <option value="17">17</option>
+                                <option value="16">16</option>
+                                <option value="15">15</option>
+                                <option value="14">14</option>
+                                <option value="13">13</option>
+                                <option value="12">12</option>
+                                <option value="11">11</option>
+
+                            </optgroup>
+
+                            <optgroup label="Superior Esquerdo">
+
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+
+                            </optgroup>
+
+                            <optgroup label="Inferior Esquerdo">
+
+                                <option value="31">31</option>
+                                <option value="32">32</option>
+                                <option value="33">33</option>
+                                <option value="34">34</option>
+                                <option value="35">35</option>
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+
+                            </optgroup>
+
+                            <optgroup label="Inferior Direito">
+
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+                                <option value="48">48</option>
+
+                            </optgroup>
+
+                            <!-- DENTIÇÃO DECÍDUA -->
+
+                            <optgroup label="Decídua Superior Direita">
+
+                                <option value="55">55</option>
+                                <option value="54">54</option>
+                                <option value="53">53</option>
+                                <option value="52">52</option>
+                                <option value="51">51</option>
+
+                            </optgroup>
+
+                            <optgroup label="Decídua Superior Esquerda">
+
+                                <option value="61">61</option>
+                                <option value="62">62</option>
+                                <option value="63">63</option>
+                                <option value="64">64</option>
+                                <option value="65">65</option>
+
+                            </optgroup>
+
+                            <optgroup label="Decídua Inferior Esquerda">
+
+                                <option value="81">81</option>
+                                <option value="82">82</option>
+                                <option value="83">83</option>
+                                <option value="84">84</option>
+                                <option value="85">85</option>
+
+                            </optgroup>
+
+                            <optgroup label="Decídua Inferior Direita">
+
+                                <option value="71">71</option>
+                                <option value="72">72</option>
+                                <option value="73">73</option>
+                                <option value="74">74</option>
+                                <option value="75">75</option>
+
+                            </optgroup>
+
+                        </select>
+
+                    </div>
+
+                    <!-- FACE -->
+
+                    <div class="col-md-2" id="campo-face">
+
+                        <label class="form-label fw-semibold">
+                            Face
+                        </label>
+
+                        <select name="face" class="form-select rounded-3">
+
+                            <option value="">
+                                --
+                            </option>
+
+                            <!-- SIMPLES -->
+
+                            <option value="O">O</option>
+                            <option value="M">M</option>
+                            <option value="D">D</option>
+                            <option value="V">V</option>
+                            <option value="L">L</option>
+                            <option value="P">P</option>
+
+                            <!-- COMPOSTAS -->
+
+                            <option value="MO">MO</option>
+                            <option value="DO">DO</option>
+                            <option value="MOD">MOD</option>
+
+                            <option value="MV">MV</option>
+                            <option value="DV">DV</option>
+
+                            <option value="ML">ML</option>
+                            <option value="DL">DL</option>
+
+                            <option value="OV">OV</option>
+                            <option value="OL">OL</option>
+
+                            <option value="VP">VP</option>
+                            <option value="LP">LP</option>
+
+                            <option value="MD">MD</option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- QUANTIDADE -->
+
+                    <div class="col-md-1">
+
+                        <label class="form-label fw-semibold">
+                            Quantidade
+                        </label>
+
+                        {{ item_form.quantidade }}
+
+                    </div>
+
+
+                    <!-- BOTÃO -->
+
+                    <div class="col-md-2">
+
+                        <div class="h-100 d-flex align-items-end">
+
+                            <button type="submit" class="btn btn-primary w-100 rounded-pill shadow-sm" style="
+                height:46px;
+                margin-bottom:1px;
+            ">
+
+                                <i class="fas fa-plus me-2"></i>
+
+                                Adicionar
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- TABELA -->
+
+                    <div class="card border-0 shadow-sm rounded-4">
+
+                        <div class="card-body p-4">
+
+                            <table class="table align-middle">
+
+                                <thead class="table-light">
+
+                                    <tr>
+
+                                        <th>
+                                            Dente
+                                        </th>
+
+                                        <th>
+                                            Face
+                                        </th>
+
+                                        <th>
+                                            Procedimento
+                                        </th>
+
+                                        <th>
+                                            Quantidade
+                                        </th>
+
+                                        <th>
+                                            Valor
+                                        </th>
+
+                                        <th>
+                                            Total
+                                        </th>
+
+                                        <th class="text-center">
+                                            Status
+                                        </th>
+
+                                        <th class="text-end">
+                                            Ações
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    {% for item in orcamento.itens.all %}
+
+                                    <tr>
+
+                                        <!-- DENTE -->
+
+                                        <td>
+
+                                            <span class="badge bg-light text-dark border">
+
+                                                {{ item.dente|default:"--" }}
+
+                                            </span>
+
+                                        </td>
+
+                                        <!-- FACE -->
+
+                                        <td>
+
+                                            <span class="badge bg-primary rounded-pill px-3">
+
+                                                {{ item.face|default:"--" }}
+
+                                            </span>
+
+                                        </td>
+
+                                        <!-- PROCEDIMENTO -->
+
+                                        <td>
+
+                                            <div class="fw-semibold">
+
+                                                {{ item.procedimento.nome }}
+
+                                            </div>
+
+                                            <small class="text-muted">
+
+                                                {{ item.procedimento.codigo|default:"Sem código" }}
+
+                                            </small>
+
+                                        </td>
+
+                                        <!-- QUANTIDADE -->
+
+                                        <td>
+
+                                            {{ item.quantidade }}
+
+                                        </td>
+
+                                        <!-- VALOR -->
+
+                                        <td>
+
+                                            R$ {{ item.valor_unitario }}
+
+                                        </td>
+
+                                        <!-- TOTAL -->
+
+                                        <td>
+
+                                            <span class="fw-bold text-success">
+
+                                                R$ {{ item.total }}
+
+                                            </span>
+
+                                        </td>
+
+                                        <!-- STATUS -->
+
+                                        <td class="text-center">
+
+                                            <span class="badge bg-warning text-dark rounded-pill px-3">
+
+                                                Planejado
+
+                                            </span>
+
+                                        </td>
+
+                                        <!-- AÇÕES -->
+
+                                        <td class="text-end">
+
+                                            <div class="d-flex justify-content-end gap-2">
+
+                                                <!-- EDITAR -->
+                                                <a href="{% url 'editar_item_orcamento' item.id %}"
+                                                    class="btn btn-sm btn-light border rounded-circle" title="Editar">
+
+                                                    <i class="fas fa-edit text-primary"></i>
+
+                                                </a>
+                                                <!-- EXCLUIR -->
+
+
+
+                                                <a href="{% url 'excluir_item_orcamento' item.id %}"
+                                                    class="btn btn-sm btn-light border rounded-circle" title="Excluir">
+
+                                                    <i class="fas fa-trash text-danger"></i>
+
+                                                </a>
+
+
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+                                    {% empty %}
+
+                                    <tr>
+
+                                        <td colspan="7" class="text-center text-muted py-4">
+
+                                            Nenhum item adicionado.
+
+                                        </td>
+
+                                    </tr>
+
+                                    {% endfor %}
+
+                                </tbody>
+
+                            </table>
+
+                            <!-- TOTAL -->
+
+                            <div class="text-end mt-4">
+
+                                <h4 class="fw-bold">
+
+                                    Total:
+                                    <span class="text-success">
+                                        R$ {{ orcamento.total }}
+                                    </span>
+
+                                </h4>
+
+                            </div>
+
+                            <!-- BOTÕES -->
+
+                            <div class="d-flex justify-content-end gap-2 mt-4 flex-wrap">
+
+                                <button class="btn btn-success rounded-pill px-4">
+
+                                    <i class="fas fa-save me-1"></i>
+                                    Salvar
+
+                                </button>
+
+                                <button class="btn btn-primary rounded-pill px-4">
+
+                                    <i class="fas fa-edit me-1"></i>
+                                    Editar
+
+                                </button>
+
+                                <button class="btn btn-danger rounded-pill px-4">
+
+                                    <i class="fas fa-trash me-1"></i>
+                                    Excluir
+
+                                </button>
+
+                                <button class="btn btn-secondary rounded-pill px-4">
+
+                                    <i class="fas fa-times me-1"></i>
+                                    Cancelar
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <script>
+
+                    document.addEventListener('DOMContentLoaded', function () {
+
+                        const tipo = document.getElementById('id_tipo_local');
+
+                        const denteSelect = document.getElementById('campo-dente-select');
+
+                        const campoFace = document.getElementById('campo-face');
+
+
+                        /* SALVA DENTES ORIGINAIS */
+
+                        const dentesOriginais = denteSelect.innerHTML;
+
+
+                        /* OPÇÕES HEMI ARCADA */
+
+                        const hemiOptions = `
 
         <option value="">
             Selecione
         </option>
 
-        /* DENTES PERMANENTES */
-        
+        <option value="sup_dir">
+            Superior Esquerdo (18 a 14)
+        </option>
 
-        <!-- SUPERIOR DIREITO -->
+        <option value="sup_centro">
+            Superior Anterior (13 a 23)
+        </option>
 
-        <optgroup label="DENTIÇÃO PERMANENTE">            
-            <option value="18">18</option>
-            <option value="17">17</option>
-            <option value="16">16</option>
-            <option value="15">15</option>
-            <option value="14">14</option>
-            <option value="13">13</option>
-            <option value="12">12</option>
-            <option value="11">11</option>
+        <option value="sup_esq">
+            Superior Direito (24 a 28)
+        </option>
 
-        </optgroup>
+        <option value="inf_dir">
+            Inferior Esquerdo (48 a 44)
+        </option>
 
-        <!-- SUPERIOR ESQUERDO -->
+        <option value="inf_centro">
+            Inferior Anterior (43 a 33)
+        </option>
 
-        <optgroup>
+        <option value="inf_esq">
+            Inferior Direito (34 a 38)
+        </option>
 
-            <option value="21">21</option>
-            <option value="22">22</option>
-            <option value="23">23</option>
-            <option value="24">24</option>
-            <option value="25">25</option>
-            <option value="26">26</option>
-            <option value="27">27</option>
-            <option value="28">28</option>
+    `;
 
-        </optgroup>
 
-        <!-- INFERIOR ESQUERDO -->
+                        function atualizarCampos() {
 
-        <optgroup >
+                            /* DENTE */
 
-            <option value="31">31</option>
-            <option value="32">32</option>
-            <option value="33">33</option>
-            <option value="34">34</option>
-            <option value="35">35</option>
-            <option value="36">36</option>
-            <option value="37">37</option>
-            <option value="38">38</option>
+                            if (tipo.value === 'dente') {
 
-        </optgroup>
+                                denteSelect.innerHTML = dentesOriginais;
 
-        <!-- INFERIOR DIREITO -->
+                                campoFace.style.display = 'block';
+                            }
 
-        <optgroup >
+                            /* HEMI ARCADA */
 
-            <option value="41">41</option>
-            <option value="42">42</option>
-            <option value="43">43</option>
-            <option value="44">44</option>
-            <option value="45">45</option>
-            <option value="46">46</option>
-            <option value="47">47</option>
-            <option value="48">48</option>
+                            else if (tipo.value === 'hemiarcada') {
 
-        </optgroup>
+                                denteSelect.innerHTML = hemiOptions;
 
-        /* DENTES DECÍDUOS */
+                                campoFace.style.display = 'none';
+                            }
 
-        <!-- SUPERIOR DIREITO -->       
+                            /* GERAL */
 
-        <optgroup label="DENTIÇÃO DECÍDUA">            
-            <option value="55">55</option>
-            <option value="54">54</option>
-            <option value="53">53</option>
-            <option value="52">52</option>
-            <option value="51">51</option>
+                            else {
 
-        </optgroup>
+                                denteSelect.innerHTML = `
+                <option value="">
+                    Não se aplica
+                </option>
+            `;
 
-        <!-- SUPERIOR ESQUERDO -->
+                                campoFace.style.display = 'none';
+                            }
+                        }
 
-        <optgroup >
+                        atualizarCampos();
 
-            <option value="61">61</option>
-            <option value="62">62</option>
-            <option value="63">63</option>
-            <option value="64">64</option>
-            <option value="65">65</option>
-            
+                        tipo.addEventListener('change', atualizarCampos);
 
-        </optgroup>
+                    });
 
-        <!-- INFERIOR ESQUERDO -->
+                </script>
 
-        <optgroup >
 
-            <option value="81">81</option>
-            <option value="82">82</option>
-            <option value="83">83</option>
-            <option value="84">84</option>
-            <option value="85">85</option>
-            
-
-        </optgroup>
-
-        <!-- INFERIOR DIREITO -->
-
-        <optgroup >
-
-            <option value="71">71</option>
-            <option value="72">72</option>
-            <option value="73">73</option>
-            <option value="74">74</option>
-            <option value="75">75</option>
-            
-
-        </optgroup>
-
-    </select>
-
-</div>
-
-<!-- FACE -->
-
-<div class="col-md-2">
-
-    <label class="form-label fw-semibold">
-        Face
-    </label>
-
-    <select
-        name="face"
-        class="form-select rounded-3"
-    >
-
-        <option value="">
-            --
-         <!-- SIMPLES -->
-
-        <option value="O">O</option>
-        <option value="M">M</option>
-        <option value="D">D</option>
-        <option value="V">V</option>
-        <option value="L">L</option>
-        <option value="P">P</option>
-
-        <!-- COMPOSTAS -->
-
-        <option value="MO">MO</option>
-        <option value="DO">DO</option>
-        <option value="MOD">MOD</option>
-
-        <option value="MV">MV</option>
-        <option value="DV">DV</option>
-
-        <option value="ML">ML</option>
-        <option value="DL">DL</option>
-
-        <option value="OV">OV</option>
-        <option value="OL">OL</option>
-
-        <option value="VP">VP</option>
-        <option value="LP">LP</option>
-
-        <option value="MD">MD</option>
-
-    </select>
-
-</div>
-
-<!-- QUANTIDADE -->
-
-<div class="col-md-2">
-
-    <label class="form-label fw-semibold">
-        Quantidade
-    </label>
-
-    {{ item_form.quantidade }}
-
-</div>
-
-<!-- BOTÃO -->
-
-<div class="col-md-2">
-
-    <button
-        type="submit"
-        class="btn btn-primary w-100 rounded-pill shadow-sm"
-    >
-
-        <i class="fas fa-plus me-2"></i>
-
-        Adicionar
-
-    </button>
-
-</div>    
-
-    <!-- TABELA -->
-
-    <div class="card border-0 shadow-sm rounded-4">
-
-        <div class="card-body p-4">
-
-            <table class="table align-middle">
-
-                <thead class="table-light">
-
-    <tr>
-
-        <th>
-            Dente
-        </th>
-
-        <th>
-            Face
-        </th>
-
-        <th>
-            Procedimento
-        </th>
-
-        <th>
-            Quantidade
-        </th>
-
-        <th>
-            Valor
-        </th>
-
-        <th>
-            Total
-        </th>
-
-        <th class="text-center">
-            Status
-        </th>
-
-        <th class="text-end">
-            Ações
-        </th>
-
-    </tr>
-
-</thead>
-
-             <tbody>
-
-    {% for item in orcamento.itens.all %}
-
-    <tr>
-
-        <!-- DENTE -->
-
-        <td>
-
-            <span class="badge bg-light text-dark border">
-
-                {{ item.dente|default:"--" }}
-
-            </span>
-
-        </td>
-
-        <!-- FACE -->
-
-<td>
-
-    <span class="badge bg-primary rounded-pill px-3">
-
-        {{ item.face|default:"--" }}
-
-    </span>
-
-</td>
-
-        <!-- PROCEDIMENTO -->
-
-        <td>
-
-            <div class="fw-semibold">
-
-                {{ item.procedimento.nome }}
-
-            </div>
-
-            <small class="text-muted">
-
-                {{ item.procedimento.codigo|default:"Sem código" }}
-
-            </small>
-
-        </td>
-
-        <!-- QUANTIDADE -->
-
-        <td>
-
-            {{ item.quantidade }}
-
-        </td>
-
-        <!-- VALOR -->
-
-        <td>
-
-            R$ {{ item.valor_unitario }}
-
-        </td>
-
-        <!-- TOTAL -->
-
-        <td>
-
-            <span class="fw-bold text-success">
-
-                R$ {{ item.total }}
-
-            </span>
-
-        </td>
-
-        <!-- STATUS -->
-
-        <td class="text-center">
-
-            <span class="badge bg-warning text-dark rounded-pill px-3">
-
-                Planejado
-
-            </span>
-
-        </td>
-
-        <!-- AÇÕES -->
-
-        <td class="text-end">
-
-            <div class="d-flex justify-content-end gap-2">
-
-                <!-- EDITAR -->
-<a
-    href="{% url 'editar_item_orcamento' item.id %}"
-    class="btn btn-sm btn-light border rounded-circle"
-    title="Editar"
->
-
-    <i class="fas fa-edit text-primary"></i>
-
-</a>
-                <!-- EXCLUIR -->
-
-               
-
-                    <a
-                        href="{% url 'excluir_item_orcamento' item.id %}"
-                        class="btn btn-sm btn-light border rounded-circle"
-                        title="Excluir"
-                    >
-
-                        <i class="fas fa-trash text-danger"></i>
-
-                    </a>
-
-               
-
-            </div>
-
-        </td>
-
-    </tr>
-
-    {% empty %}
-
-    <tr>
-
-        <td colspan="7" class="text-center text-muted py-4">
-
-            Nenhum item adicionado.
-
-        </td>
-
-    </tr>
-
-    {% endfor %}
-
-</tbody>
-
-            </table>
-
-            <!-- TOTAL -->
-
-            <div class="text-end mt-4">
-
-                <h4 class="fw-bold">
-
-                    Total:
-                    <span class="text-success">
-                        R$ {{ orcamento.total }}
-                    </span>
-
-                </h4>
-
-            </div>
-
-            <!-- BOTÕES -->
-
-            <div class="d-flex justify-content-end gap-2 mt-4 flex-wrap">
-
-                <button class="btn btn-success rounded-pill px-4">
-
-                    <i class="fas fa-save me-1"></i>
-                    Salvar
-
-                </button>
-
-                <button class="btn btn-primary rounded-pill px-4">
-
-                    <i class="fas fa-edit me-1"></i>
-                    Editar
-
-                </button>
-
-                <button class="btn btn-danger rounded-pill px-4">
-
-                    <i class="fas fa-trash me-1"></i>
-                    Excluir
-
-                </button>
-
-                <button class="btn btn-secondary rounded-pill px-4">
-
-                    <i class="fas fa-times me-1"></i>
-                    Cancelar
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-{% endblock %}
+                {% endblock %}

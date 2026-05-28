@@ -1067,11 +1067,30 @@ class Convenio(models.Model):
     def __str__(self):
 
         return self.nome
-    
+  
 
 # =========================================
 # ITEM ORÇAMENTO
 # =========================================
+
+TIPO_LOCAL = (
+
+    ('dente', 'Dente'),
+    ('hemiarcada', 'Hemi Arcada'),
+    ('geral', 'Geral'),
+
+)
+
+
+HEMI_CHOICES = (
+
+    ('sup_dir', 'Superior Direita'),
+    ('sup_esq', 'Superior Esquerda'),
+    ('inf_dir', 'Inferior Direita'),
+    ('inf_esq', 'Inferior Esquerda'),
+
+)
+
 
 class ItemOrcamento(models.Model):
 
@@ -1083,6 +1102,8 @@ class ItemOrcamento(models.Model):
         ('cancelado', 'Cancelado'),
 
     )
+
+  
 
     # =========================================
     # ORÇAMENTO
@@ -1098,6 +1119,7 @@ class ItemOrcamento(models.Model):
 
     )
 
+
     # =========================================
     # PROCEDIMENTO
     # =========================================
@@ -1109,6 +1131,20 @@ class ItemOrcamento(models.Model):
         on_delete=models.SET_NULL,
 
         null=True
+
+    )
+
+    # =========================================
+    # TIPO LOCAL
+    # =========================================
+
+    tipo_local = models.CharField(
+
+        max_length=20,
+
+        choices=TIPO_LOCAL,
+
+        default='dente'
 
     )
 
@@ -1139,6 +1175,23 @@ class ItemOrcamento(models.Model):
         null=True
 
     )
+
+    # =========================================
+    # HEMI ARCADA
+    # =========================================
+
+    hemi_arcada = models.CharField(
+
+        max_length=20,
+
+        choices=HEMI_CHOICES,
+
+        blank=True,
+
+        null=True
+
+    )
+
 
     # =========================================
     # QUANTIDADE

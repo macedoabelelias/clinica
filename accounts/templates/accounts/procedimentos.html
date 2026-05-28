@@ -339,10 +339,24 @@
                         <!-- ÍCONE -->
                         <td width="80">
 
-                            <img
-                            src="{% static 'img/procedimentos/mini/' %}{{ procedimento.arquivo_icone }}"
-                            width="34"
-                            >
+{% if procedimento.tipo == 'hemiarcada' or procedimento.tipo == 'geral' %}
+
+    <img
+        src="{% static 'img/procedimentos/full/' %}{{ procedimento.arquivo_icone }}"
+        width="60"
+        style="object-fit:contain;"
+    >
+
+{% else %}
+
+    <img
+        src="{% static 'img/procedimentos/mini/' %}{{ procedimento.arquivo_icone }}"
+        width="34"
+        style="object-fit:contain;"
+    >
+
+{% endif %}
+
 
                         </td>
 
