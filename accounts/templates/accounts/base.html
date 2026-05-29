@@ -89,11 +89,13 @@ CSS DASHBOARD
     <!-- =========================================
     CSS FICHA CLÍNICA
     ========================================== -->
+<link
+    rel="stylesheet"
+    href="{% static 'css/ficha_clinica.css' %}"
+>
 
-    <link
-        rel="stylesheet"
-        href="{% static 'css/ficha_clinica.css' %}"
-    >
+{% block extra_css %}
+{% endblock %}
 
 </head>
 <body>

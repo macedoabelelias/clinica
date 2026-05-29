@@ -1093,12 +1093,12 @@ HEMI_CHOICES = (
 
 
 class ItemOrcamento(models.Model):
-
     STATUS_CHOICES = (
 
+        ('existente', 'Existente'),
         ('planejado', 'Planejado'),
-        ('andamento', 'Em andamento'),
-        ('finalizado', 'Finalizado'),
+        ('andamento', 'Em Andamento'),
+        ('realizado', 'Realizado'),
         ('cancelado', 'Cancelado'),
 
     )

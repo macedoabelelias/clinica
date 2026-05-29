@@ -220,6 +220,7 @@ def perfil_paciente(request, id):
         }
 
     )
+    
 
 # =========================================
 # LOGOUT
@@ -230,6 +231,74 @@ def logout_view(request):
     logout(request)
 
     return redirect('/')
+
+# =========================================
+# NOVO PACIENTE
+# =========================================
+
+@login_required(login_url='/')
+def novo_paciente(request):
+
+    if request.method == 'POST':
+
+        Paciente.objects.create(
+
+            foto=request.FILES.get('foto'),
+
+            nome=request.POST.get('nome'),
+            cpf=request.POST.get('cpf'),
+            rg=request.POST.get('rg'),
+            nascimento=request.POST.get('nascimento') or None,
+
+            genero=request.POST.get('genero'),
+            estado_civil=request.POST.get('estado_civil'),
+            profissao=request.POST.get('profissao'),
+
+            telefone=request.POST.get('telefone'),
+            whatsapp=request.POST.get('whatsapp'),
+            email=request.POST.get('email'),
+
+            cep=request.POST.get('cep'),
+            endereco=request.POST.get('endereco'),
+            numero=request.POST.get('numero'),
+            complemento=request.POST.get('complemento'),
+            bairro=request.POST.get('bairro'),
+            cidade=request.POST.get('cidade'),
+            estado=request.POST.get('estado'),
+
+            convenio=request.POST.get('convenio'),
+            carteirinha=request.POST.get('carteirinha'),
+
+            alergias=request.POST.get('alergias'),
+            medicamentos=request.POST.get('medicamentos'),
+            observacoes=request.POST.get('observacoes'),
+
+            responsavel=request.POST.get('responsavel'),
+            cpf_responsavel=request.POST.get('cpf_responsavel'),
+            telefone_responsavel=request.POST.get('telefone_responsavel')
+
+        )
+
+        return redirect('pacientes')
+
+    convenios = Convenio.objects.filter(
+        ativo=True
+    ).order_by('nome')
+
+    return render(
+
+        request,
+
+        'accounts/paciente_form.html',
+
+        {
+
+            'convenios': convenios,
+            'modo': 'novo'
+
+        }
+
+    )
 
 # =========================================
 # EDITAR PACIENTE

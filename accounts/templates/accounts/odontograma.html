@@ -70,20 +70,22 @@ PROCEDIMENTOS GERAIS
     {% for item in itens_orcamento %}
 
         {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemiarcada'%}
-
-            <div class="procedimento-geral-chip status-{{ item.status }}">
-
-                <img
-                    src="{% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:'default.png' }}"
-                    class="icone-geral"
-                    alt="{{ item.procedimento.nome }}"
+                <div
+                    class="procedimento-geral-chip status-{{ item.status }}"
+                    data-id="{{ item.id }}"
                 >
 
-                <span>
-                    {{ item.procedimento.nome }}
-                </span>
+                    <img
+                        src="{% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:'default.png' }}"
+                        class="icone-geral"
+                        alt="{{ item.procedimento.nome }}"
+                    >
 
-            </div>
+                    <span>
+                        {{ item.procedimento.nome }}
+                    </span>
+
+                </div>
 
         {% endif %}
 
@@ -97,58 +99,6 @@ PROCEDIMENTOS GERAIS
 <div class="secao-titulo">
     Dentição Permanente
 </div>
-
-
-<!-- =========================================
-HEMI ARCADA
-========================================= -->
-<!-- 
-<div class="hemi-wrapper">
-
-    {% for item in itens_orcamento %}
-
-        {% if item.procedimento.tipo == 'hemiarcada' %}
-
-            <div class="hemi-item
-
-                {% if item.hemi_arcada == 'sup_dir' %}
-                    hemi-sup_dir
-
-                {% elif item.hemi_arcada == 'sup_centro' %}
-                    hemi-sup_centro
-
-                {% elif item.hemi_arcada == 'sup_esq' %}
-                    hemi-sup_esq
-
-                {% elif item.hemi_arcada == 'inf_dir' %}
-                    hemi-inf_dir
-
-                {% elif item.hemi_arcada == 'inf_centro' %}
-                    hemi-inf_centro
-
-                {% elif item.hemi_arcada == 'inf_esq' %}
-                    hemi-inf_esq
-                {% endif %}
-            ">
-
-                <img
-                    src="{% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:'default.png' }}"
-                    class="icone-hemi"
-                    alt="{{ item.procedimento.nome }}"
-                >
-
-                <span>
-                    {{ item.procedimento.nome }}
-                </span>
-
-            </div>
-
-        {% endif %}
-
-    {% endfor %}
-
-</div> -->
-
 
 <!-- SUPERIOR -->
 
@@ -793,35 +743,39 @@ MODAL EVOLUÇÃO CLÍNICA
 <!-- MENU STATUS PREMIUM -->
 
 <div id="menuStatus" class="menu-status">
-
     <div
-        class="status-item status-planejado"
-        data-status="planejado"
-    >
-        Planejado
-    </div>
+    class="status-item status-existente"
+    data-status="existente"
+>
+    Existente
+</div>
 
-    <div
-        class="status-item status-andamento"
-        data-status="andamento"
-    >
-        Em andamento
-    </div>
+<div
+    class="status-item status-planejado"
+    data-status="planejado"
+>
+    Planejado
+</div>
 
-    <div
-        class="status-item status-realizado"
-        data-status="realizado"
-    >
-        Realizado
-    </div>
+<div
+    class="status-item status-andamento"
+    data-status="andamento"
+>
+    Em Andamento
+</div>
 
-    <div
-        class="status-item status-cancelado"
-        data-status="cancelado"
-    >
-        Cancelado
-    </div>
+<div
+    class="status-item status-realizado"
+    data-status="realizado"
+>
+    Realizado
+</div>
 
+<div
+    class="status-item status-cancelado"
+    data-status="cancelado"
+>
+    Cancelado
 </div>
 
 <script>
@@ -926,16 +880,16 @@ document.addEventListener(
 
     function(e){
 
-        const icone = e.target.closest(
-            '.icone-procedimento-dente'
+        const elemento = e.target.closest(
+            '.icone-procedimento-dente, .procedimento-geral-chip'
         );
 
-        if(!icone) return;
+        if(!elemento) return;
 
         e.preventDefault();
 
         procedimentoAtual =
-            icone.dataset.id;
+            elemento.dataset.id;
 
         menuStatus.style.display =
             'block';

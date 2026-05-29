@@ -1,0 +1,700 @@
+{% extends 'accounts/base.html' %}
+
+{% load static %}
+
+{% block title %}
+Paciente | AM Systems
+{% endblock %}
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/paciente_form.css' %}"
+>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="page-wrapper">
+
+    <div class="page-card">
+
+        <!-- HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1 class="page-title">
+
+                    {% if paciente %}
+
+                        Editar Paciente
+
+                    {% else %}
+
+                        Novo Paciente
+
+                    {% endif %}
+
+                </h1>
+
+                <p class="page-subtitle">
+
+                    Cadastro completo do paciente.
+
+                </p>
+
+            </div>
+
+            <a
+                href="{% url 'pacientes' %}"
+                class="btn-premium text-decoration-none"
+            >
+
+                <i class="bi bi-arrow-left"></i>
+
+                Voltar
+
+            </a>
+
+        </div>
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            {% csrf_token %}
+
+<!-- FOTO -->
+
+<div class="form-section">
+
+    <h4 class="section-title">
+
+        Foto do Paciente
+
+    </h4>
+
+    <div class="photo-upload">
+
+    <div class="photo-preview-wrapper">
+
+        {% if paciente and paciente.foto %}
+
+            <img
+                src="{{ paciente.foto.url }}"
+                class="preview-photo"
+            >
+
+        {% else %}
+
+            <div class="photo-placeholder">
+
+                <i class="bi bi-person"></i>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <input
+        type="file"
+        name="foto"
+        class="form-control"
+    >
+
+</div>
+
+</div>
+
+<!-- DADOS PESSOAIS -->
+
+<div class="form-section">
+
+    <h4 class="section-title">
+
+        <i class="bi bi-person-vcard"></i>
+
+        Dados Pessoais
+
+    </h4>
+
+    <!-- LINHA 1 -->
+
+    <div class="form-grid-3">
+
+        <div>
+
+            <label>Nome Completo</label>
+
+            <input
+                type="text"
+                name="nome"
+                class="form-control"
+                value="{{ paciente.nome|default:'' }}"
+                required
+            >
+
+        </div>
+
+        <div>
+
+            <label>Data Nascimento</label>
+
+            <input
+                type="date"
+                name="nascimento"
+                class="form-control"
+                value="{{ paciente.nascimento|date:'Y-m-d' }}"
+            >
+
+        </div>
+
+        <div>
+
+            <label>Idade</label>
+
+            <input
+                type="text"
+                class="form-control"
+                value="{{ paciente.idade|default:'' }}"
+                readonly
+            >
+
+        </div>
+
+    </div>
+
+    <!-- LINHA 2 -->
+
+    <div class="form-grid-3-equal">
+
+        <div>
+
+            <label>CPF</label>
+
+            <input
+                type="text"
+                name="cpf"
+                class="form-control"
+                value="{{ paciente.cpf|default:'' }}"
+            >
+
+        </div>
+
+        <div>
+
+            <label>RG</label>
+
+            <input
+                type="text"
+                name="rg"
+                class="form-control"
+                value="{{ paciente.rg|default:'' }}"
+            >
+
+        </div>
+
+        <div>
+
+            <label>Estado Civil</label>
+
+            <select
+                name="estado_civil"
+                class="form-control"
+            >
+
+                <option value="">Selecione</option>
+
+                <option value="Solteiro">Solteiro</option>
+
+                <option value="Casado">Casado</option>
+
+                <option value="Divorciado">Divorciado</option>
+
+                <option value="Viúvo">Viúvo</option>
+
+                <option value="União Estável">
+                    União Estável
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <!-- LINHA 3 -->
+
+    <div class="form-grid-2">
+
+        <div>
+
+            <label>Gênero</label>
+
+            <select
+                name="genero"
+                class="form-control"
+            >
+
+                <option value="">Selecione</option>
+
+                <option
+                    value="Masculino"
+                    {% if paciente.genero == 'Masculino' %}
+                    selected
+                    {% endif %}
+                >
+                    Cis Masculino
+                </option>
+
+                <option
+                    value="Feminino"
+                    {% if paciente.genero == 'Feminino' %}
+                    selected
+                    {% endif %}
+                >
+                    Feminino
+                </option>
+
+                <option
+                    value="Transgênero Feminino"
+                    {% if paciente.genero == 'Transgênero Feminino' %}
+                    selected
+                    {% endif %}
+                >
+                    Transgênero Feminino
+                </option>
+
+                <option
+                    value="Transgênero Masculino"
+                    {% if paciente.genero == 'Transgênero Masculino' %}
+                    selected
+                    {% endif %}
+                >
+                    Transgênero Masculino
+                </option>
+
+                <option
+                    value="Outros"
+                    {% if paciente.genero == 'Outros' %}
+                    selected
+                    {% endif %}
+                >
+                    Outros
+                </option>
+
+            </select>
+
+        </div>
+
+        <div>
+
+            <label>Profissão</label>
+
+            <input
+                type="text"
+                name="profissao"
+                class="form-control"
+                value="{{ paciente.profissao|default:'' }}"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CONTATO -->
+
+<div class="form-section">
+
+    <h4 class="section-title">
+
+        <i class="bi bi-telephone"></i>
+
+        Contato
+
+    </h4>
+
+    <div class="form-grid">
+
+        <div>
+
+            <label>WhatsApp</label>
+
+            <input
+                type="text"
+                name="whatsapp"
+                class="form-control"
+                value="{{ paciente.whatsapp|default:'' }}"
+            >
+
+        </div>
+
+        <div>
+
+            <label>E-mail</label>
+
+            <input
+                type="email"
+                name="email"
+                class="form-control"
+                value="{{ paciente.email|default:'' }}"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ENDEREÇO -->
+
+<div class="form-section">
+
+    <h4 class="section-title">
+
+        <i class="bi bi-geo-alt"></i>
+
+        Endereço
+
+    </h4>
+
+    <!-- LINHA 1 -->
+
+    <div class="form-grid-2">
+
+        <div>
+
+            <label>CEP</label>
+
+            <input
+                type="text"
+                name="cep"
+                class="form-control"
+                value="{{ paciente.cep|default:'' }}"
+            >
+
+        </div>
+
+        <div>
+
+            <label>Estado</label>
+
+            <select
+                name="estado"
+                class="form-control"
+            >
+
+                <option value="">UF</option>
+
+                <option value="AC">AC</option>
+                <option value="AL">AL</option>
+                <option value="AP">AP</option>
+                <option value="AM">AM</option>
+                <option value="BA">BA</option>
+                <option value="CE">CE</option>
+                <option value="DF">DF</option>
+                <option value="ES">ES</option>
+                <option value="GO">GO</option>
+                <option value="MA">MA</option>
+                <option value="MT">MT</option>
+                <option value="MS">MS</option>
+                <option value="MG">MG</option>
+                <option value="PA">PA</option>
+                <option value="PB">PB</option>
+                <option value="PR">PR</option>
+                <option value="PE">PE</option>
+                <option value="PI">PI</option>
+                <option value="RJ">RJ</option>
+                <option value="RN">RN</option>
+                <option value="RS">RS</option>
+                <option value="RO">RO</option>
+                <option value="RR">RR</option>
+                <option value="SC">SC</option>
+                <option value="SP">SP</option>
+                <option value="SE">SE</option>
+                <option value="TO">TO</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <!-- LINHA 2 -->
+
+    <div class="form-group-full">
+
+        <label>Endereço</label>
+
+        <input
+            type="text"
+            name="endereco"
+            class="form-control"
+            value="{{ paciente.endereco|default:'' }}"
+        >
+
+    </div>
+
+    <!-- LINHA 3 -->
+
+    <div class="form-grid-2">
+
+        <div>
+
+            <label>Número</label>
+
+            <input
+                type="text"
+                name="numero"
+                class="form-control"
+                value="{{ paciente.numero|default:'' }}"
+            >
+
+        </div>
+
+        <div>
+
+            <label>Complemento</label>
+
+            <input
+                type="text"
+                name="complemento"
+                class="form-control"
+                value="{{ paciente.complemento|default:'' }}"
+            >
+
+        </div>
+
+    </div>
+
+    <!-- LINHA 4 -->
+
+    <div class="form-grid-2">
+
+        <div>
+
+            <label>Bairro</label>
+
+            <input
+                type="text"
+                name="bairro"
+                class="form-control"
+                value="{{ paciente.bairro|default:'' }}"
+            >
+
+        </div>
+
+        <div>
+
+            <label>Cidade</label>
+
+            <input
+                type="text"
+                name="cidade"
+                class="form-control"
+                value="{{ paciente.cidade|default:'' }}"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- RESPONSÁVEL -->
+<div class="form-section responsavel-section">
+
+<h4 class="section-title">
+
+    <i class="bi bi-shield-check"></i>
+
+    Responsável
+
+</h4>
+
+    <div class="form-grid">
+
+        <div class="form-group-lg">
+
+            <label>Nome do Responsável</label>
+
+            <input
+                type="text"
+                name="responsavel"
+                class="form-control"
+                value="{{ paciente.responsavel|default:'' }}"
+            >
+
+        </div>
+
+        <div>
+
+            <label>CPF Responsável</label>
+
+            <input
+                type="text"
+                name="cpf_responsavel"
+                class="form-control"
+                value="{{ paciente.cpf_responsavel|default:'' }}"
+            >
+
+        </div>
+
+        <div>
+
+            <label>WhatsApp Responsável</label>
+
+            <input
+                type="text"
+                name="telefone_responsavel"
+                class="form-control"
+                value="{{ paciente.telefone_responsavel|default:'' }}"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- DADOS CLÍNICOS -->
+
+<div class="form-section">
+
+    <h4 class="section-title">
+
+    <i class="bi bi-heart-pulse"></i>
+
+    Dados Clínicos
+
+</h4>
+
+    <div class="form-grid">
+
+        <div>
+
+            <label>Convênio</label>
+
+            <select
+                name="convenio"
+                class="form-control"
+            >
+
+                <option value="">
+
+                    Particular
+
+                </option>
+
+                {% for convenio in convenios %}
+
+                    <option
+                        value="{{ convenio.nome }}"
+                        {% if paciente.convenio == convenio.nome %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ convenio.nome }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+        <div>
+
+            <label>Carteirinha</label>
+
+            <input
+                type="text"
+                name="carteirinha"
+                class="form-control"
+                value="{{ paciente.carteirinha|default:'' }}"
+            >
+
+        </div>
+
+    </div>
+ 
+    <div class="clinico-grid">
+
+    <div class="clinico-card">
+
+        <label>Alergias</label>
+
+        <textarea
+            name="alergias"
+            class="form-control"
+        >{{ paciente.alergias|default:'' }}</textarea>
+
+    </div>
+
+    <div class="clinico-card">
+
+        <label>Medicamentos em Uso</label>
+
+        <textarea
+            name="medicamentos"
+            class="form-control"
+        >{{ paciente.medicamentos|default:'' }}</textarea>
+
+    </div>
+
+    <div class="clinico-card">
+
+        <label>Observações Clínicas</label>
+
+        <textarea
+            name="observacoes"
+            class="form-control"
+        >{{ paciente.observacoes|default:'' }}</textarea>
+
+    </div>
+
+</div>
+   
+<!-- BOTÕES -->
+
+<div class="form-actions">
+
+    <a
+        href="{% url 'pacientes' %}"
+        class="btn-cancel"
+    >
+
+        Cancelar
+
+    </a>
+
+    <button
+        type="submit"
+        class="btn-save"
+    >
+
+        <i class="bi bi-check-circle"></i>
+
+        Salvar Paciente
+
+    </button>
+
+</div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

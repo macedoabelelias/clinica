@@ -1024,6 +1024,26 @@ RESPONSIVO
 STATUS VISUAL PREMIUM
 ========================================= */
 
+.status-existente{
+    color:#6b7280;
+}
+
+.status-planejado{
+    color:#dc2626;
+}
+
+.status-andamento{
+    color:#16a34a;
+}
+
+.status-realizado{
+    color:#2563eb;
+}
+
+.status-cancelado{
+    color:#7c3aed;
+}
+
 /* =========================================
 ÍCONE BASE
 ========================================= */
@@ -1404,6 +1424,8 @@ PROCEDIMENTOS GERAIS PREMIUM
 
     border-radius:16px;
 
+    cursor:pointer;
+
     transition:.25s ease;
 
     box-shadow:
@@ -1416,6 +1438,8 @@ PROCEDIMENTOS GERAIS PREMIUM
 .procedimento-geral-chip:hover{
 
     transform:translateY(-2px);
+
+    transition:.2s ease;
 
     box-shadow:
     0 8px 18px rgba(15,23,42,.08);
@@ -1461,6 +1485,30 @@ PROCEDIMENTOS GERAIS PREMIUM
     overflow-wrap:break-word;
 
     word-break:break-word;
+}
+
+/* =========================================
+STATUS DOS PROCEDIMENTOS GERAIS
+========================================= */
+
+.procedimento-geral-chip.status-existente span{
+    color:#6b7280;
+}
+
+.procedimento-geral-chip.status-planejado span{
+    color:#dc2626;
+}
+
+.procedimento-geral-chip.status-andamento span{
+    color:#16a34a;
+}
+
+.procedimento-geral-chip.status-realizado span{
+    color:#2563eb;
+}
+
+.procedimento-geral-chip.status-cancelado span{
+    color:#7c3aed;
 }
 
 /* =========================================
@@ -1642,118 +1690,54 @@ INFERIOR ESQUERDA
 
 }
 
-/* =========================================
-STATUS
-========================================= */
+.hemi-item span{
 
-/* FINALIZADO */
+    display:block;
 
-.hemi-item.status-finalizado{
+    max-width:68px;
 
-    opacity:.45;
+    font-size:9px;
 
-    filter:saturate(.75);
+    font-weight:600;
+
+    color:#475569;
+
+    text-align:center;
+
+    line-height:1.1;
+
+    white-space:normal;
+
+    overflow-wrap:anywhere;
+
+    word-break:break-word;
+
+    margin:0 auto;
 }
-
-
-/* CANCELADO */
-
-.hemi-item.status-cancelado{
-
-    opacity:.18;
-
-    filter:grayscale(100%);
-}
-
-
-/* ANDAMENTO */
-
-.hemi-item.status-andamento .icone-hemi{
-
-    filter:
-    drop-shadow(0 0 6px rgba(59,130,246,.35));
-}
-
 
 /* =========================================
-STATUS VISUAL
-PROCEDIMENTOS GERAIS / HEMI
+STATUS HEMI ARCADA
 ========================================= */
 
-/* PLANEJADO */
-
-.procedimento-geral-chip.status-planejado,
-.hemi-item.status-planejado{
-
-    opacity:1;
+.hemi-item.status-existente span{
+    color:#6b7280;
 }
 
-
-/* EM ANDAMENTO */
-
-.procedimento-geral-chip.status-andamento,
-.hemi-item.status-andamento{
-
-    opacity:1;
-
-    box-shadow:
-    0 0 0 2px rgba(59,130,246,.12),
-    0 10px 24px rgba(59,130,246,.10);
+.hemi-item.status-planejado span{
+    color:#dc2626;
 }
 
-
-/* FINALIZADO */
-
-.procedimento-geral-chip.status-finalizado,
-.hemi-item.status-finalizado{
-
-    opacity:.45;
-
-    filter:saturate(.75);
+.hemi-item.status-andamento span{
+    color:#16a34a;
 }
 
-
-/* CANCELADO */
-
-.procedimento-geral-chip.status-cancelado,
-.hemi-item.status-cancelado{
-
-    opacity:.18;
-
-    filter:grayscale(100%);
+.hemi-item.status-realizado span{
+    color:#2563eb;
 }
 
-
-/* URGÊNCIA */
-
-.procedimento-geral-chip.status-urgencia,
-.hemi-item.status-urgencia{
-
-    animation:pulseUrgencia 1.5s infinite;
+.hemi-item.status-cancelado span{
+    color:#7c3aed;
 }
-
-
-@keyframes pulseUrgencia{
-
-    0%{
-
-        box-shadow:
-        0 0 0 0 rgba(239,68,68,.45);
-    }
-
-    70%{
-
-        box-shadow:
-        0 0 0 12px rgba(239,68,68,0);
-    }
-
-    100%{
-
-        box-shadow:
-        0 0 0 0 rgba(239,68,68,0);
-    }
-}
-
 
 /* =========================================
 RESPONSIVO

@@ -2,119 +2,79 @@
 
 {% load static %}
 
-{% block content %}
+{% block title %}
+Pacientes | AM Systems
+{% endblock %}
 
-<!-- =========================================
-CSS
-========================================= -->
+{% block extra_css %}
 
 <link
     rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-/>
+    href="{% static 'css/pacientes.css' %}"
+>
 
-<!-- =========================================
-TOPBAR
-========================================= -->
+{% endblock %}
 
-<div class="topbar">
+{% block content %}
 
-    <!-- BUSCA -->
+<div class="page-wrapper">
 
-    <div class="search-box">
+    <div class="page-card">
 
-        <i class="fa-solid fa-magnifying-glass"></i>
+        <!-- HEADER -->
 
-        <input
-            type="text"
-            placeholder="Buscar paciente..."
-        >
-
-    </div>
-
-    <!-- DIREITA -->
-
-    <div class="topbar-right">
-
-        <button class="top-icon">
-
-            <i class="fa-regular fa-bell"></i>
-
-        </button>
-
-        <div class="profile-box">
-
-            <img
-                src="https://i.pravatar.cc/100"
-                alt="Perfil"
-            >
+        <div class="page-header">
 
             <div>
 
-                <h6>
-                    Abel Macedo
-                </h6>
+                <h1 class="page-title">
 
-                <span>
-                    Administrador
-                </span>
+                    Pacientes
+
+                </h1>
+
+                <p class="page-subtitle">
+
+                    Gerencie os pacientes da clínica.
+
+                </p>
 
             </div>
 
+                <a
+                    href="{% url 'novo_paciente' %}"
+                    class="btn-premium"
+                >
+
+                    <i class="bi bi-plus-lg"></i>
+
+                    Novo Paciente
+
+                </a>
+
         </div>
 
-    </div>
+        <!-- BUSCA -->
 
-</div>
+        <div class="search-card">
 
-<hr class="page-divider">
+            <form method="GET">
 
+                <input
+                    type="text"
+                    name="q"
+                    class="form-control search-input"
+                    placeholder="Buscar paciente..."
+                    value="{{ request.GET.q }}"
+                >
 
-<div class="page-card-premium">
+            </form>
 
-<!-- =========================================
-HEADER
-========================================= -->
+        </div>
 
-<div class="page-header">
-
-    <div>
-
-        <h2 class="page-title">
-
-            Pacientes 👥
-
-        </h2>
-
-        <p class="page-subtitle">
-
-            Gerencie os pacientes da clínica.
-
-        </p>
-
-    </div>
-
-    <button
-        class="new-btn"
-        data-bs-toggle="modal"
-        data-bs-target="#modalPaciente"
-    >
-
-        <i class="fa-solid fa-plus"></i>
-
-        Novo Paciente
-
-    </button>
-
-</div>
-
-<!-- =========================================
-CARDS
-========================================= -->
+        <!-- ESTATÍSTICAS -->
 
 <div class="stats-grid">
-
-    <!-- CARD -->
 
     <div class="stats-card">
 
@@ -126,43 +86,55 @@ CARDS
 
         <p>
 
-            Pacientes cadastrados
+            Pacientes Cadastrados
 
         </p>
 
     </div>
 
-    <!-- CARD -->
-
     <div class="stats-card">
 
         <h3>
 
-            28
+            {{ convenios|length }}
 
         </h3>
 
         <p>
 
-            Consultas hoje
+            Convênios Ativos
 
         </p>
 
     </div>
 
-    <!-- CARD -->
-
     <div class="stats-card">
 
         <h3>
 
-            94%
+            {{ pacientes|length }}
 
         </h3>
 
         <p>
 
-            Taxa de retorno
+            Prontuários
+
+        </p>
+
+    </div>
+
+    <div class="stats-card">
+
+        <h3>
+
+            {{ pacientes|length }}
+
+        </h3>
+
+        <p>
+
+            Pacientes Ativos
 
         </p>
 
@@ -170,172 +142,112 @@ CARDS
 
 </div>
 
-<!-- =========================================
-TABELA
-========================================= -->
+<!-- PACIENTES -->
 
-<div class="table-card">
+<!-- LISTA DE PACIENTES -->
 
-    <div class="table-responsive">
+<div class="patients-list">
 
-        <table class="table align-middle">
+    {% for paciente in pacientes %}
 
-            <thead>
+    <div class="patient-row">
 
-                <tr>
+        <div class="patient-col patient-col-main">
 
-                    <th>Paciente</th>
-                    <th>Telefone</th>
-                    <th>Convênio</th>
-                    <th>Status</th>
-                    <th>Ações</th>
+            <div class="patient-thumb">
 
-                </tr>
+                {% if paciente.foto %}
 
-            </thead>
+                    <img
+                        src="{{ paciente.foto.url }}"
+                        alt="{{ paciente.nome }}"
+                    >
 
-            <tbody>
+                {% else %}
 
-                {% for paciente in pacientes %}
+                    {{ paciente.nome|slice:":1" }}
 
-                <tr>
+                {% endif %}
 
-                    <!-- PACIENTE -->
+            </div>
 
-                    <td>
+            <div>
 
-                        <div class="patient-info">
+                <div class="patient-row-name">
 
-                            <!-- FOTO -->
+                    {{ paciente.nome }}
 
-                            <div class="patient-avatar">
+                </div>
 
-                                {% if paciente.foto %}
+                <div class="patient-row-email">
 
-                                    <img
-                                        src="{{ paciente.foto.url }}"
-                                        alt="{{ paciente.nome }}"
-                                    >
+                    {{ paciente.email|default:"Sem e-mail" }}
 
-                                {% else %}
+                </div>
 
-                                    {{ paciente.nome|slice:":1" }}
+            </div>
 
-                                {% endif %}
+        </div>
 
-                            </div>
+        <div class="patient-col">
 
-                            <!-- DADOS -->
+            {{ paciente.telefone|default:"—" }}
 
-                            <div>
+        </div>
 
-                                <h6 class="patient-name">
+        <div class="patient-col">
 
-                                    <a
-                                        href="{% url 'perfil_paciente' paciente.id %}"
-                                    >
+            {{ paciente.convenio|default:"Particular" }}
 
-                                        {{ paciente.nome }}
+        </div>
 
-                                    </a>
+        <div class="patient-col">
 
-                                </h6>
+            <span class="status-badge status-ativo">
 
-                                <span class="patient-email">
+                Ativo
 
-                                    {{ paciente.email }}
+            </span>
 
-                                </span>
+        </div>
 
-                            </div>
+        <div class="patient-col actions">
 
-                        </div>
+            <a
+                href="{% url 'perfil_paciente' paciente.id %}"
+                class="action-btn"
+            >
+                <i class="bi bi-person-vcard"></i>
+            </a>
 
-                    </td>
+            <a
+                href="{% url 'editar_paciente' paciente.id %}"
+                class="action-btn"
+            >
+                <i class="bi bi-pencil"></i>
+            </a>
 
-                    <!-- TELEFONE -->
+            <button
+                type="button"
+                class="action-btn action-btn-danger"
+            >
+                <i class="bi bi-trash"></i>
+            </button>
 
-                    <td>
-
-                        {{ paciente.telefone }}
-
-                    </td>
-
-                    <!-- CONVÊNIO -->
-
-                    <td>
-
-                        {{ paciente.convenio }}
-
-                    </td>
-
-                    <!-- STATUS -->
-
-                    <td>
-
-                        <span class="status active">
-
-                            {{ paciente.status }}
-
-                        </span>
-
-                    </td>
-
-                    <!-- AÇÕES -->
-
-                    <td>
-
-                        <div class="actions">
-
-                            <!-- VISUALIZAR -->
-
-                            <a
-                                href="{% url 'perfil_paciente' paciente.id %}"
-                                class="action-btn"
-                            >
-
-                                <i class="fa-regular fa-eye"></i>
-
-                            </a>
-
-                            <!-- EDITAR -->
-
-                            <a
-                                href="{% url 'editar_paciente' paciente.id %}"
-                                class="action-btn"
-                            >
-
-                                <i class="fa-regular fa-pen-to-square"></i>
-
-                            </a>
-
-                        </div>
-
-                    </td>
-
-                </tr>
-
-                {% empty %}
-
-                <tr>
-
-                    <td colspan="5">
-
-                        Nenhum paciente cadastrado.
-
-                    </td>
-
-                </tr>
-
-                {% endfor %}
-
-            </tbody>
-
-        </table>
+        </div>
 
     </div>
 
+    {% empty %}
+
+    <div class="patient-empty">
+
+        Nenhum paciente cadastrado.
+
+    </div>
+
+    {% endfor %}
+
 </div>
-</div>  
 
 {% endblock %}

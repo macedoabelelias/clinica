@@ -43,10 +43,17 @@ urlpatterns = [
     # =========================================
 
     path(
+        'pacientes/novo/',
+        views.novo_paciente,
+        name='novo_paciente'
+    ),
+
+    path(
         'pacientes/<int:id>/',
         views.perfil_paciente,
         name='perfil_paciente'
     ),
+    
 
     # =========================================
     # EDITAR PACIENTE
