@@ -616,43 +616,43 @@ PERMANENTES SUPERIORES
 
 .dente-11 .posicao-raiz{ top:28px; left:0px; }
 .dente-11 .posicao-centro{ top:42px; left:1px; }
-.dente-11 .posicao-coroa{ top:54px; left:0px; }
+.dente-11 .posicao-coroa{ top:52px; left:-1px; }
 .dente-11 .posicao-oclusal{ top:12px; left:5px; }
 
 .dente-12 .posicao-raiz{ top:30px; left:-1px; }
 .dente-12 .posicao-centro{ top:42px; left:0px; }
-.dente-12 .posicao-coroa{ top:54px; left:0px; }
+.dente-12 .posicao-coroa{ top:52px; left:0px; }
 .dente-12 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-13 .posicao-raiz{ top:30px; left:5px; }
-.dente-13 .posicao-centro{ top:42px; left:0px; }
-.dente-13 .posicao-coroa{ top:60px; left:6px; }
-.dente-13 .posicao-oclusal{ top:12px; left:7px; }
+.dente-13 .posicao-raiz{ top:32px; left:-1px; }
+.dente-13 .posicao-centro{ top:56px; left:-1px; }
+.dente-13 .posicao-coroa{ top:54px; left:-1px; }
+.dente-13 .posicao-oclusal{ top:48px; left:7px; }
 
-.dente-14 .posicao-raiz{ top:18px; left:1px; }
-.dente-14 .posicao-centro{ top:42px; left:1px; }
-.dente-14 .posicao-coroa{ top:58px; left:0px; }
+.dente-14 .posicao-raiz{ top:40px; left:-1px; }
+.dente-14 .posicao-centro{ top:48px; left:-1px; }
+.dente-14 .posicao-coroa{ top:56px; left:0px; }
 .dente-14 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-15 .posicao-raiz{ top:48px; left:2px; }
+.dente-15 .posicao-raiz{ top:40px; left:-1px; }
 .dente-15 .posicao-centro{ top:46px; left:1px; }
 .dente-15 .posicao-coroa{ top:58px; left:0px; }
-.dente-15 .posicao-oclusal{ top:12px; left:5px; }
+.dente-15 .posicao-oclusal{ top:2px; left:5px; }
 
-.dente-16 .posicao-raiz{ top:48px; left:-2px; }
+.dente-16 .posicao-raiz{ top:40px; left:-2px; }
 .dente-16 .posicao-centro{ top:48px; left:-2px; }
-.dente-16 .posicao-coroa{ top:58px; left:0px; }
+.dente-16 .posicao-coroa{ top:58px; left:-2px; }
 .dente-16 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-17 .posicao-raiz{ top:38px; left:0px; }
-.dente-17 .posicao-centro{ top:40px; left:0px; }
+.dente-17 .posicao-raiz{ top:42px; left:-1px; }
+.dente-17 .posicao-centro{ top:44px; left:0px; }
 .dente-17 .posicao-coroa{ top:58px; left:0px; }
 .dente-17 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-18 .posicao-raiz{ top:48px; left:-1px; }
+.dente-18 .posicao-raiz{ top:40px; left:1px; }
 .dente-18 .posicao-centro{ top:44px; left:-1px; }
-.dente-18 .posicao-coroa{ top:58px; left:2px; }
-.dente-18 .posicao-oclusal{ top:12px; left:5px; }
+.dente-18 .posicao-coroa{ top:50px; left:2px; }
+.dente-18 .posicao-oclusal{ top:8px; left:1px; }
 
 .dente-21 .posicao-raiz{ top:30px; left:1px; }
 .dente-21 .posicao-centro{ top:42px; left:2px; }
