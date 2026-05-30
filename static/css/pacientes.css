@@ -89,9 +89,15 @@ HEADER
 
 .page-subtitle{
 
-    color:var(--text-light);
+    font-size:14px;
 
-    margin:4px 0 0;
+    font-weight:500;
+
+    color:#64748b;
+
+    margin-top:6px;
+
+    line-height:1.5;
 
 }
 

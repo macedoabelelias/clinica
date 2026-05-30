@@ -65,6 +65,12 @@ urlpatterns = [
         name='editar_paciente'
     ),
 
+    path(
+        'pacientes/excluir/<int:id>/',
+        views.excluir_paciente,
+        name='excluir_paciente'
+    ),
+
     # =========================================
     # ODONTOGRAMA
     # =========================================

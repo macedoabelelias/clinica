@@ -241,7 +241,7 @@ def novo_paciente(request):
 
     if request.method == 'POST':
 
-        Paciente.objects.create(
+        paciente = Paciente.objects.create(
 
             foto=request.FILES.get('foto'),
 
@@ -254,7 +254,6 @@ def novo_paciente(request):
             estado_civil=request.POST.get('estado_civil'),
             profissao=request.POST.get('profissao'),
 
-            telefone=request.POST.get('telefone'),
             whatsapp=request.POST.get('whatsapp'),
             email=request.POST.get('email'),
 
@@ -275,11 +274,21 @@ def novo_paciente(request):
 
             responsavel=request.POST.get('responsavel'),
             cpf_responsavel=request.POST.get('cpf_responsavel'),
-            telefone_responsavel=request.POST.get('telefone_responsavel')
+            telefone_responsavel=request.POST.get(
+                'telefone_responsavel'
+            )
 
         )
 
-        return redirect('pacientes')
+        print(
+            'PACIENTE CRIADO:',
+            paciente.id
+        )
+
+        return redirect(
+            'perfil_paciente',
+            id=paciente.id
+        )
 
     convenios = Convenio.objects.filter(
         ativo=True
@@ -292,10 +301,8 @@ def novo_paciente(request):
         'accounts/paciente_form.html',
 
         {
-
             'convenios': convenios,
             'modo': 'novo'
-
         }
 
     )
@@ -439,11 +446,33 @@ def editar_paciente(request, id):
 
         request,
 
-        'accounts/editar_paciente.html',
+        'accounts/paciente_form.html',
 
-        context
+        {
+
+            'paciente': paciente,
+            'convenios': convenios,
+            'modo': 'editar'
+
+        }
 
     )
+
+# =========================================
+# EXCLUIR PACIENTE
+# =========================================
+
+@login_required(login_url='/')
+def excluir_paciente(request, id):
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
+
+    paciente.delete()
+
+    return redirect('pacientes')
 
 # =========================================
 # ODONTOGRAMA

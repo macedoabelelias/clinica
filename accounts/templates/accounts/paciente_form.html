@@ -112,6 +112,7 @@ Paciente | AM Systems
 
 </div>
 
+
 <!-- DADOS PESSOAIS -->
 
 <div class="form-section">
@@ -145,9 +146,9 @@ Paciente | AM Systems
         <div>
 
             <label>Data Nascimento</label>
-
             <input
                 type="date"
+                id="nascimento"
                 name="nascimento"
                 class="form-control"
                 value="{{ paciente.nascimento|date:'Y-m-d' }}"
@@ -161,6 +162,8 @@ Paciente | AM Systems
 
             <input
                 type="text"
+                id="idade"
+                name="idade"
                 class="form-control"
                 value="{{ paciente.idade|default:'' }}"
                 readonly
@@ -180,6 +183,7 @@ Paciente | AM Systems
 
             <input
                 type="text"
+                id="cpf"
                 name="cpf"
                 class="form-control"
                 value="{{ paciente.cpf|default:'' }}"
@@ -330,6 +334,7 @@ Paciente | AM Systems
 
             <input
                 type="text"
+                id="whatsapp"
                 name="whatsapp"
                 class="form-control"
                 value="{{ paciente.whatsapp|default:'' }}"
@@ -343,6 +348,7 @@ Paciente | AM Systems
 
             <input
                 type="email"
+                id="email"
                 name="email"
                 class="form-control"
                 value="{{ paciente.email|default:'' }}"
@@ -376,6 +382,7 @@ Paciente | AM Systems
 
             <input
                 type="text"
+                id="cep"
                 name="cep"
                 class="form-control"
                 value="{{ paciente.cep|default:'' }}"
@@ -388,6 +395,7 @@ Paciente | AM Systems
             <label>Estado</label>
 
             <select
+                id="estado"
                 name="estado"
                 class="form-control"
             >
@@ -436,6 +444,7 @@ Paciente | AM Systems
 
         <input
             type="text"
+            id="endereco"
             name="endereco"
             class="form-control"
             value="{{ paciente.endereco|default:'' }}"
@@ -485,6 +494,7 @@ Paciente | AM Systems
 
             <input
                 type="text"
+                id="bairro"
                 name="bairro"
                 class="form-control"
                 value="{{ paciente.bairro|default:'' }}"
@@ -498,6 +508,7 @@ Paciente | AM Systems
 
             <input
                 type="text"
+                id="cidade"
                 name="cidade"
                 class="form-control"
                 value="{{ paciente.cidade|default:'' }}"
@@ -541,9 +552,9 @@ Paciente | AM Systems
 
             <input
                 type="text"
+                id="cpf_responsavel"
                 name="cpf_responsavel"
                 class="form-control"
-                value="{{ paciente.cpf_responsavel|default:'' }}"
             >
 
         </div>
@@ -554,9 +565,9 @@ Paciente | AM Systems
 
             <input
                 type="text"
+                id="telefone_responsavel"
                 name="telefone_responsavel"
                 class="form-control"
-                value="{{ paciente.telefone_responsavel|default:'' }}"
             >
 
         </div>
@@ -696,5 +707,398 @@ Paciente | AM Systems
     </div>
 
 </div>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function(){
+
+    // =====================================
+    // ELEMENTOS
+    // =====================================
+
+    const cpf = document.getElementById('cpf');
+    const cpfResponsavel = document.getElementById('cpf_responsavel');
+
+    const whatsapp = document.getElementById('whatsapp');
+    const telefoneResponsavel = document.getElementById('telefone_responsavel');
+
+    const nascimento = document.getElementById('nascimento');
+    const idade = document.getElementById('idade');
+
+    const cep = document.getElementById('cep');
+
+    // =====================================
+    // MÁSCARA CPF
+    // =====================================
+
+    function mascaraCPF(campo){
+
+        let v = campo.value.replace(/\D/g,'');
+
+        v = v.substring(0,11);
+
+        if(v.length > 9){
+
+            v = v.replace(
+                /^(\d{3})(\d{3})(\d{3})(\d{0,2}).*/,
+                '$1.$2.$3-$4'
+            );
+
+        }else if(v.length > 6){
+
+            v = v.replace(
+                /^(\d{3})(\d{3})(\d+).*/,
+                '$1.$2.$3'
+            );
+
+        }else if(v.length > 3){
+
+            v = v.replace(
+                /^(\d{3})(\d+).*/,
+                '$1.$2'
+            );
+
+        }
+
+        campo.value = v;
+
+    }
+
+    // =====================================
+    // VALIDAÇÃO CPF
+    // =====================================
+
+    function validarCPF(cpf){
+
+        cpf = cpf.replace(/\D/g,'');
+
+        if(cpf.length !== 11)
+            return false;
+
+        if(/^(\d)\1+$/.test(cpf))
+            return false;
+
+        let soma = 0;
+
+        for(let i = 0; i < 9; i++){
+
+            soma += parseInt(cpf.charAt(i))
+                * (10 - i);
+
+        }
+
+        let resto = 11 - (soma % 11);
+
+        if(resto >= 10)
+            resto = 0;
+
+        if(resto !== parseInt(cpf.charAt(9)))
+            return false;
+
+        soma = 0;
+
+        for(let i = 0; i < 10; i++){
+
+            soma += parseInt(cpf.charAt(i))
+                * (11 - i);
+
+        }
+
+        resto = 11 - (soma % 11);
+
+        if(resto >= 10)
+            resto = 0;
+
+        return resto === parseInt(
+            cpf.charAt(10)
+        );
+
+    }
+
+    // =====================================
+    // MÁSCARA TELEFONE
+    // =====================================
+
+    function mascaraTelefone(campo){
+
+        let v = campo.value.replace(/\D/g,'');
+
+        v = v.substring(0,11);
+
+        if(v.length > 10){
+
+            v = v.replace(
+                /^(\d{2})(\d{5})(\d{0,4}).*/,
+                '($1) $2-$3'
+            );
+
+        }else if(v.length > 6){
+
+            v = v.replace(
+                /^(\d{2})(\d{4})(\d{0,4}).*/,
+                '($1) $2-$3'
+            );
+
+        }else if(v.length > 2){
+
+            v = v.replace(
+                /^(\d{2})(\d+).*/,
+                '($1) $2'
+            );
+
+        }
+
+        campo.value = v;
+
+    }
+
+    // =====================================
+    // CPF PACIENTE
+    // =====================================
+
+    if(cpf){
+
+        cpf.addEventListener('input', function(){
+
+            mascaraCPF(this);
+
+        });
+
+        cpf.addEventListener('blur', function(){
+
+            if(!this.value)
+                return;
+
+            if(!validarCPF(this.value)){
+
+                this.value = '';
+
+                alert('CPF inválido');
+
+            }
+
+        });
+
+    }
+
+    // =====================================
+    // CPF RESPONSÁVEL
+    // =====================================
+
+    if(cpfResponsavel){
+
+        cpfResponsavel.addEventListener(
+            'input',
+            function(){
+
+                mascaraCPF(this);
+
+            }
+        );
+
+        cpfResponsavel.addEventListener(
+            'blur',
+            function(){
+
+                if(!this.value)
+                    return;
+
+                if(!validarCPF(this.value)){
+
+                    this.value = '';
+
+                    alert(
+                        'CPF do responsável inválido'
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+    // =====================================
+    // WHATSAPP PACIENTE
+    // =====================================
+
+    if(whatsapp){
+
+        whatsapp.addEventListener(
+            'input',
+            function(){
+
+                mascaraTelefone(this);
+
+            }
+        );
+
+    }
+
+    // =====================================
+    // WHATSAPP RESPONSÁVEL
+    // =====================================
+
+    if(telefoneResponsavel){
+
+        telefoneResponsavel.addEventListener(
+            'input',
+            function(){
+
+                mascaraTelefone(this);
+
+            }
+        );
+
+    }
+
+    // =====================================
+    // IDADE AUTOMÁTICA
+    // =====================================
+
+    function calcularIdade(){
+
+        if(!nascimento || !idade)
+            return;
+
+        if(!nascimento.value){
+
+            idade.value = '';
+
+            return;
+
+        }
+
+        const nasc = new Date(
+            nascimento.value
+        );
+
+        const hoje = new Date();
+
+        let anos =
+            hoje.getFullYear()
+            - nasc.getFullYear();
+
+        const mes =
+            hoje.getMonth()
+            - nasc.getMonth();
+
+        if(
+            mes < 0 ||
+            (
+                mes === 0 &&
+                hoje.getDate() < nasc.getDate()
+            )
+        ){
+
+            anos--;
+
+        }
+
+        idade.value = anos + ' anos';
+
+    }
+
+    if(nascimento){
+
+        nascimento.addEventListener(
+            'change',
+            calcularIdade
+        );
+
+        calcularIdade();
+
+    }
+
+    // =====================================
+    // CEP AUTOMÁTICO
+    // =====================================
+
+    if(cep){
+
+        cep.addEventListener('input', function(){
+
+            let v = this.value.replace(/\D/g,'');
+
+            v = v.substring(0,8);
+
+            if(v.length > 5){
+
+                v = v.replace(
+                    /^(\d{5})(\d{0,3}).*/,
+                    '$1-$2'
+                );
+
+            }
+
+            this.value = v;
+
+        });
+
+        cep.addEventListener(
+            'blur',
+            function(){
+
+                const valor =
+                    this.value.replace(/\D/g,'');
+
+                if(valor.length !== 8)
+                    return;
+
+                fetch(
+                    `https://viacep.com.br/ws/${valor}/json/`
+                )
+                .then(response => response.json())
+                .then(data => {
+
+                    if(data.erro)
+                        return;
+
+                    const endereco =
+                        document.getElementById('endereco');
+
+                    const bairro =
+                        document.getElementById('bairro');
+
+                    const cidade =
+                        document.getElementById('cidade');
+
+                    const estado =
+                        document.getElementById('estado');
+
+                    if(endereco)
+                        endereco.value =
+                            data.logradouro || '';
+
+                    if(bairro)
+                        bairro.value =
+                            data.bairro || '';
+
+                    if(cidade)
+                        cidade.value =
+                            data.localidade || '';
+
+                    if(estado)
+                        estado.value =
+                            data.uf || '';
+
+                })
+                .catch(error => {
+
+                    console.error(
+                        'Erro ViaCEP:',
+                        error
+                    );
+
+                });
+
+            }
+        );
+
+    }
+
+});
+
+</script>
 
 {% endblock %}

@@ -211,42 +211,46 @@ Pacientes | AM Systems
 
         </div>
 
-        <div class="patient-col actions">
+       <div class="patient-col actions">
 
-            <a
-                href="{% url 'perfil_paciente' paciente.id %}"
-                class="action-btn"
-            >
-                <i class="bi bi-person-vcard"></i>
-            </a>
+    <a
+        href="{% url 'perfil_paciente' paciente.id %}"
+        class="action-btn"
+        title="Perfil"
+    >
+        <i class="bi bi-person-vcard"></i>
+    </a>
 
-            <a
-                href="{% url 'editar_paciente' paciente.id %}"
-                class="action-btn"
-            >
-                <i class="bi bi-pencil"></i>
-            </a>
+    <a
+        href="{% url 'editar_paciente' paciente.id %}"
+        class="action-btn"
+        title="Editar"
+    >
+        <i class="bi bi-pencil"></i>
+    </a>
 
-            <button
-                type="button"
-                class="action-btn action-btn-danger"
-            >
-                <i class="bi bi-trash"></i>
-            </button>
+    <a
+        href="{% url 'excluir_paciente' paciente.id %}"
+        class="action-btn action-btn-danger"
+        title="Excluir"
+        onclick="return confirm('Deseja realmente excluir o paciente {{ paciente.nome }}?')"
+    >
+        <i class="bi bi-trash"></i>
+    </a>
 
-        </div>
+</div>
 
-    </div>
+</div>
 
-    {% empty %}
+{% empty %}
 
-    <div class="patient-empty">
+<div class="patient-empty">
 
-        Nenhum paciente cadastrado.
+    Nenhum paciente cadastrado.
 
-    </div>
+</div>
 
-    {% endfor %}
+{% endfor %}
 
 </div>
 
