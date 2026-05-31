@@ -550,7 +550,7 @@ HEMI SUPERIOR
 
 .arcada:not(.inferior) .icone-hemi{
 
-    top:-8px;
+    top:-2px;
 
 }
 
@@ -561,7 +561,7 @@ HEMI INFERIOR
 
 .arcada.inferior .icone-hemi{
 
-    bottom:-8px;
+    bottom:-2px;
 
 }
 
@@ -600,15 +600,12 @@ BADGE
 ROTAÇÃO DOS ÍCONES INFERIORES
 ========================================= */
 
-.arcada.inferior .icone-procedimento-dente:not(.sem-rotacao){
+.arcada.inferior .icone-procedimento-dente:not(.sem-rotacao),
+.arcada.decidua.inferior .icone-procedimento-dente:not(.sem-rotacao){
 
     rotate:180deg;
 
 }
-
-/* =========================================
-POSICIONAMENTO INDIVIDUAL
-========================================= */
 
 /* =========================================
 PERMANENTES SUPERIORES
@@ -654,44 +651,44 @@ PERMANENTES SUPERIORES
 .dente-18 .posicao-coroa{ top:50px; left:2px; }
 .dente-18 .posicao-oclusal{ top:8px; left:1px; }
 
-.dente-21 .posicao-raiz{ top:30px; left:1px; }
-.dente-21 .posicao-centro{ top:42px; left:2px; }
-.dente-21 .posicao-coroa{ top:54px; left:0px; }
+.dente-21 .posicao-raiz{ top:30px; left:-1px; }
+.dente-21 .posicao-centro{ top:42px; left:-1px; }
+.dente-21 .posicao-coroa{ top:54px; left:-1px; }
 .dente-21 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-22 .posicao-raiz{ top:32px; left:1px; }
+.dente-22 .posicao-raiz{ top:32px; left:-1px; }
 .dente-22 .posicao-centro{ top:42px; left:0px; }
-.dente-22 .posicao-coroa{ top:58px; left:0px; }
+.dente-22 .posicao-coroa{ top:52px; left:0px; }
 .dente-22 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-23 .posicao-raiz{ top:32px; left:0px; }
+.dente-23 .posicao-raiz{ top:32px; left:-1px; }
 .dente-23 .posicao-centro{ top:42px; left:0px; }
-.dente-23 .posicao-coroa{ top:56px; left:0px; }
+.dente-23 .posicao-coroa{ top:56px; left:-1px; }
 .dente-23 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-24 .posicao-raiz{ top:40px; left:6px; }
+.dente-24 .posicao-raiz{ top:40px; left:-1px; }
 .dente-24 .posicao-centro{ top:42px; left:0px; }
-.dente-24 .posicao-coroa{ top:58px; left:0px; }
+.dente-24 .posicao-coroa{ top:54px; left:-2px; }
 .dente-24 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-25 .posicao-raiz{ top:36px; left:0px; }
-.dente-25 .posicao-centro{ top:42px; left:0px; }
-.dente-25 .posicao-coroa{ top:58px; left:0px; }
+.dente-25 .posicao-raiz{ top:36px; left:-2px; }
+.dente-25 .posicao-centro{ top:42px; left:-2px; }
+.dente-25 .posicao-coroa{ top:58px; left:-2px; }
 .dente-25 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-26 .posicao-raiz{ top:38px; left:0px; }
-.dente-26 .posicao-centro{ top:42px; left:0px; }
-.dente-26 .posicao-coroa{ top:58px; left:0px; }
+.dente-26 .posicao-raiz{ top:38px; left:-2px; }
+.dente-26 .posicao-centro{ top:42px; left:-2px; }
+.dente-26 .posicao-coroa{ top:52px; left:-2px; }
 .dente-26 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-27 .posicao-raiz{ top:38px; left:0px; }
-.dente-27 .posicao-centro{ top:42px; left:0px; }
-.dente-27 .posicao-coroa{ top:58px; left:0px; }
+.dente-27 .posicao-raiz{ top:38px; left:-2px; }
+.dente-27 .posicao-centro{ top:48px; left:-2px; }
+.dente-27 .posicao-coroa{ top:58px; left:-2px; }
 .dente-27 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-28 .posicao-raiz{ top:38px; left:0px; }
-.dente-28 .posicao-centro{ top:42px; left:0px; }
-.dente-28 .posicao-coroa{ top:60px; left:0px; }
+.dente-28 .posicao-raiz{ top:38px; left:-2px; }
+.dente-28 .posicao-centro{ top:48px; left:-2px; }
+.dente-28 .posicao-coroa{ top:50px; left:-2px; }
 .dente-28 .posicao-oclusal{ top:12px; left:5px; }
 
 /* =========================================
@@ -702,9 +699,9 @@ PERMANENTES INFERIORES
 31
 ========================================= */
 
-.dente-31 .posicao-raiz{ bottom:32px; left:1px; }
-.dente-31 .posicao-centro{ bottom:42px; left:1px; }
-.dente-31 .posicao-coroa{ bottom:58px; left:1px; }
+.dente-31 .posicao-raiz{ bottom:32px; left:0px; }
+.dente-31 .posicao-centro{ bottom:42px; left:0px; }
+.dente-31 .posicao-coroa{ bottom:58px; left:0px; }
 .dente-31 .posicao-oclusal{ bottom:12px; left:5px; }
 
 /* =========================================
@@ -714,7 +711,7 @@ PERMANENTES INFERIORES
 .dente-32 .posicao-raiz{ bottom:34px; left:1px; }
 .dente-32 .posicao-centro{ bottom:42px; left:0px; }
 .dente-32 .posicao-coroa{ bottom:58px; left:1px; }
-.dente-32 .posicao-oclusal{ bottom:12px; left:5px; }
+.dente-32 .posicao-oclusal{ bottom:32px; left:5px; }
 
 /* =========================================
 33
@@ -958,16 +955,6 @@ DECÍDUOS INFERIORES
 .dente-85 .posicao-coroa{ bottom:50px; left:6px; }
 .dente-85 .posicao-oclusal{ bottom:10px; left:4px; }
 
-/* =========================================
-ÍCONE TOPO
-SUPERIORES
-========================================= */
-
-.posicao-topo{
-
-    top:-18px !important;
-
-}
 
 
 /* =========================================
@@ -1128,8 +1115,6 @@ POSIÇÕES ESPECIAIS
 RX / EXTRAÇÃO
 ========================================= */
 
-/* SUPERIORES */
-
 .posicao-topo{
 
     top:8px !important;
@@ -1140,15 +1125,29 @@ RX / EXTRAÇÃO
 
 }
 
-/* INFERIORES */
-
 .posicao-base{
 
-    top:78px !important;
+    bottom:-8px !important;
 
     left:50% !important;
 
     transform:translateX(-50%) !important;
+
+}
+
+/* =========================================
+RX E AUSENTE
+========================================= */
+
+.icone-procedimento-dente[src*="rx_dente"]{
+
+    rotate:0deg !important;
+
+}
+
+.icone-procedimento-dente[src*="ausente"]{
+
+    rotate:0deg !important;
 
 }
 
@@ -1169,28 +1168,6 @@ DECÍDUOS INFERIORES
 .arcada.decidua.inferior .posicao-base{
 
     bottom:-20px !important;
-
-}
-
-/* =========================================
-SEM ROTAÇÃO
-========================================= */
-
-.sem-rotacao{
-
-    rotate:0deg !important;
-
-    transform:none !important;
-
-}
-
-/* =========================================
-SEM ROTAÇÃO NOS INFERIORES
-========================================= */
-
-.arcada.inferior .sem-rotacao{
-
-    rotate:0deg !important;
 
 }
 
@@ -1224,7 +1201,7 @@ MENU STATUS PREMIUM REFINADO
 
 .menu-status{
 
-    position: fixed;
+    position: absolute;
 
     width: 190px;
 
@@ -1283,6 +1260,129 @@ MENU STATUS PREMIUM REFINADO
 
 }
 
+/* =========================================
+MENU STATUS PREMIUM REFINADO
+========================================= */
+
+.menu-status{
+
+    position: absolute;
+
+    width: 190px;
+
+    background: rgba(235, 232, 232, 0.92);
+
+    backdrop-filter: blur(12px);
+
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 2px solid rgba(95, 93, 93, 0.45);
+
+    border-radius: 16px;
+
+    padding: 8px;
+
+    box-shadow:
+    0 8px 25px rgba(15,23,42,1.02);
+
+    z-index: 999999;
+
+    display: none;
+
+}
+
+/* ITENS */
+
+.status-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 10px;
+
+    border-radius:12px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.18s ease;
+
+    color:#0f172a;
+
+}
+
+/* HOVER */
+
+.status-item:hover{
+
+    transform: translateX(3px);
+
+}
+
+/* =========================================
+BOLINHAS DE STATUS
+========================================= */
+
+.status-dot{
+
+    width:12px;
+
+    height:12px;
+
+    border-radius:50%;
+
+    display:inline-block;
+
+    flex-shrink:0;
+
+}
+
+/* EXISTENTE */
+
+.status-existente .status-dot{
+
+    background:#6b7280;
+
+}
+
+/* PLANEJADO */
+
+.status-planejado .status-dot{
+
+    background:#ef4444;
+
+}
+
+/* EM ANDAMENTO */
+
+.status-andamento .status-dot{
+
+    background:#10b981;
+
+}
+
+/* REALIZADO */
+
+.status-realizado .status-dot{
+
+    background:#2563eb;
+
+}
+
+/* CANCELADO */
+
+.status-cancelado .status-dot{
+
+    background:#9333ea;
+
+}
+
 /* BADGE */
 
 .status-item::before{
@@ -1299,23 +1399,19 @@ MENU STATUS PREMIUM REFINADO
 
 }
 
-/* PLANEJADO */
+/* EXISTENTE */
 
-.status-planejado{
+.status-existente::before{
 
-    color:#dc2626;
+    background:#6b7280;
 
 }
+
+/* PLANEJADO */
 
 .status-planejado::before{
 
-    background:#dbd8d8;
-
-}
-
-.status-planejado:hover{
-
-    background:#fef2f2;
+    background:#ef4444;
 
 }
 
@@ -1737,6 +1833,37 @@ STATUS HEMI ARCADA
 
 .hemi-item.status-cancelado span{
     color:#7c3aed;
+}
+
+/* =========================================
+RX INFERIOR
+========================================= */
+
+.arcada.inferior .icone-procedimento-dente[src*="rx_dente"],
+.arcada.decidua.inferior .icone-procedimento-dente[src*="rx_dente"]{
+
+    top:auto !important;
+
+    bottom:-16px !important;
+
+    left:50% !important;
+
+    transform:translateX(-50%) !important;
+
+}
+
+/* RX PERMANENTE INFERIOR */
+
+.arcada.inferior .icone-procedimento-dente[src*="rx_dente"]{
+
+    top:auto !important;
+
+    bottom:-24px !important;
+
+    left:50% !important;
+
+    transform:translateX(-50%) !important;
+
 }
 
 /* =========================================

@@ -215,10 +215,7 @@ PROCEDIMENTOS GERAIS
                                 {% else %}
                                     posicao-{{ item.procedimento.posicao_icone }}
                                 {% endif %}
-
-                                {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-                                    sem-rotacao
-                                {% endif %}
+                                
                             "
 
                             data-id="{{ item.id }}"
@@ -779,6 +776,8 @@ MODAL EVOLUÇÃO CLÍNICA
     Cancelado
 </div>
 
+</div> <!-- menuStatus -->
+
 <script>
 
 /* =========================================
@@ -895,11 +894,65 @@ document.addEventListener(
         menuStatus.style.display =
             'block';
 
+        const larguraMenu = 190;
+const alturaMenu = 230;
+
+let posX =
+    e.pageX - (larguraMenu / 2);
+
+/* POSIÇÃO INICIAL */
+
+let posY =
+    e.pageY + 15;
+
+/* SE NÃO HOUVER ESPAÇO EMBAIXO,
+   ABRE ACIMA */
+
+if(
+    posY + alturaMenu >
+    window.innerHeight + window.scrollY
+){
+
+    posY =
+        e.pageY - alturaMenu - 15;
+
+}
+       
+        /* EVITA SAIR PELA ESQUERDA */
+
+        if(posX < 10){
+
+            posX = 10;
+
+        }
+
+        /* EVITA SAIR PELA DIREITA */
+
+        if(
+            posX + larguraMenu >
+            window.innerWidth
+        ){
+
+            posX =
+                window.innerWidth
+                - larguraMenu
+                - 10;
+
+        }
+
+        /* EVITA SAIR PELO TOPO */
+
+        if(posY < 10){
+
+            posY = 10;
+
+        }
+
         menuStatus.style.left =
-            e.pageX + 'px';
+            posX + 'px';
 
         menuStatus.style.top =
-            e.pageY + 'px';
+            posY + 'px';
 
     }
 
