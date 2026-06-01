@@ -821,6 +821,87 @@ class EvolucaoClinica(models.Model):
 
     )
 
+    dente = models.CharField(
+
+        max_length=10,
+
+        blank=True,
+
+        null=True
+
+    )
+
+    procedimento = models.ForeignKey(
+
+        'Procedimento',
+
+        on_delete=models.SET_NULL,
+
+        null=True,
+
+        blank=True
+
+    )
+
+    descricao = models.TextField(
+
+        blank=True,
+
+        null=True
+
+    )
+
+    criado_em = models.DateTimeField(
+
+        auto_now_add=True
+
+    )
+
+    class Meta:
+
+        ordering = ['-criado_em']
+
+    def __str__(self):
+
+        return f'{self.paciente.nome}'
+
+    # =========================================
+# PRONTUÁRIO CLÍNICO
+# =========================================
+
+class ProntuarioClinico(models.Model):
+
+    paciente = models.ForeignKey(
+        Paciente,
+        on_delete=models.CASCADE,
+        related_name='prontuarios'
+    )
+
+    titulo = models.CharField(
+        max_length=200
+    )
+
+    anotacao = models.TextField()
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    atualizado_em = models.DateTimeField(
+        auto_now=True
+    )
+
+    class Meta:
+
+        ordering = ['-criado_em']
+
+        verbose_name = 'Prontuário Clínico'
+        verbose_name_plural = 'Prontuários Clínicos'
+
+    def __str__(self):
+
+        return f'{self.paciente.nome} - {self.titulo}'
+
     # =========================================
     # DENTE
     # =========================================

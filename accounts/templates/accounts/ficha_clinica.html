@@ -40,180 +40,188 @@ LAYOUT
 
 <div class="ficha-layout">
 
-    <!-- =========================================
-    FORM NOVA EVOLUÇÃO
-    ========================================== -->
+<!-- =========================================
+PRONTUÁRIO CLÍNICO
+========================================= -->
 
-    <div class="ficha-form-card">
+<div class="ficha-form-card">
 
-        <div class="section-header-premium">
+    <div class="section-header-premium">
 
-            <div class="section-icon blue">
+        <div class="section-icon blue">
 
-                <i class="fa-solid fa-notes-medical"></i>
-
-            </div>
-
-            <div>
-
-                <h5>
-                    Nova Evolução
-                </h5>
-
-                <p>
-                    Registre procedimentos e evolução clínica.
-                </p>
-
-            </div>
+            <i class="fa-solid fa-file-medical"></i>
 
         </div>
 
-        <form method="POST">
+        <div>
 
-            {% csrf_token %}
+            <h5>
+                Prontuário Clínico
+            </h5>
 
-            <div class="anamnese-grid">
+            <p>
+                Registros clínicos e observações do paciente.
+            </p>
 
-                <div>
-
-                    <label class="anamnese-label">
-
-                        Dente
-
-                    </label>
-
-                    <input
-                        type="text"
-                        name="dente"
-                        class="anamnese-input"
-                        placeholder="Ex: 16"
-                    >
-
-                </div>
-
-                <div>
-
-                    <label class="anamnese-label">
-
-                        Procedimento
-
-                    </label>
-
-                    <input
-                        type="text"
-                        name="procedimento"
-                        class="anamnese-input"
-                        placeholder="Ex: Profilaxia"
-                        required
-                    >
-
-                </div>
-
-            </div>
-
-            <div class="mt-4">
-
-                <label class="anamnese-label">
-
-                    Descrição
-
-                </label>
-
-                <textarea
-                    name="descricao"
-                    class="anamnese-textarea"
-                    placeholder="Descreva a evolução clínica..."
-                ></textarea>
-
-            </div>
-
-            <div class="anamnese-grid mt-4">
-
-                <div>
-
-                    <label class="anamnese-label">
-
-                        Materiais
-
-                    </label>
-
-                    <textarea
-                        name="materiais"
-                        class="anamnese-textarea"
-                    ></textarea>
-
-                </div>
-
-                <div>
-
-                    <label class="anamnese-label">
-
-                        Anestesia
-
-                    </label>
-
-                    <input
-                        type="text"
-                        name="anestesia"
-                        class="anamnese-input"
-                    >
-
-                </div>
-
-            </div>
-
-            <div class="anamnese-grid mt-4">
-
-                <div>
-
-                    <label class="anamnese-label">
-
-                        Retorno
-
-                    </label>
-
-                    <input
-                        type="date"
-                        name="retorno"
-                        class="anamnese-input"
-                    >
-
-                </div>
-
-            </div>
-
-            <div class="d-flex justify-content-end mt-4">
-
-                <button
-                    type="submit"
-                    class="btn-anamnese"
-                >
-
-                    <i class="fa-solid fa-floppy-disk"></i>
-
-                    Salvar Evolução
-
-                </button>
-
-            </div>
-
-        </form>
+        </div>
 
     </div>
 
-    <!-- =========================================
-    TIMELINE
-    ========================================== -->
+    <form method="POST">
 
-    <div class="timeline-card">
+        {% csrf_token %}
 
-        <div class="timeline-header">
+        <div>
 
-            <h5>
+            <label class="anamnese-label">
 
-                Timeline Clínica
+                Título
 
-            </h5>
+            </label>
+
+            <input
+                type="text"
+                name="titulo"
+                class="anamnese-input"
+                placeholder="Ex: Avaliação Inicial"
+                required
+            >
+
+        </div>
+
+        <div class="mt-4">
+
+            <label class="anamnese-label">
+
+                Registro Clínico
+
+            </label>
+
+            <textarea
+                name="anotacao"
+                class="anamnese-textarea"
+                rows="8"
+                placeholder="Descreva observações clínicas, diagnóstico, condutas, orientações, prescrições e retornos..."
+                required
+            ></textarea>
+
+        </div>
+
+        <div class="d-flex justify-content-end gap-3 mt-4">
+
+    <a
+        href="{% url 'imprimir_prontuario' paciente.id %}"
+        target="_blank"
+        class="btn btn-outline-primary"
+    >
+
+        <i class="fa-solid fa-file-pdf"></i>
+
+        Gerar PDF
+
+    </a>
+
+    <button
+        type="submit"
+        class="btn-anamnese"
+    >
+
+        <i class="fa-solid fa-floppy-disk"></i>
+
+        Salvar Registro
+
+    </button>
+
+</div>
+
+    </form>
+
+</div>
+
+<!-- =========================================
+PRONTUÁRIOS
+========================================= -->
+
+<div class="timeline-card">
+
+    <div class="timeline-header">
+
+        <h5>
+
+            Prontuário do Paciente
+
+        </h5>
+
+        <p>
+
+            Histórico clínico registrado manualmente.
+
+        </p>
+
+    </div>
+
+    <div class="timeline-body">
+
+    {% for item in prontuarios %}
+
+    <div class="timeline-item">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-content">
+
+            <div class="timeline-top">
+
+                <strong>
+
+                    {{ item.titulo }}
+
+                </strong>
+
+                <span>
+
+                    {{ item.criado_em|date:"d/m/Y H:i" }}
+
+                </span>
+
+            </div>
+
+            <p>
+
+                {{ item.anotacao|linebreaks }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="empty-timeline">
+
+        Nenhum registro clínico cadastrado.
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+</div>
+    
+<!-- TIMELINE -->
+
+<div class="timeline-card timeline-full">
+
+    <div class="timeline-header">
+
+        <h5>
+
+            Timeline Clínica
+
+        </h5>
 
             <p>
 
@@ -235,25 +243,33 @@ LAYOUT
 
                     <div class="timeline-top">
 
-                        <strong>
+    <strong>
 
-                            {{ evolucao.procedimento }}
+{% if evolucao.procedimento %}
 
-                        </strong>
+    {{ evolucao.procedimento.nome }}
 
-                        <span>
+{% else %}
 
-                            {{ evolucao.criado_em|date:"d/m/Y H:i" }}
+    Atualização Clínica
 
-                        </span>
+{% endif %}
 
-                    </div>
+</strong>
+
+    <span>
+
+        {{ evolucao.criado_em|date:"d/m/Y H:i" }}
+
+    </span>
+
+</div>
 
                     {% if evolucao.dente %}
 
                     <div class="timeline-dente">
 
-                        Dente {{ evolucao.dente }}
+                        🦷 Dente {{ evolucao.dente }}
 
                     </div>
 

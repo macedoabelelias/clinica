@@ -1867,6 +1867,76 @@ RX INFERIOR
 }
 
 /* =========================================
+NOVO PROCEDIMENTO GERAL
+========================================= */
+
+/* =========================================
+HEADER PROCEDIMENTOS GERAIS
+========================================= */
+
+.procedimentos-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:18px;
+
+}
+
+.procedimentos-header h6{
+
+    margin:0;
+
+    font-size:1.05rem;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+}
+
+/* =========================================
+BOTÃO NOVO
+========================================= */
+
+.btn-add-geral{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    border:none;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.btn-add-geral:hover{
+
+    background:#dbeafe;
+
+}
+
+/* =========================================
 RESPONSIVO
 ========================================= */
 

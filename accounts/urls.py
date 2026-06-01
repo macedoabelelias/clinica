@@ -5,7 +5,6 @@ from . import views
 from .views import convenios
 
 
-
 urlpatterns = [
 
     # =========================================
@@ -196,4 +195,21 @@ path(
     name='alterar_status_procedimento'
 ),
 
+path(
+
+    'pacientes/<int:id>/prontuario/pdf/',
+
+    views.imprimir_prontuario,
+
+    name='imprimir_prontuario'
+
+),
+
+path(
+    'pacientes/<int:id>/procedimento-geral/',
+    views.salvar_procedimento_geral,
+    name='salvar_procedimento_geral'
+)
+
 ]
+

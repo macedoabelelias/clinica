@@ -6,11 +6,19 @@ LAYOUT
 
     display:grid;
 
-    grid-template-columns:1.1fr .9fr;
+    grid-template-columns: 2fr 1.2fr;
 
     gap:24px;
 
     align-items:start;
+
+}
+
+.empty-timeline{
+
+    padding:30px;
+
+    min-height:auto;
 
 }
 
@@ -21,14 +29,15 @@ CARDS
 .ficha-form-card,
 .timeline-card{
 
-    background:#fff;
+    position:relative;
 
-    border-radius:24px;
+    border:1px solid #eef2f7;
 
-    padding:24px;
+}
 
-    box-shadow:
-    0 4px 20px rgba(15,23,42,.08);
+.timeline-full{
+
+    grid-column:1 / -1;
 
 }
 

@@ -1,4 +1,5 @@
 import os
+from urllib import response
 
 from django.shortcuts import (
     render,
@@ -18,12 +19,11 @@ from django.contrib.auth.decorators import (
 
 from django.conf import settings
 
-print(settings.BASE_DIR)
-
 from .models import (
 
     Convenio,
     EvolucaoClinica,
+    ProntuarioClinico,
     Paciente,
     Anamnese,
     Procedimento,
@@ -492,23 +492,58 @@ def odontograma(request, id):
 
     if request.method == 'POST':
 
-        procedimento_id = request.POST.get(
-            'procedimento'
+        procedimento = Procedimento.objects.get(
+            id=request.POST.get('procedimento')
         )
 
-        procedimento = Procedimento.objects.get(
-            id=procedimento_id
+        status = request.POST.get('status')
+
+        dente = request.POST.get('dente')
+
+        descricao = request.POST.get('observacao')
+
+
+        # =====================================
+        # GARANTE ORÇAMENTO
+        # =====================================
+
+        orcamento, created = Orcamento.objects.get_or_create(
+            paciente=paciente
         )
+
+        # =====================================
+        # CRIA ITEM DO ORÇAMENTO
+        # =====================================
+
+        item = ItemOrcamento.objects.create(
+
+            orcamento=orcamento,
+
+            procedimento=procedimento,
+
+            tipo_local='dente',
+
+            dente=dente,
+
+            valor_unitario=procedimento.valor_particular,
+
+            status=status
+
+        )
+
+        # =====================================
+        # CRIA EVOLUÇÃO
+        # =====================================
 
         EvolucaoClinica.objects.create(
 
             paciente=paciente,
 
-            dente=request.POST.get('dente'),
+            dente=dente,
 
             procedimento=procedimento,
 
-            descricao=request.POST.get('descricao')
+            descricao=descricao or ''
 
         )
 
@@ -538,6 +573,13 @@ def odontograma(request, id):
     # =========================================
 
     procedimentos = Procedimento.objects.all().order_by(
+        'categoria',
+        'nome'
+    )
+
+    procedimentos_gerais = Procedimento.objects.filter(
+        tipo__in=['geral', 'hemiarcada']
+    ).order_by(
         'categoria',
         'nome'
     )
@@ -598,13 +640,14 @@ def odontograma(request, id):
 
         'itens_orcamento': itens_orcamento,
 
-        # =========================================
-        # PROCEDIMENTOS
-        # =========================================
+       # PROCEDIMENTOS
 
-        'procedimentos': procedimentos
+        'procedimentos': procedimentos,
 
-    }
+        # PROCEDIMENTOS GERAIS
+
+        'procedimentos_gerais': procedimentos_gerais,
+        }
 
     return render(
 
@@ -614,6 +657,74 @@ def odontograma(request, id):
 
         context
 
+    )
+
+# =========================================
+# PROCEDIMENTO GERAL
+# =========================================
+
+@login_required(login_url='/')
+def salvar_procedimento_geral(request, id):
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
+
+    if request.method == 'POST':
+
+        procedimento = get_object_or_404(
+            Procedimento,
+            id=request.POST.get('procedimento')
+        )
+
+        status = request.POST.get(
+            'status'
+        )
+
+        descricao = request.POST.get(
+            'descricao'
+        )
+
+        # GARANTE ORÇAMENTO
+
+        orcamento, created = Orcamento.objects.get_or_create(
+            paciente=paciente
+        )
+
+        # CRIA ITEM NO ORÇAMENTO
+
+        ItemOrcamento.objects.create(
+
+            orcamento=orcamento,
+
+            procedimento=procedimento,
+
+            tipo_local='geral',
+
+            valor_unitario=procedimento.valor_particular,
+
+            quantidade=1,
+
+            status=status or 'planejado'
+
+        )
+
+        # CRIA EVOLUÇÃO
+
+        EvolucaoClinica.objects.create(
+
+            paciente=paciente,
+
+            procedimento=procedimento,
+
+            descricao=descricao
+
+        )
+
+    return redirect(
+        'odontograma',
+        id=paciente.id
     )
 
 def anamnese(request, id):
@@ -861,58 +972,62 @@ def anamnese(request, id):
 
     )
 
+@login_required(login_url='/')
 def ficha_clinica(request, id):
 
-    paciente = Paciente.objects.get(id=id)
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
 
     evolucoes = EvolucaoClinica.objects.filter(
-
         paciente=paciente
-
     ).order_by('-criado_em')
+
+    prontuarios = ProntuarioClinico.objects.filter(
+        paciente=paciente
+    )
 
     if request.method == 'POST':
 
-        EvolucaoClinica.objects.create(
+        ProntuarioClinico.objects.create(
 
             paciente=paciente,
 
-            dente=request.POST.get('dente'),
+            titulo=request.POST.get(
+                'titulo'
+            ),
 
-            procedimento=request.POST.get('procedimento'),
-
-            descricao=request.POST.get('descricao'),
-
-            materiais=request.POST.get('materiais'),
-
-            anestesia=request.POST.get('anestesia'),
-
-            retorno=request.POST.get('retorno') or None
+            anotacao=request.POST.get(
+                'anotacao'
+            )
 
         )
 
         return redirect(
-
             'ficha_clinica',
             id=paciente.id
-
         )
 
     context = {
 
         'paciente': paciente,
-        'evolucoes': evolucoes
+
+        'evolucoes': evolucoes,
+
+        'prontuarios': prontuarios
 
     }
 
     return render(
 
         request,
+
         'accounts/ficha_clinica.html',
+
         context
 
     )
-
 # =========================================
 # PROCEDIMENTOS
 # =========================================
@@ -1436,10 +1551,10 @@ def editar_item_orcamento(request, id):
             'face'
         )
 
-        item.status = request.POST.get(
-            'status'
+        status = request.POST.get(
+            'status',
+            'planejado'
         )
-
         item.quantidade = request.POST.get(
             'quantidade'
         )
@@ -1506,3 +1621,314 @@ def alterar_status_procedimento(request, id):
         'success': True
 
     })
+
+from django.http import HttpResponse
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Paragraph,
+    Spacer,
+    Image,
+    HRFlowable
+)
+
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib import colors
+
+from django.conf import settings
+import os
+
+from django.utils import timezone
+
+from reportlab.lib.units import mm
+
+# =========================================
+# RODAPÉ PDF
+# =========================================
+
+def adicionar_rodape(canvas, doc):
+
+    canvas.saveState()
+
+    pagina = canvas.getPageNumber()
+
+    canvas.setFont(
+        "Helvetica",
+        9
+    )
+
+    canvas.drawRightString(
+        190 * mm,
+        10 * mm,
+        f"Página {pagina}"
+    )
+
+    canvas.restoreState()
+
+
+# =========================================
+# PDF PRONTUÁRIO
+# =========================================
+@login_required(login_url='/')
+def imprimir_prontuario(request, id):
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )   
+
+    prontuarios = ProntuarioClinico.objects.filter(
+        paciente=paciente
+    ).order_by('-criado_em')
+
+    response = HttpResponse(
+        content_type='application/pdf'
+    )
+
+    response[
+        'Content-Disposition'
+    ] = f'inline; filename="prontuario_{paciente.id}.pdf"'
+
+    doc = SimpleDocTemplate(
+        response,
+        topMargin=30,
+        bottomMargin=30,
+        leftMargin=40,
+        rightMargin=40
+    )
+
+    styles = getSampleStyleSheet()
+
+    elementos = []
+
+    # =========================================
+    # LOGO
+    # =========================================
+
+    logo_path = os.path.join(
+        settings.BASE_DIR,
+        'static',
+        'img',
+        'logo.png'
+    )
+
+    if os.path.exists(logo_path):
+
+        logo = Image(
+            logo_path,
+            width=240,
+            height=90
+        )
+
+        logo.hAlign = 'CENTER'
+
+        elementos.append(logo)
+
+    # =========================================
+    # TÍTULO
+    # =========================================
+
+    elementos.append(
+        Paragraph(
+            '''
+            <para align="center">
+            <b>PRONTUÁRIO CLÍNICO</b>
+            </para>
+            ''',
+            styles['Title']
+        )
+    )
+
+    elementos.append(Spacer(1, 8))
+
+    # Linha abaixo do título
+
+    elementos.append(
+        HRFlowable(
+            width="100%",
+            thickness=1.2,
+            color=colors.HexColor('#1e40af')
+        )
+    )
+
+    elementos.append(Spacer(1, 12))
+
+    # =========================================
+    # CABEÇALHO
+    # =========================================   
+
+    elementos.append(Spacer(1, 15))
+
+    elementos.append(
+        Paragraph(
+            f'<b>Paciente:</b> {paciente.nome}',
+            styles['Normal']
+        )
+    )
+
+    if hasattr(paciente, 'cpf'):
+
+        elementos.append(
+            Paragraph(
+                f'<b>CPF:</b> {paciente.cpf}',
+                styles['Normal']
+            )
+        )
+
+    telefone = paciente.telefone or 'Não informado'
+    whatsapp = paciente.whatsapp or 'Não informado'
+    email = paciente.email or 'Não informado'
+
+    elementos.append(
+        Paragraph(
+            f'<b>Telefone:</b> {telefone}',
+            styles['Normal']
+        )
+    )
+
+    elementos.append(
+        Paragraph(
+            f'<b>WhatsApp:</b> {whatsapp}',
+            styles['Normal']
+        )
+    )
+
+    elementos.append(
+        Paragraph(
+            f'<b>E-mail:</b> {email}',
+            styles['Normal']
+        )
+    )
+
+    agora = timezone.localtime()
+
+    elementos.append(
+        Paragraph(
+            f'<b>Data de emissão:</b> {agora.strftime("%d/%m/%Y %H:%M")}',
+            styles['Normal']
+        )
+    )
+
+    elementos.append(Spacer(1, 15))
+
+    elementos.append(
+        HRFlowable(
+            width="100%",
+            thickness=1,
+            color=colors.grey
+        )
+    )
+
+    elementos.append(Spacer(1, 15))
+
+    # =========================================
+    # REGISTROS
+    # =========================================
+
+    for item in prontuarios:
+
+        elementos.append(
+            Paragraph(
+                f'<b>{item.titulo}</b>',
+                styles['Heading2']
+            )
+        )
+
+        data_local = timezone.localtime(
+            item.criado_em
+        )
+
+        elementos.append(
+            Paragraph(
+                data_local.strftime(
+                    '%d/%m/%Y %H:%M'
+                ),
+                styles['Italic']
+            )
+        )
+
+        elementos.append(Spacer(1, 5))
+
+        elementos.append(
+            Paragraph(
+                item.anotacao,
+                styles['BodyText']
+            )
+        )
+
+        elementos.append(Spacer(1, 10))
+
+        elementos.append(
+            HRFlowable(
+                width="100%",
+                thickness=0.5,
+                color=colors.lightgrey
+            )
+        )
+
+        elementos.append(Spacer(1, 10))
+
+            # =========================================
+        # ASSINATURAS
+        # =========================================
+
+        elementos.append(Spacer(1, 50))
+
+        elementos.append(
+            Paragraph(
+                '________________________________________________________',
+                styles['Normal']
+            )
+        )
+
+        elementos.append(
+            Paragraph(
+                'Cirurgião-Dentista Responsável',
+                styles['Normal']
+            )
+        )
+
+        elementos.append(Spacer(1, 40))
+
+        elementos.append(
+            Paragraph(
+                '________________________________________________________',
+                styles['Normal']
+            )
+        )
+
+        elementos.append(
+            Paragraph(
+                'Paciente / Responsável Legal',
+                styles['Normal']
+            )
+        )
+
+        # =========================================
+        # RODAPÉ
+        # =========================================
+
+        elementos.append(Spacer(1, 30))
+
+        elementos.append(
+            Paragraph(
+                '''
+                <para align="center">
+                Documento gerado automaticamente pelo
+                <b>AM Systems Odontologia</b>
+                </para>
+                ''',
+                styles['Italic']
+            )
+        )
+
+        # =========================================
+        # GERAR PDF
+        # =========================================
+
+        doc.build(
+            elementos,
+            onFirstPage=adicionar_rodape,
+            onLaterPages=adicionar_rodape
+        )
+
+        return response

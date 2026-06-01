@@ -64,29 +64,54 @@ LAYOUT
 <!-- =========================================
 PROCEDIMENTOS GERAIS
 ========================================= -->
-<h6 style="text-align: center; font-weight: bold; font-size: 1.04rem;">Procedimentos Gerais</h6>
+
+<div class="procedimentos-header">
+
+    <h6>
+
+        Procedimentos Gerais
+
+    </h6>
+
+    <button
+        type="button"
+        class="btn-add-geral"
+        data-bs-toggle="modal"
+        data-bs-target="#modalProcedimentoGeral"
+    >
+
+        <i class="fa-solid fa-plus"></i>
+
+        Novo
+
+    </button>
+
+</div>
+
 <div class="procedimentos-gerais-wrapper">
-    
 
     {% for item in itens_orcamento %}
 
-        {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemiarcada'%}
-                <div
-                    class="procedimento-geral-chip status-{{ item.status }}"
-                    data-id="{{ item.id }}"
+        {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemiarcada' %}
+
+            <div
+                class="procedimento-geral-chip status-{{ item.status }}"
+                data-id="{{ item.id }}"
+            >
+
+                <img
+                    src="{% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:'default.png' }}"
+                    class="icone-geral"
+                    alt="{{ item.procedimento.nome }}"
                 >
 
-                    <img
-                        src="{% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:'default.png' }}"
-                        class="icone-geral"
-                        alt="{{ item.procedimento.nome }}"
-                    >
+                <span>
 
-                    <span>
-                        {{ item.procedimento.nome }}
-                    </span>
+                    {{ item.procedimento.nome }}
 
-                </div>
+                </span>
+
+            </div>
 
         {% endif %}
 
@@ -631,10 +656,8 @@ MODAL EVOLUÇÃO CLÍNICA
 
         </option>
 
-        <option value="finalizado">
-
-            Finalizado
-
+        <option value="realizado">
+            Realizado
         </option>
 
         <option value="urgencia">
@@ -738,45 +761,247 @@ MODAL EVOLUÇÃO CLÍNICA
 
 </div>
 
+<!-- =========================================
+MODAL PROCEDIMENTO GERAL
+========================================= -->
+
+<div
+    class="modal fade"
+    id="modalProcedimentoGeral"
+    tabindex="-1"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    Novo Procedimento Geral
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                ></button>
+
+            </div>
+
+            <form
+                method="POST"
+                action="{% url 'salvar_procedimento_geral' paciente.id %}"
+            >
+
+                {% csrf_token %}
+
+                <div class="modal-body">
+
+                    <!-- STATUS -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+
+                            Status
+
+                        </label>
+
+                        <select
+                            name="status"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="planejado" selected>
+
+                                Planejado
+
+                            </option>
+
+                            <option value="existente">
+
+                                Existente
+
+                            </option>
+
+                            <option value="andamento">
+
+                                Em Andamento
+
+                            </option>
+
+                            <option value="realizado">
+
+                                Realizado
+
+                            </option>
+
+                            <option value="cancelado">
+
+                                Cancelado
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- PROCEDIMENTO -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+
+                            Procedimento
+
+                        </label>
+
+                        <select
+                            name="procedimento"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+
+                                Selecione um procedimento
+
+                            </option>
+
+                            {% for procedimento in procedimentos_gerais %}
+
+                                <option value="{{ procedimento.id }}">
+
+                                    {{ procedimento.nome }}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <!-- OBSERVAÇÃO -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+
+                            Observação
+
+                        </label>
+
+                        <textarea
+                            name="observacao"
+                            class="form-control"
+                            rows="4"
+                            placeholder="Digite observações do procedimento..."
+                        ></textarea>
+
+                    </div>
+
+                    <!-- ADICIONAR AO ORÇAMENTO -->
+
+                    <div class="form-check">
+
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="adicionar_orcamento"
+                            id="adicionar_orcamento"
+                            checked
+                        >
+
+                        <label
+                            class="form-check-label"
+                            for="adicionar_orcamento"
+                        >
+
+                            Adicionar ao orçamento
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                    >
+
+                        Cancelar
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+
+                        Salvar
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
 <!-- MENU STATUS PREMIUM -->
 
 <div id="menuStatus" class="menu-status">
+
     <div
-    class="status-item status-existente"
-    data-status="existente"
->
-    Existente
-</div>
+        class="status-item status-existente"
+        data-status="existente"
+    >
+        Existente
+    </div>
 
-<div
-    class="status-item status-planejado"
-    data-status="planejado"
->
-    Planejado
-</div>
+    <div
+        class="status-item status-planejado"
+        data-status="planejado"
+    >
+        Planejado
+    </div>
 
-<div
-    class="status-item status-andamento"
-    data-status="andamento"
->
-    Em Andamento
-</div>
+    <div
+        class="status-item status-andamento"
+        data-status="andamento"
+    >
+        Em Andamento
+    </div>
 
-<div
-    class="status-item status-realizado"
-    data-status="realizado"
->
-    Realizado
-</div>
+    <div
+        class="status-item status-realizado"
+        data-status="realizado"
+    >
+        Realizado
+    </div>
 
-<div
-    class="status-item status-cancelado"
-    data-status="cancelado"
->
-    Cancelado
-</div>
+    <div
+        class="status-item status-cancelado"
+        data-status="cancelado"
+    >
+        Cancelado
+    </div>
 
-</div> <!-- menuStatus -->
+</div>
 
 <script>
 
