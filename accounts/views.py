@@ -254,6 +254,9 @@ def novo_paciente(request):
             estado_civil=request.POST.get('estado_civil'),
             profissao=request.POST.get('profissao'),
 
+            # CONTATO
+
+            telefone=request.POST.get('telefone'),
             whatsapp=request.POST.get('whatsapp'),
             email=request.POST.get('email'),
 
@@ -1516,13 +1519,27 @@ def excluir_item_orcamento(request, id):
         id=id
     )
 
-    paciente_id = item.orcamento.paciente.id
+    paciente = item.orcamento.paciente
+
+    # REMOVE DA TIMELINE
+
+    EvolucaoClinica.objects.filter(
+
+        paciente=paciente,
+
+        procedimento=item.procedimento,
+
+        dente=item.dente
+
+    ).delete()
+
+    # REMOVE DO ORÇAMENTO
 
     item.delete()
 
     return redirect(
         'orcamento',
-        id=paciente_id
+        id=paciente.id
     )
 
 # =========================================
@@ -1833,6 +1850,15 @@ def imprimir_prontuario(request, id):
             )
         )
 
+    for item in prontuarios:
+
+        elementos.append(
+            Paragraph(
+                f'<b>{item.titulo}</b>',
+                styles['Heading2']
+            )
+        )
+
         data_local = timezone.localtime(
             item.criado_em
         )
@@ -1866,69 +1892,70 @@ def imprimir_prontuario(request, id):
         )
 
         elementos.append(Spacer(1, 10))
+    # =========================================
+    # ASSINATURAS
+    # =========================================
 
-            # =========================================
-        # ASSINATURAS
-        # =========================================
+    elementos.append(Spacer(1, 50))
 
-        elementos.append(Spacer(1, 50))
-
-        elementos.append(
-            Paragraph(
-                '________________________________________________________',
-                styles['Normal']
-            )
+    elementos.append(
+        Paragraph(
+            '________________________________________________________',
+            styles['Normal']
         )
+    )
 
-        elementos.append(
-            Paragraph(
-                'Cirurgião-Dentista Responsável',
-                styles['Normal']
-            )
+    elementos.append(
+        Paragraph(
+            'Cirurgião-Dentista Responsável',
+            styles['Normal']
         )
+    )
 
-        elementos.append(Spacer(1, 40))
+    elementos.append(Spacer(1, 40))
 
-        elementos.append(
-            Paragraph(
-                '________________________________________________________',
-                styles['Normal']
-            )
+    elementos.append(
+        Paragraph(
+            '________________________________________________________',
+            styles['Normal']
         )
+    )
 
-        elementos.append(
-            Paragraph(
-                'Paciente / Responsável Legal',
-                styles['Normal']
-            )
+    elementos.append(
+        Paragraph(
+            'Paciente / Responsável Legal',
+            styles['Normal']
         )
+    )
 
-        # =========================================
-        # RODAPÉ
-        # =========================================
+    # =========================================
+    # RODAPÉ
+    # =========================================
 
-        elementos.append(Spacer(1, 30))
+    elementos.append(Spacer(1, 30))
 
-        elementos.append(
-            Paragraph(
-                '''
-                <para align="center">
-                Documento gerado automaticamente pelo
-                <b>AM Systems Odontologia</b>
-                </para>
-                ''',
-                styles['Italic']
-            )
+    elementos.append(
+        Paragraph(
+            '''
+            <para align="center">
+            Documento gerado automaticamente pelo
+            <b>AM Systems Odontologia</b>
+            </para>
+            ''',
+            styles['Italic']
         )
+    )
 
-        # =========================================
-        # GERAR PDF
-        # =========================================
+    # =========================================
+    # GERAR PDF
+    # =========================================
 
-        doc.build(
-            elementos,
-            onFirstPage=adicionar_rodape,
-            onLaterPages=adicionar_rodape
-        )
+    doc.build(
+        elementos,
+        onFirstPage=adicionar_rodape,
+        onLaterPages=adicionar_rodape
+    )
 
-        return response
+    return response
+            
+            

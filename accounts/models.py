@@ -865,7 +865,7 @@ class EvolucaoClinica(models.Model):
 
         return f'{self.paciente.nome}'
 
-    # =========================================
+# =========================================
 # PRONTUÁRIO CLÍNICO
 # =========================================
 

@@ -44,21 +44,20 @@ TIMELINE
 
 .timeline-card{
 
-    position:sticky;
+    position:relative;
 
     top:20px;
 
     background:#fff;
 
-    border-radius:24px;
+    border-radius:32px;
 
-    padding:22px;
+    padding:18px;
 
     border:none;
 
     box-shadow:
-    0 2px 6px rgba(15,23,42,.04),
-    0 14px 35px rgba(15,23,42,.10);
+        0 10px 35px rgba(15,23,42,.25);
 
     height:640px;
 
@@ -67,6 +66,28 @@ TIMELINE
     flex-direction:column;
 
     overflow:hidden;
+
+}
+
+/* BARRA SUPERIOR PREMIUM */
+
+.timeline-card::before{
+
+    content:'';
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:5px;
+
+    background:#2563eb;
+
+    border-radius:32px 32px 0 0;
 
 }
 
@@ -230,9 +251,9 @@ ITEM
 
 .timeline-icone{
 
-    width:28px;
+    width:34px;
 
-    height:28px;
+    height:34px;
 
     object-fit:contain;
 
@@ -626,29 +647,29 @@ PERMANENTES SUPERIORES
 .dente-13 .posicao-coroa{ top:54px; left:-1px; }
 .dente-13 .posicao-oclusal{ top:48px; left:7px; }
 
-.dente-14 .posicao-raiz{ top:40px; left:-1px; }
+.dente-14 .posicao-raiz{ top:38px; left:-1px; }
 .dente-14 .posicao-centro{ top:48px; left:-1px; }
 .dente-14 .posicao-coroa{ top:56px; left:0px; }
 .dente-14 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-15 .posicao-raiz{ top:40px; left:-1px; }
+.dente-15 .posicao-raiz{ top:38px; left:-1px; }
 .dente-15 .posicao-centro{ top:46px; left:1px; }
 .dente-15 .posicao-coroa{ top:58px; left:0px; }
 .dente-15 .posicao-oclusal{ top:2px; left:5px; }
 
-.dente-16 .posicao-raiz{ top:40px; left:-2px; }
+.dente-16 .posicao-raiz{ top:38px; left:-2px; }
 .dente-16 .posicao-centro{ top:48px; left:-2px; }
 .dente-16 .posicao-coroa{ top:58px; left:-2px; }
 .dente-16 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-17 .posicao-raiz{ top:42px; left:-1px; }
+.dente-17 .posicao-raiz{ top:36px; left:-1px; }
 .dente-17 .posicao-centro{ top:44px; left:0px; }
-.dente-17 .posicao-coroa{ top:58px; left:0px; }
+.dente-17 .posicao-coroa{ top:60px; left:0px; }
 .dente-17 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-18 .posicao-raiz{ top:40px; left:1px; }
+.dente-18 .posicao-raiz{ top:38px; left:1px; }
 .dente-18 .posicao-centro{ top:44px; left:-1px; }
-.dente-18 .posicao-coroa{ top:50px; left:2px; }
+.dente-18 .posicao-coroa{ top:60px; left:2px; }
 .dente-18 .posicao-oclusal{ top:8px; left:1px; }
 
 .dente-21 .posicao-raiz{ top:30px; left:-1px; }

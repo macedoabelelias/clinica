@@ -1,61 +1,151 @@
 /* =========================================
-LAYOUT
+LAYOUT PRINCIPAL
 ========================================= */
 
-.ficha-layout{
+.ficha-grid{
 
-    display:grid;
 
-    grid-template-columns: 2fr 1.2fr;
+display:grid;
 
-    gap:24px;
+grid-template-columns:2fr 1fr;
 
-    align-items:start;
+gap:24px;
 
-}
+align-items:start;
 
-.empty-timeline{
-
-    padding:30px;
-
-    min-height:auto;
 
 }
 
 /* =========================================
-CARDS
+COLUNA DIREITA
+========================================= */
+
+.painel-lateral{
+
+
+display:flex;
+
+flex-direction:column;
+
+gap:16px;
+
+
+}
+
+/* =========================================
+BOTÕES SUPERIORES
+========================================= */
+
+.tabs-premium{
+
+    display:flex;
+
+    flex-wrap:nowrap;
+
+    gap:6px;
+
+    margin-bottom:12px;
+
+    overflow-x:auto;
+
+}
+
+.tab-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:5px;
+
+    height:32px;
+
+    padding:0 10px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#f1f5f9;
+
+    color:#334155;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    white-space:nowrap;
+
+    transition:.2s;
+
+}
+
+.tab-btn i{
+
+    font-size:11px;
+
+}
+
+.tab-btn:hover{
+
+    background:#e2e8f0;
+
+}
+
+.tab-btn.active{
+
+    background:#2563eb;
+
+    color:#fff;
+
+}
+
+/* =========================================
+CARDS SUPERIORES
 ========================================= */
 
 .ficha-form-card,
-.timeline-card{
+.painel-lateral .timeline-card{
 
-    position:relative;
 
-    border:1px solid #eef2f7;
+min-height:620px;
 
-}
-
-.timeline-full{
-
-    grid-column:1 / -1;
 
 }
 
 /* =========================================
-TIMELINE
+TIMELINE E ANEXOS
 ========================================= */
 
-.timeline-card{
+.linha-inferior{
 
-    position:sticky;
 
-    top:20px;
+grid-column:1 / -1;
 
-    max-height:88vh;
+display:grid;
 
-    overflow:hidden;
+grid-template-columns:2fr 1fr;
 
-    border:1px solid #eef2f7;
+gap:24px;
+
+
+}
+
+.linha-inferior .timeline-card{
+
+
+position:relative;
+
+top:auto;
+
+max-height:none;
+
+overflow:hidden;
+
 
 }
 
@@ -65,29 +155,35 @@ HEADER
 
 .timeline-header{
 
-    margin-bottom:24px;
+
+margin-bottom:20px;
+
 
 }
 
 .timeline-header h5{
 
-    font-size:22px;
 
-    font-weight:700;
+font-size:20px;
 
-    color:#0f172a;
+font-weight:700;
 
-    margin-bottom:4px;
+color:#0f172a;
+
+margin-bottom:4px;
+
 
 }
 
 .timeline-header p{
 
-    color:#64748b;
 
-    font-size:13px;
+color:#64748b;
 
-    margin:0;
+font-size:13px;
+
+margin:0;
+
 
 }
 
@@ -97,17 +193,13 @@ BODY
 
 .timeline-body{
 
-    display:flex;
 
-    flex-direction:column;
+display:flex;
 
-    gap:18px;
+flex-direction:column;
 
-    overflow-y:auto;
+gap:16px;
 
-    max-height:72vh;
-
-    padding-right:6px;
 
 }
 
@@ -117,191 +209,131 @@ ITEM
 
 .timeline-item{
 
-    display:flex;
 
-    align-items:flex-start;
+display:flex;
 
-    gap:14px;
+align-items:flex-start;
+
+gap:14px;
+
 
 }
-
-/* =========================================
-DOT
-========================================= */
 
 .timeline-dot{
 
-    width:12px;
 
-    height:12px;
+width:12px;
 
-    min-width:12px;
+height:12px;
 
-    border-radius:50%;
+min-width:12px;
 
-    background:#2563eb;
+border-radius:50%;
 
-    margin-top:8px;
+background:#2563eb;
+
+margin-top:8px;
+
 
 }
-
-/* =========================================
-CONTENT
-========================================= */
 
 .timeline-content{
 
-    flex:1;
 
-    background:#f8fafc;
+flex:1;
 
-    border:1px solid #e2e8f0;
+background:#f8fafc;
 
-    border-radius:18px;
+border:1px solid #e2e8f0;
 
-    padding:18px;
+border-radius:18px;
+
+padding:18px;
+
 
 }
 
-/* =========================================
-TOP
-========================================= */
-
 .timeline-top{
 
-    display:flex;
 
-    justify-content:space-between;
+display:flex;
 
-    align-items:center;
+justify-content:space-between;
 
-    gap:12px;
+align-items:center;
 
-    margin-bottom:10px;
+gap:12px;
+
+margin-bottom:10px;
+
 
 }
 
 .timeline-top strong{
 
-    font-size:15px;
 
-    color:#0f172a;
+font-size:14px;
+
 
 }
 
 .timeline-top span{
 
-    font-size:12px;
 
-    color:#64748b;
+font-size:12px;
+
+color:#64748b;
+
 
 }
-
-/* =========================================
-DENTE
-========================================= */
 
 .timeline-dente{
 
-    display:inline-flex;
 
-    align-items:center;
+display:inline-flex;
 
-    justify-content:center;
+padding:5px 10px;
 
-    padding:6px 12px;
+border-radius:999px;
 
-    border-radius:999px;
+background:#eff6ff;
 
-    background:#eff6ff;
+color:#2563eb;
 
-    color:#2563eb;
+font-size:11px;
 
-    font-size:12px;
+font-weight:700;
 
-    font-weight:700;
+margin-bottom:10px;
 
-    margin-bottom:10px;
 
 }
-
-/* =========================================
-EXTRAS
-========================================= */
-
-.timeline-extra{
-
-    margin-top:12px;
-
-    font-size:13px;
-
-    color:#475569;
-
-    line-height:1.5;
-
-}
-
-/* =========================================
-RETORNO
-========================================= */
-
-.timeline-retorno{
-
-    margin-top:14px;
-
-    display:inline-flex;
-
-    align-items:center;
-
-    padding:8px 14px;
-
-    border-radius:999px;
-
-    background:#dcfce7;
-
-    color:#16a34a;
-
-    font-size:12px;
-
-    font-weight:700;
-
-}
-
-/* =========================================
-PARÁGRAFOS
-========================================= */
 
 .timeline-content p{
 
-    margin:0;
 
-    font-size:14px;
+margin:0;
 
-    line-height:1.6;
+line-height:1.6;
 
-    color:#475569;
 
 }
 
-/* =========================================
-EMPTY
-========================================= */
-
 .empty-timeline{
 
-    background:#f8fafc;
 
-    border:2px dashed #cbd5e1;
+background:#f8fafc;
 
-    border-radius:18px;
+border:2px dashed #cbd5e1;
 
-    padding:40px 20px;
+border-radius:18px;
 
-    text-align:center;
+padding:40px 20px;
 
-    color:#64748b;
+text-align:center;
 
-    font-size:14px;
+color:#64748b;
+
 
 }
 
@@ -311,41 +343,18 @@ RESPONSIVO
 
 @media(max-width:1200px){
 
-    .ficha-layout{
 
-        grid-template-columns:1fr;
+.ficha-grid{
 
-    }
-
-    .timeline-card{
-
-        position:relative;
-
-        top:auto;
-
-        max-height:none;
-
-    }
-
-    .timeline-body{
-
-        max-height:none;
-
-        overflow:visible;
-
-    }
+    grid-template-columns:1fr;
 
 }
 
-@media(max-width:768px){
+.linha-inferior{
 
-    .ficha-form-card,
-    .timeline-card{
+    grid-template-columns:1fr;
 
-        padding:18px;
+}
 
-        border-radius:20px;
-
-    }
 
 }

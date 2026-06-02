@@ -533,6 +533,21 @@ select.form-control{
 
 }
 
+.contato-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        1fr;
+
+    gap:20px;
+
+    align-items:start;
+
+}
+
 /* =========================================*/
 
 @media(max-width:768px){
@@ -592,5 +607,7 @@ select.form-control{
     }
 
 }
+
+
 
 

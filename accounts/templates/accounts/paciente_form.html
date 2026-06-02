@@ -263,7 +263,7 @@ Paciente | AM Systems
                     selected
                     {% endif %}
                 >
-                    Feminino
+                    Cis Feminino
                 </option>
 
                 <option
@@ -326,37 +326,51 @@ Paciente | AM Systems
 
     </h4>
 
-    <div class="form-grid">
+    <div class="form-grid contato-grid">
 
-        <div>
+    <div>
 
-            <label>WhatsApp</label>
+        <label>Telefone</label>
 
-            <input
-                type="text"
-                id="whatsapp"
-                name="whatsapp"
-                class="form-control"
-                value="{{ paciente.whatsapp|default:'' }}"
-            >
-
-        </div>
-
-        <div>
-
-            <label>E-mail</label>
-
-            <input
-                type="email"
-                id="email"
-                name="email"
-                class="form-control"
-                value="{{ paciente.email|default:'' }}"
-            >
-
-        </div>
+        <input
+            type="text"
+            id="telefone"
+            name="telefone"
+            class="form-control"
+            value="{{ paciente.telefone|default:'' }}"
+        >
 
     </div>
+
+    <div>
+
+        <label>WhatsApp</label>
+
+        <input
+            type="text"
+            id="whatsapp"
+            name="whatsapp"
+            class="form-control"
+            value="{{ paciente.whatsapp|default:'' }}"
+        >
+
+    </div>
+
+    <div>
+
+        <label>E-mail</label>
+
+        <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            value="{{ paciente.email|default:'' }}"
+        >
+
+    </div>
+
+</div>
 
 </div>
 
@@ -555,6 +569,7 @@ Paciente | AM Systems
                 id="cpf_responsavel"
                 name="cpf_responsavel"
                 class="form-control"
+                value="{{ paciente.cpf_responsavel|default:'' }}"
             >
 
         </div>
@@ -568,6 +583,7 @@ Paciente | AM Systems
                 id="telefone_responsavel"
                 name="telefone_responsavel"
                 class="form-control"
+                value="{{ paciente.telefone_responsavel|default:'' }}"
             >
 
         </div>
@@ -719,6 +735,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const cpf = document.getElementById('cpf');
     const cpfResponsavel = document.getElementById('cpf_responsavel');
 
+    const telefone = document.getElementById('telefone');
     const whatsapp = document.getElementById('whatsapp');
     const telefoneResponsavel = document.getElementById('telefone_responsavel');
 
@@ -934,6 +951,19 @@ document.addEventListener('DOMContentLoaded', function(){
         );
 
     }
+
+    if(telefone){
+
+    telefone.addEventListener(
+        'input',
+        function(){
+
+            mascaraTelefone(this);
+
+        }
+    );
+
+}
 
     // =====================================
     // WHATSAPP RESPONSÁVEL

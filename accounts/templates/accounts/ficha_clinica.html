@@ -38,46 +38,42 @@ MENU CLÍNICO GLOBAL
 LAYOUT
 ========================================= -->
 
-<div class="ficha-layout">
-
 <!-- =========================================
-PRONTUÁRIO CLÍNICO
+LAYOUT PRINCIPAL
 ========================================= -->
 
-<div class="ficha-form-card">
+<div class="ficha-grid">
 
-    <div class="section-header-premium">
+    <!-- =========================================
+    PRONTUÁRIO CLÍNICO
+    ========================================= -->
 
-        <div class="section-icon blue">
+    <div class="ficha-form-card">
 
-            <i class="fa-solid fa-file-medical"></i>
+        <div class="section-header-premium">
+
+            <div class="section-icon blue">
+                <i class="fa-solid fa-file-medical"></i>
+            </div>
+
+            <div>
+
+                <h5>Prontuário Clínico</h5>
+
+                <p>
+                    Registros clínicos e observações do paciente.
+                </p>
+
+            </div>
 
         </div>
 
-        <div>
+        <form method="POST">
 
-            <h5>
-                Prontuário Clínico
-            </h5>
-
-            <p>
-                Registros clínicos e observações do paciente.
-            </p>
-
-        </div>
-
-    </div>
-
-    <form method="POST">
-
-        {% csrf_token %}
-
-        <div>
+            {% csrf_token %}
 
             <label class="anamnese-label">
-
                 Título
-
             </label>
 
             <input
@@ -88,145 +84,155 @@ PRONTUÁRIO CLÍNICO
                 required
             >
 
-        </div>
+            <div class="mt-4">
 
-        <div class="mt-4">
+                <label class="anamnese-label">
+                    Registro Clínico
+                </label>
 
-            <label class="anamnese-label">
-
-                Registro Clínico
-
-            </label>
-
-            <textarea
-                name="anotacao"
-                class="anamnese-textarea"
-                rows="8"
-                placeholder="Descreva observações clínicas, diagnóstico, condutas, orientações, prescrições e retornos..."
-                required
-            ></textarea>
-
-        </div>
-
-        <div class="d-flex justify-content-end gap-3 mt-4">
-
-    <a
-        href="{% url 'imprimir_prontuario' paciente.id %}"
-        target="_blank"
-        class="btn btn-outline-primary"
-    >
-
-        <i class="fa-solid fa-file-pdf"></i>
-
-        Gerar PDF
-
-    </a>
-
-    <button
-        type="submit"
-        class="btn-anamnese"
-    >
-
-        <i class="fa-solid fa-floppy-disk"></i>
-
-        Salvar Registro
-
-    </button>
-
-</div>
-
-    </form>
-
-</div>
-
-<!-- =========================================
-PRONTUÁRIOS
-========================================= -->
-
-<div class="timeline-card">
-
-    <div class="timeline-header">
-
-        <h5>
-
-            Prontuário do Paciente
-
-        </h5>
-
-        <p>
-
-            Histórico clínico registrado manualmente.
-
-        </p>
-
-    </div>
-
-    <div class="timeline-body">
-
-    {% for item in prontuarios %}
-
-    <div class="timeline-item">
-
-        <div class="timeline-dot"></div>
-
-        <div class="timeline-content">
-
-            <div class="timeline-top">
-
-                <strong>
-
-                    {{ item.titulo }}
-
-                </strong>
-
-                <span>
-
-                    {{ item.criado_em|date:"d/m/Y H:i" }}
-
-                </span>
+                <textarea
+                    name="anotacao"
+                    class="anamnese-textarea"
+                    rows="8"
+                    placeholder="Descreva observações clínicas..."
+                    required
+                ></textarea>
 
             </div>
 
-            <p>
+            <div class="d-flex justify-content-end gap-3 mt-4">
 
-                {{ item.anotacao|linebreaks }}
+                <a
+                    href="{% url 'imprimir_prontuario' paciente.id %}"
+                    target="_blank"
+                    class="btn btn-outline-primary"
+                >
+                    <i class="fa-solid fa-file-pdf"></i>
+                    Gerar PDF
+                </a>
 
-            </p>
+                <button
+                    type="submit"
+                    class="btn-anamnese"
+                >
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Salvar Registro
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- =========================================
+    COLUNA DIREITA
+    ========================================= -->
+
+    <div class="painel-lateral">
+
+        <!-- BOTÕES -->
+
+        <div class="tabs-premium">
+
+            <button class="tab-btn active" data-tab="registros">
+                <i class="fa-solid fa-file-lines"></i>
+                Registros
+            </button>
+
+            <button class="tab-btn" data-tab="evolucao">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                Evolução
+            </button>
+
+            <button class="tab-btn" data-tab="anexos">
+                <i class="fa-solid fa-paperclip"></i>
+                Anexos
+            </button>
+
+            <button class="tab-btn" data-tab="documentos">
+                <i class="fa-solid fa-file-medical"></i>
+                Documentos
+            </button>
+
+        </div>
+
+        <!-- PRONTUÁRIO PACIENTE -->
+
+        <div class="timeline-card">
+
+            <div class="timeline-header">
+
+                <h5>
+                    Prontuário do Paciente
+                </h5>
+
+                <p>
+                    Histórico clínico registrado manualmente.
+                </p>
+
+            </div>
+
+            <div class="timeline-body">
+
+                {% for item in prontuarios %}
+
+                <div class="timeline-item">
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-content">
+
+                        <div class="timeline-top">
+
+                            <strong>
+                                {{ item.titulo }}
+                            </strong>
+
+                            <span>
+                                {{ item.criado_em|date:"d/m/Y H:i" }}
+                            </span>
+
+                        </div>
+
+                        <p>
+                            {{ item.anotacao|linebreaks }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {% empty %}
+
+                <div class="empty-timeline">
+                    Nenhum registro clínico cadastrado.
+                </div>
+
+                {% endfor %}
+
+            </div>
 
         </div>
 
     </div>
 
-    {% empty %}
+    <div class="linha-inferior">
 
-    <div class="empty-timeline">
+    <!-- =========================================
+    TIMELINE CLÍNICA
+    ========================================= -->
 
-        Nenhum registro clínico cadastrado.
+    <div class="timeline-card timeline-full">
 
-    </div>
+        <div class="timeline-header">
 
-    {% endfor %}
-
-</div>
-
-</div>
-    
-<!-- TIMELINE -->
-
-<div class="timeline-card timeline-full">
-
-    <div class="timeline-header">
-
-        <h5>
-
-            Timeline Clínica
-
-        </h5>
+            <h5>
+                Timeline Clínica
+            </h5>
 
             <p>
-
                 Histórico completo do paciente
-
             </p>
 
         </div>
@@ -243,81 +249,34 @@ PRONTUÁRIOS
 
                     <div class="timeline-top">
 
-    <strong>
+                        <strong>
 
-{% if evolucao.procedimento %}
+                            {% if evolucao.procedimento %}
+                                {{ evolucao.procedimento.nome }}
+                            {% else %}
+                                Atualização Clínica
+                            {% endif %}
 
-    {{ evolucao.procedimento.nome }}
+                        </strong>
 
-{% else %}
+                        <span>
 
-    Atualização Clínica
+                            {{ evolucao.criado_em|date:"d/m/Y H:i" }}
 
-{% endif %}
-
-</strong>
-
-    <span>
-
-        {{ evolucao.criado_em|date:"d/m/Y H:i" }}
-
-    </span>
-
-</div>
-
-                    {% if evolucao.dente %}
-
-                    <div class="timeline-dente">
-
-                        🦷 Dente {{ evolucao.dente }}
+                        </span>
 
                     </div>
 
+                    {% if evolucao.dente %}
+                    <div class="timeline-dente">
+                        🦷 Dente {{ evolucao.dente }}
+                    </div>
                     {% endif %}
 
                     {% if evolucao.descricao %}
-
                     <p>
-
                         {{ evolucao.descricao }}
-
                     </p>
-
-                    {% endif %}
-
-                    {% if evolucao.materiais %}
-
-                    <div class="timeline-extra">
-
-                        <strong>Materiais:</strong>
-
-                        {{ evolucao.materiais }}
-
-                    </div>
-
-                    {% endif %}
-
-                    {% if evolucao.anestesia %}
-
-                    <div class="timeline-extra">
-
-                        <strong>Anestesia:</strong>
-
-                        {{ evolucao.anestesia }}
-
-                    </div>
-
-                    {% endif %}
-
-                    {% if evolucao.retorno %}
-
-                    <div class="timeline-retorno">
-
-                        Retorno:
-                        {{ evolucao.retorno|date:"d/m/Y" }}
-
-                    </div>
-
                     {% endif %}
 
                 </div>
@@ -338,6 +297,33 @@ PRONTUÁRIOS
 
     </div>
 
+    <!-- =========================================
+    ANEXOS
+    ========================================= -->
+
+    <div class="timeline-card">
+
+        <div class="timeline-header">
+
+            <h5>
+                Anexos
+            </h5>
+
+            <p>
+                Radiografias, fotos e documentos.
+            </p>
+
+        </div>
+
+        <div class="empty-timeline">
+
+            Nenhum anexo cadastrado.
+
+        </div>
+
+    </div>
+
+</div>
 </div>
 
 {% endblock %}
