@@ -553,7 +553,7 @@ class Procedimento(models.Model):
     # =========================================
 
     CATEGORIAS = [
-
+        ('diagnostico', 'Diagnóstico'),
         ('dentistica', 'Dentística'),
         ('endodontia', 'Endodontia'),
         ('periodontia', 'Periodontia'),
@@ -805,11 +805,23 @@ class Procedimento(models.Model):
 
         return self.nome
 
+
+
 # =========================================
 # EVOLUÇÃO CLÍNICA
 # =========================================
 
 class EvolucaoClinica(models.Model):
+
+    STATUS_CHOICES = (
+
+        ('existente', 'Existente'),
+        ('planejado', 'Planejado'),
+        ('andamento', 'Em Andamento'),
+        ('realizado', 'Realizado'),
+        ('cancelado', 'Cancelado'),
+
+    )
 
     paciente = models.ForeignKey(
 
@@ -843,6 +855,16 @@ class EvolucaoClinica(models.Model):
 
     )
 
+    status = models.CharField(
+
+        max_length=20,
+
+        choices=STATUS_CHOICES,
+
+        default='planejado'
+
+    )
+
     descricao = models.TextField(
 
         blank=True,
@@ -863,7 +885,17 @@ class EvolucaoClinica(models.Model):
 
     def __str__(self):
 
-        return f'{self.paciente.nome}'
+        procedimento = (
+            self.procedimento.nome
+            if self.procedimento
+            else 'Sem procedimento'
+        )
+
+        return (
+            f'{self.paciente.nome} - '
+            f'{procedimento} - '
+            f'{self.get_status_display()}'
+        )
 
 # =========================================
 # PRONTUÁRIO CLÍNICO

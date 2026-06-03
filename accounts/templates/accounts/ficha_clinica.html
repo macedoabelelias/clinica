@@ -279,6 +279,12 @@ LAYOUT PRINCIPAL
                     </p>
                     {% endif %}
 
+                    <div class="timeline-status timeline-status-{{ evolucao.status }}">
+
+                        {{ evolucao.get_status_display }}
+
+                    </div>
+
                 </div>
 
             </div>

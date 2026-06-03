@@ -534,8 +534,9 @@ def odontograma(request, id):
 
         )
 
-        # =====================================
-        # CRIA EVOLUÇÃO
+
+               # =====================================
+        # REGISTRA EVOLUÇÃO CLÍNICA
         # =====================================
 
         EvolucaoClinica.objects.create(
@@ -545,6 +546,8 @@ def odontograma(request, id):
             dente=dente,
 
             procedimento=procedimento,
+
+            status=status,
 
             descricao=descricao or ''
 
@@ -1629,35 +1632,37 @@ def alterar_status_procedimento(request, id):
 
     data = json.loads(request.body)
 
-    item.status = data['status']
+    novo_status = data['status']
+
+    # =====================================
+    # ATUALIZA STATUS
+    # =====================================
+
+    item.status = novo_status
 
     item.save()
+
+    # =====================================
+    # REGISTRA EVOLUÇÃO CLÍNICA
+    # =====================================
+
+    EvolucaoClinica.objects.create(
+
+        paciente=item.orcamento.paciente,
+
+        dente=item.dente,
+
+        procedimento=item.procedimento,
+
+        descricao=f'Status alterado para: {novo_status}'
+
+    )
 
     return JsonResponse({
 
         'success': True
 
     })
-
-from django.http import HttpResponse
-from reportlab.platypus import (
-    SimpleDocTemplate,
-    Paragraph,
-    Spacer,
-    Image,
-    HRFlowable
-)
-
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib import colors
-
-from django.conf import settings
-import os
-
-from django.utils import timezone
-
-from reportlab.lib.units import mm
-
 # =========================================
 # RODAPÉ PDF
 # =========================================
@@ -1848,16 +1853,7 @@ def imprimir_prontuario(request, id):
                 f'<b>{item.titulo}</b>',
                 styles['Heading2']
             )
-        )
-
-    for item in prontuarios:
-
-        elementos.append(
-            Paragraph(
-                f'<b>{item.titulo}</b>',
-                styles['Heading2']
-            )
-        )
+        ) 
 
         data_local = timezone.localtime(
             item.criado_em
