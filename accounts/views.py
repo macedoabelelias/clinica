@@ -503,7 +503,9 @@ def odontograma(request, id):
 
         dente = request.POST.get('dente')
 
-        descricao = request.POST.get('observacao')
+        face = request.POST.get('face')
+
+        descricao = request.POST.get('descricao')
 
 
         # =====================================
@@ -513,6 +515,25 @@ def odontograma(request, id):
         orcamento, created = Orcamento.objects.get_or_create(
             paciente=paciente
         )
+
+        # =====================================
+        # DEFINE VALOR CONFORME CONVÊNIO
+        # =====================================
+
+        valor_unitario = procedimento.valor_particular
+
+        if paciente.convenio:
+
+            convenio = Convenio.objects.filter(
+                nome=paciente.convenio
+            ).first()
+
+            if convenio:
+
+                valor_unitario = (
+                    procedimento.valor_particular
+                    * convenio.indice
+                )
 
         # =====================================
         # CRIA ITEM DO ORÇAMENTO
@@ -528,14 +549,15 @@ def odontograma(request, id):
 
             dente=dente,
 
-            valor_unitario=procedimento.valor_particular,
+            face=face,
+
+            valor_unitario=valor_unitario,
 
             status=status
 
         )
 
-
-               # =====================================
+        # =====================================
         # REGISTRA EVOLUÇÃO CLÍNICA
         # =====================================
 
@@ -544,6 +566,8 @@ def odontograma(request, id):
             paciente=paciente,
 
             dente=dente,
+
+            face=face,
 
             procedimento=procedimento,
 
@@ -698,7 +722,28 @@ def salvar_procedimento_geral(request, id):
             paciente=paciente
         )
 
+        # =====================================
+        # CALCULA VALOR CONFORME CONVÊNIO
+        # =====================================
+
+        valor_unitario = procedimento.valor_particular
+
+        if paciente.convenio:
+
+            convenio = Convenio.objects.filter(
+                nome=paciente.convenio
+            ).first()
+
+            if convenio:
+
+                valor_unitario = (
+                    procedimento.valor_particular
+                    * convenio.indice
+                )
+
+        # =====================================
         # CRIA ITEM NO ORÇAMENTO
+        # =====================================
 
         ItemOrcamento.objects.create(
 
@@ -708,7 +753,7 @@ def salvar_procedimento_geral(request, id):
 
             tipo_local='geral',
 
-            valor_unitario=procedimento.valor_particular,
+            valor_unitario=valor_unitario,
 
             quantidade=1,
 
@@ -1654,10 +1699,11 @@ def alterar_status_procedimento(request, id):
 
         procedimento=item.procedimento,
 
-        descricao=f'Status alterado para: {novo_status}'
+        status=novo_status,
+
+        descricao=''
 
     )
-
     return JsonResponse({
 
         'success': True

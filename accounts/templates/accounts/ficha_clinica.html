@@ -267,41 +267,41 @@ LAYOUT PRINCIPAL
 
                     </div>
 
-                    {% if evolucao.dente %}
-                    <div class="timeline-dente">
-                        🦷 Dente {{ evolucao.dente }}
-                    </div>
-                    {% endif %}
+                   {% if evolucao.dente %}
+<div class="timeline-dente">
+    🦷 Dente {{ evolucao.dente }}
+</div>
+{% endif %}
 
-                    {% if evolucao.descricao %}
-                    <p>
-                        {{ evolucao.descricao }}
-                    </p>
-                    {% endif %}
+{% if evolucao.descricao %}
+<div class="timeline-evento">
 
-                    <div class="timeline-status timeline-status-{{ evolucao.status }}">
+    <i class="fa-solid fa-arrow-right-arrow-left"></i>
 
-                        {{ evolucao.get_status_display }}
+    {{ evolucao.descricao }}
 
-                    </div>
+</div>
+{% endif %}
 
-                </div>
+<div class="timeline-status timeline-status-{{ evolucao.status }}">
 
-            </div>
+    {{ evolucao.get_status_display }}
 
-            {% empty %}
+</div>
 
-            <div class="empty-timeline">
+</div>
 
-                Nenhuma evolução clínica cadastrada.
+</div>
 
-            </div>
+{% empty %}
 
-            {% endfor %}
+<div class="empty-timeline">
 
-        </div>
+    Nenhuma evolução clínica cadastrada.
 
-    </div>
+</div>
+
+{% endfor %}
 
     <!-- =========================================
     ANEXOS

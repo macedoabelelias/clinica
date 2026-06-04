@@ -557,6 +557,7 @@ PROCEDIMENTOS GERAIS
 
 </div>
 
+
 <!-- =========================================
 MODAL EVOLUÇÃO CLÍNICA
 ========================================= -->
@@ -576,15 +577,11 @@ MODAL EVOLUÇÃO CLÍNICA
                 <div>
 
                     <h5 class="modal-title">
-
                         Cadastro de Procedimentos no Odontograma
-
                     </h5>
 
                     <p class="modal-subtitle">
-
                         Registro clínico do odontograma
-
                     </p>
 
                 </div>
@@ -593,8 +590,7 @@ MODAL EVOLUÇÃO CLÍNICA
                     type="button"
                     class="btn-close"
                     data-bs-dismiss="modal"
-                >
-            </button>
+                ></button>
 
             </div>
 
@@ -604,83 +600,142 @@ MODAL EVOLUÇÃO CLÍNICA
 
                 <div class="modal-body">
 
-                    <div class="mb-4">
+                    <!-- DENTE / FACE / STATUS -->
 
-                        <label class="anamnese-label">
+                    <div class="row mb-4">
 
-                            Dente
+                        <div class="col-md-3">
 
-                        </label>
+                            <label class="anamnese-label">
+                                Dente
+                            </label>
 
-                        <input
-                            type="text"
-                            id="denteSelecionado"
-                            name="dente"
-                            class="anamnese-input"
-                            readonly
-                        >
+                            <input
+                                type="text"
+                                id="denteSelecionado"
+                                name="dente"
+                                class="anamnese-input"
+                                readonly
+                            >
+
+                        </div>
+
+                        <div class="col-md-5">
+
+                            <label class="anamnese-label">
+                                Face do Dente
+                            </label>
+
+                            <select
+                                name="face"
+                                class="anamnese-input"
+                            >
+
+                                <option value="">
+                                    Selecione
+                                </option>
+
+                                <option value="V">
+                                    Vestibular (V)
+                                </option>
+
+                                <option value="L">
+                                    Lingual / Palatina (L)
+                                </option>
+
+                                <option value="M">
+                                    Mesial (M)
+                                </option>
+
+                                <option value="D">
+                                    Distal (D)
+                                </option>
+
+                                <option value="O">
+                                    Oclusal (O)
+                                </option>
+
+                                <option value="MV">
+                                    Mesio-Vestibular (MV)
+                                </option>
+
+                                <option value="DV">
+                                    Disto-Vestibular (DV)
+                                </option>
+
+                                <option value="ML">
+                                    Mesio-Lingual (ML)
+                                </option>
+
+                                <option value="DL">
+                                    Disto-Lingual (DL)
+                                </option>
+
+                                <option value="MO">
+                                    Mesio-Oclusal (MO)
+                                </option>
+
+                                <option value="DO">
+                                    Disto-Oclusal (DO)
+                                </option>
+
+                                <option value="MOD">
+                                    Mésio-Ocluso-Distal (MOD)
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label class="anamnese-label">
+                                Status
+                            </label>
+
+                            <select
+                                name="status"
+                                class="anamnese-input"
+                                required
+                            >
+
+                                <option value="planejado">
+                                    Planejado
+                                </option>
+
+                                <option value="existente">
+                                    Existente
+                                </option>
+
+                                <option value="andamento">
+                                    Em andamento
+                                </option>
+
+                                <option value="realizado">
+                                    Realizado
+                                </option>
+
+                                <option value="urgencia">
+                                    Urgência
+                                </option>
+
+                                <option value="cancelado">
+                                    Cancelado
+                                </option>
+
+                            </select>
+
+                        </div>
 
                     </div>
 
+                    <!-- PROCEDIMENTO -->
+
                     <div class="mb-4">
 
                         <label class="anamnese-label">
-
                             Procedimento
-
                         </label>
-
- <div class="mb-4">
-
-    <label class="anamnese-label">
-
-        Status
-
-    </label>
-
-    <select
-        name="status"
-        class="anamnese-input"
-        required
-    >
-
-        <option value="planejado">
-
-            Planejado
-
-        </option>
-
-        <option value="existente">
-
-            Existente
-
-        </option>
-
-        <option value="andamento">
-
-            Em andamento
-
-        </option>
-
-        <option value="realizado">
-            Realizado
-        </option>
-
-        <option value="urgencia">
-
-            Urgência
-
-        </option>
-
-        <option value="cancelado">
-
-            Cancelado
-
-        </option>
-
-    </select>
-
-</div>                       
 
                         <select
                             name="procedimento"
@@ -689,9 +744,7 @@ MODAL EVOLUÇÃO CLÍNICA
                         >
 
                             <option value="">
-
                                 Selecione um procedimento
-
                             </option>
 
                             {% regroup procedimentos by categoria as categorias %}
@@ -703,9 +756,7 @@ MODAL EVOLUÇÃO CLÍNICA
                                     {% for procedimento in categoria.list %}
 
                                         <option value="{{ procedimento.id }}">
-
                                             {{ procedimento.nome }}
-
                                         </option>
 
                                     {% endfor %}
@@ -718,18 +769,19 @@ MODAL EVOLUÇÃO CLÍNICA
 
                     </div>
 
+                    <!-- DESCRIÇÃO -->
+
                     <div>
 
                         <label class="anamnese-label">
-
                             Descrição
-
                         </label>
 
                         <textarea
                             name="descricao"
                             class="anamnese-textarea"
-                            placeholder="Descreva o procedimento..."
+                            rows="4"
+                            placeholder="Descreva o procedimento"
                         ></textarea>
 
                     </div>
@@ -743,18 +795,14 @@ MODAL EVOLUÇÃO CLÍNICA
                         class="btn-anamnese-outline"
                         data-bs-dismiss="modal"
                     >
-
                         Cancelar
-
                     </button>
 
                     <button
                         type="submit"
                         class="btn-anamnese"
                     >
-
                         Salvar Evolução
-
                     </button>
 
                 </div>
@@ -767,206 +815,7 @@ MODAL EVOLUÇÃO CLÍNICA
 
 </div>
 
-<!-- =========================================
-MODAL PROCEDIMENTO GERAL
-========================================= -->
 
-<div
-    class="modal fade"
-    id="modalProcedimentoGeral"
-    tabindex="-1"
-    aria-hidden="true"
->
-
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-
-        <div class="modal-content">
-
-            <div class="modal-header">
-
-                <h5 class="modal-title">
-
-                    Cadastro de Procedimento Geral
-
-                </h5>
-
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                ></button>
-
-            </div>
-
-            <form
-                method="POST"
-                action="{% url 'salvar_procedimento_geral' paciente.id %}"
-            >
-
-                {% csrf_token %}
-
-                <div class="modal-body">
-
-                    <!-- STATUS -->
-
-                    <div class="mb-3">
-
-                        <label class="form-label fw-semibold">
-
-                            Status
-
-                        </label>
-
-                        <select
-                            name="status"
-                            class="form-select"
-                            required
-                        >
-
-                            <option value="planejado" selected>
-
-                                Planejado
-
-                            </option>
-
-                            <option value="existente">
-
-                                Existente
-
-                            </option>
-
-                            <option value="andamento">
-
-                                Em Andamento
-
-                            </option>
-
-                            <option value="realizado">
-
-                                Realizado
-
-                            </option>
-
-                            <option value="cancelado">
-
-                                Cancelado
-
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                    <!-- PROCEDIMENTO -->
-
-                    <div class="mb-3">
-
-                        <label class="form-label fw-semibold">
-
-                            Procedimento
-
-                        </label>
-
-                        <select
-                            name="procedimento"
-                            class="form-select"
-                            required
-                        >
-
-                            <option value="">
-
-                                Selecione um procedimento
-
-                            </option>
-
-                            {% for procedimento in procedimentos_gerais %}
-
-                                <option value="{{ procedimento.id }}">
-
-                                    {{ procedimento.nome }}
-
-                                </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
-
-                    <!-- OBSERVAÇÃO -->
-
-                    <div class="mb-3">
-
-                        <label class="form-label fw-semibold">
-
-                            Observação
-
-                        </label>
-
-                        <textarea
-                            name="observacao"
-                            class="form-control"
-                            rows="4"
-                            placeholder="Digite observações do procedimento..."
-                        ></textarea>
-
-                    </div>
-
-                    <!-- ADICIONAR AO ORÇAMENTO -->
-
-                    <div class="form-check">
-
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="adicionar_orcamento"
-                            id="adicionar_orcamento"
-                            checked
-                        >
-
-                        <label
-                            class="form-check-label"
-                            for="adicionar_orcamento"
-                        >
-
-                            Adicionar ao orçamento
-
-                        </label>
-
-                    </div>
-
-                </div>
-
-                <div class="modal-footer">
-
-                    <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                    >
-
-                        Cancelar
-
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                    >
-
-                        Salvar
-
-                    </button>
-
-                </div>
-
-            </form>
-
-        </div>
-
-    </div>
-
-</div>
 
 <!-- MENU STATUS PREMIUM -->
 

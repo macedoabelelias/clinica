@@ -843,6 +843,16 @@ class EvolucaoClinica(models.Model):
 
     )
 
+    face = models.CharField(
+
+        max_length=20,
+
+        blank=True,
+
+        null=True
+
+    )
+
     procedimento = models.ForeignKey(
 
         'Procedimento',
@@ -1130,7 +1140,7 @@ class Orcamento(models.Model):
         return f'Orçamento #{self.id}' 
     
 
-    # =========================================
+# =========================================
 # CONVÊNIOS
 # =========================================
 

@@ -4,7 +4,7 @@
 
         <a
             href="{% url 'perfil_paciente' paciente.id %}"
-            class="menu-clinico-btn active"
+            class="menu-clinico-btn {% if request.resolver_match.url_name == 'perfil_paciente' %}active{% endif %}"
         >
             <i class="bi bi-grid-1x2-fill"></i>
             <span>Perfil</span>
@@ -12,7 +12,7 @@
 
         <a
             href="{% url 'odontograma' paciente.id %}"
-            class="menu-clinico-btn"
+            class="menu-clinico-btn {% if request.resolver_match.url_name == 'odontograma' %}active{% endif %}"
         >
             <i class="bi bi-heart-pulse-fill"></i>
             <span>Odontograma</span>
@@ -20,7 +20,7 @@
 
         <a
             href="{% url 'orcamento' paciente.id %}"
-            class="menu-clinico-btn"
+            class="menu-clinico-btn {% if request.resolver_match.url_name == 'orcamento' %}active{% endif %}"
         >
             <i class="bi bi-cash-coin"></i>
             <span>Orçamento</span>
@@ -28,7 +28,7 @@
 
         <a
             href="{% url 'ficha_clinica' paciente.id %}"
-            class="menu-clinico-btn"
+            class="menu-clinico-btn {% if request.resolver_match.url_name == 'ficha_clinica' %}active{% endif %}"
         >
             <i class="bi bi-file-earmark-medical-fill"></i>
             <span>Ficha Clínica</span>
@@ -36,7 +36,7 @@
 
         <a
             href="{% url 'anamnese' paciente.id %}"
-            class="menu-clinico-btn"
+            class="menu-clinico-btn {% if request.resolver_match.url_name == 'anamnese' %}active{% endif %}"
         >
             <i class="bi bi-clipboard2-pulse-fill"></i>
             <span>Anamnese</span>
