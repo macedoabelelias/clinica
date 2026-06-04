@@ -1,5 +1,4 @@
 import os
-from urllib import response
 
 from django.shortcuts import (
     render,
@@ -33,9 +32,7 @@ from .models import (
 )
 
 from .forms import (
-
     ProcedimentoForm,
-    OrcamentoForm,
     ItemOrcamentoForm,
     ConvenioForm
 
@@ -494,6 +491,7 @@ def odontograma(request, id):
     # =========================================
 
     if request.method == 'POST':
+        print(request.POST)
 
         procedimento = Procedimento.objects.get(
             id=request.POST.get('procedimento')
@@ -532,7 +530,7 @@ def odontograma(request, id):
 
                 valor_unitario = (
                     procedimento.valor_particular
-                    * convenio.indice
+                    * (convenio.indice)
                 )
 
         # =====================================
@@ -1654,6 +1652,34 @@ def editar_item_orcamento(request, id):
 
         context
 
+    )
+
+# =========================================
+# PDF ORÇAMENTO
+# =========================================
+
+@login_required(login_url='/')
+def gerar_pdf_orcamento(request, id):
+
+    orcamento = get_object_or_404(
+        Orcamento,
+        id=id
+    )
+
+    paciente = orcamento.paciente
+
+    itens = orcamento.itens.all()
+
+    context = {
+        'orcamento': orcamento,
+        'paciente': paciente,
+        'itens': itens,
+    }
+
+    return render(
+        request,
+        'accounts/orcamento_pdf.html',
+        context
     )
 
 # =========================================

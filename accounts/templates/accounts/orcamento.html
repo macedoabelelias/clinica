@@ -496,37 +496,23 @@
 
                             </div>
 
-                            <!-- BOTÕES -->
+                            <div class="d-flex justify-content-end gap-2 mt-4">
 
-                            <div class="d-flex justify-content-end gap-2 mt-4 flex-wrap">
+                                <a
+                                    href="{% url 'odontograma' paciente.id %}"
+                                    class="btn btn-secondary rounded-pill px-4"
+                                >
+                                    <i class="fas fa-arrow-left me-2"></i>
+                                    Voltar
+                                </a>
 
-                                <button class="btn btn-success rounded-pill px-4">
-
-                                    <i class="fas fa-save me-1"></i>
-                                    Salvar
-
-                                </button>
-
-                                <button class="btn btn-primary rounded-pill px-4">
-
-                                    <i class="fas fa-edit me-1"></i>
-                                    Editar
-
-                                </button>
-
-                                <button class="btn btn-danger rounded-pill px-4">
-
-                                    <i class="fas fa-trash me-1"></i>
-                                    Excluir
-
-                                </button>
-
-                                <button class="btn btn-secondary rounded-pill px-4">
-
-                                    <i class="fas fa-times me-1"></i>
-                                    Cancelar
-
-                                </button>
+                                <a
+                                    href="{% url 'gerar_pdf_orcamento' orcamento.id %}"
+                                    class="btn btn-success rounded-pill px-4"
+                                >
+                                    <i class="fas fa-file-pdf me-2"></i>
+                                    PDF
+                                </a>
 
                             </div>
 

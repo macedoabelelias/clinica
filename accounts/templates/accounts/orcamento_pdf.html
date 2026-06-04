@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+<meta charset="utf-8">
+
+<title>Orçamento Odontológico</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    margin:40px;
+    color:#333;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:2px solid #0d6efd;
+    padding-bottom:15px;
+    margin-bottom:30px;
+}
+
+.logo{
+    width:120px;
+}
+
+.titulo{
+    text-align:right;
+}
+
+.titulo h1{
+    margin:0;
+    color:#0d6efd;
+}
+
+.card{
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#f5f5f5;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:8px;
+    text-align:left;
+}
+
+.total{
+    text-align:right;
+    font-size:24px;
+    font-weight:bold;
+    color:#198754;
+    margin-top:20px;
+}
+
+.assinaturas{
+    margin-top:80px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.assinatura{
+    width:300px;
+    text-align:center;
+}
+
+.linha{
+    border-top:1px solid #000;
+    margin-bottom:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+
+<div>
+
+    <img src="/static/img/logo.png" class="logo">
+
+</div>
+
+<div class="titulo">
+
+    <h1>Orçamento Odontológico</h1>
+
+    <p>{{ paciente.nome }}</p>
+
+</div>
+
+
+</div>
+
+<div class="card">
+
+
+<h3>Dados do Paciente</h3>
+
+<p><strong>Nome:</strong> {{ paciente.nome }}</p>
+
+<p><strong>Convênio:</strong> {{ paciente.convenio }}</p>
+
+
+</div>
+
+<div class="card">
+
+
+<h3>Procedimentos</h3>
+
+<table>
+
+    <thead>
+
+        <tr>
+
+            <th>Dente</th>
+            <th>Face</th>
+            <th>Procedimento</th>
+            <th>Quantidade</th>
+            <th>Valor</th>
+            <th>Total</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for item in itens %}
+
+        <tr>
+
+            <td>{{ item.dente|default:"--" }}</td>
+            <td>{{ item.face|default:"--" }}</td>
+            <td>{{ item.procedimento.nome }}</td>
+            <td>{{ item.quantidade }}</td>
+            <td>R$ {{ item.valor_unitario }}</td>
+            <td>R$ {{ item.total }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+<div class="total">
+
+    Total: R$ {{ orcamento.total }}
+
+</div>
+
+
+</div>
+
+<div class="assinaturas">
+
+
+<div class="assinatura">
+
+    <div class="linha"></div>
+
+    Paciente / Responsável
+
+</div>
+
+<div class="assinatura">
+
+    <div class="linha"></div>
+
+    Cirurgião Dentista
+
+</div>
+
+
+</div>
+
+</body>
+
+</html>

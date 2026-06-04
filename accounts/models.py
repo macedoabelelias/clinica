@@ -925,6 +925,37 @@ class ProntuarioClinico(models.Model):
 
     anotacao = models.TextField()
 
+    dente = models.CharField(
+        max_length=10,
+        blank=True,
+        null=True
+    )
+
+    procedimento = models.ForeignKey(
+        Procedimento,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    descricao = models.TextField(
+        blank=True
+    )
+
+    materiais = models.TextField(
+        blank=True
+    )
+
+    anestesia = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    retorno = models.DateField(
+        null=True,
+        blank=True
+    )
+
     criado_em = models.DateTimeField(
         auto_now_add=True
     )
@@ -938,105 +969,24 @@ class ProntuarioClinico(models.Model):
         ordering = ['-criado_em']
 
         verbose_name = 'Prontuário Clínico'
+
         verbose_name_plural = 'Prontuários Clínicos'
 
     def __str__(self):
 
-        return f'{self.paciente.nome} - {self.titulo}'
+        if self.procedimento:
 
-    # =========================================
-    # DENTE
-    # =========================================
+            return (
+                f'{self.paciente.nome} - '
+                f'{self.procedimento.nome}'
+            )
 
-    dente = models.CharField(
-
-        max_length=10,
-
-        blank=True
-
-    )
-
-    # =========================================
-    # PROCEDIMENTO
-    # =========================================
-
-    procedimento = models.ForeignKey(
-
-        'Procedimento',
-
-        on_delete=models.SET_NULL,
-
-        null=True,
-
-        blank=True
-
-    )
-
-    # =========================================
-    # DESCRIÇÃO
-    # =========================================
-
-    descricao = models.TextField(
-
-        blank=True
-
-    )
-
-    # =========================================
-    # MATERIAIS
-    # =========================================
-
-    materiais = models.TextField(
-
-        blank=True
-
-    )
-
-    # =========================================
-    # ANESTESIA
-    # =========================================
-
-    anestesia = models.CharField(
-
-        max_length=255,
-
-        blank=True
-
-    )
-
-    # =========================================
-    # RETORNO
-    # =========================================
-
-    retorno = models.DateField(
-
-        null=True,
-
-        blank=True
-
-    )
-
-    # =========================================
-    # DATA
-    # =========================================
-
-    criado_em = models.DateTimeField(
-
-        auto_now_add=True
-
-    )
-
-    def __str__(self):
-
-        procedimento = (
-            self.procedimento.nome
-            if self.procedimento
-            else 'Sem procedimento'
+        return (
+            f'{self.paciente.nome} - '
+            f'{self.titulo}'
         )
 
-        return f'{self.paciente.nome} - {procedimento}'
-
-    # =========================================
+# =========================================
 # ORÇAMENTO
 # =========================================
 class Orcamento(models.Model):
@@ -1138,7 +1088,62 @@ class Orcamento(models.Model):
     def __str__(self):
 
         return f'Orçamento #{self.id}' 
-    
+
+# =========================================
+# CONFIGURAÇÃO DA CLÍNICA
+# =========================================
+
+class ConfiguracaoClinica(models.Model):
+
+    nome_clinica = models.CharField(
+        max_length=200
+    )
+
+    logo = models.ImageField(
+        upload_to='clinica/',
+        blank=True,
+        null=True
+    )
+
+    cro = models.CharField(
+        max_length=50,
+        blank=True
+    )
+
+    telefone = models.CharField(
+        max_length=30,
+        blank=True
+    )
+
+    whatsapp = models.CharField(
+        max_length=30,
+        blank=True
+    )
+
+    email = models.EmailField(
+        blank=True
+    )
+
+    endereco = models.TextField(
+        blank=True
+    )
+
+    cidade = models.CharField(
+        max_length=100,
+        blank=True
+    )
+
+    estado = models.CharField(
+        max_length=2,
+        blank=True
+    )
+
+    observacoes_orcamento = models.TextField(
+        blank=True
+    )
+
+    def __str__(self):
+        return self.nome_clinica    
 
 # =========================================
 # CONVÊNIOS

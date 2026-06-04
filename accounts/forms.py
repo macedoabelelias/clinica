@@ -33,13 +33,11 @@ class ProcedimentoForm(forms.ModelForm):
             'posicao_icone',
 
             'valor_particular',
-            'valor_convenio',
 
             'tempo_estimado',
             'custo_clinico',
 
             'ativo',
-            'ordem',
 
         ]
 

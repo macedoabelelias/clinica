@@ -99,21 +99,24 @@ urlpatterns = [
         views.ficha_clinica,
         name='ficha_clinica'
     ),
+    
 
     # =========================================
     # ORÇAMENTO
     # =========================================
 
     path(
-
         'pacientes/<int:id>/orcamento/',
-
         views.orcamento,
-
         name='orcamento'
-
     ),
 
+    path(
+        'orcamento/<int:id>/pdf/',
+        views.gerar_pdf_orcamento,
+        name='gerar_pdf_orcamento'
+    ),
+       
     # =========================================
     # PROCEDIMENTOS
     # =========================================
