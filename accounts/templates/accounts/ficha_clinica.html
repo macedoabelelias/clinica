@@ -125,99 +125,159 @@ LAYOUT PRINCIPAL
 
     </div>
 
-    <!-- =========================================
-    COLUNA DIREITA
-    ========================================= -->
+<!-- =========================================
+COLUNA DIREITA
+========================================= -->
 
-    <div class="painel-lateral">
+<div class="painel-lateral">
 
-        <!-- BOTÕES -->
+    <!-- BOTÕES -->
 
-        <div class="tabs-premium">
+    <div class="tabs-premium">
 
-            <button class="tab-btn active" data-tab="registros">
-                <i class="fa-solid fa-file-lines"></i>
-                Registros
-            </button>
+        <button class="tab-btn active" data-tab="registros">
+            <i class="fa-solid fa-file-lines"></i>
+            Registros
+        </button>
 
-            <button class="tab-btn" data-tab="evolucao">
-                <i class="fa-solid fa-clock-rotate-left"></i>
-                Evolução
-            </button>
+        <button class="tab-btn" data-tab="evolucao">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            Evolução
+        </button>
 
-            <button class="tab-btn" data-tab="anexos">
-                <i class="fa-solid fa-paperclip"></i>
-                Anexos
-            </button>
+        <button class="tab-btn" data-tab="anexos">
+            <i class="fa-solid fa-paperclip"></i>
+            Anexos
+        </button>
 
-            <button class="tab-btn" data-tab="documentos">
-                <i class="fa-solid fa-file-medical"></i>
-                Documentos
-            </button>
+        <button class="tab-btn" data-tab="documentos">
+            <i class="fa-solid fa-file-medical"></i>
+            Documentos
+        </button>
 
-        </div>
+    </div>
 
-        <!-- PRONTUÁRIO PACIENTE -->
+    <!-- CARD DAS ABAS -->
 
-        <div class="timeline-card">
+    <div class="tab-card">
 
-            <div class="timeline-header">
+        <!-- REGISTROS -->
 
-                <h5>
-                    Prontuário do Paciente
-                </h5>
+        <div
+            class="tab-content active"
+            id="tab-registros"
+            style="display:block;"
+        >
 
-                <p>
-                    Histórico clínico registrado manualmente.
-                </p>
+            <h5>Prontuário do Paciente</h5>
 
-            </div>
+            <p class="mb-4">
+                Histórico clínico registrado manualmente.
+            </p>
 
-            <div class="timeline-body">
+            {% for item in prontuarios %}
 
-                {% for item in prontuarios %}
+            <div class="timeline-item">
 
-                <div class="timeline-item">
+                <div class="timeline-dot"></div>
 
-                    <div class="timeline-dot"></div>
+                <div class="timeline-content">
 
-                    <div class="timeline-content">
+                    <div class="timeline-top">
 
-                        <div class="timeline-top">
+                        <strong>
+                            {{ item.titulo }}
+                        </strong>
 
-                            <strong>
-                                {{ item.titulo }}
-                            </strong>
-
-                            <span>
-                                {{ item.criado_em|date:"d/m/Y H:i" }}
-                            </span>
-
-                        </div>
-
-                        <p>
-                            {{ item.anotacao|linebreaks }}
-                        </p>
+                        <span>
+                            {{ item.criado_em|date:"d/m/Y H:i" }}
+                        </span>
 
                     </div>
 
+                    <p>
+                        {{ item.anotacao|linebreaks }}
+                    </p>
+
                 </div>
 
-                {% empty %}
+            </div>
 
-                <div class="empty-timeline">
-                    Nenhum registro clínico cadastrado.
-                </div>
+            {% empty %}
 
-                {% endfor %}
+            <div class="empty-timeline">
+                Nenhum registro clínico cadastrado.
+            </div>
 
+            {% endfor %}
+
+        </div>
+
+        <!-- EVOLUÇÃO -->
+
+        <div
+            class="tab-content"
+            id="tab-evolucao"
+            style="display:none;"
+        >
+
+            <h5>Evolução Clínica</h5>
+
+            <p class="mb-4">
+                Histórico de procedimentos.
+            </p>
+
+            <div class="empty-timeline">
+                Conteúdo da evolução aparecerá aqui.
+            </div>
+
+        </div>
+
+        <!-- ANEXOS -->
+
+        <div
+            class="tab-content"
+            id="tab-anexos"
+            style="display:none;"
+        >
+
+            <h5>Anexos</h5>
+
+            <p class="mb-4">
+                Radiografias, fotos e exames.
+            </p>
+
+            <div class="empty-timeline">
+                Nenhum anexo cadastrado.
+            </div>
+
+        </div>
+
+        <!-- DOCUMENTOS -->
+
+        <div
+            class="tab-content"
+            id="tab-documentos"
+            style="display:none;"
+        >
+
+            <h5>Documentos</h5>
+
+            <p class="mb-4">
+                Contratos, receitas e PDFs.
+            </p>
+
+            <div class="empty-timeline">
+                Nenhum documento cadastrado.
             </div>
 
         </div>
 
     </div>
 
-    <div class="linha-inferior">
+</div>
+
+<div class="linha-inferior">
 
     <!-- =========================================
     TIMELINE CLÍNICA
@@ -331,5 +391,45 @@ LAYOUT PRINCIPAL
 
 </div>
 </div>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    const botoes = document.querySelectorAll('.tab-btn');
+
+    const conteudos = document.querySelectorAll('.tab-content');
+
+    botoes.forEach(botao => {
+
+        botao.addEventListener('click', function() {
+
+            const aba = this.dataset.tab;
+
+            botoes.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            conteudos.forEach(item => {
+                item.style.display = 'none';
+            });
+
+            this.classList.add('active');
+
+            const painel = document.getElementById(
+                'tab-' + aba
+            );
+
+            if (painel) {
+                painel.style.display = 'block';
+            }
+
+        });
+
+    });
+
+});
+
+</script>
 
 {% endblock %}

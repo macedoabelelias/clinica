@@ -22,13 +22,13 @@ COLUNA DIREITA
 
 .painel-lateral{
 
+    display:flex;
 
-display:flex;
+    flex-direction:column;
 
-flex-direction:column;
+    gap:12px;
 
-gap:16px;
-
+    height:100%;
 
 }
 
@@ -44,7 +44,7 @@ BOTÕES SUPERIORES
 
     gap:6px;
 
-    margin-bottom:12px;
+    margin-bottom:8px;
 
     overflow-x:auto;
 
@@ -101,6 +101,56 @@ BOTÕES SUPERIORES
     background:#2563eb;
 
     color:#fff;
+
+}
+
+/* =========================================
+CARD DAS ABAS
+========================================= */
+
+.tab-card{
+
+    background:#fff;
+
+    border-radius:20px;
+
+    border:1px solid #e2e8f0;
+
+    padding:20px;
+
+    height:470px;
+
+    overflow-y:auto;
+
+    overflow-x:hidden;
+
+}
+
+.tab-card::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.tab-card::-webkit-scrollbar-track{
+
+    background:#f1f5f9;
+
+    border-radius:10px;
+
+}
+
+.tab-card::-webkit-scrollbar-thumb{
+
+    background:#cbd5e1;
+
+    border-radius:10px;
+
+}
+
+.tab-card::-webkit-scrollbar-thumb:hover{
+
+    background:#94a3b8;
 
 }
 

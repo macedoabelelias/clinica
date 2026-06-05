@@ -1670,10 +1670,98 @@ def gerar_pdf_orcamento(request, id):
 
     itens = orcamento.itens.all()
 
+    evolucoes = EvolucaoClinica.objects.filter(
+        paciente=paciente
+    )
+
+    # =========================================
+    # ARCADAS PERMANENTES
+    # =========================================
+
+    superiores_permanentes = [
+        '18','17','16','15','14','13','12','11',
+        '21','22','23','24','25','26','27','28'
+    ]
+
+    inferiores_permanentes = [
+        '48','47','46','45','44','43','42','41',
+        '31','32','33','34','35','36','37','38'
+    ]
+
+    # =========================================
+    # ARCADAS DECÍDUAS
+    # =========================================
+
+    superiores_deciduos = [
+        '55','54','53','52','51',
+        '61','62','63','64','65'
+    ]
+
+    inferiores_deciduos = [
+        '85','84','83','82','81',
+        '71','72','73','74','75'
+    ]
+
+    # =========================================
+    # VERIFICA SE EXISTE DENTIÇÃO
+    # =========================================
+
+    PERMANENTES = (
+        superiores_permanentes +
+        inferiores_permanentes
+    )
+
+    DECIDUOS = (
+        superiores_deciduos +
+        inferiores_deciduos
+    )
+
+    tem_permanente = evolucoes.filter(
+        dente__in=PERMANENTES
+    ).exists()
+
+    tem_deciduo = evolucoes.filter(
+        dente__in=DECIDUOS
+    ).exists()
+
+    # =========================================
+    # DENTES COM PROCEDIMENTO
+    # =========================================
+
+    dentes_com_procedimento = []
+
+    for evolucao in evolucoes:
+
+        if evolucao.dente:
+
+            dentes_com_procedimento.append(
+                str(evolucao.dente)
+            )
+
+    dentes_com_procedimento = list(
+        set(dentes_com_procedimento)
+    )
+
+    # =========================================
+    # CONTEXT
+    # =========================================
+
     context = {
+
         'orcamento': orcamento,
         'paciente': paciente,
         'itens': itens,
+        'evolucoes': evolucoes,
+
+        'tem_permanente': tem_permanente,
+        'tem_deciduo': tem_deciduo,
+
+        'superiores_permanentes': superiores_permanentes,
+        'inferiores_permanentes': inferiores_permanentes,
+
+        'superiores_deciduos': superiores_deciduos,
+        'inferiores_deciduos': inferiores_deciduos,
+        'dentes_com_procedimento': dentes_com_procedimento,
     }
 
     return render(
