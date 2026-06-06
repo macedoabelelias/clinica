@@ -1381,3 +1381,204 @@ class ItemOrcamento(models.Model):
         )
 
         return f'{procedimento} - {self.orcamento.paciente.nome}'
+    
+# =========================================
+# ANEXOS PACIENTE
+# =========================================
+
+class AnexoPaciente(models.Model):
+
+    paciente = models.ForeignKey(
+        Paciente,
+        on_delete=models.CASCADE,
+        related_name='anexos'
+    )
+
+    TIPO_CHOICES = (
+
+        ('foto', 'Foto Clínica'),
+        ('radiografia', 'Radiografia'),
+        ('tomografia', 'Tomografia'),
+        ('documento', 'Documento'),
+        ('exame', 'Exame')
+
+    )
+
+    tipo = models.CharField(
+        max_length=20,
+        choices=TIPO_CHOICES,
+        default='documento'
+    )
+
+    descricao = models.CharField(
+        max_length=200
+    )
+
+    arquivo = models.FileField(
+        upload_to='anexos_pacientes/'
+    )
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+
+        ordering = ['-criado_em']
+
+    def __str__(self):
+
+        return (
+            f'{self.paciente.nome} - '
+            f'{self.descricao}'
+        )
+    
+# =========================================
+# TEMPLATES DOCUMENTOS
+# =========================================
+
+class TemplateDocumento(models.Model):
+
+    TIPO_CHOICES = (
+
+        ('consentimento', 'Termo de Consentimento'),
+        ('receita', 'Receita'),
+        ('atestado', 'Atestado'),
+        ('encaminhamento', 'Encaminhamento'),
+        ('declaracao', 'Declaração'),
+        ('livre', 'Documento Livre'),
+
+    )
+
+    nome = models.CharField(
+        max_length=200
+    )
+
+    tipo = models.CharField(
+        max_length=30,
+        choices=TIPO_CHOICES
+    )
+
+    conteudo = models.TextField()
+
+    ativo = models.BooleanField(
+        default=True
+    )
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return self.nome
+    
+# =========================================
+# DOCUMENTOS CLÍNICOS
+# =========================================
+
+class DocumentoClinico(models.Model):
+
+    STATUS = (
+
+        ('rascunho', 'Rascunho'),
+        ('finalizado', 'Finalizado'),
+
+    )
+
+    paciente = models.ForeignKey(
+        Paciente,
+        on_delete=models.CASCADE,
+        related_name='documentos'
+    )
+
+    template = models.ForeignKey(
+        TemplateDocumento,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    titulo = models.CharField(
+        max_length=255
+    )
+
+    conteudo = models.TextField()
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS,
+        default='rascunho'
+    )
+
+    pdf = models.FileField(
+        upload_to='documentos/',
+        blank=True,
+        null=True
+    )
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    atualizado_em = models.DateTimeField(
+        auto_now=True
+    )
+
+    class Meta:
+
+        ordering = ['-criado_em']
+
+    def __str__(self):
+
+        return self.titulo
+    
+# =========================================
+# CONFIGURAÇÃO DA CLÍNICA
+# =========================================
+
+class ConfiguracaoClinica(models.Model):
+
+    nome_clinica = models.CharField(
+        max_length=200
+    )
+
+    logo = models.ImageField(
+        upload_to='clinica/',
+        blank=True,
+        null=True
+    )
+
+    telefone = models.CharField(
+        max_length=30,
+        blank=True
+    )
+
+    whatsapp = models.CharField(
+        max_length=30,
+        blank=True
+    )
+
+    email = models.EmailField(
+        blank=True
+    )
+
+    endereco = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    cidade = models.CharField(
+        max_length=100,
+        blank=True
+    )
+
+    cro = models.CharField(
+        max_length=50,
+        blank=True
+    )
+
+    def __str__(self):
+
+        return self.nome_clinica
+    
+

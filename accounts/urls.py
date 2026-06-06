@@ -100,6 +100,11 @@ urlpatterns = [
         name='ficha_clinica'
     ),
     
+    path(
+        'pacientes/<int:id>/anexo/',
+        views.upload_anexo,
+        name='upload_anexo'
+    ),
 
     # =========================================
     # ORÇAMENTO
@@ -115,6 +120,18 @@ urlpatterns = [
         'orcamento/<int:id>/pdf/',
         views.gerar_pdf_orcamento,
         name='gerar_pdf_orcamento'
+    ),
+
+    path(
+        'documento/novo/<int:id>/',
+        views.novo_documento,
+        name='novo_documento'
+    ),
+
+    path(
+        'documento/editar/<int:id>/',
+        views.editar_documento,
+        name='editar_documento'
     ),
        
     # =========================================

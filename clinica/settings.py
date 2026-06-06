@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     # APPS DO SISTEMA
 
     'accounts',
+    'ckeditor',
 
 ]
 

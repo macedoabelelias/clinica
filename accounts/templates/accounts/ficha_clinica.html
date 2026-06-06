@@ -76,13 +76,7 @@ LAYOUT PRINCIPAL
                 Título
             </label>
 
-            <input
-                type="text"
-                name="titulo"
-                class="anamnese-input"
-                placeholder="Ex: Avaliação Inicial"
-                required
-            >
+            <input type="text" name="titulo" class="anamnese-input" placeholder="Ex: Avaliação Inicial" required>
 
             <div class="mt-4">
 
@@ -90,31 +84,19 @@ LAYOUT PRINCIPAL
                     Registro Clínico
                 </label>
 
-                <textarea
-                    name="anotacao"
-                    class="anamnese-textarea"
-                    rows="8"
-                    placeholder="Descreva observações clínicas..."
-                    required
-                ></textarea>
+                <textarea name="anotacao" class="anamnese-textarea" rows="8"
+                    placeholder="Descreva observações clínicas..." required></textarea>
 
             </div>
 
             <div class="d-flex justify-content-end gap-3 mt-4">
 
-                <a
-                    href="{% url 'imprimir_prontuario' paciente.id %}"
-                    target="_blank"
-                    class="btn btn-outline-primary"
-                >
+                <a href="{% url 'imprimir_prontuario' paciente.id %}" target="_blank" class="btn btn-outline-primary">
                     <i class="fa-solid fa-file-pdf"></i>
                     Gerar PDF
                 </a>
 
-                <button
-                    type="submit"
-                    class="btn-anamnese"
-                >
+                <button type="submit" class="btn-anamnese">
                     <i class="fa-solid fa-floppy-disk"></i>
                     Salvar Registro
                 </button>
@@ -138,11 +120,6 @@ COLUNA DIREITA
         <button class="tab-btn active" data-tab="registros">
             <i class="fa-solid fa-file-lines"></i>
             Registros
-        </button>
-
-        <button class="tab-btn" data-tab="evolucao">
-            <i class="fa-solid fa-clock-rotate-left"></i>
-            Evolução
         </button>
 
         <button class="tab-btn" data-tab="anexos">
@@ -213,26 +190,6 @@ COLUNA DIREITA
 
         </div>
 
-        <!-- EVOLUÇÃO -->
-
-        <div
-            class="tab-content"
-            id="tab-evolucao"
-            style="display:none;"
-        >
-
-            <h5>Evolução Clínica</h5>
-
-            <p class="mb-4">
-                Histórico de procedimentos.
-            </p>
-
-            <div class="empty-timeline">
-                Conteúdo da evolução aparecerá aqui.
-            </div>
-
-        </div>
-
         <!-- ANEXOS -->
 
         <div
@@ -247,59 +204,41 @@ COLUNA DIREITA
                 Radiografias, fotos e exames.
             </p>
 
-            <div class="empty-timeline">
-                Nenhum anexo cadastrado.
-            </div>
+            <form
+                method="POST"
+                action="{% url 'upload_anexo' paciente.id %}"
+                enctype="multipart/form-data"
+                class="mb-4"
+            >
 
-        </div>
+                {% csrf_token %}
 
-        <!-- DOCUMENTOS -->
+                <input
+                    type="text"
+                    name="descricao"
+                    class="anamnese-input mb-2"
+                    placeholder="Descrição do arquivo"
+                    required
+                >
 
-        <div
-            class="tab-content"
-            id="tab-documentos"
-            style="display:none;"
-        >
+                <input
+                    type="file"
+                    name="arquivo"
+                    class="form-control mb-3"
+                    required
+                >
 
-            <h5>Documentos</h5>
+                <button
+                    type="submit"
+                    class="btn-anamnese"
+                >
+                    <i class="fa-solid fa-upload"></i>
+                    Enviar Arquivo
+                </button>
 
-            <p class="mb-4">
-                Contratos, receitas e PDFs.
-            </p>
+            </form>
 
-            <div class="empty-timeline">
-                Nenhum documento cadastrado.
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<div class="linha-inferior">
-
-    <!-- =========================================
-    TIMELINE CLÍNICA
-    ========================================= -->
-
-    <div class="timeline-card timeline-full">
-
-        <div class="timeline-header">
-
-            <h5>
-                Timeline Clínica
-            </h5>
-
-            <p>
-                Histórico completo do paciente
-            </p>
-
-        </div>
-
-        <div class="timeline-body">
-
-            {% for evolucao in evolucoes %}
+            {% for anexo in anexos %}
 
             <div class="timeline-item">
 
@@ -310,126 +249,256 @@ COLUNA DIREITA
                     <div class="timeline-top">
 
                         <strong>
-
-                            {% if evolucao.procedimento %}
-                                {{ evolucao.procedimento.nome }}
-                            {% else %}
-                                Atualização Clínica
-                            {% endif %}
-
+                            {{ anexo.descricao }}
                         </strong>
 
                         <span>
-
-                            {{ evolucao.criado_em|date:"d/m/Y H:i" }}
-
+                            {{ anexo.criado_em|date:"d/m/Y H:i" }}
                         </span>
 
                     </div>
 
-                   {% if evolucao.dente %}
-<div class="timeline-dente">
-    🦷 Dente {{ evolucao.dente }}
-</div>
-{% endif %}
+                    <a
+                        href="{{ anexo.arquivo.url }}"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-primary mt-2"
+                    >
+                        Visualizar Arquivo
+                    </a>
 
-{% if evolucao.descricao %}
-<div class="timeline-evento">
+                </div>
 
-    <i class="fa-solid fa-arrow-right-arrow-left"></i>
+            </div>
 
-    {{ evolucao.descricao }}
+            {% empty %}
 
-</div>
-{% endif %}
+            <div class="empty-timeline">
+                Nenhum anexo cadastrado.
+            </div>
 
-<div class="timeline-status timeline-status-{{ evolucao.status }}">
+            {% endfor %}
 
-    {{ evolucao.get_status_display }}
+        </div>
 
-</div>
+        <!-- DOCUMENTOS -->
+<div
+    class="tab-content"
+    id="tab-documentos"
+    style="display:none;"
+>
 
-</div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-</div>
+        <div>
 
-{% empty %}
-
-<div class="empty-timeline">
-
-    Nenhuma evolução clínica cadastrada.
-
-</div>
-
-{% endfor %}
-
-    <!-- =========================================
-    ANEXOS
-    ========================================= -->
-
-    <div class="timeline-card">
-
-        <div class="timeline-header">
-
-            <h5>
-                Anexos
-            </h5>
+            <h5>Documentos</h5>
 
             <p>
-                Radiografias, fotos e documentos.
+                Documentos clínicos do paciente.
             </p>
 
         </div>
 
-        <div class="empty-timeline">
+        <a
+            href="{% url 'novo_documento' paciente.id %}"
+            class="btn-anamnese"
+        >
+            <i class="fa-solid fa-plus"></i>
+            Novo Documento
+        </a>
 
-            Nenhum anexo cadastrado.
+    </div>
 
+    {% for documento in documentos %}
+
+    <div class="timeline-item">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-content">
+
+            <div class="timeline-top">
+
+                <strong>
+
+                    {{ documento.titulo }}
+
+                </strong>
+
+                <span>
+
+                    {{ documento.criado_em|date:"d/m/Y H:i" }}
+
+                </span>
+
+            </div>
+
+            <div class="mt-2 d-flex gap-2">
+
+                <a
+                    href="{% url 'editar_documento' documento.id %}"
+                    class="btn btn-sm btn-outline-primary"
+                >
+                    Editar
+                </a>
+
+            </div>
+
+            <div class="mt-4">
+
+                {{ documento.conteudo|linebreaks }}
+
+            </div>
         </div>
 
     </div>
 
+    {% empty %}
+
+    <div class="empty-timeline">
+
+        Nenhum documento cadastrado.
+
+    </div>
+
+    {% endfor %}
+
 </div>
-</div>
 
-<script>
+    </div> <!-- tab-card -->
 
-document.addEventListener('DOMContentLoaded', function() {
+</div> <!-- painel-lateral -->
 
-    const botoes = document.querySelectorAll('.tab-btn');
+</div> <!-- ficha-grid -->
+<br>
 
-    const conteudos = document.querySelectorAll('.tab-content');
+<div class="linha-inferior">
+        <!-- =========================================
+        TIMELINE CLÍNICA
+        ========================================= -->
 
-    botoes.forEach(botao => {
+        <div class="timeline-card timeline-full">
 
-        botao.addEventListener('click', function() {
+            <div class="timeline-header">
 
-            const aba = this.dataset.tab;
+                <h5>
+                    Timeline Clínica
+                </h5>
 
-            botoes.forEach(btn => {
-                btn.classList.remove('active');
+                <p>
+                    Histórico completo do paciente
+                </p>
+
+            </div>
+
+            <div class="timeline-body">
+
+                {% for evolucao in evolucoes %}
+
+                <div class="timeline-item">
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-content">
+
+                        <div class="timeline-top">
+
+                            <strong>
+
+                                {% if evolucao.procedimento %}
+                                {{ evolucao.procedimento.nome }}
+                                {% else %}
+                                Atualização Clínica
+                                {% endif %}
+
+                            </strong>
+
+                            <span>
+
+                                {{ evolucao.criado_em|date:"d/m/Y H:i" }}
+
+                            </span>
+
+                        </div>
+
+                        {% if evolucao.dente %}
+                        <div class="timeline-dente">
+                            🦷 Dente {{ evolucao.dente }}
+                        </div>
+                        {% endif %}
+
+                        {% if evolucao.descricao %}
+                        <div class="timeline-evento">
+
+                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+
+                            {{ evolucao.descricao }}
+
+                        </div>
+                        {% endif %}
+
+                        <div class="timeline-status timeline-status-{{ evolucao.status }}">
+
+                            {{ evolucao.get_status_display }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% empty %}
+
+                <div class="empty-timeline">
+
+                    Nenhuma evolução clínica cadastrada.
+
+                </div>             
+
+                {% endfor %}
+
+                </div> <!-- timeline-body -->   
+
+        </div> <!-- timeline-card -->
+
+        <script>
+
+            document.addEventListener('DOMContentLoaded', function () {
+
+                const botoes = document.querySelectorAll('.tab-btn');
+
+                const conteudos = document.querySelectorAll('.tab-content');
+
+                botoes.forEach(botao => {
+
+                    botao.addEventListener('click', function () {
+
+                        const aba = this.dataset.tab;
+
+                        botoes.forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+
+                        conteudos.forEach(item => {
+                            item.style.display = 'none';
+                        });
+
+                        this.classList.add('active');
+
+                        const painel = document.getElementById(
+                            'tab-' + aba
+                        );
+
+                        if (painel) {
+                            painel.style.display = 'block';
+                        }
+
+                    });
+
+                });
+
             });
 
-            conteudos.forEach(item => {
-                item.style.display = 'none';
-            });
+        </script>
 
-            this.classList.add('active');
-
-            const painel = document.getElementById(
-                'tab-' + aba
-            );
-
-            if (painel) {
-                painel.style.display = 'block';
-            }
-
-        });
-
-    });
-
-});
-
-</script>
-
-{% endblock %}
+        {% endblock %}

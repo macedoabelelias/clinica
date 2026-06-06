@@ -1,5 +1,9 @@
 import os
 
+from django.conf import settings
+
+from django.http import HttpResponse
+
 from django.shortcuts import (
     render,
     redirect,
@@ -16,28 +20,39 @@ from django.contrib.auth.decorators import (
     login_required
 )
 
-from django.conf import settings
+from django.utils import timezone
+
+from reportlab.lib import colors
+from reportlab.lib.units import mm
+from reportlab.lib.styles import getSampleStyleSheet
+
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Paragraph,
+    Spacer,
+    Image,
+    HRFlowable
+)
 
 from .models import (
-
     Convenio,
     EvolucaoClinica,
     ProntuarioClinico,
+    DocumentoClinico,
+    TemplateDocumento,
     Paciente,
     Anamnese,
     Procedimento,
     Orcamento,
-    ItemOrcamento
-
+    ItemOrcamento,
+    AnexoPaciente
 )
 
 from .forms import (
     ProcedimentoForm,
     ItemOrcamentoForm,
     ConvenioForm
-
 )
-
 
 # =========================================
 # LOGIN
@@ -1037,6 +1052,38 @@ def ficha_clinica(request, id):
         paciente=paciente
     )
 
+    documentos = DocumentoClinico.objects.filter(
+        paciente=paciente
+    )
+
+    anexos = AnexoPaciente.objects.filter(
+        paciente=paciente
+    )
+
+    # =========================================
+    # RESUMO CLÍNICO
+    # =========================================
+
+    total_procedimentos = evolucoes.count()
+
+    realizados = evolucoes.filter(
+        status='realizado'
+    ).count()
+
+    planejados = evolucoes.filter(
+        status='planejado'
+    ).count()
+
+    andamento = evolucoes.filter(
+        status='andamento'
+    ).count()
+
+    ultima_evolucao = evolucoes.first()
+
+    # =========================================
+    # NOVO REGISTRO CLÍNICO
+    # =========================================
+
     if request.method == 'POST':
 
         ProntuarioClinico.objects.create(
@@ -1064,7 +1111,22 @@ def ficha_clinica(request, id):
 
         'evolucoes': evolucoes,
 
-        'prontuarios': prontuarios
+        'prontuarios': prontuarios,
+
+        'anexos': anexos,
+        'documentos': documentos,
+
+        # RESUMO CLÍNICO
+
+        'total_procedimentos': total_procedimentos,
+
+        'realizados': realizados,
+
+        'planejados': planejados,
+
+        'andamento': andamento,
+
+        'ultima_evolucao': ultima_evolucao
 
     }
 
@@ -1077,6 +1139,46 @@ def ficha_clinica(request, id):
         context
 
     )
+
+# =========================================
+# UPLOAD ANEXO
+# =========================================
+
+@login_required(login_url='/')
+def upload_anexo(request, id):
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
+
+    if request.method == 'POST':
+
+        arquivo = request.FILES.get(
+            'arquivo'
+        )
+
+        descricao = request.POST.get(
+            'descricao'
+        )
+
+        if arquivo:
+
+            AnexoPaciente.objects.create(
+
+                paciente=paciente,
+
+                descricao=descricao,
+
+                arquivo=arquivo
+
+            )
+
+    return redirect(
+        'ficha_clinica',
+        id=paciente.id
+    )
+
 # =========================================
 # PROCEDIMENTOS
 # =========================================
@@ -2113,5 +2215,158 @@ def imprimir_prontuario(request, id):
     )
 
     return response
-            
+
+@login_required(login_url='/')
+def novo_documento(request, id):
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
+
+    if request.method == 'POST':
+
+        template_id = request.POST.get(
+            'template'
+        )
+
+        conteudo = request.POST.get(
+            'conteudo'
+        )
+
+        if template_id:
+
+            template = TemplateDocumento.objects.get(
+                id=template_id
+            )
+
+            conteudo = template.conteudo
+
+            conteudo = conteudo.replace(
+                '{{ paciente_nome }}',
+                paciente.nome or ''
+            )
+
+            conteudo = conteudo.replace(
+                '{{ paciente_cpf }}',
+                paciente.cpf or ''
+            )
+
+            conteudo = conteudo.replace(
+                '{{ data_atual }}',
+                timezone.now().strftime(
+                    '%d/%m/%Y'
+                )
+            )
+
+            if paciente.nascimento:
+
+                conteudo = conteudo.replace(
+                    '{{ paciente_nascimento }}',
+                    paciente.nascimento.strftime(
+                        '%d/%m/%Y'
+                    )
+                )
+
+            else:
+
+                conteudo = conteudo.replace(
+                    '{{ paciente_nascimento }}',
+                    ''
+                )
+
+            conteudo = conteudo.replace(
+                '{{ paciente_nome }}',
+                paciente.nome
+            )
+
+            conteudo = conteudo.replace(
+                '{{ data_atual }}',
+                timezone.now().strftime('%d/%m/%Y')
+            )
+
+        documento = DocumentoClinico.objects.create(
+
+            paciente=paciente,
+
+            titulo=request.POST.get(
+                'titulo'
+            ),
+
+            conteudo=conteudo
+
+        )
+
+        return redirect(
+            'editar_documento',
+            documento.id
+        )
+
+    templates = TemplateDocumento.objects.filter(
+        ativo=True
+    ).order_by('nome')
+
+    return render(
+
+        request,
+
+        'accounts/documento_form.html',
+
+        {
+
+            'paciente': paciente,
+
+            'templates': templates
+
+        }
+
+    )
+
+
+@login_required(login_url='/')
+def editar_documento(request, id):
+
+    documento = get_object_or_404(
+
+        DocumentoClinico,
+
+        id=id
+
+    )
+
+    if request.method == 'POST':
+
+        documento.titulo = request.POST.get(
+            'titulo'
+        )
+
+        documento.conteudo = request.POST.get(
+            'conteudo'
+        )
+
+        documento.save()
+
+        return redirect(
+
+            'editar_documento',
+
+            documento.id
+
+        )
+
+    return render(
+
+        request,
+
+        'accounts/documento_form.html',
+
+        {
+
+            'documento': documento,
+
+            'paciente': documento.paciente
+
+        }
+
+    )     
             
