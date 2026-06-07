@@ -115,6 +115,8 @@ CARD DAS ABAS
     border-radius:20px;
 
     border:1px solid #e2e8f0;
+    
+    border-top:4px solid #2563eb;
 
     padding:20px;
 
@@ -163,7 +165,13 @@ CARDS SUPERIORES
 }
 
 .painel-lateral .timeline-card{
-    height:auto;
+     background:#fff;
+
+    border-radius:24px;
+
+    border-top:4px solid #2563eb;
+
+    padding:18px;
 }
 
 /* =========================================
@@ -172,29 +180,27 @@ TIMELINE E ANEXOS
 
 .linha-inferior{
 
+    grid-column:1 / -1;
 
-grid-column:1 / -1;
+    width:100%;
 
-display:grid;
+}
 
-grid-template-columns:2fr 1fr;
+.timeline-full{
 
-gap:24px;
-
+    width:100%;
 
 }
 
 .linha-inferior .timeline-card{
 
+    position:relative;
 
-position:relative;
+    top:auto;
 
-top:auto;
+    width:100%;
 
-max-height:none;
-
-overflow:hidden;
-
+    padding:18px;
 
 }
 
@@ -301,7 +307,7 @@ HEADER
 .timeline-header{
 
 
-margin-bottom:20px;
+margin-bottom:12px;
 
 
 }
@@ -338,13 +344,17 @@ BODY
 
 .timeline-body{
 
+    display:flex;
 
-display:flex;
+    flex-direction:column;
 
-flex-direction:column;
+    gap:10px;
 
-gap:16px;
+    height:220px;
 
+    overflow-y:auto;
+
+    padding-right:6px;
 
 }
 
@@ -384,17 +394,15 @@ margin-top:8px;
 
 .timeline-content{
 
+    flex:1;
 
-flex:1;
+    background:#ffffff;
 
-background:#f8fafc;
+    border:1px solid #dbeafe;
 
-border:1px solid #e2e8f0;
+    border-radius:16px;
 
-border-radius:18px;
-
-padding:18px;
-
+    padding:14px;
 
 }
 
@@ -464,6 +472,18 @@ line-height:1.6;
 
 }
 
+.documento-preview-body h1,
+.documento-preview-body h2,
+.documento-preview-body h3{
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+    color:#0f172a;
+
+}
+
 .empty-timeline{
 
 
@@ -501,5 +521,158 @@ RESPONSIVO
 
 }
 
+
+}
+
+/* =========================================
+VISUALIZAÇÃO DOCUMENTO
+========================================= */
+
+.documento-visualizacao{
+
+    background:#fff;
+
+    border:1px solid #dbeafe;
+
+    border-radius:18px;
+
+    padding:50px;
+
+    min-height:700px;
+
+    font-family:"Times New Roman", serif;
+
+    font-size:17px;
+
+    line-height:2;
+
+    color:#111827;
+
+}
+
+/* =========================================
+CABEÇALHO
+========================================= */
+
+.documento-header{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+.documento-logo{
+
+    max-height:110px;
+
+    width:auto;
+
+    margin-bottom:6px;
+
+}
+
+.nome-clinica{
+
+    margin:0;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+}
+
+.cro-clinica{
+
+    margin-top:8px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    color:#475569;
+
+}
+
+/* =========================================
+CONTEÚDO
+========================================= */
+
+.documento-corpo{
+    padding-left:40px;
+    padding-right:40px;
+}
+
+.documento-corpo p{
+
+    margin-bottom:16px;
+
+}
+
+.documento-texto{
+
+    white-space: pre-wrap;
+
+    font-family: "Times New Roman", serif;
+
+    font-size: 17px;
+
+    line-height: 2;
+
+    margin: 0;
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+}
+
+/* =========================================
+DIVISOR
+========================================= */
+
+.documento-divisor{
+
+    border:none;
+
+    border-top:1px solid #e2e8f0;
+
+    margin:30px 0;
+
+}
+
+/* =========================================
+RODAPÉ
+========================================= */
+
+.documento-rodape{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:10px;
+
+    font-size:14px;
+
+    color:#64748b;
+
+}
+
+.rodape-esquerda{
+
+    text-align:left;
+
+}
+
+.rodape-direita{
+
+    text-align:right;
 
 }

@@ -335,20 +335,45 @@ COLUNA DIREITA
 
             <div class="mt-2 d-flex gap-2">
 
-                <a
-                    href="{% url 'editar_documento' documento.id %}"
-                    class="btn btn-sm btn-outline-primary"
-                >
-                    Editar
-                </a>
+                <div class="mt-2 d-flex gap-2">
+
+    <a
+        href="{% url 'visualizar_documento' documento.id %}"
+        class="btn btn-sm btn-primary"
+    >
+        Visualizar
+    </a>
+
+    <a
+        href="{% url 'editar_documento' documento.id %}"
+        class="btn btn-sm btn-outline-primary"
+    >
+        Editar
+    </a>
+
+</div>
 
             </div>
 
-            <div class="mt-4">
+            <div class="documento-preview">
 
-                {{ documento.conteudo|linebreaks }}
+    <div class="documento-preview-header">
 
-            </div>
+        <i class="fa-solid fa-file-signature"></i>
+
+        <span>
+            Pré-visualização
+        </span>
+
+    </div>
+
+    <div class="documento-preview-body">
+
+        {{ documento.conteudo|linebreaks }}
+
+    </div>
+
+</div>
         </div>
 
     </div>

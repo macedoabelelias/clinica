@@ -45,7 +45,8 @@ from .models import (
     Procedimento,
     Orcamento,
     ItemOrcamento,
-    AnexoPaciente
+    AnexoPaciente,
+    ConfiguracaoClinica
 )
 
 from .forms import (
@@ -2215,6 +2216,7 @@ def imprimir_prontuario(request, id):
     )
 
     return response
+# =========================================
 
 @login_required(login_url='/')
 def novo_documento(request, id):
@@ -2229,6 +2231,8 @@ def novo_documento(request, id):
         template_id = request.POST.get(
             'template'
         )
+
+        print(template_id)
 
         conteudo = request.POST.get(
             'conteudo'
@@ -2259,6 +2263,13 @@ def novo_documento(request, id):
                 )
             )
 
+            conteudo = conteudo.replace(
+                '{{ data_atendimento }}',
+                timezone.now().strftime(
+                    '%d/%m/%Y'
+                )
+            )
+
             if paciente.nascimento:
 
                 conteudo = conteudo.replace(
@@ -2275,15 +2286,14 @@ def novo_documento(request, id):
                     ''
                 )
 
-            conteudo = conteudo.replace(
-                '{{ paciente_nome }}',
-                paciente.nome
-            )
+            config = ConfiguracaoClinica.objects.first()
 
             conteudo = conteudo.replace(
-                '{{ data_atual }}',
-                timezone.now().strftime('%d/%m/%Y')
+                '{{ cro_clinica }}',
+                config.cro if config and config.cro else ''
             )
+
+            
 
         documento = DocumentoClinico.objects.create(
 
@@ -2322,6 +2332,7 @@ def novo_documento(request, id):
 
     )
 
+# ========================================
 
 @login_required(login_url='/')
 def editar_documento(request, id):
@@ -2368,5 +2379,33 @@ def editar_documento(request, id):
 
         }
 
-    )     
-            
+    ) 
+
+# =========================================
+# VISUALIZAR DOCUMENTO
+# =========================================
+
+@login_required(login_url='/')
+def visualizar_documento(request, id):
+
+    documento = get_object_or_404(
+        DocumentoClinico,
+        id=id
+    )
+
+    config = ConfiguracaoClinica.objects.first()
+
+    return render(
+
+        request,
+
+        'accounts/visualizar_documento.html',
+
+        {
+
+            'documento': documento,
+            'config': config
+
+        }
+
+    )           

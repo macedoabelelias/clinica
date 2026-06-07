@@ -133,6 +133,12 @@ urlpatterns = [
         views.editar_documento,
         name='editar_documento'
     ),
+
+    path(
+        'documento/visualizar/<int:id>/',
+        views.visualizar_documento,
+        name='visualizar_documento'
+    ),
        
     # =========================================
     # PROCEDIMENTOS
