@@ -232,6 +232,20 @@ path(
 ),
 
 path(
+    'pacientes/<int:id>/anamnese/pdf/',
+    views.imprimir_anamnese,
+    name='imprimir_anamnese'
+),
+
+path(
+    'configuracao-clinica/',
+    views.configuracao_clinica,
+    name='configuracao_clinica'
+),
+
+
+
+path(
     'pacientes/<int:id>/procedimento-geral/',
     views.salvar_procedimento_geral,
     name='salvar_procedimento_geral'

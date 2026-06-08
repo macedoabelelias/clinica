@@ -373,6 +373,34 @@ class Anamnese(models.Model):
     )
 
     # =========================================
+    # CONDIÇÕES MÉDICAS IMPORTANTES
+    # =========================================
+
+    anticoagulante = models.BooleanField(
+        default=False
+    )
+
+    bisfosfonato = models.BooleanField(
+        default=False
+    )
+
+    marcapasso = models.BooleanField(
+        default=False
+    )
+
+    cancer = models.BooleanField(
+        default=False
+    )
+
+    hipotireoidismo = models.BooleanField(
+        default=False
+    )
+
+    hipertireoidismo = models.BooleanField(
+        default=False
+    )
+
+    # =========================================
     # HISTÓRIA ODONTOLÓGICA
     # =========================================
 
@@ -1110,6 +1138,11 @@ class ConfiguracaoClinica(models.Model):
         blank=True
     )
 
+    cnpj = models.CharField(
+        max_length=30,
+        blank=True
+    )
+
     telefone = models.CharField(
         max_length=30,
         blank=True
@@ -1124,7 +1157,18 @@ class ConfiguracaoClinica(models.Model):
         blank=True
     )
 
-    endereco = models.TextField(
+    endereco = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    numero = models.CharField(
+        max_length=20,
+        blank=True
+    )
+
+    bairro = models.CharField(
+        max_length=100,
         blank=True
     )
 
@@ -1138,12 +1182,34 @@ class ConfiguracaoClinica(models.Model):
         blank=True
     )
 
+    cep = models.CharField(
+        max_length=20,
+        blank=True
+    )
+
     observacoes_orcamento = models.TextField(
         blank=True
     )
 
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    atualizado_em = models.DateTimeField(
+        auto_now=True
+    )
+
+    class Meta:
+
+        verbose_name = 'Configuração da Clínica'
+
+        verbose_name_plural = (
+            'Configurações da Clínica'
+        )
+
     def __str__(self):
-        return self.nome_clinica    
+
+        return self.nome_clinica
 
 # =========================================
 # CONVÊNIOS
@@ -1548,6 +1614,16 @@ class ConfiguracaoClinica(models.Model):
         null=True
     )
 
+    cro = models.CharField(
+        max_length=50,
+        blank=True
+    )
+
+    cnpj = models.CharField(
+        max_length=30,
+        blank=True
+    )
+
     telefone = models.CharField(
         max_length=30,
         blank=True
@@ -1562,8 +1638,7 @@ class ConfiguracaoClinica(models.Model):
         blank=True
     )
 
-    endereco = models.CharField(
-        max_length=255,
+    endereco = models.TextField(
         blank=True
     )
 
@@ -1572,13 +1647,14 @@ class ConfiguracaoClinica(models.Model):
         blank=True
     )
 
-    cro = models.CharField(
-        max_length=50,
+    estado = models.CharField(
+        max_length=2,
+        blank=True
+    )
+
+    observacoes_orcamento = models.TextField(
         blank=True
     )
 
     def __str__(self):
-
         return self.nome_clinica
-    
-

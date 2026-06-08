@@ -55,6 +55,8 @@ from .forms import (
     ConvenioForm
 )
 
+from datetime import timedelta
+
 # =========================================
 # LOGIN
 # =========================================
@@ -807,7 +809,7 @@ def anamnese(request, id):
         # =========================================
 
         anamnese.queixa_principal = request.POST.get(
-            'queixa_principal'
+            'queixa_principal', ''
         )
 
         # =========================================
@@ -824,60 +826,102 @@ def anamnese(request, id):
 
         anamnese.rinite = 'rinite' in request.POST
         anamnese.sinusite = 'sinusite' in request.POST
+
         anamnese.problema_renal = (
             'problema_renal' in request.POST
         )
+
         anamnese.sangramento_excessivo = (
-            'sangramento_excessivo' in request.POST 
+            'sangramento_excessivo' in request.POST
         )
+
         anamnese.alergico = 'alergico' in request.POST
+
         anamnese.alergias = request.POST.get(
-            'alergias'
+            'alergias', ''
         )
 
         anamnese.fumante = 'fumante' in request.POST
         anamnese.gravida = 'gravida' in request.POST
 
         anamnese.historico_medico = request.POST.get(
-            'historico_medico'
+            'historico_medico', ''
         )
+
+        # NOVOS CAMPOS
+
+        if hasattr(anamnese, 'anticoagulante'):
+            anamnese.anticoagulante = (
+                'anticoagulante' in request.POST
+            )
+
+        if hasattr(anamnese, 'bisfosfonato'):
+            anamnese.bisfosfonato = (
+                'bisfosfonato' in request.POST
+            )
+
+        if hasattr(anamnese, 'marcapasso'):
+            anamnese.marcapasso = (
+                'marcapasso' in request.POST
+            )
+
+        if hasattr(anamnese, 'cancer'):
+            anamnese.cancer = (
+                'cancer' in request.POST
+            )
+
+        if hasattr(anamnese, 'hipotireoidismo'):
+            anamnese.hipotireoidismo = (
+                'hipotireoidismo' in request.POST
+            )
+
+        if hasattr(anamnese, 'hipertireoidismo'):
+            anamnese.hipertireoidismo = (
+                'hipertireoidismo' in request.POST
+            )
 
         # =========================================
         # MEDICAMENTOS
         # =========================================
 
-        anamnese.usa_medicamento = 'usa_medicamento' in request.POST
+        anamnese.usa_medicamento = (
+            'usa_medicamento' in request.POST
+        )
 
         anamnese.medicamentos = request.POST.get(
-            'medicamentos'
+            'medicamentos', ''
         )
 
         anamnese.antibioticos = request.POST.get(
-            'antibioticos'
+            'antibioticos', ''
         )
 
         anamnese.antiinflamatorios = request.POST.get(
-            'antiinflamatorios'
+            'antiinflamatorios', ''
         )
 
         anamnese.analgesicos = request.POST.get(
-            'analgesicos'
+            'analgesicos', ''
         )
 
         # =========================================
         # CIRURGIAS
         # =========================================
 
-        anamnese.cirurgia = 'cirurgia' in request.POST
-
-        anamnese.cirurgias = request.POST.get(
-            'cirurgias'
+        anamnese.cirurgia = (
+            'cirurgia' in request.POST
         )
 
-        anamnese.hospitalizado = 'hospitalizado' in request.POST
+        anamnese.cirurgias = request.POST.get(
+            'cirurgias', ''
+        )
+
+        anamnese.hospitalizado = (
+            'hospitalizado' in request.POST
+        )
 
         anamnese.hospitalizacao = request.POST.get(
-            'hospitalizacao'
+            'hospitalizacao', ''
         )
 
         anamnese.transfusao_sangue = (
@@ -893,7 +937,7 @@ def anamnese(request, id):
         )
 
         anamnese.experiencia_odontologica = request.POST.get(
-            'experiencia_odontologica'
+            'experiencia_odontologica', ''
         )
 
         anamnese.abandono_tratamento = (
@@ -905,7 +949,7 @@ def anamnese(request, id):
         )
 
         anamnese.anestesia_reacao = request.POST.get(
-            'anestesia_reacao'
+            'anestesia_reacao', ''
         )
 
         anamnese.sangramento_gengival = (
@@ -925,7 +969,7 @@ def anamnese(request, id):
         # =========================================
 
         anamnese.frequencia_escovacao = request.POST.get(
-            'frequencia_escovacao'
+            'frequencia_escovacao', ''
         )
 
         anamnese.usa_fio_dental = (
@@ -968,13 +1012,14 @@ def anamnese(request, id):
         anamnese.baba_travesseiro = (
             'baba_travesseiro' in request.POST
         )
+
         anamnese.dorme_boca_aberta = (
             'dorme_boca_aberta' in request.POST
         )
 
         anamnese.morde_labios = (
             'morde_labios' in request.POST
-        ) 
+        )
 
         # =========================================
         # HÁBITOS ALIMENTARES
@@ -989,8 +1034,8 @@ def anamnese(request, id):
         )
 
         anamnese.tipo_alimentacao = request.POST.get(
-            'tipo_alimentacao'
-        )      
+            'tipo_alimentacao', ''
+        )
 
         # =========================================
         # PERFIL COMPORTAMENTAL
@@ -1004,10 +1049,14 @@ def anamnese(request, id):
             'comunicativo' in request.POST
         )
 
-        anamnese.retraido = 'retraido' in request.POST
+        anamnese.retraido = (
+            'retraido' in request.POST
+        )
+
         anamnese.introvertido = (
             'introvertido' in request.POST
         )
+
         anamnese.extrovertido = (
             'extrovertido' in request.POST
         )
@@ -1017,7 +1066,7 @@ def anamnese(request, id):
         # =========================================
 
         anamnese.observacoes = request.POST.get(
-            'observacoes'
+            'observacoes', ''
         )
 
         anamnese.save()
@@ -1771,6 +1820,13 @@ def gerar_pdf_orcamento(request, id):
 
     paciente = orcamento.paciente
 
+    validade = (
+        orcamento.criado_em.date()
+        + timedelta(days=30)
+    )
+
+    config = ConfiguracaoClinica.objects.first()
+
     itens = orcamento.itens.all()
 
     evolucoes = EvolucaoClinica.objects.filter(
@@ -1855,7 +1911,8 @@ def gerar_pdf_orcamento(request, id):
         'paciente': paciente,
         'itens': itens,
         'evolucoes': evolucoes,
-
+        'config': config,
+        'validade': validade,
         'tem_permanente': tem_permanente,
         'tem_deciduo': tem_deciduo,
 
@@ -1864,7 +1921,7 @@ def gerar_pdf_orcamento(request, id):
 
         'superiores_deciduos': superiores_deciduos,
         'inferiores_deciduos': inferiores_deciduos,
-        'dentes_com_procedimento': dentes_com_procedimento,
+        'dentes_com_procedimento': dentes_com_procedimento,        
     }
 
     return render(
@@ -2408,4 +2465,301 @@ def visualizar_documento(request, id):
 
         }
 
-    )           
+    ) 
+
+# =========================================
+# CONFIGURAÇÃO DA CLÍNICA
+# =========================================
+
+@login_required(login_url='/')
+def configuracao_clinica(request):
+
+    config, created = (
+        ConfiguracaoClinica.objects.get_or_create(
+            id=1
+        )
+    )
+
+    if request.method == 'POST':
+
+        config.nome_clinica = request.POST.get(
+            'nome_clinica'
+        )
+
+        config.cro = request.POST.get(
+            'cro'
+        )
+
+        config.cnpj = request.POST.get(
+            'cnpj'
+        )
+
+        config.telefone = request.POST.get(
+            'telefone'
+        )
+
+        config.whatsapp = request.POST.get(
+            'whatsapp'
+        )
+
+        config.email = request.POST.get(
+            'email'
+        )
+
+        config.endereco = request.POST.get(
+            'endereco'
+        )
+
+        config.numero = request.POST.get(
+            'numero'
+        )
+
+        config.bairro = request.POST.get(
+            'bairro'
+        )
+
+        config.cidade = request.POST.get(
+            'cidade'
+        )
+
+        config.estado = request.POST.get(
+            'estado'
+        )
+
+        config.cep = request.POST.get(
+            'cep'
+        )
+
+        config.observacoes_orcamento = (
+            request.POST.get(
+                'observacoes_orcamento'
+            )
+        )
+
+        if request.FILES.get('logo'):
+
+            config.logo = request.FILES.get(
+                'logo'
+            )
+
+        config.save()
+
+        return redirect(
+            'configuracao_clinica'
+        )
+
+    return render(
+
+        request,
+
+        'accounts/configuracao_clinica.html',
+
+        {
+            'config': config
+        }
+
+    ) 
+
+# =========================================
+# PDF ANAMNESE
+# =========================================
+
+@login_required(login_url='/')
+def imprimir_anamnese(request, id):
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
+
+    anamnese = get_object_or_404(
+        Anamnese,
+        paciente=paciente
+    )
+
+    resumo_clinico = gerar_resumo_clinico(
+        anamnese
+    )
+
+    print(resumo_clinico)
+
+    config = ConfiguracaoClinica.objects.first()    
+
+    context = {
+
+        'paciente': paciente,
+        'anamnese': anamnese,
+        'config': config,
+        'resumo_clinico': resumo_clinico
+    }
+
+    return render(
+
+        request,
+
+        'accounts/anamnese_pdf.html',
+
+        context
+
+    ) 
+
+# =========================================
+# RESUMO CLÍNICO AUTOMÁTICO
+# =========================================
+
+def gerar_resumo_clinico(anamnese):
+
+    resumo = []
+
+    # =========================================
+    # CONDIÇÕES SISTÊMICAS
+    # =========================================
+
+    if anamnese.hipertenso:
+        resumo.append('Hipertenso')
+
+    if anamnese.diabetico:
+        resumo.append('Diabético')
+
+    if anamnese.cardiopatia:
+        resumo.append('Cardiopata')
+
+    if anamnese.asma:
+        resumo.append('Asma')
+
+    if anamnese.bronquite:
+        resumo.append('Bronquite')
+
+    if anamnese.anemia:
+        resumo.append('Anemia')
+
+    if anamnese.hepatite:
+        resumo.append('Hepatite')
+
+    if anamnese.rinite:
+        resumo.append('Rinite')
+
+    if anamnese.sinusite:
+        resumo.append('Sinusite')
+
+    if anamnese.problema_renal:
+        resumo.append('Problema renal')
+
+    if anamnese.sangramento_excessivo:
+        resumo.append('Sangramento excessivo')
+
+    if hasattr(anamnese, 'anticoagulante') and anamnese.anticoagulante:
+        resumo.append('Uso de anticoagulantes')
+
+    if hasattr(anamnese, 'bisfosfonato') and anamnese.bisfosfonato:
+        resumo.append('Uso de bisfosfonatos')
+
+    if hasattr(anamnese, 'marcapasso') and anamnese.marcapasso:
+        resumo.append('Portador de marcapasso')
+
+    if hasattr(anamnese, 'cancer') and anamnese.cancer:
+        resumo.append('Histórico de câncer')
+
+    if hasattr(anamnese, 'hipotireoidismo') and anamnese.hipotireoidismo:
+        resumo.append('Hipotireoidismo')
+
+    if hasattr(anamnese, 'hipertireoidismo') and anamnese.hipertireoidismo:
+        resumo.append('Hipertireoidismo')
+
+    # =========================================
+    # ALERGIAS E MEDICAMENTOS
+    # =========================================
+
+    if anamnese.alergias:
+        resumo.append(
+            f'Alergias: {anamnese.alergias}'
+        )
+
+    if anamnese.medicamentos:
+        resumo.append(
+            f'Medicamentos: {anamnese.medicamentos}'
+        )
+
+    # =========================================
+    # CIRURGIAS
+    # =========================================
+
+    if anamnese.cirurgia:
+
+        if anamnese.cirurgias:
+
+            resumo.append(
+                f'Cirurgias prévias: {anamnese.cirurgias}'
+            )
+
+        else:
+
+            resumo.append(
+                'Histórico cirúrgico positivo'
+            )
+
+    if anamnese.hospitalizado:
+
+        if anamnese.hospitalizacao:
+
+            resumo.append(
+                f'Hospitalização: {anamnese.hospitalizacao}'
+            )
+
+        else:
+
+            resumo.append(
+                'Hospitalização prévia'
+            )
+
+    if anamnese.transfusao_sangue:
+        resumo.append(
+            'Histórico de transfusão sanguínea'
+        )
+
+    # =========================================
+    # HISTÓRIA ODONTOLÓGICA
+    # =========================================
+
+    if anamnese.bruxismo:
+        resumo.append('Bruxismo')
+
+    if anamnese.sensibilidade:
+        resumo.append('Sensibilidade dentária')
+
+    if anamnese.sangramento_gengival:
+        resumo.append('Sangramento gengival')
+
+    if anamnese.dor_mastigar:
+        resumo.append('Dor à mastigação')
+
+    if anamnese.medo_dentista:
+        resumo.append('Ansiedade odontológica')
+
+    if anamnese.abandono_tratamento:
+        resumo.append('Histórico de abandono de tratamento')
+
+    # =========================================
+    # HÁBITOS
+    # =========================================
+
+    if anamnese.fumante:
+        resumo.append('Fumante')
+
+    if anamnese.ronco:
+        resumo.append('Ronco')
+
+    if anamnese.respiracao_bucal:
+        resumo.append('Respiração bucal')
+
+    # =========================================
+    # RESULTADO
+    # =========================================
+
+    if not resumo:
+
+        return (
+            'Nenhuma condição clínica relevante informada.'
+        )
+
+    return ' • '.join(resumo)
