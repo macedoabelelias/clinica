@@ -1507,11 +1507,16 @@ class TemplateDocumento(models.Model):
 
     TIPO_CHOICES = (
 
-        ('consentimento', 'Termo de Consentimento'),
-        ('receita', 'Receita'),
-        ('atestado', 'Atestado'),
+        ('atestado', 'Atestado Odontológico'),
+        ('declaracao', 'Declaração de Comparecimento'),
+        ('receita', 'Receituário Simples'),
+        ('controle_especial', 'Receituário Controle Especial'),
+        ('exames', 'Solicitação de Exames'),
         ('encaminhamento', 'Encaminhamento'),
-        ('declaracao', 'Declaração'),
+        ('relatorio', 'Relatório Odontológico'),
+        ('alta', 'Termo de Alta'),
+        ('consentimento', 'Termo de Consentimento'),
+        ('contrato', 'Contrato'),
         ('livre', 'Documento Livre'),
 
     )
@@ -1536,6 +1541,7 @@ class TemplateDocumento(models.Model):
     )
 
     def __str__(self):
+
         return self.nome
     
 # =========================================
@@ -1548,6 +1554,32 @@ class DocumentoClinico(models.Model):
 
         ('rascunho', 'Rascunho'),
         ('finalizado', 'Finalizado'),
+
+    )
+
+    TIPOS = (
+
+        ('atestado', 'Atestado Odontológico'),
+
+        ('declaracao', 'Declaração de Comparecimento'),
+
+        ('receita', 'Receituário Simples'),
+
+        ('controle_especial', 'Receituário Controle Especial'),
+
+        ('exames', 'Solicitação de Exames'),
+
+        ('encaminhamento', 'Encaminhamento'),
+
+        ('relatorio', 'Relatório Odontológico'),
+
+        ('alta', 'Termo de Alta'),
+
+        ('consentimento', 'Termo de Consentimento'),
+
+        ('contrato', 'Contrato'),
+
+        ('personalizado', 'Documento Personalizado'),
 
     )
 
@@ -1566,6 +1598,12 @@ class DocumentoClinico(models.Model):
 
     titulo = models.CharField(
         max_length=255
+    )
+
+    tipo = models.CharField(
+        max_length=30,
+        choices=TIPOS,
+        default='personalizado'
     )
 
     conteudo = models.TextField()
@@ -1594,9 +1632,13 @@ class DocumentoClinico(models.Model):
 
         ordering = ['-criado_em']
 
+        verbose_name = 'Documento Clínico'
+
+        verbose_name_plural = 'Documentos Clínicos'
+
     def __str__(self):
 
-        return self.titulo
+        return f'{self.titulo} - {self.paciente.nome}'
     
 # =========================================
 # CONFIGURAÇÃO DA CLÍNICA
@@ -1658,3 +1700,145 @@ class ConfiguracaoClinica(models.Model):
 
     def __str__(self):
         return self.nome_clinica
+    
+# =========================================
+# MEDICAMENTOS
+# =========================================
+
+class Medicamento(models.Model):
+
+    CATEGORIAS = (
+
+        ('antibiotico', 'Antibiótico'),
+        ('analgesico', 'Analgésico'),
+        ('antiinflamatorio', 'Anti-inflamatório'),
+        ('antisseptico', 'Antisséptico'),
+        ('outro', 'Outro'),
+
+    )
+
+    nome = models.CharField(
+        max_length=200
+    )
+
+    concentracao = models.CharField(
+        max_length=100,
+        blank=True
+    )
+
+    categoria = models.CharField(
+        max_length=50,
+        choices=CATEGORIAS,
+        default='outro'
+    )
+
+    ativo = models.BooleanField(
+        default=True
+    )
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+
+        if self.concentracao:
+
+            return (
+                f'{self.nome} '
+                f'{self.concentracao}'
+            )
+
+        return self.nome
+
+
+# =========================================
+# RECEITAS
+# =========================================
+
+class Receita(models.Model):
+
+    paciente = models.ForeignKey(
+
+        Paciente,
+
+        on_delete=models.CASCADE,
+
+        related_name='receitas'
+
+    )
+
+    medicamento = models.ForeignKey(
+
+        Medicamento,
+
+        on_delete=models.PROTECT
+
+    )
+
+    titulo = models.CharField(
+
+        max_length=200,
+
+        default='Receituário'
+
+    )
+
+    quantidade = models.CharField(
+
+        max_length=100
+
+    )
+
+    posologia = models.TextField()
+
+    observacoes = models.TextField(
+
+        blank=True,
+
+        null=True
+
+    )
+
+    TIPO_RECEITA = (
+
+        ('simples', 'Receituário Simples'),
+
+        ('controle', 'Receita de Controle Especial'),
+
+    )
+
+    tipo_receita = models.CharField(
+
+        max_length=20,
+
+        choices=TIPO_RECEITA,
+
+        default='simples'
+
+    )
+
+    status = models.CharField(
+
+        max_length=20,
+
+        default='ativo'
+
+    )
+
+    criado_em = models.DateTimeField(
+
+        auto_now_add=True
+
+    )
+
+    class Meta:
+
+        ordering = ['-criado_em']
+
+    def __str__(self):
+
+        return (
+            f'{self.paciente.nome} - '
+            f'{self.medicamento}'
+        )

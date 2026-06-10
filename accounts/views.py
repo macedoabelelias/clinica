@@ -1,4 +1,6 @@
+from logging import config
 import os
+from urllib import response
 
 from django.conf import settings
 
@@ -24,7 +26,7 @@ from django.utils import timezone
 
 from reportlab.lib import colors
 from reportlab.lib.units import mm
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 
 from reportlab.platypus import (
     SimpleDocTemplate,
@@ -46,7 +48,9 @@ from .models import (
     Orcamento,
     ItemOrcamento,
     AnexoPaciente,
-    ConfiguracaoClinica
+    ConfiguracaoClinica,
+    Medicamento,
+    Receita,
 )
 
 from .forms import (
@@ -2016,7 +2020,7 @@ def imprimir_prontuario(request, id):
     paciente = get_object_or_404(
         Paciente,
         id=id
-    )   
+    )
 
     prontuarios = ProntuarioClinico.objects.filter(
         paciente=paciente
@@ -2043,6 +2047,12 @@ def imprimir_prontuario(request, id):
     elementos = []
 
     # =========================================
+    # CONFIGURAÇÃO CLÍNICA
+    # =========================================
+
+    config = ConfiguracaoClinica.objects.first()
+
+    # =========================================
     # LOGO
     # =========================================
 
@@ -2061,42 +2071,86 @@ def imprimir_prontuario(request, id):
             height=90
         )
 
-        logo.hAlign = 'CENTER'
+    logo.hAlign = 'CENTER'
 
-        elementos.append(logo)
+    elementos.append(logo)
+
+    # Pequeno espaço após a logo
+    elementos.append(Spacer(1, 8))
+
+    # =========================================
+    # NOME DA CLÍNICA
+    # =========================================
+
+    estilo_clinica = ParagraphStyle(
+        'Clinica',
+        parent=styles['Heading2'],
+        fontSize=12,
+        leading=14,
+        alignment=1,  # Centralizado
+        spaceAfter=10
+    )
+
+    if config and config.nome_clinica:
+
+        elementos.append(
+            Paragraph(
+                f'''
+                <para align="center">
+                <b>{config.nome_clinica}</b>
+                </para>
+                ''',
+                estilo_clinica
+            )
+        )
 
     # =========================================
     # TÍTULO
     # =========================================
 
-    elementos.append(
-        Paragraph(
-            '''
-            <para align="center">
-            <b>PRONTUÁRIO CLÍNICO</b>
-            </para>
-            ''',
-            styles['Title']
-        )
+    titulo = (
+        'RECEITA DE CONTROLE ESPECIAL'
+        if receita.tipo_receita == 'controle'
+        else 'RECEITUÁRIO'
     )
 
-    elementos.append(Spacer(1, 8))
+    elementos.append(
 
-    # Linha abaixo do título
+        Paragraph(
+
+            f'''
+            <para align="center">
+            <b>{titulo}</b>
+            </para>
+            ''',
+
+            styles['Title']
+
+        )
+
+    )
 
     elementos.append(
+        Spacer(1, 10)
+    )
+
+    elementos.append(
+
         HRFlowable(
             width="100%",
             thickness=1.2,
             color=colors.HexColor('#1e40af')
         )
+
     )
 
-    elementos.append(Spacer(1, 12))
+    elementos.append(
+        Spacer(1, 15)
+    )
 
     # =========================================
     # CABEÇALHO
-    # =========================================   
+    # =========================================
 
     elementos.append(Spacer(1, 15))
 
@@ -2107,7 +2161,7 @@ def imprimir_prontuario(request, id):
         )
     )
 
-    if hasattr(paciente, 'cpf'):
+    if paciente.cpf:
 
         elementos.append(
             Paragraph(
@@ -2116,27 +2170,35 @@ def imprimir_prontuario(request, id):
             )
         )
 
-    telefone = paciente.telefone or 'Não informado'
-    whatsapp = paciente.whatsapp or 'Não informado'
-    email = paciente.email or 'Não informado'
+    telefone_paciente = (
+        paciente.telefone or 'Não informado'
+    )
+
+    whatsapp_paciente = (
+        paciente.whatsapp or 'Não informado'
+    )
+
+    email_paciente = (
+        paciente.email or 'Não informado'
+    )
 
     elementos.append(
         Paragraph(
-            f'<b>Telefone:</b> {telefone}',
+            f'<b>Telefone:</b> {telefone_paciente}',
             styles['Normal']
         )
     )
 
     elementos.append(
         Paragraph(
-            f'<b>WhatsApp:</b> {whatsapp}',
+            f'<b>WhatsApp:</b> {whatsapp_paciente}',
             styles['Normal']
         )
     )
 
     elementos.append(
         Paragraph(
-            f'<b>E-mail:</b> {email}',
+            f'<b>E-mail:</b> {email_paciente}',
             styles['Normal']
         )
     )
@@ -2161,6 +2223,34 @@ def imprimir_prontuario(request, id):
     )
 
     elementos.append(Spacer(1, 15))
+
+    # =========================================
+    # DADOS DA CLÍNICA
+    # =========================================
+
+    nome_clinica = (
+        config.nome_clinica
+        if config and config.nome_clinica
+        else ''
+    )
+
+    telefone_clinica = (
+        config.telefone
+        if config and config.telefone
+        else ''
+    )
+
+    whatsapp_clinica = (
+        config.whatsapp
+        if config and config.whatsapp
+        else ''
+    )
+
+    email_clinica = (
+        config.email
+        if config and config.email
+        else ''
+    )
 
     # =========================================
     # REGISTROS
@@ -2209,37 +2299,20 @@ def imprimir_prontuario(request, id):
 
         elementos.append(Spacer(1, 10))
     # =========================================
-    # ASSINATURAS
+    # ASSINATURA
     # =========================================
 
-    elementos.append(Spacer(1, 50))
+    elementos.append(Spacer(1, 15))
 
     elementos.append(
         Paragraph(
-            '________________________________________________________',
-            styles['Normal']
-        )
-    )
-
-    elementos.append(
-        Paragraph(
-            'Cirurgião-Dentista Responsável',
-            styles['Normal']
-        )
-    )
-
-    elementos.append(Spacer(1, 40))
-
-    elementos.append(
-        Paragraph(
-            '________________________________________________________',
-            styles['Normal']
-        )
-    )
-
-    elementos.append(
-        Paragraph(
-            'Paciente / Responsável Legal',
+            '''
+            <para align="center">
+            _______________________________________
+            <br/>
+            Cirurgião-Dentista Responsável
+            </para>
+            ''',
             styles['Normal']
         )
     )
@@ -2248,17 +2321,50 @@ def imprimir_prontuario(request, id):
     # RODAPÉ
     # =========================================
 
-    elementos.append(Spacer(1, 30))
+    elementos.append(Spacer(1, 20))
+
+    elementos.append(
+        HRFlowable(
+            width="100%",
+            thickness=0.8,
+            color=colors.grey
+        )
+    )
+
+    elementos.append(Spacer(1, 8))
 
     elementos.append(
         Paragraph(
-            '''
+            f'''
             <para align="center">
-            Documento gerado automaticamente pelo
-            <b>AM Systems Odontologia</b>
+            <b>{nome_clinica}</b>
             </para>
             ''',
-            styles['Italic']
+            styles['Normal']
+        )
+    )
+
+    elementos.append(
+        Paragraph(
+            f'''
+            <para align="center">
+            Tel: {telefone_clinica}
+            &nbsp;&nbsp;&nbsp;
+            WhatsApp: {whatsapp_clinica}
+            </para>
+            ''',
+            styles['BodyText']
+        )
+    )
+
+    elementos.append(
+        Paragraph(
+            f'''
+            <para align="center">
+            {email_clinica}
+            </para>
+            ''',
+            styles['BodyText']
         )
     )
 
@@ -2289,18 +2395,36 @@ def novo_documento(request, id):
             'template'
         )
 
-        print(template_id)
-
         conteudo = request.POST.get(
-            'conteudo'
+            'conteudo',
+            ''
         )
+
+        titulo = request.POST.get(
+            'titulo',
+            ''
+        )
+
+        tipo_documento = request.POST.get(
+            'tipo',
+            'personalizado'
+        )
+
+        # =========================================
+        # TEMPLATE SELECIONADO
+        # =========================================
 
         if template_id:
 
-            template = TemplateDocumento.objects.get(
+            template = get_object_or_404(
+                TemplateDocumento,
                 id=template_id
             )
 
+            # usa o tipo do template
+            tipo_documento = template.tipo
+
+            # usa o conteúdo do template
             conteudo = template.conteudo
 
             conteudo = conteudo.replace(
@@ -2350,17 +2474,22 @@ def novo_documento(request, id):
                 config.cro if config and config.cro else ''
             )
 
-            
+            # se não informar título,
+            # usa o nome do template
+            if not titulo:
+                titulo = template.nome
 
         documento = DocumentoClinico.objects.create(
 
             paciente=paciente,
 
-            titulo=request.POST.get(
-                'titulo'
-            ),
+            titulo=titulo,
 
-            conteudo=conteudo
+            tipo=tipo_documento,
+
+            conteudo=conteudo,
+
+            status='rascunho'
 
         )
 
@@ -2437,6 +2566,272 @@ def editar_documento(request, id):
         }
 
     ) 
+
+@login_required(login_url='/')
+def imprimir_documento(request, id):
+
+    documento = get_object_or_404(
+        DocumentoClinico,
+        id=id
+    )
+
+    paciente = documento.paciente
+
+    config = ConfiguracaoClinica.objects.first()
+
+    response = HttpResponse(
+        content_type='application/pdf'
+    )
+
+    response[
+        'Content-Disposition'
+    ] = f'inline; filename="documento_{documento.id}.pdf"'
+
+    doc = SimpleDocTemplate(
+        response,
+        topMargin=30,
+        bottomMargin=30,
+        leftMargin=40,
+        rightMargin=40
+    )
+
+    styles = getSampleStyleSheet()
+
+    elementos = []
+
+   # =========================================
+    # LOGO
+    # =========================================
+
+    logo_path = os.path.join(
+        settings.BASE_DIR,
+        'static',
+        'img',
+        'logo.png'
+    )
+
+    if os.path.exists(logo_path):
+
+        logo = Image(
+            logo_path,
+            width=240,
+            height=90
+        )
+
+        logo.hAlign = 'CENTER'
+
+        elementos.append(logo)
+
+        elementos.append(
+            Spacer(1, 8)
+        )
+
+    # =========================================
+    # NOME DA CLÍNICA
+    # =========================================
+
+    if config and config.nome_clinica:
+
+        elementos.append(
+            Paragraph(
+                f'''
+                <para align="center">
+                <b>{config.nome_clinica}</b>
+                </para>
+                ''',
+                styles['Heading2']
+            )
+        )
+
+    # =========================================
+    # TÍTULO
+    # =========================================
+
+    elementos.append(
+        Paragraph(
+            f'''
+            <para align="center">
+            <b>{documento.titulo.upper()}</b>
+            </para>
+            ''',
+            styles['Title']
+        )
+    )
+
+    elementos.append(Spacer(1, 10))
+
+    elementos.append(
+        HRFlowable(
+            width="100%",
+            thickness=1.2,
+            color=colors.HexColor('#1e40af')
+        )
+    )
+
+    elementos.append(Spacer(1, 15))
+
+    # =========================================
+    # PACIENTE
+    # =========================================
+
+    elementos.append(
+        Paragraph(
+            f'<b>Paciente:</b> {paciente.nome}',
+            styles['Normal']
+        )
+    )
+
+    if paciente.cpf:
+
+        elementos.append(
+            Paragraph(
+                f'<b>CPF:</b> {paciente.cpf}',
+                styles['Normal']
+            )
+        )
+
+    elementos.append(Spacer(1, 15))
+
+    # =========================================
+    # CONTEÚDO
+    # =========================================
+
+    from reportlab.lib.styles import ParagraphStyle
+
+    estilo_conteudo = ParagraphStyle(
+        'ConteudoDocumento',
+        parent=styles['BodyText'],
+        fontSize=11,
+        leading=20,
+        alignment=4,  # Justificado
+        spaceBefore=0,
+        spaceAfter=12,
+    )
+
+    conteudo = documento.conteudo.replace(
+        '\n',
+        '<br/>'
+    )
+
+    elementos.append(
+        Paragraph(
+            conteudo,
+            estilo_conteudo
+        )
+    )
+
+    # =========================================
+    # ASSINATURA
+    # =========================================
+
+    elementos.append(
+        Spacer(1, 35)
+    )
+
+    elementos.append(
+        Paragraph(
+            '''
+            <para align="center">
+            ____________________________________
+            <br/>
+            Assinatura e Carimbo
+            </para>
+            ''',
+            styles['Normal']
+        )
+    )
+    # =========================================
+    # DADOS DA CLÍNICA
+    # =========================================
+
+    telefone = (
+        config.telefone
+        if config and config.telefone
+        else ''
+    )
+
+    whatsapp = (
+        config.whatsapp
+        if config and config.whatsapp
+        else ''
+    )
+
+    email = (
+        config.email
+        if config and config.email
+        else ''
+    )
+
+    endereco = (
+        config.endereco
+        if config and hasattr(config, 'endereco')
+        else ''
+    )
+
+    # =========================================
+    # RODAPÉ
+    # =========================================
+
+    elementos.append(
+        Spacer(1, 20)
+    )
+
+    elementos.append(
+        HRFlowable(
+            width="100%",
+            thickness=0.8,
+            color=colors.grey
+        )
+    )
+
+    elementos.append(
+        Spacer(1, 8)
+    )
+
+    if nome_clinica:
+
+        elementos.append(
+            Paragraph(
+                f'''
+                <para align="center">
+                <b>{nome_clinica}</b>
+                </para>
+                ''',
+                styles['Normal']
+            )
+        )
+
+    if telefone_clinica or whatsapp_clinica:
+
+        elementos.append(
+            Paragraph(
+                f'''
+                <para align="center">
+                Tel: {telefone_clinica}
+                &nbsp;&nbsp;&nbsp;
+                WhatsApp: {whatsapp_clinica}
+                </para>
+                ''',
+                styles['BodyText']
+            )
+        )
+
+    if email_clinica:
+
+        elementos.append(
+            Paragraph(
+                f'''
+                <para align="center">
+                {email_clinica}
+                </para>
+                ''',
+                styles['BodyText']
+            )
+        )
+
+        doc.build(elementos)
+
+        return response
 
 # =========================================
 # VISUALIZAR DOCUMENTO
@@ -2763,3 +3158,617 @@ def gerar_resumo_clinico(anamnese):
         )
 
     return ' • '.join(resumo)
+
+# =========================================
+# MEDICAMENTOS
+# =========================================
+
+@login_required(login_url='/')
+def medicamentos(request):
+
+    medicamentos = Medicamento.objects.all().order_by(
+        'nome'
+    )
+
+    return render(
+
+        request,
+
+        'accounts/medicamentos.html',
+
+        {
+            'medicamentos': medicamentos
+        }
+
+    )
+
+
+@login_required(login_url='/')
+def novo_medicamento(request):
+
+    if request.method == 'POST':
+
+        Medicamento.objects.create(
+
+            nome=request.POST.get(
+                'nome'
+            ),
+
+            concentracao=request.POST.get(
+                'concentracao'
+            ),
+
+            categoria=request.POST.get(
+                'categoria'
+            )
+
+        )
+
+        return redirect(
+            'medicamentos'
+        )
+
+    return render(
+
+        request,
+
+        'accounts/medicamento_form.html'
+
+    )
+
+# =========================================
+# RECEITAS
+# =========================================
+
+@login_required(login_url='/')
+def receitas(request, id):
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
+
+    receitas = Receita.objects.filter(
+        paciente=paciente
+    )
+
+    return render(
+
+        request,
+
+        'accounts/receitas.html',
+
+        {
+
+            'paciente': paciente,
+            'receitas': receitas
+
+        }
+
+    )
+
+
+# =========================================
+# NOVA RECEITA
+# =========================================
+
+@login_required(login_url='/')
+def nova_receita(request, id):
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
+
+    medicamentos = Medicamento.objects.filter(
+        ativo=True
+    ).order_by('nome')
+
+    if request.method == 'POST':
+
+        Receita.objects.create(
+
+            paciente=paciente,
+
+            medicamento_id=request.POST.get(
+                'medicamento'
+            ),
+
+            quantidade=request.POST.get(
+                'quantidade'
+            ),
+
+            posologia=request.POST.get(
+                'posologia'
+            ),
+
+            observacoes=request.POST.get(
+                'observacoes'
+            ),
+
+            tipo_receita=request.POST.get(
+                'tipo_receita',
+                'simples'
+            )
+
+        )
+
+        return redirect(
+            'receitas',
+            id=paciente.id
+        )
+
+    return render(
+
+        request,
+
+        'accounts/receita_form.html',
+
+        {
+
+            'paciente': paciente,
+
+            'medicamentos': medicamentos
+
+        }
+
+    )
+
+# =========================================
+# EDITAR RECEITA
+# =========================================
+
+@login_required(login_url='/')
+def editar_receita(request, id):
+
+    receita = get_object_or_404(
+        Receita,
+        id=id
+    )
+
+    medicamentos = Medicamento.objects.filter(
+        ativo=True
+    ).order_by('nome')
+
+    if request.method == 'POST':
+
+        receita.medicamento_id = request.POST.get(
+            'medicamento'
+        )
+
+        receita.quantidade = request.POST.get(
+            'quantidade'
+        )
+
+        receita.posologia = request.POST.get(
+            'posologia'
+        )
+
+        receita.observacoes = request.POST.get(
+            'observacoes'
+        )
+
+        receita.tipo_receita = request.POST.get(
+            'tipo_receita',
+            'simples'
+        )
+
+        receita.save()
+
+        return redirect(
+            'receitas',
+            id=receita.paciente.id
+        )
+
+    return render(
+
+        request,
+
+        'accounts/receita_form.html',
+
+        {
+
+            'receita': receita,
+
+            'paciente': receita.paciente,
+
+            'medicamentos': medicamentos
+
+        }
+
+    )
+
+# =========================================
+# EXCLUIR RECEITA
+# =========================================
+
+@login_required(login_url='/')
+def excluir_receita(request, id):
+
+    receita = get_object_or_404(
+        Receita,
+        id=id
+    )
+
+    paciente_id = receita.paciente.id
+
+    receita.delete()
+
+    return redirect(
+        'receitas',
+        id=paciente_id
+    )
+
+# =========================================
+# PDF RECEITA
+# =========================================
+
+@login_required(login_url='/')
+def imprimir_receita(request, id):
+
+    receita = get_object_or_404(
+        Receita,
+        id=id
+    )
+
+    paciente = receita.paciente
+
+    config = ConfiguracaoClinica.objects.first()
+
+    response = HttpResponse(
+        content_type='application/pdf'
+    )
+
+    response[
+        'Content-Disposition'
+    ] = f'inline; filename="receita_{receita.id}.pdf"'
+
+    doc = SimpleDocTemplate(
+        response,
+        topMargin=30,
+        bottomMargin=30,
+        leftMargin=40,
+        rightMargin=40
+    )
+
+    styles = getSampleStyleSheet()
+
+    elementos = []
+
+    # =========================================
+    # LOGO
+    # =========================================
+
+    logo_path = os.path.join(
+        settings.BASE_DIR,
+        'static',
+        'img',
+        'logo.png'
+    )
+
+    if os.path.exists(logo_path):
+
+        logo = Image(
+            logo_path,
+            width=240,
+            height=90
+        )
+
+        logo.hAlign = 'CENTER'
+
+        elementos.append(logo)
+
+        elementos.append(
+            Spacer(1, 8)
+        )
+
+
+
+    # =========================================
+    # TÍTULO
+    # =========================================
+
+    titulo = (
+        'RECEITA DE CONTROLE ESPECIAL'
+        if receita.tipo_receita == 'controle'
+        else 'RECEITUÁRIO'
+    )
+
+    elementos.append(
+
+        Paragraph(
+
+            f'''
+            <para align="center">
+            <b>{titulo}</b>
+            </para>
+            ''',
+
+            styles['Title']
+
+        )
+
+    )
+
+    elementos.append(
+        Spacer(1, 10)
+    )
+
+    elementos.append(
+
+        HRFlowable(
+            width="100%",
+            thickness=1.2,
+            color=colors.HexColor('#1e40af')
+        )
+
+    )
+
+    elementos.append(
+        Spacer(1, 15)
+    )
+
+    # =========================================
+    # PACIENTE
+    # =========================================
+
+    elementos.append(
+
+        Paragraph(
+
+            f'<b>Paciente:</b> {paciente.nome}',
+
+            styles['Normal']
+
+        )
+
+    )
+
+    if paciente.cpf:
+
+        elementos.append(
+
+            Paragraph(
+
+                f'<b>CPF:</b> {paciente.cpf}',
+
+                styles['Normal']
+
+            )
+
+        )
+
+    elementos.append(
+        Spacer(1, 15)
+    )
+
+    # =========================================
+    # MEDICAMENTO
+    # =========================================
+
+    elementos.append(
+
+        Paragraph(
+
+            '<b>Medicamento:</b>',
+
+            styles['Heading3']
+
+        )
+
+    )
+
+    elementos.append(
+
+        Paragraph(
+
+            str(receita.medicamento),
+
+            styles['BodyText']
+
+        )
+
+    )
+
+    elementos.append(
+        Spacer(1, 10)
+    )
+
+    # =========================================
+    # QUANTIDADE
+    # =========================================
+
+    elementos.append(
+
+        Paragraph(
+
+            '<b>Quantidade:</b>',
+
+            styles['Heading3']
+
+        )
+
+    )
+
+    elementos.append(
+
+        Paragraph(
+
+            receita.quantidade,
+
+            styles['BodyText']
+
+        )
+
+    )
+
+    elementos.append(
+        Spacer(1, 10)
+    )
+
+    # =========================================
+    # POSOLOGIA
+    # =========================================
+
+    elementos.append(
+
+        Paragraph(
+
+            '<b>Posologia:</b>',
+
+            styles['Heading3']
+
+        )
+
+    )
+
+    elementos.append(
+
+        Paragraph(
+
+            receita.posologia,
+
+            styles['BodyText']
+
+        )
+
+    )
+
+    elementos.append(
+        Spacer(1, 10)
+    )
+
+    # =========================================
+    # OBSERVAÇÕES
+    # =========================================
+
+    if receita.observacoes:
+
+        elementos.append(
+
+            Paragraph(
+
+                '<b>Observações:</b>',
+
+                styles['Heading3']
+
+            )
+
+        )
+
+        elementos.append(
+
+            Paragraph(
+
+                receita.observacoes,
+
+                styles['BodyText']
+
+            )
+
+        )
+
+        elementos.append(
+            Spacer(1, 10)
+        )
+
+    
+
+    # =========================================
+    # ASSINATURA
+    # =========================================
+
+    elementos.append(
+        Spacer(1, 25)
+    )
+
+    elementos.append(
+        Paragraph(
+            '''
+            <para align="center">
+            _______________________________________
+            <br/>
+            Cirurgião-Dentista Responsável
+            </para>
+            ''',
+            styles['Normal']
+        )
+    )
+
+    # =========================================
+    # RODAPÉ
+    # =========================================
+
+    elementos.append(
+        Spacer(1, 20)
+    )
+
+    elementos.append(
+        HRFlowable(
+            width="100%",
+            thickness=0.8,
+            color=colors.grey
+        )
+    )
+
+    elementos.append(
+        Spacer(1, 8)
+    )
+
+    if config and config.nome_clinica:
+
+        elementos.append(
+            Paragraph(
+                f'''
+                <para align="center">
+                <b>{config.nome_clinica}</b>
+                </para>
+                ''',
+                styles['Normal']
+            )
+        )
+
+    if config and config.telefone:
+
+        elementos.append(
+            Paragraph(
+                f'''
+                <para align="center">
+                Tel: {config.telefone}
+                &nbsp;&nbsp;&nbsp;
+                WhatsApp: {config.whatsapp}
+                </para>
+                ''',
+                styles['BodyText']
+            )
+        )
+
+    if config and config.endereco:
+
+        elementos.append(
+            Paragraph(
+                f'''
+                <para align="center">
+                {config.endereco}
+                </para>
+                ''',
+                styles['BodyText']
+            )
+        )
+
+    if config and config.email:
+
+        elementos.append(
+            Paragraph(
+                f'''
+                <para align="center">
+                {config.email}
+                </para>
+                ''',
+                styles['BodyText']
+            )
+        )
+
+    doc.build(elementos)
+
+    return response

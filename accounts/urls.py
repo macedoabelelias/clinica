@@ -243,7 +243,61 @@ path(
     name='configuracao_clinica'
 ),
 
+path(
+    'documento/<int:id>/pdf/',
+    views.imprimir_documento,
+    name='imprimir_documento'
+),
 
+# =========================================
+# MEDICAMENTOS
+# =========================================
+
+path(
+    'medicamentos/',
+    views.medicamentos,
+    name='medicamentos'
+),
+
+path(
+    'medicamentos/novo/',
+    views.novo_medicamento,
+    name='novo_medicamento'
+),
+
+# =========================================
+# RECEITAS
+# =========================================
+
+path(
+    'pacientes/<int:id>/receitas/',
+    views.receitas,
+    name='receitas'
+),
+
+path(
+    'pacientes/<int:id>/receita/nova/',
+    views.nova_receita,
+    name='nova_receita'
+),
+
+path(
+    'receita/editar/<int:id>/',
+    views.editar_receita,
+    name='editar_receita'
+),
+
+path(
+    'receita/excluir/<int:id>/',
+    views.excluir_receita,
+    name='excluir_receita'
+),
+
+path(
+    'receita/<int:id>/pdf/',
+    views.imprimir_receita,
+    name='imprimir_receita'
+),
 
 path(
     'pacientes/<int:id>/procedimento-geral/',
