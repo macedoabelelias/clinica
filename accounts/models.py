@@ -1758,6 +1758,7 @@ class Medicamento(models.Model):
 
 class Receita(models.Model):
 
+
     paciente = models.ForeignKey(
 
         Paciente,
@@ -1768,11 +1769,9 @@ class Receita(models.Model):
 
     )
 
-    medicamento = models.ForeignKey(
+    medicamento = models.CharField(
 
-        Medicamento,
-
-        on_delete=models.PROTECT
+        max_length=300
 
     )
 
@@ -1841,4 +1840,140 @@ class Receita(models.Model):
         return (
             f'{self.paciente.nome} - '
             f'{self.medicamento}'
+        )
+    
+
+# =========================================
+# MODELOS DE RECEITA
+# =========================================
+
+class ModeloReceita(models.Model):
+
+    nome = models.CharField(
+        max_length=200
+    )
+
+    medicamento = models.CharField(
+        max_length=255
+    )
+
+    quantidade = models.CharField(
+        max_length=100,
+        blank=True
+    )
+
+    posologia = models.TextField()
+
+    ativo = models.BooleanField(
+        default=True
+    )
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+
+        verbose_name = 'Modelo de Receita'
+
+        verbose_name_plural = 'Modelos de Receita'
+
+        ordering = ['nome']
+
+    def __str__(self):
+
+        return self.nome
+    
+
+# =========================================
+# EXAMES
+# =========================================
+
+class Exame(models.Model):
+
+    paciente = models.ForeignKey(
+        Paciente,
+        on_delete=models.CASCADE,
+        related_name='exames'
+    )
+
+    nome = models.CharField(
+        max_length=200
+    )
+
+    data_exame = models.DateField(
+        blank=True,
+        null=True
+    )
+
+    arquivo = models.FileField(
+        upload_to='exames/',
+        blank=True,
+        null=True
+    )
+
+    observacoes = models.TextField(
+        blank=True,
+        null=True
+    )
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+
+        ordering = ['-criado_em']
+
+        verbose_name = 'Exame'
+
+        verbose_name_plural = 'Exames'
+
+    def __str__(self):
+
+        return (
+            f'{self.paciente.nome} - '
+            f'{self.nome}'
+        )
+    
+# =========================================
+# SOLICITAÇÃO DE EXAMES
+# =========================================
+
+class SolicitacaoExame(models.Model):
+
+    paciente = models.ForeignKey(
+        Paciente,
+        on_delete=models.CASCADE,
+        related_name='solicitacoes_exames'
+    )
+
+    titulo = models.CharField(
+        max_length=200
+    )
+
+    exames_solicitados = models.TextField()
+
+    observacoes = models.TextField(
+        blank=True,
+        null=True
+    )
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+
+        ordering = ['-criado_em']
+
+        verbose_name = 'Solicitação de Exame'
+
+        verbose_name_plural = 'Solicitações de Exames'
+
+    def __str__(self):
+
+        return (
+            f'{self.paciente.nome} - '
+            f'{self.titulo}'
         )

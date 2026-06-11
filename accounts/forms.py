@@ -9,6 +9,7 @@ from .models import (
 
 )
 
+from .models import Receita, ModeloReceita
 
 # =========================================
 # FORM PROCEDIMENTO

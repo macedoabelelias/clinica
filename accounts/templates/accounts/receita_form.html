@@ -27,45 +27,65 @@
 
     {% csrf_token %}
 
+    <!-- MODELO DE RECEITA -->
+
+<div class="mb-3">
+
+    <label class="form-label">
+
+        Modelo de Receita
+
+    </label>
+
+    <select
+        id="modelo_receita"
+        class="form-select"
+    >
+
+        <option value="">
+
+            Selecione um modelo
+
+        </option>
+
+        {% for modelo in modelos_receita %}
+
+            <option value="{{ modelo.id }}">
+
+                {{ modelo.nome }}
+
+            </option>
+
+        {% endfor %}
+
+    </select>
+
+</div>
+
     <!-- MEDICAMENTO -->
 
-    <div class="mb-3">
+<div class="mb-3">
 
-        <label class="form-label">
 
-            Medicamento
+<label class="form-label">
 
-        </label>
+    Medicamento
 
-        <select
-            name="medicamento"
-            class="form-select"
-            required
-        >
+</label>
 
-            <option value="">
+<input
+    id="medicamento"
+    type="text"
+    name="medicamento"
+    class="form-control"
+    value="{{ receita.medicamento|default:'' }}"
+    placeholder="Ex.: Amoxicilina 500 mg"
+    required
+>
 
-                Selecione um medicamento
 
-            </option>
+</div>
 
-            {% for medicamento in medicamentos %}
-
-            <option
-                value="{{ medicamento.id }}"
-                {% if receita and receita.medicamento.id == medicamento.id %}selected{% endif %}
-            >
-
-                {{ medicamento.nome }}
-                {{ medicamento.concentracao }}
-
-            </option>
-
-            {% endfor %}
-
-        </select>
-
-    </div>
 
     <!-- TIPO DE RECEITA -->
 
@@ -78,6 +98,7 @@
         </label>
 
         <select
+            id="tipo_receita"
             name="tipo_receita"
             class="form-select"
         >
@@ -111,6 +132,7 @@
         </label>
 
         <input
+            id="quantidade"
             type="text"
             name="quantidade"
             class="form-control"
@@ -132,6 +154,7 @@
         </label>
 
         <textarea
+            id="posologia"
             name="posologia"
             rows="4"
             class="form-control"
@@ -151,6 +174,7 @@
         </label>
 
         <textarea
+            id="observacoes"
             name="observacoes"
             rows="3"
             class="form-control"
@@ -187,5 +211,88 @@
 </form>
 
 </div>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function(){
+
+    const modelo = document.getElementById(
+        'modelo_receita'
+    );
+
+    modelo.addEventListener(
+        'change',
+        function(){
+
+            if(!this.value)
+                return;
+
+            console.log(
+                'Modelo selecionado:',
+                this.value
+            );
+
+            fetch(
+                `/modelo-receita/${this.value}/`
+            )
+
+            .then(
+                response => response.json()
+            )
+
+            .then(
+    data => {
+
+        console.log('Preenchendo...');
+
+        const medicamento =
+            document.getElementById(
+                'medicamento'
+            );
+
+        const quantidade =
+            document.getElementById(
+                'quantidade'
+            );
+
+        const posologia =
+            document.getElementById(
+                'posologia'
+            );
+
+        medicamento.value =
+            data.medicamento;
+
+        quantidade.value =
+            data.quantidade;
+
+        posologia.value =
+            data.posologia;
+
+        console.log(
+            medicamento.value,
+            quantidade.value,
+            posologia.value
+        );
+
+    }
+)
+
+            .catch(
+                error => {
+
+                    console.error(
+                        error
+                    );
+
+                }
+            );
+
+        }
+    );
+
+});
+
+</script>
 
 {% endblock %}

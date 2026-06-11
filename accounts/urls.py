@@ -300,10 +300,57 @@ path(
 ),
 
 path(
+    'modelo-receita/<int:id>/',
+    views.buscar_modelo_receita,
+    name='buscar_modelo_receita'
+),
+
+path(
+    'modelos-receita/',
+    views.modelos_receita,
+    name='modelos_receita'
+),
+
+path(
+    'modelos-receita/<int:id>/editar/',
+    views.editar_modelo_receita,
+    name='editar_modelo_receita'
+),
+
+path(
+    'modelos-receita/<int:id>/excluir/',
+    views.excluir_modelo_receita,
+    name='excluir_modelo_receita'
+),
+
+# =========================================
+# EXAMES
+# =========================================
+
+path(
+    'pacientes/<int:id>/exames/',
+    views.exames,
+    name='exames'
+),
+
+path(
+    'pacientes/<int:id>/exame/novo/',
+    views.novo_exame,
+    name='novo_exame'
+),
+
+path(
+    'exame/<int:id>/excluir/',
+    views.excluir_exame,
+    name='excluir_exame'
+),
+
+path(
     'pacientes/<int:id>/procedimento-geral/',
     views.salvar_procedimento_geral,
     name='salvar_procedimento_geral'
-)
+),
 
 ]
+
 

@@ -147,8 +147,8 @@
 </a>
 
 <a
-    href="#"
-    class="menu-clinico-btn"
+    href="{% url 'exames' paciente.id %}"
+    class="menu-clinico-btn {% if request.resolver_match.url_name == 'exames' %}active{% endif %}"
 >
     <i class="bi bi-file-earmark-medical icon-exame"></i>
     <span>Exames</span>

@@ -2,20 +2,42 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-between mb-3">
+<div class="d-flex justify-content-between align-items-center mb-3">
 
-    <h3>
+    <h3 class="mb-0">
 
         Receitas - {{ paciente.nome }}
 
     </h3>
 
-    <a
-        href="{% url 'nova_receita' paciente.id %}"
-        class="btn btn-primary"
-    >
-        Nova Receita
-    </a>
+    <div class="d-flex gap-2">
+
+        <a
+            href="{% url 'perfil_paciente' paciente.id %}"
+            class="btn btn-outline-secondary"
+        >
+            <i class="bi bi-arrow-left"></i>
+            Voltar
+        </a>
+
+        <a
+            href="{% url 'nova_receita' paciente.id %}"
+            class="btn btn-primary"
+        >
+            Nova Receita
+        </a>
+
+        <a
+            href="{% url 'modelos_receita' %}"
+            class="btn btn-outline-secondary"
+        >
+            <i class="bi bi-journal-medical"></i>
+            Modelos de Receita
+        </a>
+
+        
+
+    </div>
 
 </div>
 
@@ -53,6 +75,7 @@
 
             <a
                 href="{% url 'editar_receita' receita.id %}"
+                target="_blank"
                 class="btn btn-sm btn-primary"
             >
                 Editar
@@ -60,6 +83,7 @@
 
              <a
                 href="{% url 'imprimir_receita' receita.id %}"
+                target="_blank"
                 class="btn btn-sm btn-success"
             >
                 PDF

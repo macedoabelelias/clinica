@@ -1,10 +1,11 @@
-from logging import config
 import os
-from urllib import response
 
 from django.conf import settings
 
-from django.http import HttpResponse
+from django.http import (
+    HttpResponse,
+    JsonResponse
+)
 
 from django.shortcuts import (
     render,
@@ -51,6 +52,8 @@ from .models import (
     ConfiguracaoClinica,
     Medicamento,
     Receita,
+    ModeloReceita,
+    Exame,
 )
 
 from .forms import (
@@ -2108,19 +2111,13 @@ def imprimir_prontuario(request, id):
     # TÍTULO
     # =========================================
 
-    titulo = (
-        'RECEITA DE CONTROLE ESPECIAL'
-        if receita.tipo_receita == 'controle'
-        else 'RECEITUÁRIO'
-    )
-
     elementos.append(
 
         Paragraph(
 
-            f'''
+            '''
             <para align="center">
-            <b>{titulo}</b>
+            <b>PRONTUÁRIO CLÍNICO</b>
             </para>
             ''',
 
@@ -2744,27 +2741,27 @@ def imprimir_documento(request, id):
     # DADOS DA CLÍNICA
     # =========================================
 
-    telefone = (
+    nome_clinica = (
+        config.nome_clinica
+        if config and config.nome_clinica
+        else ''
+    )
+
+    telefone_clinica = (
         config.telefone
         if config and config.telefone
         else ''
     )
 
-    whatsapp = (
+    whatsapp_clinica = (
         config.whatsapp
         if config and config.whatsapp
         else ''
     )
 
-    email = (
+    email_clinica = (
         config.email
         if config and config.email
-        else ''
-    )
-
-    endereco = (
-        config.endereco
-        if config and hasattr(config, 'endereco')
         else ''
     )
 
@@ -2829,9 +2826,9 @@ def imprimir_documento(request, id):
             )
         )
 
-        doc.build(elementos)
+    doc.build(elementos)
 
-        return response
+    return response
 
 # =========================================
 # VISUALIZAR DOCUMENTO
@@ -3260,17 +3257,13 @@ def nova_receita(request, id):
         id=id
     )
 
-    medicamentos = Medicamento.objects.filter(
-        ativo=True
-    ).order_by('nome')
-
     if request.method == 'POST':
 
         Receita.objects.create(
 
             paciente=paciente,
 
-            medicamento_id=request.POST.get(
+            medicamento=request.POST.get(
                 'medicamento'
             ),
 
@@ -3308,11 +3301,14 @@ def nova_receita(request, id):
 
             'paciente': paciente,
 
-            'medicamentos': medicamentos
+            'modelos_receita': ModeloReceita.objects.filter(
+                ativo=True
+            ).order_by('nome')
 
         }
 
     )
+
 
 # =========================================
 # EDITAR RECEITA
@@ -3326,13 +3322,9 @@ def editar_receita(request, id):
         id=id
     )
 
-    medicamentos = Medicamento.objects.filter(
-        ativo=True
-    ).order_by('nome')
-
     if request.method == 'POST':
 
-        receita.medicamento_id = request.POST.get(
+        receita.medicamento = request.POST.get(
             'medicamento'
         )
 
@@ -3370,13 +3362,12 @@ def editar_receita(request, id):
 
             'receita': receita,
 
-            'paciente': receita.paciente,
-
-            'medicamentos': medicamentos
+            'paciente': receita.paciente
 
         }
 
     )
+
 
 # =========================================
 # EXCLUIR RECEITA
@@ -3772,3 +3763,267 @@ def imprimir_receita(request, id):
     doc.build(elementos)
 
     return response
+
+# =========================================
+# MODELO DE RECEITA AJAX
+# =========================================
+
+@login_required(login_url='/')
+def buscar_modelo_receita(request, id):
+
+    modelo = get_object_or_404(
+        ModeloReceita,
+        id=id
+    )
+
+    return JsonResponse({
+
+        'medicamento': modelo.medicamento,
+
+        'quantidade': modelo.quantidade,
+
+        'posologia': modelo.posologia,
+
+    })
+
+# =========================================
+# MODELOS DE RECEITA
+# =========================================
+
+@login_required(login_url='/')
+def modelos_receita(request):
+
+    modelos = ModeloReceita.objects.all().order_by(
+        'nome'
+    )
+
+    if request.method == 'POST':
+
+        ModeloReceita.objects.create(
+
+            nome=request.POST.get(
+                'nome'
+            ),
+
+            medicamento=request.POST.get(
+                'medicamento'
+            ),
+
+            quantidade=request.POST.get(
+                'quantidade'
+            ),
+
+            posologia=request.POST.get(
+                'posologia'
+            ),
+
+            ativo='ativo' in request.POST
+
+        )
+
+        return redirect(
+            'modelos_receita'
+        )
+
+    return render(
+
+        request,
+
+        'accounts/modelos_receita.html',
+
+        {
+
+            'modelos': modelos
+
+        }
+
+    )
+
+# =========================================
+# EXCLUIR MODELO RECEITA
+# =========================================
+
+@login_required(login_url='/')
+def excluir_modelo_receita(request, id):
+
+    modelo = get_object_or_404(
+        ModeloReceita,
+        id=id
+    )
+
+    modelo.delete()
+
+    return redirect(
+        'modelos_receita'
+    )
+
+# =========================================
+# EDITAR MODELO RECEITA
+# =========================================
+
+@login_required(login_url='/')
+def editar_modelo_receita(request, id):
+
+    modelo = get_object_or_404(
+        ModeloReceita,
+        id=id
+    )
+
+    if request.method == 'POST':
+
+        modelo.nome = request.POST.get(
+            'nome'
+        )
+
+        modelo.medicamento = request.POST.get(
+            'medicamento'
+        )
+
+        modelo.quantidade = request.POST.get(
+            'quantidade'
+        )
+
+        modelo.posologia = request.POST.get(
+            'posologia'
+        )
+
+        modelo.ativo = (
+            'ativo' in request.POST
+        )
+
+        modelo.save()
+
+        return redirect(
+            'modelos_receita'
+        )
+
+    return render(
+
+        request,
+
+        'accounts/modelo_receita_form.html',
+
+        {
+
+            'modelo': modelo
+
+        }
+
+    )
+
+# =========================================
+# EXAMES
+# =========================================
+
+@login_required(login_url='/')
+def exames(request, id):
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
+
+    exames = Exame.objects.filter(
+        paciente=paciente
+    ).order_by(
+        '-criado_em'
+    )
+
+    return render(
+
+        request,
+
+        'accounts/exames.html',
+
+        {
+
+            'paciente': paciente,
+            'exames': exames
+
+        }
+
+    )
+
+
+# =========================================
+# NOVO EXAME
+# =========================================
+
+@login_required(login_url='/')
+def novo_exame(request, id):
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
+
+    if request.method == 'POST':
+
+        Exame.objects.create(
+
+            paciente=paciente,
+
+            nome=request.POST.get(
+                'nome'
+            ),
+
+            data_exame=request.POST.get(
+                'data_exame'
+            ),
+
+            observacoes=request.POST.get(
+                'observacoes'
+            ),
+
+            arquivo=request.FILES.get(
+                'arquivo'
+            )
+
+        )
+
+        return redirect(
+            'exames',
+            paciente.id
+        )
+
+    return render(
+
+        request,
+
+        'accounts/novo_exame.html',
+
+        {
+
+            'paciente': paciente
+
+        }
+
+    )
+
+
+# =========================================
+# EXCLUIR EXAME
+# =========================================
+
+@login_required(login_url='/')
+def excluir_exame(request, id):
+
+    exame = get_object_or_404(
+        Exame,
+        id=id
+    )
+
+    paciente_id = exame.paciente.id
+
+    if exame.arquivo:
+
+        exame.arquivo.delete(
+            save=False
+        )
+
+    exame.delete()
+
+    return redirect(
+        'exames',
+        paciente_id
+    )
