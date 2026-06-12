@@ -54,6 +54,7 @@ from .models import (
     Receita,
     ModeloReceita,
     Exame,
+    SolicitacaoExame,
 )
 
 from .forms import (
@@ -1117,6 +1118,18 @@ def ficha_clinica(request, id):
         paciente=paciente
     )
 
+    receitas = Receita.objects.filter(
+        paciente=paciente
+    )
+
+    exames = Exame.objects.filter(
+        paciente=paciente
+    )
+
+    solicitacoes = SolicitacaoExame.objects.filter(
+        paciente=paciente
+    )
+
     # =========================================
     # RESUMO CLÍNICO
     # =========================================
@@ -1171,9 +1184,14 @@ def ficha_clinica(request, id):
         'prontuarios': prontuarios,
 
         'anexos': anexos,
+
         'documentos': documentos,
 
-        # RESUMO CLÍNICO
+        'receitas': receitas,
+
+        'exames': exames,
+
+        'solicitacoes': solicitacoes,
 
         'total_procedimentos': total_procedimentos,
 
@@ -2562,6 +2580,27 @@ def editar_documento(request, id):
 
         }
 
+    )
+
+# =========================================
+# EXCLUIR DOCUMENTO
+# =========================================
+
+@login_required(login_url='/')
+def excluir_documento(request, id):
+
+    documento = get_object_or_404(
+        DocumentoClinico,
+        id=id
+    )
+
+    paciente_id = documento.paciente.id
+
+    documento.delete()
+
+    return redirect(
+        'ficha_clinica',
+        paciente_id
     ) 
 
 @login_required(login_url='/')
@@ -4027,3 +4066,496 @@ def excluir_exame(request, id):
         'exames',
         paciente_id
     )
+
+# =========================================
+# SOLICITAÇÕES DE EXAMES
+# =========================================
+
+@login_required(login_url='/')
+def solicitacoes_exames(request, id):
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
+
+    solicitacoes = SolicitacaoExame.objects.filter(
+        paciente=paciente
+    )
+
+    return render(
+
+        request,
+
+        'accounts/solicitacoes_exames.html',
+
+        {
+
+            'paciente': paciente,
+            'solicitacoes': solicitacoes
+
+        }
+
+    )
+
+
+# =========================================
+# NOVA SOLICITAÇÃO DE EXAME
+# =========================================
+
+@login_required(login_url='/')
+def nova_solicitacao_exame(request, id):
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
+
+    if request.method == 'POST':
+
+        SolicitacaoExame.objects.create(
+
+            paciente=paciente,
+
+            titulo=request.POST.get(
+                'titulo'
+            ),
+
+            exames_solicitados=request.POST.get(
+                'exames_solicitados'
+            ),
+
+            observacoes=request.POST.get(
+                'observacoes'
+            )
+
+        )
+
+        return redirect(
+            'solicitacoes_exames',
+            paciente.id
+        )
+
+    return render(
+
+        request,
+
+        'accounts/nova_solicitacao_exame.html',
+
+        {
+
+            'paciente': paciente
+
+        }
+
+    )
+
+
+# =========================================
+# EXCLUIR SOLICITAÇÃO
+# =========================================
+
+@login_required(login_url='/')
+def excluir_solicitacao_exame(request, id):
+
+    solicitacao = get_object_or_404(
+        SolicitacaoExame,
+        id=id
+    )
+
+    paciente_id = solicitacao.paciente.id
+
+    solicitacao.delete()
+
+    return redirect(
+        'solicitacoes_exames',
+        paciente_id
+    )
+
+
+# =========================================
+# PDF SOLICITAÇÃO DE EXAME
+# =========================================
+
+@login_required(login_url='/')
+def imprimir_solicitacao_exame(request, id):
+
+    solicitacao = get_object_or_404(
+        SolicitacaoExame,
+        id=id
+    )
+
+    paciente = solicitacao.paciente
+
+    config = ConfiguracaoClinica.objects.first()
+
+    response = HttpResponse(
+        content_type='application/pdf'
+    )
+
+    response[
+        'Content-Disposition'
+    ] = (
+        f'inline; '
+        f'filename="solicitacao_exame_{solicitacao.id}.pdf"'
+    )
+
+    doc = SimpleDocTemplate(
+        response,
+        topMargin=30,
+        bottomMargin=30,
+        leftMargin=40,
+        rightMargin=40
+    )
+
+    styles = getSampleStyleSheet()
+
+    elementos = []
+
+    # =========================================
+    # LOGO
+    # =========================================
+
+    logo_path = os.path.join(
+        settings.BASE_DIR,
+        'static',
+        'img',
+        'logo.png'
+    )
+
+    if os.path.exists(logo_path):
+
+        logo = Image(
+            logo_path,
+            width=240,
+            height=90
+        )
+
+        logo.hAlign = 'CENTER'
+
+        elementos.append(logo)
+
+        elementos.append(
+            Spacer(1, 8)
+        )
+
+    # =========================================
+    # TÍTULO
+    # =========================================
+
+    elementos.append(
+
+        Paragraph(
+
+            '''
+            <para align="center">
+            <b>SOLICITAÇÃO DE EXAMES</b>
+            </para>
+            ''',
+
+            styles['Title']
+
+        )
+
+    )
+
+    elementos.append(
+        Spacer(1, 10)
+    )
+
+    elementos.append(
+
+        HRFlowable(
+            width="100%",
+            thickness=1.2,
+            color=colors.HexColor('#1e40af')
+        )
+
+    )
+
+    elementos.append(
+        Spacer(1, 15)
+    )
+
+    # =========================================
+    # PACIENTE
+    # =========================================
+
+    elementos.append(
+
+        Paragraph(
+
+            f'<b>Paciente:</b> {paciente.nome}',
+
+            styles['Normal']
+
+        )
+
+    )
+
+    if paciente.cpf:
+
+        elementos.append(
+
+            Paragraph(
+
+                f'<b>CPF:</b> {paciente.cpf}',
+
+                styles['Normal']
+
+            )
+
+        )
+
+    elementos.append(
+        Spacer(1, 15)
+    )
+
+    # =========================================
+    # TÍTULO DA SOLICITAÇÃO
+    # =========================================
+
+    elementos.append(
+
+        Paragraph(
+
+            '<b>Título:</b>',
+
+            styles['Heading3']
+
+        )
+
+    )
+
+    elementos.append(
+
+        Paragraph(
+
+            solicitacao.titulo,
+
+            styles['BodyText']
+
+        )
+
+    )
+
+    elementos.append(
+        Spacer(1, 10)
+    )
+
+    # =========================================
+    # EXAMES SOLICITADOS
+    # =========================================
+
+    elementos.append(
+
+        Paragraph(
+
+            '<b>Exames Solicitados:</b>',
+
+            styles['Heading3']
+
+        )
+
+    )
+
+    elementos.append(
+
+        Paragraph(
+
+            solicitacao.exames_solicitados.replace(
+                '\n',
+                '<br/>'
+            ),
+
+            styles['BodyText']
+
+        )
+
+    )
+
+    elementos.append(
+        Spacer(1, 10)
+    )
+
+    # =========================================
+    # OBSERVAÇÕES
+    # =========================================
+
+    if solicitacao.observacoes:
+
+        elementos.append(
+
+            Paragraph(
+
+                '<b>Observações:</b>',
+
+                styles['Heading3']
+
+            )
+
+        )
+
+        elementos.append(
+
+            Paragraph(
+
+                solicitacao.observacoes.replace(
+                    '\n',
+                    '<br/>'
+                ),
+
+                styles['BodyText']
+
+            )
+
+        )
+
+        elementos.append(
+            Spacer(1, 10)
+        )
+
+    # =========================================
+    # DATA
+    # =========================================
+
+    elementos.append(
+
+        Paragraph(
+
+            (
+                f'Franca/SP, '
+                f'{solicitacao.criado_em.strftime("%d/%m/%Y")}'
+            ),
+
+            styles['Normal']
+
+        )
+
+    )
+
+    # =========================================
+    # ASSINATURA
+    # =========================================
+
+    elementos.append(
+        Spacer(1, 35)
+    )
+
+    elementos.append(
+
+        Paragraph(
+
+            '''
+            <para align="center">
+            _______________________________________
+            <br/>
+            Cirurgião-Dentista Responsável
+            </para>
+            ''',
+
+            styles['Normal']
+
+        )
+
+    )
+
+    # =========================================
+    # RODAPÉ
+    # =========================================
+
+    elementos.append(
+        Spacer(1, 20)
+    )
+
+    elementos.append(
+
+        HRFlowable(
+            width="100%",
+            thickness=0.8,
+            color=colors.grey
+        )
+
+    )
+
+    elementos.append(
+        Spacer(1, 8)
+    )
+
+    if config and config.nome_clinica:
+
+        elementos.append(
+
+            Paragraph(
+
+                f'''
+                <para align="center">
+                <b>{config.nome_clinica}</b>
+                </para>
+                ''',
+
+                styles['Normal']
+
+            )
+
+        )
+
+    if config and config.telefone:
+
+        elementos.append(
+
+            Paragraph(
+
+                f'''
+                <para align="center">
+                Tel: {config.telefone}
+                &nbsp;&nbsp;&nbsp;
+                WhatsApp: {config.whatsapp}
+                </para>
+                ''',
+
+                styles['BodyText']
+
+            )
+
+        )
+
+    if config and config.endereco:
+
+        elementos.append(
+
+            Paragraph(
+
+                f'''
+                <para align="center">
+                {config.endereco}
+                </para>
+                ''',
+
+                styles['BodyText']
+
+            )
+
+        )
+
+    if config and config.email:
+
+        elementos.append(
+
+            Paragraph(
+
+                f'''
+                <para align="center">
+                {config.email}
+                </para>
+                ''',
+
+                styles['BodyText']
+
+            )
+
+        )
+
+    doc.build(elementos)
+
+    return response

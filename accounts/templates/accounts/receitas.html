@@ -2,40 +2,48 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="mb-4">
 
-    <h3 class="mb-0">
+    <div class="d-flex justify-content-between align-items-center">
 
-        Receitas - {{ paciente.nome }}
+        <div>
 
-    </h3>
+            <h2 class="fw-bold mb-1">
+                Receitas
+            </h2>
 
-    <div class="d-flex gap-2">
+            <p class="text-muted mb-0">
+                Receitas emitidas para {{ paciente.nome }}
+            </p>
 
-        <a
-            href="{% url 'perfil_paciente' paciente.id %}"
-            class="btn btn-outline-secondary"
-        >
-            <i class="bi bi-arrow-left"></i>
-            Voltar
-        </a>
+        </div>
 
-        <a
-            href="{% url 'nova_receita' paciente.id %}"
-            class="btn btn-primary"
-        >
-            Nova Receita
-        </a>
+        <div class="d-flex gap-2">
 
-        <a
-            href="{% url 'modelos_receita' %}"
-            class="btn btn-outline-secondary"
-        >
-            <i class="bi bi-journal-medical"></i>
-            Modelos de Receita
-        </a>
+            <a
+                href="{% url 'perfil_paciente' paciente.id %}"
+                class="btn btn-outline-secondary"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Voltar
+            </a>
 
-        
+            <a
+                href="{% url 'nova_receita' paciente.id %}"
+                class="btn btn-primary"
+            >
+                Nova Receita
+            </a>
+
+            <a
+                href="{% url 'modelos_receita' %}"
+                class="btn btn-outline-secondary"
+            >
+                <i class="bi bi-journal-medical"></i>
+                Modelos de Receita
+            </a>
+
+        </div>
 
     </div>
 
@@ -45,76 +53,71 @@
 
     <thead>
 
-    <tr>
+        <tr>
 
-        <th>Medicamento</th>
+            <th>Medicamento</th>
+            <th>Quantidade</th>
+            <th>Data</th>
+            <th width="220">Ações</th>
 
-        <th>Quantidade</th>
+        </tr>
 
-        <th>Data</th>
+    </thead>
 
-        <th width="220">Ações</th>
+    <tbody>
 
-    </tr>
+        {% for receita in receitas %}
 
-</thead>
+        <tr>
 
-<tbody>
+            <td>{{ receita.medicamento }}</td>
 
-    {% for receita in receitas %}
+            <td>{{ receita.quantidade }}</td>
 
-    <tr>
+            <td>{{ receita.criado_em|date:"d/m/Y" }}</td>
 
-        <td>{{ receita.medicamento }}</td>
+            <td>
 
-        <td>{{ receita.quantidade }}</td>
+                <a
+                    href="{% url 'editar_receita' receita.id %}"
+                    target="_blank"
+                    class="btn btn-sm btn-primary"
+                >
+                    Editar
+                </a>
 
-        <td>{{ receita.criado_em|date:"d/m/Y" }}</td>
+                <a
+                    href="{% url 'imprimir_receita' receita.id %}"
+                    target="_blank"
+                    class="btn btn-sm btn-success"
+                >
+                    PDF
+                </a>
 
-        <td>
+                <a
+                    href="{% url 'excluir_receita' receita.id %}"
+                    class="btn btn-sm btn-danger"
+                >
+                    Excluir
+                </a>
 
-            <a
-                href="{% url 'editar_receita' receita.id %}"
-                target="_blank"
-                class="btn btn-sm btn-primary"
-            >
-                Editar
-            </a>
+            </td>
 
-             <a
-                href="{% url 'imprimir_receita' receita.id %}"
-                target="_blank"
-                class="btn btn-sm btn-success"
-            >
-                PDF
-            </a>
+        </tr>
 
-            <a
-                href="{% url 'excluir_receita' receita.id %}"
-                class="btn btn-sm btn-danger"
-            >
-                Excluir
-            </a>
+        {% empty %}
 
-        </td>
+        <tr>
 
-    </tr>
+            <td colspan="4">
+                Nenhuma receita cadastrada.
+            </td>
 
-    {% empty %}
+        </tr>
 
-    <tr>
+        {% endfor %}
 
-        <td colspan="4">
-
-            Nenhuma receita cadastrada.
-
-        </td>
-
-    </tr>
-
-    {% endfor %}
-
-</tbody>
+    </tbody>
 
 </table>
 

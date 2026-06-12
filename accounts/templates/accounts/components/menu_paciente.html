@@ -1,166 +1,153 @@
 <style>
+    .menu-clinico {
 
-.menu-clinico{
+        display: flex;
 
-    display:flex;
+        align-items: center;
 
-    align-items:center;
+        gap: 8px;
 
-    gap:8px;
+        flex-wrap: nowrap;
 
-    flex-wrap:nowrap;
+        overflow-x: auto;
 
-    overflow-x:auto;
+        padding-bottom: 5px;
 
-    padding-bottom:5px;
+        scrollbar-width: none;
 
-    scrollbar-width:none;
+    }
 
-}
+    .menu-clinico::-webkit-scrollbar {
 
-.menu-clinico::-webkit-scrollbar{
+        display: none;
 
-    display:none;
+    }
 
-}
+    .menu-clinico-btn {
 
-.menu-clinico-btn{
+        display: flex !important;
 
-    display:flex !important;
+        align-items: center;
 
-    align-items:center;
+        justify-content: center;
 
-    justify-content:center;
+        gap: 6px;
 
-    gap:6px;
+        padding: 8px 12px !important;
 
-    padding:8px 12px !important;
+        font-size: 13px !important;
 
-    font-size:13px !important;
+        min-height: 42px !important;
 
-    min-height:42px !important;
+        border-radius: 12px !important;
 
-    border-radius:12px !important;
+        white-space: nowrap;
 
-    white-space:nowrap;
+        flex-shrink: 0;
 
-    flex-shrink:0;
+    }
 
-}
+    .menu-clinico-btn i {
 
-.menu-clinico-btn i{
+        font-size: 14px;
 
-    font-size:14px;
+    }
 
-}
+    .menu-clinico-btn span {
 
-.menu-clinico-btn span{
+        font-size: 13px;
 
-    font-size:13px;
+    }
 
-}
+    .icon-perfil {
+        color: #2563eb;
+    }
 
-.icon-perfil{
-    color:#2563eb;
-}
+    .icon-odonto {
+        color: #dc2626;
+    }
 
-.icon-odonto{
-    color:#dc2626;
-}
+    .icon-orcamento {
+        color: #16a34a;
+    }
 
-.icon-orcamento{
-    color:#16a34a;
-}
+    .icon-ficha {
+        color: #1d4ed8;
+    }
 
-.icon-ficha{
-    color:#1d4ed8;
-}
+    .icon-anamnese {
+        color: #ea580c;
+    }
 
-.icon-anamnese{
-    color:#ea580c;
-}
+    .icon-receita {
+        color: #9333ea;
+    }
 
-.icon-receita{
-    color:#9333ea;
-}
+    .icon-exame {
+        color: #0891b2;
+    }
 
-.icon-exame{
-    color:#0891b2;
-}
-
-.icon-documento{
-    color:#dc2626;
-}
-
+    .icon-documento {
+        color: #dc2626;
+    }
 </style>
 
 <div class="menu-clinico-wrapper">
 
     <div class="menu-clinico">
 
-        <a
-            href="{% url 'perfil_paciente' paciente.id %}"
-            class="menu-clinico-btn {% if request.resolver_match.url_name == 'perfil_paciente' %}active{% endif %}"
-        >
+        <a href="{% url 'perfil_paciente' paciente.id %}"
+            class="menu-clinico-btn {% if request.resolver_match.url_name == 'perfil_paciente' %}active{% endif %}">
             <i class="bi bi-grid-1x2-fill icon-perfil"></i>
             <span>Perfil</span>
         </a>
 
-        <a
-            href="{% url 'odontograma' paciente.id %}"
-            class="menu-clinico-btn {% if request.resolver_match.url_name == 'odontograma' %}active{% endif %}"
-        >
+        <a href="{% url 'odontograma' paciente.id %}"
+            class="menu-clinico-btn {% if request.resolver_match.url_name == 'odontograma' %}active{% endif %}">
             <i class="bi bi-heart-pulse-fill icon-odonto"></i>
             <span>Odontograma</span>
         </a>
 
-        <a
-            href="{% url 'orcamento' paciente.id %}"
-            class="menu-clinico-btn {% if request.resolver_match.url_name == 'orcamento' %}active{% endif %}"
-        >
+        <a href="{% url 'orcamento' paciente.id %}"
+            class="menu-clinico-btn {% if request.resolver_match.url_name == 'orcamento' %}active{% endif %}">
             <i class="bi bi-cash-coin icon-orcamento"></i>
             <span>Orçamento</span>
         </a>
 
-        <a
-            href="{% url 'ficha_clinica' paciente.id %}"
-            class="menu-clinico-btn {% if request.resolver_match.url_name == 'ficha_clinica' %}active{% endif %}"
-        >
+        <a href="{% url 'ficha_clinica' paciente.id %}"
+            class="menu-clinico-btn {% if request.resolver_match.url_name == 'ficha_clinica' %}active{% endif %}">
             <i class="bi bi-file-earmark-medical-fill icon-ficha"></i>
             <span>Ficha Clínica</span>
         </a>
 
-        <a
-            href="{% url 'anamnese' paciente.id %}"
-            class="menu-clinico-btn {% if request.resolver_match.url_name == 'anamnese' %}active{% endif %}"
-        >
+        <a href="{% url 'anamnese' paciente.id %}"
+            class="menu-clinico-btn {% if request.resolver_match.url_name == 'anamnese' %}active{% endif %}">
             <i class="bi bi-clipboard2-pulse-fill icon-anamnese"></i>
             <span>Anamnese</span>
         </a>
 
-<a
-    href="{% url 'receitas' paciente.id %}"
-    class="menu-clinico-btn {% if request.resolver_match.url_name == 'receitas' %}active{% endif %}"
->
-    <i class="bi bi-capsule-pill icon-receita"></i>
-    <span>Receitas</span>
-</a>
+        <a href="{% url 'receitas' paciente.id %}"
+            class="menu-clinico-btn {% if request.resolver_match.url_name == 'receitas' %}active{% endif %}">
+            <i class="bi bi-capsule-pill icon-receita"></i>
+            <span>Receitas</span>
+        </a>
 
-<a
-    href="{% url 'exames' paciente.id %}"
-    class="menu-clinico-btn {% if request.resolver_match.url_name == 'exames' %}active{% endif %}"
->
-    <i class="bi bi-file-earmark-medical icon-exame"></i>
-    <span>Exames</span>
-</a>
+        <a href="{% url 'exames' paciente.id %}"
+            class="menu-clinico-btn {% if request.resolver_match.url_name == 'exames' %}active{% endif %}">
+            <i class="bi bi-file-earmark-medical icon-exame"></i>
+            <span>Exames</span>
+        </a>
 
-<a
-    href="{% url 'novo_documento' paciente.id %}"
-    class="menu-clinico-btn {% if request.resolver_match.url_name == 'novo_documento' %}active{% endif %}"
->
-    <i class="bi bi-file-earmark-text-fill icon-documento"></i>
-    <span>Documentos</span>
-</a>
+        <a href="{% url 'solicitacoes_exames' paciente.id %}" class="menu-clinico-btn">
+            <i class="bi bi-clipboard2-pulse"></i>
+            <span>Solicitações</span>
+        </a>
+
+        <a href="{% url 'novo_documento' paciente.id %}"
+            class="menu-clinico-btn {% if request.resolver_match.url_name == 'novo_documento' %}active{% endif %}">
+            <i class="bi bi-file-earmark-text-fill icon-documento"></i>
+            <span>Documentos</span>
+        </a>
 
     </div>
 

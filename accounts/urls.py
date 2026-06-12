@@ -351,6 +351,40 @@ path(
     name='salvar_procedimento_geral'
 ),
 
+path(
+    'documento/excluir/<int:id>/',
+    views.excluir_documento,
+    name='excluir_documento'
+),
+
+# =========================================
+# SOLICITAÇÕES DE EXAMES
+# =========================================
+
+path(
+    'pacientes/<int:id>/solicitacoes-exames/',
+    views.solicitacoes_exames,
+    name='solicitacoes_exames'
+),
+
+path(
+    'pacientes/<int:id>/solicitacao-exame/nova/',
+    views.nova_solicitacao_exame,
+    name='nova_solicitacao_exame'
+),
+
+path(
+    'solicitacao-exame/<int:id>/excluir/',
+    views.excluir_solicitacao_exame,
+    name='excluir_solicitacao_exame'
+),
+
+path(
+    'solicitacao-exame/<int:id>/pdf/',
+    views.imprimir_solicitacao_exame,
+    name='imprimir_solicitacao_exame'
+),
+
 ]
 
 
