@@ -19,6 +19,11 @@ urlpatterns = [
         include('accounts.urls')
     ),
 
+    path(
+        'agenda/',
+        include('agenda.urls')
+    ),
+
 ]
 
 

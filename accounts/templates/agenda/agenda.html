@@ -1,0 +1,88 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}
+Agenda | AM Systems
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h1>Agenda</h1>
+
+        <a href="{% url 'novo_agendamento' %}" class="btn btn-primary">
+
+            <i class="bi bi-plus-circle"></i>
+
+            Novo Agendamento
+
+        </a>
+
+    </div>
+
+    {% if agendamentos %}
+
+    {% for agendamento in agendamentos %}
+
+    <div style="
+                    background:#fff;
+                    border-radius:12px;
+                    padding:20px;
+                    margin-bottom:15px;
+                    box-shadow:0 2px 8px rgba(0,0,0,.08);
+                ">
+
+        <h5>
+
+            {{ agendamento.hora_inicio }}
+
+        </h5>
+
+        <strong>
+
+            {{ agendamento.paciente.nome }}
+
+        </strong>
+
+        <br>
+
+        {% if agendamento.procedimento %}
+
+        Procedimento:
+        {{ agendamento.procedimento.nome }}
+
+        <br>
+
+        {% endif %}
+
+        Profissional:
+        {{ agendamento.profissional.nome }}
+
+        <br>
+
+        Status:
+        {{ agendamento.get_status_display }}
+
+    </div>
+
+    {% endfor %}
+
+    {% else %}
+
+    <div style="
+                background:#fff;
+                padding:30px;
+                border-radius:12px;
+            ">
+
+        Nenhum agendamento cadastrado.
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
