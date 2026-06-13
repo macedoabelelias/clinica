@@ -13,125 +13,111 @@
 
     <!-- Bootstrap -->
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
 
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Fonte -->
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- CSS -->
 
-    <link
-        rel="stylesheet"
-        href="{% static 'css/dashboard.css' %}"
-    >
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 
 </head>
 
 <body>
 
 
-<div class="dashboard-wrapper">
+    <div class="dashboard-wrapper">
 
-    <!-- =========================================
+        <!-- =========================================
     SIDEBAR
     ========================================== -->
 
-    <aside class="sidebar">
+        <aside class="sidebar">
 
-        <div class="logo-area">
+            <div class="logo-area">
 
-            <img src="{% static 'img/logo.png' %}">
-
-        </div>
-
-        <hr>
-
-        <ul class="sidebar-menu">
-
-            <li onclick="window.location.href='/dashboard/'">
-
-                <i class="bi bi-grid-fill"></i>
-
-                <span>Dashboard</span>
-
-            </li>
-
-            <li
-                class="active"
-                onclick="window.location.href='/pacientes/'">
-
-                <i class="bi bi-people-fill"></i>
-
-                <span>Pacientes</span>
-
-            </li>
-
-            <li>
-
-                <i class="bi bi-calendar-check-fill"></i>
-
-                <span>Agenda</span>
-
-            </li>
-
-            <li>
-
-                <i class="bi bi-cash-stack"></i>
-
-                <span>Financeiro</span>
-
-            </li>
-
-        </ul>
-
-    </aside>
-
-    <!-- =========================================
-    MAIN
-    ========================================== -->
-
-    <main class="main-content">
-
-        <!-- TOPBAR -->
-
-        <div class="topbar">
-
-            <div class="search-box">
-
-                <i class="bi bi-search"></i>
-
-                <input
-                    type="text"
-                    placeholder="Buscar..."
-                >
+                <img src="{% static 'img/logo.png' %}">
 
             </div>
 
-            <div class="topbar-right">
+            <hr>
 
-                <div class="profile-box">
+            <ul class="sidebar-menu">
 
-                    <img src="https://i.pravatar.cc/100">
+                <li onclick="window.location.href='/dashboard/'">
 
-                    <div>
+                    <i class="bi bi-grid-fill"></i>
 
-                        <h6>Abel Macedo</h6>
+                    <span>Dashboard</span>
 
-                        <span>Administrador</span>
+                </li>
+
+                <li class="active" onclick="window.location.href='/pacientes/'">
+
+                    <i class="bi bi-people-fill"></i>
+
+                    <span>Pacientes</span>
+
+                </li>
+
+                <li onclick="window.location.href='/agenda/'">
+
+                    <i class="bi bi-calendar-check-fill"></i>
+
+                    <span>Agenda</span>
+
+                </li>
+
+                <li>
+
+                    <i class="bi bi-cash-stack"></i>
+
+                    <span>Financeiro</span>
+
+                </li>
+
+            </ul>
+
+        </aside>
+
+        <!-- =========================================
+    MAIN
+    ========================================== -->
+
+        <main class="main-content">
+
+            <!-- TOPBAR -->
+
+            <div class="topbar">
+
+                <div class="search-box">
+
+                    <i class="bi bi-search"></i>
+
+                    <input type="text" placeholder="Buscar...">
+
+                </div>
+
+                <div class="topbar-right">
+
+                    <div class="profile-box">
+
+                        <img src="https://i.pravatar.cc/100">
+
+                        <div>
+
+                            <h6>Abel Macedo</h6>
+
+                            <span>Administrador</span>
+
+                        </div>
 
                     </div>
 
@@ -139,30 +125,26 @@
 
             </div>
 
-        </div>
+            <hr>
 
-        <hr>
-
-        <!-- =========================================
+            <!-- =========================================
         HEADER PACIENTE
         ========================================== -->
 
-        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
 
-            <div class="card-body p-4">
+                <div class="card-body p-4">
 
-                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
 
-                    <!-- ESQUERDA -->
+                        <!-- ESQUERDA -->
 
-                    <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center">
 
-                       
-<!-- AVATAR -->
 
-<div
-    class="avatar-paciente me-4"
-    style="
+                            <!-- AVATAR -->
+
+                            <div class="avatar-paciente me-4" style="
         width:74px;
         height:74px;
         min-width:74px;
@@ -172,264 +154,405 @@
         display:flex;
         align-items:center;
         justify-content:center;
-    "
->
+    ">
 
-    {% if paciente.foto %}
+                                {% if paciente.foto %}
 
-        <img
-            src="{{ paciente.foto.url }}"
-            alt="{{ paciente.nome }}"
-            style="
+                                <img src="{{ paciente.foto.url }}" alt="{{ paciente.nome }}" style="
                 width:100%;
                 height:100%;
                 object-fit:cover;
                 border-radius:50%;
                 display:block;
-            "
-        >
+            ">
 
-    {% else %}
+                                {% else %}
 
-        <span
-            style="
+                                <span style="
                 color:#fff;
                 font-size:24px;
                 font-weight:700;
-            "
-        >
+            ">
 
-            {{ paciente.nome|slice:":1" }}
+                                    {{ paciente.nome|slice:":1" }}
 
-        </span>
+                                </span>
 
-    {% endif %}
+                                {% endif %}
 
-</div>
+                            </div>
 
-                        <!-- INFO -->
+                            <!-- INFO -->
 
-                        <div>
+                            <div>
 
-                            <h2
-                                style="
+                                <h2 style="
                                     font-size:24px;
                                     font-weight:700;
                                     margin-bottom:2px;
                                     line-height:1.2;
-                                "
-                            >
+                                ">
 
-                                {{ paciente.nome }}
+                                    {{ paciente.nome }}
 
-                            </h2>
+                                </h2>
 
-                            <div
-                                style="
+                                <div style="
                                     font-size:13px;
                                     color:#64748b;
                                     margin-bottom:2px;
-                                "
-                            >
+                                ">
 
-                                {{ paciente.telefone }}
+                                    {{ paciente.telefone }}
 
-                            </div>
-                            <div
-                                style="
+                                </div>
+                                <div style="
                                     font-size:13px;
                                     color:#64748b;
                                     margin-bottom:2px;
-                                "
-                            >
+                                ">
 
-                                {{ paciente.email }}
+                                    {{ paciente.email }}
 
-                            </div>
+                                </div>
 
-                            <div>
+                                <div>
 
-                                <span class="badge bg-success">
+                                    <span class="badge bg-success">
 
-                                    {{ paciente.status }}
+                                        {{ paciente.status }}
 
-                                </span>
+                                    </span>
+
+                                </div>
 
                             </div>
 
                         </div>
 
+
+                        <!-- BOTÕES -->
+
+                        <div class="d-flex gap-2 mt-3 mt-md-0">
+
+                            <a href="{% url 'pacientes' %}" class="btn btn-light rounded-pill px-4">
+
+                                <i class="bi bi-arrow-left"></i>
+                                Voltar
+
+                            </a>
+
+
+                        </div>
+
                     </div>
-
-                   
-                    <!-- BOTÕES -->
-
-<div class="d-flex gap-2 mt-3 mt-md-0">
-
-    <a
-        href="{% url 'pacientes' %}"
-        class="btn btn-light rounded-pill px-4"
-    >
-
-        <i class="bi bi-arrow-left"></i>
-
-        Voltar
-
-    </a>
-
-    <button class="btn btn-primary rounded-pill px-4">
-
-        Novo Atendimento
-
-    </button>
-
-</div>
 
                 </div>
 
-            </div>
-
-        </div>
-
-        <!-- =========================================
+                <!-- =========================================
         CARDS
         ========================================== -->
 
-        <div class="row g-3 mb-4">
+                <div class="row g-3 mb-4">
 
-            <div class="col-md-3">
+                    <div class="col-md-3">
 
-                <div class="card border-0 shadow-sm rounded-4">
+                        <div class="card border-0 shadow-sm rounded-4">
 
-                    <div class="card-body">
+                            <div class="card-body">
 
-                        <small class="text-muted">
+                                <small class="text-muted">
 
-                            Consultas
+                                    Consultas
 
-                        </small>
+                                </small>
 
-                        <h3 class="fw-bold">
+                                <h3 class="fw-bold">
 
-                            12
+                                    12
 
-                        </h3>
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="card border-0 shadow-sm rounded-4">
+
+                            <div class="card-body">
+
+                                <small class="text-muted">
+
+                                    Orçamentos
+
+                                </small>
+
+                                <h3 class="fw-bold">
+
+                                    R$ 4.500
+
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="card border-0 shadow-sm rounded-4">
+
+                            <div class="card-body">
+
+                                <small class="text-muted">
+
+                                    Pago
+
+                                </small>
+
+                                <h3 class="fw-bold text-success">
+
+                                    R$ 2.300
+
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="card border-0 shadow-sm rounded-4">
+
+                            <div class="card-body">
+
+                                <small class="text-muted">
+
+                                    Pendente
+
+                                </small>
+
+                                <h3 class="fw-bold text-danger">
+
+                                    R$ 2.200
+
+                                </h3>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
-
-            <div class="col-md-3">
-
-                <div class="card border-0 shadow-sm rounded-4">
-
-                    <div class="card-body">
-
-                        <small class="text-muted">
-
-                            Orçamentos
-
-                        </small>
-
-                        <h3 class="fw-bold">
-
-                            R$ 4.500
-
-                        </h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div class="card border-0 shadow-sm rounded-4">
-
-                    <div class="card-body">
-
-                        <small class="text-muted">
-
-                            Pago
-
-                        </small>
-
-                        <h3 class="fw-bold text-success">
-
-                            R$ 2.300
-
-                        </h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div class="card border-0 shadow-sm rounded-4">
-
-                    <div class="card-body">
-
-                        <small class="text-muted">
-
-                            Pendente
-
-                        </small>
-
-                        <h3 class="fw-bold text-danger">
-
-                            R$ 2.200
-
-                        </h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- =========================================
+                <!-- =========================================
 ABAS DO PERFIL
 ========================================= -->
 
-<!-- =========================================
+                <!-- =========================================
 MENU CLÍNICO
 ========================================= -->
 
-{% include 'accounts/components/menu_paciente.html' %}
+                {% include 'accounts/components/menu_paciente.html' %}
 
-        <!-- CONTEÚDO -->
+                <!-- CONTEÚDO -->
 
-        <div class="tab-content">
+                <!-- =========================================
+PRÓXIMOS AGENDAMENTOS
+========================================= -->
 
-            <!-- VISÃO GERAL -->
+                <div class="px-4 mb-4">
 
-            <div
-                class="tab-pane fade show active"
-                id="visao-geral">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
 
-                <div class="row">
+                        <h5 class="fw-bold mb-0">
 
-                    <div class="col-md-6 mb-4">
+                            <i class="bi bi-calendar-check me-2"></i>
 
-                        <div class="info-card">
+                            Próximos Agendamentos
 
-                            <h6>
+                        </h5>
 
-                                CPF
+                        <div class="d-flex gap-2 pe-1">
 
-                            </h6>
+                            <a href="{% url 'novo_agendamento_paciente' paciente.id %}"
+                                class="btn btn-sm btn-primary rounded-pill">
+
+                                <i class="bi bi-plus-circle"></i>
+
+                                Novo Agendamento
+
+                            </a>
+
+                            <a href="{% url 'agenda' %}" class="btn btn-sm btn-outline-primary rounded-pill">
+
+                                Ver Agenda
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row g-4 justify-content-between">
+
+                        {% for agendamento in agendamentos %}
+
+                        <div class="col-xl-3 col-lg-3 col-md-6">
+
+                            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                                <div class="card-body">
+
+                                    <div class="fw-bold mb-2">
+
+                                        {{ agendamento.data|date:"d/m/Y" }}
+
+                                    </div>
+
+                                    <div class="text-primary fw-semibold mb-2">
+
+                                        {{ agendamento.hora_inicio|time:"H:i" }}
+
+                                    </div>
+
+                                    <div class="small text-muted mb-3">
+
+                                        {{ agendamento.procedimento }}
+
+                                    </div>
+
+                                    <span class="badge bg-primary">
+
+                                        {{ agendamento.get_status_display }}
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {% empty %}
+
+                        <div class="col-12">
+
+                            <div class="card border-0 shadow-sm rounded-4">
+
+                                <div class="card-body text-center text-muted">
+
+                                    Nenhum agendamento encontrado.
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+                <div class="tab-content">
+
+                    <!-- VISÃO GERAL -->
+
+                    <div class="tab-pane fade show active" id="visao-geral">
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-4">
+
+                                <div class="info-card">
+
+                                    <h6>
+
+                                        CPF
+
+                                    </h6>
+
+                                    <p>
+
+                                        {{ paciente.cpf|default:"Não informado" }}
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+
+                                <div class="info-card">
+
+                                    <h6>
+
+                                        Convênio
+
+                                    </h6>
+
+                                    <p>
+
+                                        {{ paciente.convenio|default:"Não informado" }}
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-12">
+
+                                <div class="info-card">
+
+                                    <h6>
+
+                                        Observações
+
+                                    </h6>
+
+                                    <p>
+
+                                        {{ paciente.observacoes|default:"Nenhuma observação cadastrada." }}
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- HISTÓRICO -->
+
+                    <div class="tab-pane fade" id="historico">
+
+                        <div class="empty-state">
+
+                            <i class="bi bi-clock-history"></i>
+
+                            <h5>
+
+                                Nenhum histórico clínico
+
+                            </h5>
 
                             <p>
 
-                                {{ paciente.cpf|default:"Não informado" }}
+                                Os atendimentos aparecerão aqui.
 
                             </p>
 
@@ -437,41 +560,55 @@ MENU CLÍNICO
 
                     </div>
 
-                    <div class="col-md-6 mb-4">
+                    <!-- FINANCEIRO -->
 
-                        <div class="info-card">
+                    <div class="tab-pane fade" id="financeiro">
 
-                            <h6>
+                        <div class="empty-state">
 
-                                Convênio
+                            <i class="bi bi-cash-stack"></i>
 
-                            </h6>
+                            <h5>
 
-                            <p>
+                                Nenhum lançamento financeiro
 
-                                {{ paciente.convenio|default:"Não informado" }}
-
-                            </p>
+                            </h5>
 
                         </div>
 
                     </div>
 
-                    <div class="col-md-12">
+                    <!-- DOCUMENTOS -->
 
-                        <div class="info-card">
+                    <div class="tab-pane fade" id="documentos">
 
-                            <h6>
+                        <div class="empty-state">
 
-                                Observações
+                            <i class="bi bi-file-earmark-medical"></i>
 
-                            </h6>
+                            <h5>
 
-                            <p>
+                                Nenhum documento anexado
 
-                                {{ paciente.observacoes|default:"Nenhuma observação cadastrada." }}
+                            </h5>
 
-                            </p>
+                        </div>
+
+                    </div>
+
+                    <!-- ODONTOGRAMA -->
+
+                    <div class="tab-pane fade" id="odontograma">
+
+                        <div class="empty-state">
+
+                            <i class="bi bi-heart-pulse"></i>
+
+                            <h5>
+
+                                Odontograma em desenvolvimento
+
+                            </h5>
 
                         </div>
 
@@ -480,104 +617,15 @@ MENU CLÍNICO
                 </div>
 
             </div>
-
-            <!-- HISTÓRICO -->
-
-            <div
-                class="tab-pane fade"
-                id="historico">
-
-                <div class="empty-state">
-
-                    <i class="bi bi-clock-history"></i>
-
-                    <h5>
-
-                        Nenhum histórico clínico
-
-                    </h5>
-
-                    <p>
-
-                        Os atendimentos aparecerão aqui.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <!-- FINANCEIRO -->
-
-            <div
-                class="tab-pane fade"
-                id="financeiro">
-
-                <div class="empty-state">
-
-                    <i class="bi bi-cash-stack"></i>
-
-                    <h5>
-
-                        Nenhum lançamento financeiro
-
-                    </h5>
-
-                </div>
-
-            </div>
-
-            <!-- DOCUMENTOS -->
-
-            <div
-                class="tab-pane fade"
-                id="documentos">
-
-                <div class="empty-state">
-
-                    <i class="bi bi-file-earmark-medical"></i>
-
-                    <h5>
-
-                        Nenhum documento anexado
-
-                    </h5>
-
-                </div>
-
-            </div>
-
-            <!-- ODONTOGRAMA -->
-
-            <div
-                class="tab-pane fade"
-                id="odontograma">
-
-                <div class="empty-state">
-
-                    <i class="bi bi-heart-pulse"></i>
-
-                    <h5>
-
-                        Odontograma em desenvolvimento
-
-                    </h5>
-
-                </div>
-
-            </div>
-
-        </div>
 
     </div>
 
-</div>        
-
     </main>
 
-</div>
+    </div>
 
 
 
 </body>
+
 </html>

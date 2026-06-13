@@ -17,4 +17,45 @@ urlpatterns = [
         name='novo_agendamento'
     ),
 
+    path(
+        'novo/<int:paciente_id>/',
+        views.novo_agendamento_paciente,
+        name='novo_agendamento_paciente'
+    ),
+
+    path(
+        'iniciar-atendimento/<int:agendamento_id>/',
+        views.iniciar_atendimento,
+        name='iniciar_atendimento'
+    ),
+
+    path(
+        'editar/<int:id>/',
+        views.editar_agendamento,
+        name='editar_agendamento'
+    ),
+
+    path(
+        'finalizar/<int:agendamento_id>/',
+        views.finalizar_atendimento,
+        name='finalizar_atendimento'
+    ),
+
+    path(
+        'eventos/',
+        views.eventos_agenda,
+        name='eventos_agenda'
+    ),
+
+    path(
+        'mover-agendamento/',
+        views.mover_agendamento,
+        name='mover_agendamento'
+    ),
+
+    path(
+        'confirmar/<int:agendamento_id>/',
+        views.confirmar_agendamento,
+        name='confirmar_agendamento'
+    ),
 ]

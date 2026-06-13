@@ -12,7 +12,7 @@ Agenda | AM Systems
 
         <h1>Agenda</h1>
 
-        <a href="{% url 'novo_agendamento' %}" class="btn btn-primary">
+        <a href="{% url 'novo_agendamento' %}" class="btn btn-primary rounded-pill px-4">
 
             <i class="bi bi-plus-circle"></i>
 
@@ -22,62 +22,287 @@ Agenda | AM Systems
 
     </div>
 
-    {% if agendamentos %}
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
 
-    {% for agendamento in agendamentos %}
+        <div class="card-body">
 
-    <div style="
-                    background:#fff;
-                    border-radius:12px;
-                    padding:20px;
-                    margin-bottom:15px;
-                    box-shadow:0 2px 8px rgba(0,0,0,.08);
-                ">
+            <form method="get">
 
-        <h5>
+                <div class="row align-items-center">
 
-            {{ agendamento.hora_inicio }}
+                    <div class="col-md-3">
 
-        </h5>
+                        <label class="form-label fw-semibold">
 
-        <strong>
+                            Data da Agenda
 
-            {{ agendamento.paciente.nome }}
+                        </label>
 
-        </strong>
+                        <input type="date" name="data" class="form-control" value="{{ data_agenda|date:'Y-m-d' }}"
+                            onchange="this.form.submit()">
 
-        <br>
+                    </div>
 
-        {% if agendamento.procedimento %}
+                </div>
 
-        Procedimento:
-        {{ agendamento.procedimento.nome }}
+            </form>
 
-        <br>
-
-        {% endif %}
-
-        Profissional:
-        {{ agendamento.profissional.nome }}
-
-        <br>
-
-        Status:
-        {{ agendamento.get_status_display }}
+        </div>
 
     </div>
 
-    {% endfor %}
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body">
+
+                    <small class="text-muted">
+
+                        Agendados
+
+                    </small>
+
+                    <h3 class="mb-0">
+
+                        {{ total_agendado }}
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body">
+
+                    <small class="text-muted">
+
+                        Confirmados
+
+                    </small>
+
+                    <h3 class="mb-0 text-success">
+
+                        {{ total_confirmado }}
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body">
+
+                    <small class="text-muted">
+
+                        Em Atendimento
+
+                    </small>
+
+                    <h3 class="mb-0 text-warning">
+
+                        {{ total_atendimento }}
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body">
+
+                    <small class="text-muted">
+
+                        Finalizados
+
+                    </small>
+
+                    <h3 class="mb-0 text-secondary">
+
+                        {{ total_finalizado }}
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% if agendamentos %}
+
+    <div class="row g-3">
+
+        {% for agendamento in agendamentos %}
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+
+                        <div>
+
+                            <h5 class="fw-bold mb-1">
+                                {{ agendamento.hora_inicio|time:"H:i" }}
+                            </h5>
+
+                            <small class="text-muted">
+                                {{ agendamento.data|date:"d/m/Y" }}
+                            </small>
+
+                        </div>
+
+                        {% if agendamento.status == 'agendado' %}
+
+                        <span class="badge bg-primary">
+                            Agendado
+                        </span>
+
+                        {% elif agendamento.status == 'confirmado' %}
+
+                        <span class="badge bg-success">
+                            Confirmado
+                        </span>
+
+                        {% elif agendamento.status == 'atendimento' %}
+
+                        <span class="badge bg-warning text-dark">
+                            Em Atendimento
+                        </span>
+
+                        {% elif agendamento.status == 'finalizado' %}
+
+                        <span class="badge bg-secondary">
+                            Finalizado
+                        </span>
+
+                        {% elif agendamento.status == 'faltou' %}
+
+                        <span class="badge bg-danger">
+                            Faltou
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge bg-dark">
+                            Cancelado
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+                    <h6 class="fw-bold mb-3">
+
+                        <a href="{% url 'perfil_paciente' agendamento.paciente.id %}" class="text-decoration-none">
+                            {{ agendamento.paciente.nome }}
+                        </a>
+
+                    </h6>
+
+                    {% if agendamento.procedimento %}
+
+                    <p class="mb-2">
+
+                        <strong>Procedimento:</strong><br>
+
+                        {{ agendamento.procedimento.nome }}
+
+                    </p>
+
+                    {% endif %}
+
+                    <p class="mb-3">
+
+                        <strong>Profissional:</strong><br>
+
+                        {{ agendamento.profissional.nome }}
+
+                    </p>
+
+                    <div class="d-flex gap-2 flex-wrap">
+
+                        <a href="{% url 'editar_agendamento' agendamento.id %}" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-calendar-event"></i>
+                            Reagendar
+                        </a>
+
+                        {% if agendamento.status == 'agendado' or agendamento.status == 'confirmado' %}
+
+                        <a href="{% url 'iniciar_atendimento' agendamento.id %}" class="btn btn-success btn-sm">
+
+                            <i class="bi bi-play-circle"></i>
+
+                            Iniciar
+
+                        </a>
+
+                        {% endif %}
+
+                        {% if agendamento.status == 'atendimento' %}
+
+                        <a href="{% url 'finalizar_atendimento' agendamento.id %}" class="btn btn-warning btn-sm">
+
+                            <i class="bi bi-check-circle"></i>
+
+                            Finalizar
+
+                        </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
 
     {% else %}
 
-    <div style="
-                background:#fff;
-                padding:30px;
-                border-radius:12px;
-            ">
+    <div class="card border-0 shadow-sm rounded-4">
 
-        Nenhum agendamento cadastrado.
+        <div class="card-body text-center py-5">
+
+            <i class="bi bi-calendar-x fs-1 text-muted"></i>
+
+            <h5 class="mt-3">
+
+                Nenhum agendamento cadastrado
+
+            </h5>
+
+        </div>
 
     </div>
 

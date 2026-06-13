@@ -65,6 +65,7 @@ from .forms import (
 
 from datetime import timedelta
 
+
 # =========================================
 # LOGIN
 # =========================================
@@ -223,12 +224,26 @@ def pacientes_view(request):
 def perfil_paciente(request, id):
 
     paciente = get_object_or_404(
-
         Paciente,
-
         id=id
+    )
+
+    agendamentos = list(
+
+        paciente.agendamentos.filter(
+            status__in=[
+                'agendado',
+                'confirmado',
+                'atendimento'
+            ]
+        ).order_by(
+            '-data',
+            '-hora_inicio'
+        )[:4]
 
     )
+
+    agendamentos.reverse()
 
     return render(
 
@@ -238,13 +253,12 @@ def perfil_paciente(request, id):
 
         {
 
-            'paciente': paciente
+            'paciente': paciente,
+            'agendamentos': agendamentos,
 
         }
 
     )
-    
-
 # =========================================
 # LOGOUT
 # =========================================
@@ -4559,3 +4573,5 @@ def imprimir_solicitacao_exame(request, id):
     doc.build(elementos)
 
     return response
+
+
