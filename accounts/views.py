@@ -545,6 +545,12 @@ def odontograma(request, id):
 
         descricao = request.POST.get('descricao')
 
+        posicao_icone = request.POST.get(
+            'posicao_icone'
+        )
+
+        print('POSICAO ESCOLHIDA:', posicao_icone)
+
 
         # =====================================
         # GARANTE ORÇAMENTO
@@ -580,21 +586,17 @@ def odontograma(request, id):
         item = ItemOrcamento.objects.create(
 
             orcamento=orcamento,
-
             procedimento=procedimento,
-
             tipo_local='dente',
-
             dente=dente,
-
             face=face,
-
+            posicao_icone=posicao_icone,
             valor_unitario=valor_unitario,
-
             status=status
 
         )
 
+        
         # =====================================
         # REGISTRA EVOLUÇÃO CLÍNICA
         # =====================================
@@ -606,6 +608,8 @@ def odontograma(request, id):
             dente=dente,
 
             face=face,
+
+            posicao_icone=posicao_icone,
 
             procedimento=procedimento,
 
@@ -716,6 +720,11 @@ def odontograma(request, id):
 
         'procedimentos_gerais': procedimentos_gerais,
         }
+    
+    for item in itens_orcamento:
+        print(
+            f'ITEM {item.id} | DENTE={item.dente} | POSICAO={item.posicao_icone}'
+        )
 
     return render(
 
@@ -752,6 +761,10 @@ def salvar_procedimento_geral(request, id):
 
         descricao = request.POST.get(
             'descricao'
+        )
+
+        posicao_icone = request.POST.get(
+            'posicao_icone'
         )
 
         # GARANTE ORÇAMENTO

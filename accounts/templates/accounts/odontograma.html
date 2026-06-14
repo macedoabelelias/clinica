@@ -61,393 +61,321 @@ LAYOUT
             <div class="odontograma-box">
 
 
-<!-- =========================================
+                <!-- =========================================
 PROCEDIMENTOS GERAIS
 ========================================= -->
 
-<div class="procedimentos-header">
+                <div class="procedimentos-header">
 
-    <h6>
+                    <h6>
 
-        Procedimentos Gerais
+                        Procedimentos Gerais
 
-    </h6>
+                    </h6>
 
-<button
-    type="button"
-    class="btn-add-geral"
-    data-bs-toggle="modal"
-    data-bs-target="#modalProcedimentoGeral"
->
-    <i class="fa-solid fa-plus"></i>
-    Novo
-</button>   
+                    <button type="button" class="btn-add-geral" data-bs-toggle="modal"
+                        data-bs-target="#modalProcedimentoGeral">
+                        <i class="fa-solid fa-plus"></i>
+                        Novo
+                    </button>
 
-</div>
+                </div>
 
-<div class="procedimentos-gerais-wrapper">
+                <div class="procedimentos-gerais-wrapper">
 
-    {% for item in itens_orcamento %}
+                    {% for item in itens_orcamento %}
 
-        {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemiarcada' %}
+                    {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemiarcada' %}
 
-            <div
-                class="procedimento-geral-chip status-{{ item.status }}"
-                data-id="{{ item.id }}"
-            >
+                    <div class="procedimento-geral-chip status-{{ item.status }}" data-id="{{ item.id }}">
 
-                <img
-                    src="{% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:'default.png' }}"
-                    class="icone-geral"
-                    alt="{{ item.procedimento.nome }}"
-                >
+                        <img src="{% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone|default:'default.png' }}"
+                            class="icone-geral" alt="{{ item.procedimento.nome }}">
 
-                <span>
+                        <span>
 
-                    {{ item.procedimento.nome }}
+                            {{ item.procedimento.nome }}
 
-                </span>
+                        </span>
 
-            </div>
+                    </div>
 
+                    {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- DENTIÇÃO PERMANENTE -->
+
+                <div class="secao-titulo">
+                    Dentição Permanente
+                </div>
+
+                <!-- SUPERIOR -->
+
+                <div class="arcada">
+
+                    {% for numero in superiores %}
+
+                    <div class="dente-box dente-{{ numero }}">
+
+                        <img src="{% static 'img/dentes/'|add:numero|add:'.png' %}" class="dente-img"
+                            data-dente="{{ numero }}" alt="Dente {{ numero }}">
+
+                        <div class="procedimentos-dente">
+
+                            {% for item in itens_orcamento %}
+
+                            {% if item.dente == numero %}
+
+                            {% if item.procedimento.tipo == 'dente' %}
+
+                           <img
+    src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
+    class="
+        icone-procedimento-dente
+        status-{{ item.status }}
+        posicao-{{ item.posicao_icone|default:item.procedimento.posicao_icone }}
+
+        {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+            sem-rotacao
         {% endif %}
+    "
+    data-id="{{ item.id }}"
+    data-status="{{ item.status }}"
+    title="{{ item.procedimento.nome }}"
+>
 
-    {% endfor %}
+                            {% if item.face %}
 
-</div>
+                            <span class="face-badge status-{{ item.status }}">
 
+                                {{ item.face }}
 
-<!-- DENTIÇÃO PERMANENTE -->
+                            </span>
 
-<div class="secao-titulo">
-    Dentição Permanente
-</div>
+                            {% endif %}
 
-<!-- SUPERIOR -->
+                            {% endif %}
 
-<div class="arcada">
+                            {% endif %}
 
-    {% for numero in superiores %}
+                            {% endfor %}
 
-    <div class="dente-box dente-{{ numero }}">
+                        </div>
 
-        <img
-            src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
-            class="dente-img"
-            data-dente="{{ numero }}"
-            alt="Dente {{ numero }}"
-        >
+                    </div>
 
-        <div class="procedimentos-dente">
+                    {% endfor %}
 
-            {% for item in itens_orcamento %}
+                </div>
 
-                {% if item.dente == numero %}
 
-                    {% if item.procedimento.tipo == 'dente' %}
+                <!-- INFERIOR -->
 
-                        {% if item.procedimento.arquivo_icone %}
+                <div class="arcada inferior">
 
-                        <img
+                    {% for numero in inferiores %}
 
-                            src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
+                    <div class="dente-box dente-{{ numero }}">
+                        
+                        <img src="{% static 'img/dentes/'|add:numero|add:'.png' %}" class="dente-img inferior"
+                            data-dente="{{ numero }}" alt="Dente {{ numero }}">
+                            
 
-                            class="
-                                icone-procedimento-dente
-                                status-{{ item.status }}
+                        <div class="procedimentos-dente">
 
-                                {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-                                    posicao-topo
-                                {% else %}
-                                    posicao-{{ item.procedimento.posicao_icone }}
-                                {% endif %}
+                            {% for item in itens_orcamento %}
 
-                                {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-                                    sem-rotacao
-                                {% endif %}
-                            "
+                            {% if item.dente == numero %}
 
-                            data-id="{{ item.id }}"
-                            data-status="{{ item.status }}"
-                            title="{{ item.procedimento.nome }}"
-                        >
+                            {% if item.procedimento.tipo == 'dente' %}
 
-                        {% endif %}
+                            <img
+                                src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
+                                class="
+                                    icone-procedimento-dente
+                                    status-{{ item.status }}
+                                    posicao-{{ item.posicao_icone|default:item.procedimento.posicao_icone }}
 
-                        {% if item.face %}
+                                    {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+                                        sem-rotacao
+                                    {% endif %}
+                                "
+                                data-id="{{ item.id }}"
+                                data-status="{{ item.status }}"
+                                title="{{ item.procedimento.nome }}"
+                            >
 
-                        <span class="face-badge status-{{ item.status }}">
+                            {% if item.face %}
 
-                            {{ item.face }}
+                            <span class="face-badge status-{{ item.status }}">
 
-                        </span>
+                                {{ item.face }}
 
-                        {% endif %}
+                            </span>
 
-                    {% endif %}
+                            {% endif %}
 
-                {% endif %}
+                            {% endif %}
 
-            {% endfor %}
+                            {% endif %}
 
-        </div>
+                            {% endfor %}
 
-    </div>
+                        </div>
 
-    {% endfor %}
+                    </div>
 
-</div>
+                    {% endfor %}
 
+                </div>
 
-<!-- INFERIOR -->
+                <div class="linha-divisao"></div>
 
-<div class="arcada inferior">
 
-    {% for numero in inferiores %}
+                <!-- DENTIÇÃO DECÍDUA -->
 
-    <div class="dente-box dente-{{ numero }}">
+                <div class="secao-titulo">
+                    Dentição Decídua
+                </div>
 
-        <img
-            src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
-            class="dente-img inferior"
-            data-dente="{{ numero }}"
-            alt="Dente {{ numero }}"
-        >
 
-        <div class="procedimentos-dente">
+                <!-- SUPERIOR -->
 
-            {% for item in itens_orcamento %}
+                <div class="arcada decidua">
 
-                {% if item.dente == numero %}
+                    {% for numero in dec_superiores %}
 
-                    {% if item.procedimento.tipo == 'dente' %}
+                    <div class="dente-box dente-{{ numero }}">
 
-                        {% if item.procedimento.arquivo_icone %}
+                        <!-- DENTE -->
 
-                        <img
+                        <img src="{% static 'img/dentes/'|add:numero|add:'.png' %}" class="dente-img deciduo"
+                            data-dente="{{ numero }}" alt="Dente {{ numero }}">
 
-                            src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
+                        <!-- PROCEDIMENTOS -->
 
-                            class="
-                                icone-procedimento-dente
-                                status-{{ item.status }}
+                        <div class="procedimentos-dente">
 
-                                {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-                                    posicao-topo
-                                {% else %}
-                                    posicao-{{ item.procedimento.posicao_icone }}
-                                {% endif %}
-                                
-                            "
+                            {% for item in itens_orcamento %}
 
-                            data-id="{{ item.id }}"
-                            data-status="{{ item.status }}"
-                            title="{{ item.procedimento.nome }}"
-                        >
+                            {% if item.dente == numero %}
 
-                        {% endif %}
+                            {% if item.procedimento.tipo == 'dente' %}
 
-                        {% if item.face %}
+                            <img
+    src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
+    class="
+        icone-procedimento-dente
+        status-{{ item.status }}
+        posicao-{{ item.posicao_icone|default:item.procedimento.posicao_icone }}
 
-                        <span class="face-badge status-{{ item.status }}">
+        {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+            sem-rotacao
+        {% endif %}
+    "
+    data-id="{{ item.id }}"
+    data-status="{{ item.status }}"
+    title="{{ item.procedimento.nome }}"
+>
+                            {% if item.face %}
 
-                            {{ item.face }}
+                            <span class="face-badge status-{{ item.status }}">
 
-                        </span>
+                                {{ item.face }}
 
-                        {% endif %}
+                            </span>
 
-                    {% endif %}
+                            {% endif %}
 
-                {% endif %}
+                            {% endif %}
 
-            {% endfor %}
+                            {% endif %}
 
-        </div>
+                            {% endfor %}
 
-    </div>
+                        </div>
 
-    {% endfor %}
+                    </div>
 
-</div>
+                    {% endfor %}
 
-<div class="linha-divisao"></div>
+                </div>
 
 
-<!-- DENTIÇÃO DECÍDUA -->
+                <!-- INFERIOR -->
 
-<div class="secao-titulo">
-    Dentição Decídua
-</div>
+                <div class="arcada decidua inferior">
 
+                    {% for numero in dec_inferiores %}
 
-<!-- SUPERIOR -->
+                    <div class="dente-box dente-{{ numero }}">
 
-<div class="arcada decidua">
+                        <!-- DENTE -->
 
-    {% for numero in dec_superiores %}
+                        <img src="{% static 'img/dentes/'|add:numero|add:'.png' %}" class="dente-img deciduo inferior"
+                            data-dente="{{ numero }}" alt="Dente {{ numero }}">
 
-    <div class="dente-box dente-{{ numero }}">
+                        <!-- PROCEDIMENTOS -->
 
-        <!-- DENTE -->
+                        <div class="procedimentos-dente">
 
-        <img
-            src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
-            class="dente-img deciduo"
-            data-dente="{{ numero }}"
-            alt="Dente {{ numero }}"
-        >
+                            {% for item in itens_orcamento %}
 
-        <!-- PROCEDIMENTOS -->
+                            {% if item.dente == numero %}
 
-        <div class="procedimentos-dente">
+                            {% if item.procedimento.tipo == 'dente' %}
 
-            {% for item in itens_orcamento %}
+                            <img
+    src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
+    class="
+        icone-procedimento-dente
+        status-{{ item.status }}
+        posicao-{{ item.posicao_icone|default:item.procedimento.posicao_icone }}
 
-                {% if item.dente == numero %}
+        {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+            sem-rotacao
+        {% endif %}
+    "
+    data-id="{{ item.id }}"
+    data-status="{{ item.status }}"
+    title="{{ item.procedimento.nome }}"
+>
+                            {% if item.face %}
 
-                    {% if item.procedimento.tipo == 'dente' %}
+                            <span class="face-badge status-{{ item.status }}">
 
-                        {% if item.procedimento.arquivo_icone %}
+                                {{ item.face }}
 
-                        <img
+                            </span>
 
-                            src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
+                            {% endif %}
 
-                            class="
-                                icone-procedimento-dente
-                                status-{{ item.status }}
+                            {% endif %}
 
-                                {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-                                    posicao-topo
-                                {% else %}
-                                    posicao-{{ item.procedimento.posicao_icone }}
-                                {% endif %}
+                            {% endif %}
 
-                                {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-                                    sem-rotacao
-                                {% endif %}
-                            "
+                            {% endfor %}
 
-                            data-id="{{ item.id }}"
-                            data-status="{{ item.status }}"
-                            title="{{ item.procedimento.nome }}"
-                        >
+                        </div>
 
-                        {% endif %}
+                    </div>
 
-                        {% if item.face %}
+                    {% endfor %}
 
-                        <span class="face-badge status-{{ item.status }}">
+                </div>
 
-                            {{ item.face }}
+            </div> <!-- odontograma-box -->
 
-                        </span>
+        </div> <!-- odontograma-card -->
 
-                        {% endif %}
+    </div> <!-- odontograma-wrapper -->
 
-                    {% endif %}
 
-                {% endif %}
 
-            {% endfor %}
-
-        </div>
-
-    </div>
-
-    {% endfor %}
-
-</div>
-
-
-<!-- INFERIOR -->
-
-<div class="arcada decidua inferior">
-
-    {% for numero in dec_inferiores %}
-
-    <div class="dente-box dente-{{ numero }}">
-
-        <!-- DENTE -->
-
-        <img
-            src="{% static 'img/dentes/'|add:numero|add:'.png' %}"
-            class="dente-img deciduo inferior"
-            data-dente="{{ numero }}"
-            alt="Dente {{ numero }}"
-        >
-
-        <!-- PROCEDIMENTOS -->
-
-        <div class="procedimentos-dente">
-
-            {% for item in itens_orcamento %}
-
-                {% if item.dente == numero %}
-
-                    {% if item.procedimento.tipo == 'dente' %}
-
-                        {% if item.procedimento.arquivo_icone %}
-
-                        <img
-
-                            src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
-
-                            class="
-                                icone-procedimento-dente
-                                status-{{ item.status }}
-
-                                {% if item.procedimento.arquivo_icone == 'extracao_incluso.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-                                    posicao-topo
-                                {% else %}
-                                    posicao-{{ item.procedimento.posicao_icone }}
-                                {% endif %}
-
-                                {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-                                    sem-rotacao
-                                {% endif %}
-                            "
-
-                            data-id="{{ item.id }}"
-                            data-status="{{ item.status }}"
-                            title="{{ item.procedimento.nome }}"
-                        >
-
-                        {% endif %}
-
-                        {% if item.face %}
-
-                        <span class="face-badge status-{{ item.status }}">
-
-                            {{ item.face }}
-
-                        </span>
-
-                        {% endif %}
-
-                    {% endif %}
-
-                {% endif %}
-
-            {% endfor %}
-
-        </div>
-
-    </div>
-
-    {% endfor %}
-
-</div>
-
-</div> <!-- odontograma-box -->
-
-</div> <!-- odontograma-card -->
-
-</div> <!-- odontograma-wrapper -->
-
-
-    
     <!-- TIMELINE -->
 
     <div class="timeline-container">
@@ -478,13 +406,11 @@ PROCEDIMENTOS GERAIS
 
                         <div class="timeline-top">
 
-<div class="timeline-procedimento">
+                            <div class="timeline-procedimento">
 
-    {% if evolucao.procedimento.arquivo_icone or evolucao.procedimento.icone %}
+                                {% if evolucao.procedimento.arquivo_icone or evolucao.procedimento.icone %}
 
-    <img
-
-        src="
+                                <img src="
         {% if evolucao.procedimento.tipo == 'geral' or evolucao.procedimento.tipo == 'hemiarcada' %}
 
             {% static 'img/procedimentos/full/' %}{{ evolucao.procedimento.arquivo_icone }}
@@ -494,21 +420,15 @@ PROCEDIMENTOS GERAIS
             {% static 'img/procedimentos/mini/' %}{{ evolucao.procedimento.arquivo_icone }}
 
         {% endif %}
-        "
+        " class="timeline-icone" alt="{{ evolucao.procedimento.nome }}">
 
-        class="timeline-icone"
+                                {% endif %}
 
-        alt="{{ evolucao.procedimento.nome }}"
+                                <strong>
+                                    {{ evolucao.procedimento.nome }}
+                                </strong>
 
-    >
-
-    {% endif %}
-
-    <strong>
-        {{ evolucao.procedimento.nome }}
-    </strong>
-
-</div>                            
+                            </div>
 
                             <span>
                                 {{ evolucao.criado_em|date:"d/m/Y" }}
@@ -559,11 +479,7 @@ PROCEDIMENTOS GERAIS
 MODAL EVOLUÇÃO CLÍNICA
 ========================================= -->
 
-<div
-    class="modal fade"
-    id="modalEvolucao"
-    tabindex="-1"
->
+<div class="modal fade" id="modalEvolucao" tabindex="-1">
 
     <div class="modal-dialog modal-lg modal-dialog-centered">
 
@@ -583,11 +499,7 @@ MODAL EVOLUÇÃO CLÍNICA
 
                 </div>
 
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 
             </div>
 
@@ -607,13 +519,7 @@ MODAL EVOLUÇÃO CLÍNICA
                                 Dente
                             </label>
 
-                            <input
-                                type="text"
-                                id="denteSelecionado"
-                                name="dente"
-                                class="anamnese-input"
-                                readonly
-                            >
+                            <input type="text" id="denteSelecionado" name="dente" class="anamnese-input" readonly>
 
                         </div>
 
@@ -623,10 +529,7 @@ MODAL EVOLUÇÃO CLÍNICA
                                 Face do Dente
                             </label>
 
-                            <select
-                                name="face"
-                                class="anamnese-input"
-                            >
+                            <select name="face" class="anamnese-input">
 
                                 <option value="">
                                     Selecione
@@ -690,11 +593,7 @@ MODAL EVOLUÇÃO CLÍNICA
                                 Status
                             </label>
 
-                            <select
-                                name="status"
-                                class="anamnese-input"
-                                required
-                            >
+                            <select name="status" class="anamnese-input" required>
 
                                 <option value="planejado">
                                     Planejado
@@ -728,17 +627,57 @@ MODAL EVOLUÇÃO CLÍNICA
 
                     <!-- PROCEDIMENTO -->
 
+                    <!-- POSIÇÃO DO ÍCONE -->
+
+                    <div class="mb-4">
+
+                        <label class="anamnese-label">
+                            Posição do Ícone
+                        </label>
+
+                        <select name="posicao_icone" class="anamnese-input">
+
+                            <option value="">
+                                Automático
+                            </option>
+
+                            <option value="coroa">
+                                Coroa
+                            </option>
+
+                            <option value="raiz">
+                                Raiz
+                            </option>
+
+                            <option value="centro">
+                                Centro
+                            </option>
+
+                            <option value="oclusal">
+                                Oclusal
+                            </option>
+
+                            <option value="vestibular">
+                                Vestibular
+                            </option>
+
+                            <option value="lingual">
+                                Lingual
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- PROCEDIMENTO -->
+
                     <div class="mb-4">
 
                         <label class="anamnese-label">
                             Procedimento
                         </label>
 
-                        <select
-                            name="procedimento"
-                            class="anamnese-input"
-                            required
-                        >
+                        <select name="procedimento" class="anamnese-input" required>
 
                             <option value="">
                                 Selecione um procedimento
@@ -748,17 +687,17 @@ MODAL EVOLUÇÃO CLÍNICA
 
                             {% for categoria in categorias %}
 
-                                <optgroup label="{{ categoria.grouper }}">
+                            <optgroup label="{{ categoria.grouper }}">
 
-                                    {% for procedimento in categoria.list %}
+                                {% for procedimento in categoria.list %}
 
-                                        <option value="{{ procedimento.id }}">
-                                            {{ procedimento.nome }}
-                                        </option>
+                                <option value="{{ procedimento.id }}">
+                                    {{ procedimento.nome }}
+                                </option>
 
-                                    {% endfor %}
+                                {% endfor %}
 
-                                </optgroup>
+                            </optgroup>
 
                             {% endfor %}
 
@@ -774,12 +713,8 @@ MODAL EVOLUÇÃO CLÍNICA
                             Descrição
                         </label>
 
-                        <textarea
-                            name="descricao"
-                            class="anamnese-textarea"
-                            rows="4"
-                            placeholder="Descreva o procedimento"
-                        ></textarea>
+                        <textarea name="descricao" class="anamnese-textarea" rows="4"
+                            placeholder="Descreva o procedimento"></textarea>
 
                     </div>
 
@@ -787,18 +722,11 @@ MODAL EVOLUÇÃO CLÍNICA
 
                 <div class="modal-footer border-0">
 
-                    <button
-                        type="button"
-                        class="btn-anamnese-outline"
-                        data-bs-dismiss="modal"
-                    >
+                    <button type="button" class="btn-anamnese-outline" data-bs-dismiss="modal">
                         Cancelar
                     </button>
 
-                    <button
-                        type="submit"
-                        class="btn-anamnese"
-                    >
+                    <button type="submit" class="btn-anamnese">
                         Salvar Evolução
                     </button>
 
@@ -816,11 +744,7 @@ MODAL EVOLUÇÃO CLÍNICA
 MODAL PROCEDIMENTO GERAL
 ========================================= -->
 
-<div
-    class="modal fade"
-    id="modalProcedimentoGeral"
-    tabindex="-1"
->
+<div class="modal fade" id="modalProcedimentoGeral" tabindex="-1">
 
     <div class="modal-dialog modal-lg modal-dialog-centered">
 
@@ -840,18 +764,11 @@ MODAL PROCEDIMENTO GERAL
 
                 </div>
 
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 
             </div>
 
-            <form
-                method="POST"
-                action="{% url 'salvar_procedimento_geral' paciente.id %}"
-            >
+            <form method="POST" action="{% url 'salvar_procedimento_geral' paciente.id %}">
 
                 {% csrf_token %}
 
@@ -865,11 +782,7 @@ MODAL PROCEDIMENTO GERAL
                             Status
                         </label>
 
-                        <select
-                            name="status"
-                            class="anamnese-input"
-                            required
-                        >
+                        <select name="status" class="anamnese-input" required>
 
                             <option value="planejado">
                                 Planejado
@@ -907,11 +820,7 @@ MODAL PROCEDIMENTO GERAL
                             Procedimento
                         </label>
 
-                        <select
-                            name="procedimento"
-                            class="anamnese-input"
-                            required
-                        >
+                        <select name="procedimento" class="anamnese-input" required>
 
                             <option value="">
                                 Selecione
@@ -919,13 +828,13 @@ MODAL PROCEDIMENTO GERAL
 
                             {% for procedimento in procedimentos %}
 
-                                {% if procedimento.tipo == 'geral' or procedimento.tipo == 'hemiarcada' %}
+                            {% if procedimento.tipo == 'geral' or procedimento.tipo == 'hemiarcada' %}
 
-                                    <option value="{{ procedimento.id }}">
-                                        {{ procedimento.nome }}
-                                    </option>
+                            <option value="{{ procedimento.id }}">
+                                {{ procedimento.nome }}
+                            </option>
 
-                                {% endif %}
+                            {% endif %}
 
                             {% endfor %}
 
@@ -941,12 +850,8 @@ MODAL PROCEDIMENTO GERAL
                             Descrição
                         </label>
 
-                        <textarea
-                            name="descricao"
-                            class="anamnese-textarea"
-                            rows="4"
-                            placeholder="Observações do procedimento"
-                        ></textarea>
+                        <textarea name="descricao" class="anamnese-textarea" rows="4"
+                            placeholder="Observações do procedimento"></textarea>
 
                     </div>
 
@@ -954,18 +859,11 @@ MODAL PROCEDIMENTO GERAL
 
                 <div class="modal-footer border-0">
 
-                    <button
-                        type="button"
-                        class="btn-anamnese-outline"
-                        data-bs-dismiss="modal"
-                    >
+                    <button type="button" class="btn-anamnese-outline" data-bs-dismiss="modal">
                         Cancelar
                     </button>
 
-                    <button
-                        type="submit"
-                        class="btn-anamnese"
-                    >
+                    <button type="submit" class="btn-anamnese">
                         Salvar Procedimento
                     </button>
 
@@ -985,38 +883,23 @@ MODAL PROCEDIMENTO GERAL
 
 <div id="menuStatus" class="menu-status">
 
-    <div
-        class="status-item status-existente"
-        data-status="existente"
-    >
+    <div class="status-item status-existente" data-status="existente">
         Existente
     </div>
 
-    <div
-        class="status-item status-planejado"
-        data-status="planejado"
-    >
+    <div class="status-item status-planejado" data-status="planejado">
         Planejado
     </div>
 
-    <div
-        class="status-item status-andamento"
-        data-status="andamento"
-    >
+    <div class="status-item status-andamento" data-status="andamento">
         Em Andamento
     </div>
 
-    <div
-        class="status-item status-realizado"
-        data-status="realizado"
-    >
+    <div class="status-item status-realizado" data-status="realizado">
         Realizado
     </div>
 
-    <div
-        class="status-item status-cancelado"
-        data-status="cancelado"
-    >
+    <div class="status-item status-cancelado" data-status="cancelado">
         Cancelado
     </div>
 
@@ -1024,257 +907,257 @@ MODAL PROCEDIMENTO GERAL
 
 <script>
 
-/* =========================================
-SELEÇÃO DO DENTE
-========================================= */
+    /* =========================================
+    SELEÇÃO DO DENTE
+    ========================================= */
 
-document
-.querySelectorAll('.dente-img')
+    document
+        .querySelectorAll('.dente-img')
 
-.forEach(dente => {
+        .forEach(dente => {
 
-    dente.addEventListener('click', function(){
+            dente.addEventListener('click', function () {
 
-        const numero = this.dataset.dente;
+                const numero = this.dataset.dente;
 
-        document.getElementById(
-            'denteSelecionado'
-        ).value = numero;
+                document.getElementById(
+                    'denteSelecionado'
+                ).value = numero;
 
-        const modal = new bootstrap.Modal(
+                const modal = new bootstrap.Modal(
 
-            document.getElementById(
-                'modalEvolucao'
-            )
+                    document.getElementById(
+                        'modalEvolucao'
+                    )
 
-        );
+                );
 
-        modal.show();
-
-    });
-
-});
-
-
-/* =========================================
-PREVIEW DOS ÍCONES
-========================================= */
-
-function atualizarPreviewIcone() {
-
-    const input =
-        document.getElementById(
-            'id_icone'
-        );
-
-    const preview =
-        document.getElementById(
-            'preview-icone'
-        );
-
-    // PROTEÇÃO
-    if(!input || !preview) return;
-
-    const nomeIcone = input.value;
-
-    if (nomeIcone) {
-
-        // TENTA FULL PRIMEIRO
-        preview.src =
-        `/static/img/procedimentos/full/${nomeIcone}`;
-
-        preview.style.display = 'block';
-
-        // FALLBACK MINI
-        preview.onerror = function () {
-
-            preview.src =
-            `/static/img/procedimentos/mini/${nomeIcone}`;
-
-        };
-
-    } else {
-
-        preview.style.display = 'none';
-
-    }
-
-}
-
-window.onload = atualizarPreviewIcone;
-
-
-/* =========================================
-MENU STATUS PREMIUM
-========================================= */
-
-const menuStatus =
-    document.getElementById(
-        'menuStatus'
-    );
-
-let procedimentoAtual = null;
-
-
-/* CLICK DIREITO */
-
-document.addEventListener(
-
-    'contextmenu',
-
-    function(e){
-
-        const elemento = e.target.closest(
-            '.icone-procedimento-dente, .procedimento-geral-chip'
-        );
-
-        if(!elemento) return;
-
-        e.preventDefault();
-
-        procedimentoAtual =
-            elemento.dataset.id;
-
-        menuStatus.style.display =
-            'block';
-
-        const larguraMenu = 190;
-const alturaMenu = 230;
-
-let posX =
-    e.pageX - (larguraMenu / 2);
-
-/* POSIÇÃO INICIAL */
-
-let posY =
-    e.pageY + 15;
-
-/* SE NÃO HOUVER ESPAÇO EMBAIXO,
-   ABRE ACIMA */
-
-if(
-    posY + alturaMenu >
-    window.innerHeight + window.scrollY
-){
-
-    posY =
-        e.pageY - alturaMenu - 15;
-
-}
-       
-        /* EVITA SAIR PELA ESQUERDA */
-
-        if(posX < 10){
-
-            posX = 10;
-
-        }
-
-        /* EVITA SAIR PELA DIREITA */
-
-        if(
-            posX + larguraMenu >
-            window.innerWidth
-        ){
-
-            posX =
-                window.innerWidth
-                - larguraMenu
-                - 10;
-
-        }
-
-        /* EVITA SAIR PELO TOPO */
-
-        if(posY < 10){
-
-            posY = 10;
-
-        }
-
-        menuStatus.style.left =
-            posX + 'px';
-
-        menuStatus.style.top =
-            posY + 'px';
-
-    }
-
-);
-
-
-/* ALTERAR STATUS */
-
-document
-.querySelectorAll('.status-item')
-
-.forEach(item => {
-
-    item.addEventListener(
-
-        'click',
-
-        function(){
-
-            const status =
-                this.dataset.status;
-
-            fetch(
-
-                `/procedimento/${procedimentoAtual}/status/`,
-
-                {
-
-                    method:'POST',
-
-                    headers:{
-
-                        'Content-Type':'application/json',
-
-                        'X-CSRFToken':
-                        '{{ csrf_token }}'
-
-                    },
-
-                    body:JSON.stringify({
-
-                        status:status
-
-                    })
-
-                }
-
-            )
-
-            .then(response => response.json())
-
-            .then(data => {
-
-                location.reload();
+                modal.show();
 
             });
 
+        });
+
+
+    /* =========================================
+    PREVIEW DOS ÍCONES
+    ========================================= */
+
+    function atualizarPreviewIcone() {
+
+        const input =
+            document.getElementById(
+                'id_icone'
+            );
+
+        const preview =
+            document.getElementById(
+                'preview-icone'
+            );
+
+        // PROTEÇÃO
+        if (!input || !preview) return;
+
+        const nomeIcone = input.value;
+
+        if (nomeIcone) {
+
+            // TENTA FULL PRIMEIRO
+            preview.src =
+                `/static/img/procedimentos/full/${nomeIcone}`;
+
+            preview.style.display = 'block';
+
+            // FALLBACK MINI
+            preview.onerror = function () {
+
+                preview.src =
+                    `/static/img/procedimentos/mini/${nomeIcone}`;
+
+            };
+
+        } else {
+
+            preview.style.display = 'none';
+
+        }
+
+    }
+
+    window.onload = atualizarPreviewIcone;
+
+
+    /* =========================================
+    MENU STATUS PREMIUM
+    ========================================= */
+
+    const menuStatus =
+        document.getElementById(
+            'menuStatus'
+        );
+
+    let procedimentoAtual = null;
+
+
+    /* CLICK DIREITO */
+
+    document.addEventListener(
+
+        'contextmenu',
+
+        function (e) {
+
+            const elemento = e.target.closest(
+                '.icone-procedimento-dente, .procedimento-geral-chip'
+            );
+
+            if (!elemento) return;
+
+            e.preventDefault();
+
+            procedimentoAtual =
+                elemento.dataset.id;
+
+            menuStatus.style.display =
+                'block';
+
+            const larguraMenu = 190;
+            const alturaMenu = 230;
+
+            let posX =
+                e.pageX - (larguraMenu / 2);
+
+            /* POSIÇÃO INICIAL */
+
+            let posY =
+                e.pageY + 15;
+
+            /* SE NÃO HOUVER ESPAÇO EMBAIXO,
+               ABRE ACIMA */
+
+            if (
+                posY + alturaMenu >
+                window.innerHeight + window.scrollY
+            ) {
+
+                posY =
+                    e.pageY - alturaMenu - 15;
+
+            }
+
+            /* EVITA SAIR PELA ESQUERDA */
+
+            if (posX < 10) {
+
+                posX = 10;
+
+            }
+
+            /* EVITA SAIR PELA DIREITA */
+
+            if (
+                posX + larguraMenu >
+                window.innerWidth
+            ) {
+
+                posX =
+                    window.innerWidth
+                    - larguraMenu
+                    - 10;
+
+            }
+
+            /* EVITA SAIR PELO TOPO */
+
+            if (posY < 10) {
+
+                posY = 10;
+
+            }
+
+            menuStatus.style.left =
+                posX + 'px';
+
+            menuStatus.style.top =
+                posY + 'px';
+
         }
 
     );
 
-});
+
+    /* ALTERAR STATUS */
+
+    document
+        .querySelectorAll('.status-item')
+
+        .forEach(item => {
+
+            item.addEventListener(
+
+                'click',
+
+                function () {
+
+                    const status =
+                        this.dataset.status;
+
+                    fetch(
+
+                        `/procedimento/${procedimentoAtual}/status/`,
+
+                        {
+
+                            method: 'POST',
+
+                            headers: {
+
+                                'Content-Type': 'application/json',
+
+                                'X-CSRFToken':
+                                    '{{ csrf_token }}'
+
+                            },
+
+                            body: JSON.stringify({
+
+                                status: status
+
+                            })
+
+                        }
+
+                    )
+
+                        .then(response => response.json())
+
+                        .then(data => {
+
+                            location.reload();
+
+                        });
+
+                }
+
+            );
+
+        });
 
 
-/* FECHAR MENU */
+    /* FECHAR MENU */
 
-document.addEventListener(
+    document.addEventListener(
 
-    'click',
+        'click',
 
-    function(){
+        function () {
 
-        menuStatus.style.display =
-            'none';
+            menuStatus.style.display =
+                'none';
 
-    }
+        }
 
-);
+    );
 
 
 

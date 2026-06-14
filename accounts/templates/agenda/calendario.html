@@ -2,9 +2,22 @@
 
 {% block content %}
 
+<style>
+    #eventoModal .btn-sm {
+        min-width: 75px;
+        font-size: 0.67rem;
+        font-weight: 500;
+    }
+
+    #eventoModal .modal-footer {
+        padding-top: .75rem;
+        padding-bottom: .75rem;
+    }
+</style>
+
 <div class="container-fluid">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-2">
 
         <h1>Agenda</h1>
 
@@ -26,7 +39,7 @@
 
 <div class="modal fade" id="eventoModal" tabindex="-1">
 
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width:500px;">
 
         <div class="modal-content">
 
@@ -69,28 +82,59 @@
 
             </div>
 
-            <div class="modal-footer justify-content-between">
+            <div class="modal-footer">
 
-                <div>
+                <div class="w-100">
 
-                    <a id="btnPerfil" class="btn btn-outline-primary">
-                        <i class="bi bi-person"></i>
-                        Perfil
-                    </a>
+                    <div class="d-flex justify-content-center gap-2 mb-2">
 
-                </div>
+                        <a id="btnConfirmar" class="btn btn-success btn-sm">
+                            <i class="bi bi-check-circle"></i>
+                            Confirmar
+                        </a>
 
-                <div class="d-flex gap-2">
+                        <a id="btnAtendimento" class="btn btn-warning btn-sm">
+                            <i class="bi bi-play-circle"></i>
+                            Em Atendimento
+                        </a>
 
-                    <a id="btnEditar" class="btn btn-primary">
-                        <i class="bi bi-pencil-square"></i>
-                        Editar
-                    </a>
+                        <a id="btnFinalizar" class="btn btn-secondary btn-sm">
+                            <i class="bi bi-flag"></i>
+                            Finalizado
+                        </a>
 
-                    <a id="btnAtendimento" class="btn btn-success">
-                        <i class="bi bi-play-circle"></i>
-                        Atendimento
-                    </a>
+                        <a id="btnFalta" class="btn btn-danger btn-sm">
+                            <i class="bi bi-x-circle"></i>
+                            Faltou
+                        </a>
+
+                        <a id="btnCancelar" class="btn btn-dark btn-sm">
+                            <i class="bi bi-slash-circle"></i>
+                            Cancelar
+                        </a>
+
+                    </div>
+
+                    <div class="d-flex justify-content-center gap-2">
+
+                        <a id="btnPerfil" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-person"></i>
+                            Perfil
+                        </a>
+
+                        <a id="btnEditar" class="btn btn-primary btn-sm">
+                            <i class="bi bi-pencil-square"></i>
+                            Editar
+                        </a>
+
+                        <a id="btnWhatsapp" class="btn btn-success btn-sm" target="_blank">
+
+                            <i class="bi bi-whatsapp"></i>
+                            WhatsApp
+
+                        </a>
+
+                    </div>
 
                 </div>
 
@@ -100,236 +144,384 @@
 
     </div>
 
-    <script>
+</div>
 
-        document.addEventListener('DOMContentLoaded', function () {
+<script>
 
-            function getCookie(name) {
+    document.addEventListener('DOMContentLoaded', function () {
 
-                let cookieValue = null;
+        function getCookie(name) {
 
-                if (document.cookie && document.cookie !== '') {
+            let cookieValue = null;
 
-                    const cookies = document.cookie.split(';');
+            if (document.cookie && document.cookie !== '') {
 
-                    for (let i = 0; i < cookies.length; i++) {
+                const cookies = document.cookie.split(';');
 
-                        const cookie = cookies[i].trim();
+                for (let i = 0; i < cookies.length; i++) {
 
-                        if (
-                            cookie.substring(0, name.length + 1) ===
-                            (name + '=')
-                        ) {
+                    const cookie = cookies[i].trim();
 
-                            cookieValue = decodeURIComponent(
-                                cookie.substring(name.length + 1)
-                            );
+                    if (
+                        cookie.substring(0, name.length + 1) ===
+                        (name + '=')
+                    ) {
 
-                            break;
+                        cookieValue = decodeURIComponent(
+                            cookie.substring(name.length + 1)
+                        );
 
-                        }
+                        break;
 
                     }
 
                 }
-
-                return cookieValue;
 
             }
 
-            const calendarEl = document.getElementById('calendar');
+            return cookieValue;
 
-            const calendar = new FullCalendar.Calendar(calendarEl, {
+        }
 
-                locale: 'pt-br',
+        const calendarEl = document.getElementById('calendar');
 
-                initialView: 'dayGridMonth',
+        let eventoSelecionado = null;
 
-                editable: true,
+        const calendar = new FullCalendar.Calendar(calendarEl, {
 
-                events: '/agenda/eventos/',
+            locale: 'pt-br',
 
-                headerToolbar: {
+            initialView: 'dayGridMonth',
 
-                    left: 'prev,next today',
+            height: 'calc(100vh - 180px)',
 
-                    center: 'title',
+            editable: true,
 
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            events: '/agenda/eventos/',
 
-                },
+            headerToolbar: {
 
-                buttonText: {
+                left: 'prev,next today',
 
-                    today: 'Hoje',
+                center: 'title',
 
-                    month: 'Mês',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
 
-                    week: 'Semana',
+            },
 
-                    day: 'Dia'
+            buttonText: {
 
-                },
+                today: 'Hoje',
 
-                eventDidMount: function (info) {
+                month: 'Mês',
 
-                    info.el.title =
+                week: 'Semana',
 
-                        'Paciente: ' +
-                        info.event.extendedProps.paciente +
+                day: 'Dia'
 
-                        '\nStatus: ' +
-                        info.event.extendedProps.status +
+            },
 
-                        '\nProcedimento: ' +
-                        info.event.extendedProps.procedimento +
+            eventDidMount: function (info) {
 
-                        '\nProfissional: ' +
-                        info.event.extendedProps.profissional;
+                info.el.title =
 
-                },
+                    'Paciente: ' +
+                    info.event.extendedProps.paciente +
 
-                eventClick: function (info) {
+                    '\nStatus: ' +
+                    info.event.extendedProps.status +
 
-                    info.jsEvent.preventDefault();
+                    '\nProcedimento: ' +
+                    info.event.extendedProps.procedimento +
 
-                    document.getElementById(
-                        'modalPaciente'
-                    ).innerText =
-                        info.event.extendedProps.paciente;
+                    '\nProfissional: ' +
+                    info.event.extendedProps.profissional;
 
-                    const statusEl = document.getElementById(
-                        'modalStatus'
+            },
+
+            eventClick: function (info) {
+
+                eventoSelecionado = info.event;
+
+                info.jsEvent.preventDefault();
+
+                document.getElementById(
+                    'modalPaciente'
+                ).innerText =
+                    info.event.extendedProps.paciente;
+
+                const statusEl = document.getElementById(
+                    'modalStatus'
+                );
+
+                statusEl.innerText =
+                    info.event.extendedProps.status;
+
+                statusEl.className =
+                    'badge fs-6';
+
+                if (
+                    info.event.extendedProps.status ===
+                    'Confirmado'
+                ) {
+
+                    statusEl.classList.add(
+                        'bg-success'
                     );
 
-                    statusEl.innerText =
-                        info.event.extendedProps.status;
+                } else if (
 
-                    statusEl.className =
-                        'badge fs-6';
+                    info.event.extendedProps.status ===
+                    'Em Atendimento'
 
-                    if (
-                        info.event.extendedProps.status ===
-                        'Confirmado'
-                    ) {
+                ) {
 
-                        statusEl.classList.add(
-                            'bg-success'
-                        );
-
-                    } else if (
-
-                        info.event.extendedProps.status ===
-                        'Em Atendimento'
-
-                    ) {
-
-                        statusEl.classList.add(
-                            'bg-warning'
-                        );
-
-                    } else if (
-
-                        info.event.extendedProps.status ===
-                        'Finalizado'
-
-                    ) {
-
-                        statusEl.classList.add(
-                            'bg-secondary'
-                        );
-
-                    } else {
-
-                        statusEl.classList.add(
-                            'bg-primary'
-                        );
-
-                    }
-
-                    document.getElementById(
-                        'modalProcedimento'
-                    ).innerText =
-                        info.event.extendedProps.procedimento;
-
-                    document.getElementById(
-                        'modalProfissional'
-                    ).innerText =
-                        info.event.extendedProps.profissional;
-
-                    document.getElementById(
-                        'btnPerfil'
-                    ).href =
-                        info.event.extendedProps.perfil_url;
-
-                    document.getElementById(
-                        'btnEditar'
-                    ).href =
-                        info.event.extendedProps.editar_url;
-
-                    document.getElementById(
-                        'btnAtendimento'
-                    ).href =
-                        info.event.extendedProps.iniciar_url;
-
-                    const modal = new bootstrap.Modal(
-
-                        document.getElementById(
-                            'eventoModal'
-                        )
-
+                    statusEl.classList.add(
+                        'bg-warning'
                     );
 
-                    modal.show();
+                } else if (
 
-                },
+                    info.event.extendedProps.status ===
+                    'Finalizado'
 
-                eventDrop: function (info) {
+                ) {
 
-                    fetch('/agenda/mover-agendamento/', {
+                    statusEl.classList.add(
+                        'bg-secondary'
+                    );
 
-                        method: 'POST',
+                } else {
 
-                        headers: {
-
-                            'Content-Type': 'application/json',
-
-                            'X-CSRFToken': getCookie('csrftoken')
-
-                        },
-
-                        body: JSON.stringify({
-
-                            agendamento_id: info.event.id,
-
-                            nova_data: info.event.startStr
-
-                        })
-
-                    })
-
-                        .then(response => response.json())
-
-                        .then(data => {
-
-                            if (!data.sucesso) {
-
-                                alert('Erro ao mover agendamento');
-
-                                info.revert();
-
-                            }
-
-                        });
+                    statusEl.classList.add(
+                        'bg-primary'
+                    );
 
                 }
 
-            });
+                document.getElementById(
+                    'modalProcedimento'
+                ).innerText =
+                    info.event.extendedProps.procedimento;
 
-            calendar.render();
+                document.getElementById(
+                    'modalProfissional'
+                ).innerText =
+                    info.event.extendedProps.profissional;
+
+                document.getElementById(
+                    'btnPerfil'
+                ).href =
+                    info.event.extendedProps.perfil_url;
+
+                document.getElementById(
+                    'btnEditar'
+                ).href =
+                    info.event.extendedProps.editar_url;
+
+                document.getElementById(
+                    'btnAtendimento'
+                ).href =
+                    info.event.extendedProps.iniciar_url;
+
+                console.log(
+                    info.event.extendedProps.whatsapp_url
+                );
+
+                document.getElementById(
+                    'btnWhatsapp'
+                ).href =
+                    info.event.extendedProps.whatsapp_url;
+
+                const modal = new bootstrap.Modal(
+
+                    document.getElementById(
+                        'eventoModal'
+                    )
+
+                );
+
+                modal.show();
+
+            },
+
+            eventDrop: function (info) {
+
+                fetch('/agenda/mover-agendamento/', {
+
+                    method: 'POST',
+
+                    headers: {
+
+                        'Content-Type': 'application/json',
+
+                        'X-CSRFToken': getCookie('csrftoken')
+
+                    },
+
+                    body: JSON.stringify({
+
+                        agendamento_id: info.event.id,
+
+                        nova_data: info.event.startStr
+
+                    })
+
+                })
+
+                    .then(response => response.json())
+
+                    .then(data => {
+
+                        if (!data.sucesso) {
+
+                            alert('Erro ao mover agendamento');
+
+                            info.revert();
+
+                        }
+
+                    });
+
+            }
 
         });
 
-    </script>
+        function alterarStatus(status) {
 
-    {% endblock %}
+            if (!eventoSelecionado) return;
+
+            fetch('/agenda/alterar-status/', {
+
+                method: 'POST',
+
+                headers: {
+
+                    'Content-Type': 'application/json',
+
+                    'X-CSRFToken': getCookie('csrftoken')
+
+                },
+
+                body: JSON.stringify({
+
+                    agendamento_id: eventoSelecionado.id,
+
+                    status: status
+
+                })
+
+            })
+
+                .then(response => response.json())
+
+                .then(data => {
+
+                    if (data.sucesso) {
+
+                        let cor = '#0d6efd';
+
+                        if (status === 'confirmado')
+                            cor = '#198754';
+
+                        else if (status === 'atendimento')
+                            cor = '#f89847';
+
+                        else if (status === 'finalizado')
+                            cor = '#6c757d';
+
+                        else if (status === 'cancelado')
+                            cor = '#382a2b';
+
+                        else if (status === 'faltou')
+                            cor = '#e93636';
+
+                        eventoSelecionado.setProp(
+                            'backgroundColor',
+                            cor
+                        );
+
+                        eventoSelecionado.setProp(
+                            'borderColor',
+                            cor
+                        );
+
+                        bootstrap.Modal.getInstance(
+                            document.getElementById(
+                                'eventoModal'
+                            )
+                        ).hide();
+
+                    }
+
+                });
+
+        }
+
+        document.getElementById(
+            'btnConfirmar'
+        ).addEventListener(
+            'click',
+            function (e) {
+
+                e.preventDefault();
+
+                alterarStatus(
+                    'confirmado'
+                );
+
+            }
+        );
+
+        document.getElementById(
+            'btnFalta'
+        ).addEventListener(
+            'click',
+            function (e) {
+
+                e.preventDefault();
+
+                alterarStatus(
+                    'faltou'
+                );
+
+            }
+        );
+
+        document.getElementById(
+            'btnCancelar'
+        ).addEventListener(
+            'click',
+            function (e) {
+
+                e.preventDefault();
+
+                alterarStatus(
+                    'cancelado'
+                );
+
+            }
+        );
+
+        document.getElementById(
+            'btnFinalizar'
+        ).addEventListener(
+            'click',
+            function (e) {
+
+                e.preventDefault();
+
+                alterarStatus(
+                    'finalizado'
+                );
+
+            }
+        );
+
+        calendar.render();
+
+    });
+
+</script>
+
+{% endblock %}

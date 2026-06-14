@@ -58,4 +58,22 @@ urlpatterns = [
         views.confirmar_agendamento,
         name='confirmar_agendamento'
     ),
+
+    path(
+        'faltou/<int:agendamento_id>/',
+        views.marcar_falta,
+        name='marcar_falta'
+    ),
+
+    path(
+        'cancelar/<int:agendamento_id>/',
+        views.cancelar_agendamento,
+        name='cancelar_agendamento'
+    ),
+
+    path(
+        'alterar-status/',
+        views.alterar_status_ajax,
+        name='alterar_status_ajax'
+    ),
 ]

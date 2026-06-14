@@ -881,6 +881,13 @@ class EvolucaoClinica(models.Model):
 
     )
 
+    posicao_icone = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        choices=Procedimento.POSICOES
+    )
+
     procedimento = models.ForeignKey(
 
         'Procedimento',
@@ -1370,6 +1377,18 @@ class ItemOrcamento(models.Model):
 
     )
 
+    posicao_icone = models.CharField(
+
+        max_length=20,
+
+        blank=True,
+
+        null=True,
+
+        choices=Procedimento.POSICOES
+
+    )
+
     # =========================================
     # HEMI ARCADA
     # =========================================
@@ -1640,67 +1659,7 @@ class DocumentoClinico(models.Model):
 
         return f'{self.titulo} - {self.paciente.nome}'
     
-# =========================================
-# CONFIGURAÇÃO DA CLÍNICA
-# =========================================
-
-class ConfiguracaoClinica(models.Model):
-
-    nome_clinica = models.CharField(
-        max_length=200
-    )
-
-    logo = models.ImageField(
-        upload_to='clinica/',
-        blank=True,
-        null=True
-    )
-
-    cro = models.CharField(
-        max_length=50,
-        blank=True
-    )
-
-    cnpj = models.CharField(
-        max_length=30,
-        blank=True
-    )
-
-    telefone = models.CharField(
-        max_length=30,
-        blank=True
-    )
-
-    whatsapp = models.CharField(
-        max_length=30,
-        blank=True
-    )
-
-    email = models.EmailField(
-        blank=True
-    )
-
-    endereco = models.TextField(
-        blank=True
-    )
-
-    cidade = models.CharField(
-        max_length=100,
-        blank=True
-    )
-
-    estado = models.CharField(
-        max_length=2,
-        blank=True
-    )
-
-    observacoes_orcamento = models.TextField(
-        blank=True
-    )
-
-    def __str__(self):
-        return self.nome_clinica
-    
+   
 # =========================================
 # MEDICAMENTOS
 # =========================================
