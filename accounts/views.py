@@ -65,6 +65,9 @@ from .forms import (
 
 from datetime import timedelta
 
+from django.contrib.auth.models import User
+from django.contrib import messages
+from .models import PerfilUsuario
 
 # =========================================
 # LOGIN
@@ -4586,5 +4589,215 @@ def imprimir_solicitacao_exame(request, id):
     doc.build(elementos)
 
     return response
+
+# =========================================
+# PERFIS
+# =========================================
+
+def usuario_admin(user):
+
+    if not hasattr(user, 'perfil'):
+        return False
+
+    return user.perfil.tipo_usuario == 'admin'
+
+
+def usuario_gestor(user):
+
+    if not hasattr(user, 'perfil'):
+        return False
+
+    return user.perfil.tipo_usuario == 'gestor'
+
+
+def usuario_dentista(user):
+
+    if not hasattr(user, 'perfil'):
+        return False
+
+    return user.perfil.tipo_usuario == 'dentista'
+
+# =========================================
+# USUÁRIOS
+# =========================================
+
+@login_required
+def usuarios(request):
+
+    usuarios = User.objects.select_related(
+        'perfil'
+    ).order_by(
+        'first_name',
+        'username'
+    )
+
+    context = {
+
+        'usuarios': usuarios
+
+    }
+
+    return render(
+        request,
+        'accounts/usuarios.html',
+        context
+    )
+
+
+# =========================================
+# NOVO USUÁRIO
+# =========================================
+
+@login_required
+def novo_usuario(request):
+
+    if request.method == 'POST':
+
+        nome = request.POST.get('nome')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        senha = request.POST.get('senha')
+
+        tipo_usuario = request.POST.get('tipo_usuario')
+
+        cro = request.POST.get('cro')
+        especialidade = request.POST.get('especialidade')
+        telefone = request.POST.get('telefone')
+
+        if User.objects.filter(username=username).exists():
+
+            messages.error(
+                request,
+                'Já existe um usuário com esse login.'
+            )
+
+            return redirect('novo_usuario')
+
+        usuario = User.objects.create_user(
+
+            username=username,
+            email=email,
+            password=senha,
+            first_name=nome
+
+        )
+
+        PerfilUsuario.objects.create(
+
+            usuario=usuario,
+
+            tipo_usuario=tipo_usuario,
+
+            cro=cro,
+
+            especialidade=especialidade,
+
+            telefone=telefone
+
+        )
+
+        messages.success(
+            request,
+            'Usuário criado com sucesso.'
+        )
+
+        return redirect('usuarios')
+
+    return render(
+        request,
+        'accounts/usuario_form.html'
+    )
+
+# =========================================
+# EDITAR USUÁRIO
+# =========================================
+
+@login_required
+def editar_usuario(request, id):
+
+    usuario = User.objects.get(id=id)
+
+    perfil = usuario.perfil
+
+    if request.method == 'POST':
+
+        usuario.first_name = request.POST.get('nome')
+
+        usuario.username = request.POST.get('username')
+
+        usuario.email = request.POST.get('email')
+
+        usuario.save()
+
+        perfil.tipo_usuario = request.POST.get(
+            'tipo_usuario'
+        )
+
+        perfil.cro = request.POST.get('cro')
+
+        perfil.especialidade = request.POST.get(
+            'especialidade'
+        )
+
+        perfil.telefone = request.POST.get(
+            'telefone'
+        )
+
+        perfil.save()
+
+        messages.success(
+            request,
+            'Usuário atualizado com sucesso.'
+        )
+
+        return redirect('usuarios')
+
+    context = {
+
+        'usuario_obj': usuario,
+        'perfil': perfil
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/usuario_form.html',
+
+        context
+
+    )
+
+# =========================================
+# ATIVAR USUÁRIO
+# =========================================
+
+@login_required
+def ativar_usuario(request, id):
+
+    usuario = User.objects.get(id=id)
+
+    usuario.perfil.ativo = True
+
+    usuario.perfil.save()
+
+    return redirect('usuarios')
+
+
+# =========================================
+# DESATIVAR USUÁRIO
+# =========================================
+
+@login_required
+def desativar_usuario(request, id):
+
+    usuario = User.objects.get(id=id)
+
+    usuario.perfil.ativo = False
+
+    usuario.perfil.save()
+
+    return redirect('usuarios')
 
 

@@ -67,10 +67,7 @@ CSS DASHBOARD
     {% block extra_css %}
     {% endblock %}
 
-<link
-    href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css"
-    rel="stylesheet"
->    
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
 
 </head>
 
@@ -184,15 +181,41 @@ CSS DASHBOARD
 
                 <!-- CONFIGURAÇÃO CLÍNICA -->
 
-                <li>
+                <!-- CLÍNICA -->
 
-                    <a href="{% url 'configuracao_clinica' %}">
+                <li class="menu-clinica">
+
+                    <a href="#">
 
                         <i class="fa-solid fa-building"></i>
 
                         <span>Clínica</span>
 
                     </a>
+
+                    <ul class="submenu-clinica">
+
+                        <li>
+
+                            <a href="{% url 'configuracao_clinica' %}">
+
+                                Configuração
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="{% url 'usuarios' %}">
+
+                                Usuários
+
+                            </a>
+
+                        </li>
+
+                    </ul>
 
                 </li>
 

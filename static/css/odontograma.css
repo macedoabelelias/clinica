@@ -687,7 +687,7 @@ PERMANENTES SUPERIORES
 .dente-23 .posicao-coroa{ top:56px; left:-1px; }
 .dente-23 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-24 .posicao-raiz{ top:40px; left:-1px; }
+.dente-24 .posicao-raiz{ top:15px; left:-1px; }
 .dente-24 .posicao-centro{ top:42px; left:0px; }
 .dente-24 .posicao-coroa{ top:54px; left:-2px; }
 .dente-24 .posicao-oclusal{ top:12px; left:5px; }
@@ -697,7 +697,7 @@ PERMANENTES SUPERIORES
 .dente-25 .posicao-coroa{ top:58px; left:-2px; }
 .dente-25 .posicao-oclusal{ top:12px; left:5px; }
 
-.dente-26 .posicao-raiz{ top:38px; left:-2px; }
+.dente-26 .posicao-raiz{ top:15px; left:-2px; }
 .dente-26 .posicao-centro{ top:42px; left:-2px; }
 .dente-26 .posicao-coroa{ top:52px; left:-2px; }
 .dente-26 .posicao-oclusal{ top:12px; left:5px; }
@@ -1130,15 +1130,16 @@ STATUS DOS MINI ÍCONES
     contrast(101%);
 }
 
-
 /* =========================================
-POSIÇÕES ESPECIAIS
-RX / EXTRAÇÃO
+RX E EXTRAÇÃO - POSIÇÃO RAIZ
 ========================================= */
 
-.posicao-topo{
+/* SUPERIORES */
 
-    top:8px !important;
+.arcada:not(.inferior) .icone-procedimento-dente.posicao-raiz[src*="rx_dente.png"],
+.arcada:not(.inferior) .icone-procedimento-dente.posicao-raiz[src*="extracao_incluso.png"]{
+
+    top:-6px !important;
 
     left:50% !important;
 
@@ -1146,9 +1147,14 @@ RX / EXTRAÇÃO
 
 }
 
-.posicao-base{
+/* INFERIORES */
 
-    bottom:-8px !important;
+.arcada.inferior .icone-procedimento-dente.posicao-raiz[src*="rx_dente.png"],
+.arcada.inferior .icone-procedimento-dente.posicao-raiz[src*="extracao_incluso.png"]{
+
+    top:auto !important;
+
+    bottom:-10px !important;
 
     left:50% !important;
 
@@ -1160,7 +1166,11 @@ RX / EXTRAÇÃO
 RX E AUSENTE
 ========================================= */
 
-.icone-procedimento-dente[src*="rx_dente"]{
+.icone-procedimento-dente[src*="rx_dente.png"]{
+
+    width:34px;
+
+    height:34px;
 
     rotate:0deg !important;
 
@@ -1173,12 +1183,83 @@ RX E AUSENTE
 }
 
 /* =========================================
+COROA SOBRE IMPLANTE
+========================================= */
+
+.icone-procedimento-dente[src*="coroa_implante"]{
+
+    width:26px !important;
+    height:26px !important;
+
+    left:50% !important;
+
+    transform:translateX(-50%) !important;
+
+}
+
+
+/* =========================================
+ÍCONE EXTRAÇÃO INCLUSO
+========================================= */
+
+.icone-procedimento-dente[src*="extracao_incluso.png"]{
+
+    width:34px;
+
+    height:34px;
+
+}
+
+/* =========================================
+COLAGEM DE FRAGMENTOS
+========================================= */
+
+/* SUPERIOR */
+
+.arcada:not(.inferior)
+.icone-procedimento-dente[src*="colagem_coroa"]{
+
+    width:22px !important;
+    height:22px !important;
+
+    rotate:0deg !important;
+
+    margin-top:-6px;
+
+}
+
+/* INFERIOR */
+
+.arcada.inferior
+.icone-procedimento-dente[src*="colagem_coroa"]{
+
+    width:22px !important;
+    height:22px !important;
+
+    rotate:180deg !important;
+
+    margin-top:0px;
+
+}
+
+/* =========================================
+COLAGEM DE FRAGMENTOS - CENTRALIZAÇÃO
+========================================= */
+
+.icone-procedimento-dente[src*="colagem_coroa"]{
+
+    margin-left:8px !important;
+
+}
+
+/* =========================================
 DECÍDUOS SUPERIORES
 ========================================= */
 
-.arcada.decidua .posicao-topo{
+.arcada.decidua .icone-procedimento-dente.posicao-raiz[src*="rx_dente.png"],
+.arcada.decidua .icone-procedimento-dente.posicao-raiz[src*="extracao_incluso.png"]{
 
-    top:10px !important;
+    top:-12px !important;
 
 }
 
@@ -1186,35 +1267,13 @@ DECÍDUOS SUPERIORES
 DECÍDUOS INFERIORES
 ========================================= */
 
-.arcada.decidua.inferior .posicao-base{
+.arcada.decidua.inferior .icone-procedimento-dente.posicao-raiz[src*="rx_dente.png"],
+.arcada.decidua.inferior .icone-procedimento-dente.posicao-raiz[src*="extracao_incluso.png"]{
 
-    bottom:-20px !important;
-
-}
-
-/* =========================================
-ÍCONE RX
-========================================= */
-
-.icone-procedimento-dente[src*="rx_dente"]{
-
-    width:34px;
-
-    height:34px;
+    bottom:-16px !important;
 
 }
 
-/* =========================================
-ÍCONE EXTRAÇÃO INCLUSO
-========================================= */
-
-.icone-procedimento-dente[src*="extracao_incluso"]{
-
-    width:34px;
-
-    height:34px;
-
-}
 
 /* =========================================
 MENU STATUS PREMIUM REFINADO
@@ -1860,8 +1919,8 @@ STATUS HEMI ARCADA
 RX INFERIOR
 ========================================= */
 
-.arcada.inferior .icone-procedimento-dente[src*="rx_dente"],
-.arcada.decidua.inferior .icone-procedimento-dente[src*="rx_dente"]{
+.arcada.inferior .icone-procedimento-dente[src*="rx_dente.png"],
+.arcada.decidua.inferior .icone-procedimento-dente[src*="rx_dente.png"]{
 
     top:auto !important;
 
@@ -1875,7 +1934,7 @@ RX INFERIOR
 
 /* RX PERMANENTE INFERIOR */
 
-.arcada.inferior .icone-procedimento-dente[src*="rx_dente"]{
+.arcada.inferior .icone-procedimento-dente[src*="rx_dente.png"]{
 
     top:auto !important;
 

@@ -2,6 +2,8 @@ from django.db import models
 
 from datetime import date
 
+from django.contrib.auth.models import User
+
 
 # =========================================
 # PACIENTES
@@ -1936,3 +1938,126 @@ class SolicitacaoExame(models.Model):
             f'{self.paciente.nome} - '
             f'{self.titulo}'
         )
+
+# =========================================
+# PERFIL DE USUÁRIO
+# =========================================
+
+class PerfilUsuario(models.Model):
+
+    ADMIN = 'admin'
+    GESTOR = 'gestor'
+    DENTISTA = 'dentista'
+    SECRETARIA = 'secretaria'
+    ACD = 'acd'
+    CONTABILIDADE = 'contabilidade'
+    MARKETING = 'marketing'
+    AUDITORIA = 'auditoria'
+
+    TIPOS_USUARIO = [
+
+        (ADMIN, 'Administrador'),
+
+        (GESTOR, 'Gestor'),
+
+        (DENTISTA, 'Dentista'),
+
+        (SECRETARIA, 'Secretária'),
+
+        (ACD, 'Auxiliar de Saúde Bucal'),
+
+        (CONTABILIDADE, 'Contabilidade'),
+
+        (MARKETING, 'Marketing'),
+
+        (AUDITORIA, 'Auditoria'),
+
+    ]
+
+    usuario = models.OneToOneField(
+
+        User,
+
+        on_delete=models.CASCADE,
+
+        related_name='perfil'
+
+    )
+
+    tipo_usuario = models.CharField(
+
+        max_length=30,
+
+        choices=TIPOS_USUARIO,
+
+        default=SECRETARIA
+
+    )
+
+    # Dados profissionais
+
+    cro = models.CharField(
+
+        max_length=20,
+
+        blank=True,
+
+        null=True
+
+    )
+
+    especialidade = models.CharField(
+
+        max_length=100,
+
+        blank=True,
+
+        null=True
+
+    )
+
+    telefone = models.CharField(
+
+        max_length=20,
+
+        blank=True,
+
+        null=True
+
+    )
+
+    # Controle
+
+    ativo = models.BooleanField(
+
+        default=True
+
+    )
+
+    somente_leitura = models.BooleanField(
+
+        default=False
+
+    )
+
+    criado_em = models.DateTimeField(
+
+        auto_now_add=True
+
+    )
+
+    atualizado_em = models.DateTimeField(
+
+        auto_now=True
+
+    )
+
+    def __str__(self):
+
+        nome = self.usuario.get_full_name()
+
+        if nome:
+
+            return f'{nome} ({self.get_tipo_usuario_display()})'
+
+        return f'{self.usuario.username} ({self.get_tipo_usuario_display()})'

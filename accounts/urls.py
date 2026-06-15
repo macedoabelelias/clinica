@@ -250,6 +250,40 @@ path(
 ),
 
 # =========================================
+# USUÁRIOS
+# =========================================
+
+path(
+    'usuarios/',
+    views.usuarios,
+    name='usuarios'
+),
+
+path(
+    'usuarios/novo/',
+    views.novo_usuario,
+    name='novo_usuario'
+),
+
+path(
+    'usuarios/<int:id>/editar/',
+    views.editar_usuario,
+    name='editar_usuario'
+),
+
+path(
+    'usuarios/<int:id>/ativar/',
+    views.ativar_usuario,
+    name='ativar_usuario'
+),
+
+path(
+    'usuarios/<int:id>/desativar/',
+    views.desativar_usuario,
+    name='desativar_usuario'
+),
+
+# =========================================
 # MEDICAMENTOS
 # =========================================
 

@@ -439,6 +439,44 @@ SCROLLBAR
 }
 
 /* =========================================
+SUBMENU CLÍNICA
+========================================= */
+
+.submenu-clinica{
+
+    list-style:none;
+
+    padding-left:40px;
+
+    margin-top:8px;
+
+}
+
+.submenu-clinica li{
+
+    margin-bottom:8px;
+
+}
+
+.submenu-clinica a{
+
+    color:#94a3b8;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    transition:.2s;
+
+}
+
+.submenu-clinica a:hover{
+
+    color:#ffffff;
+
+}
+
+/* =========================================
 RESPONSIVO
 ========================================= */
 

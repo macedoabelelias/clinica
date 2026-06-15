@@ -132,9 +132,8 @@ PROCEDIMENTOS GERAIS
 
                             {% if item.procedimento.tipo == 'dente' %}
 
-                           <img
-    src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
-    class="
+                            <img src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
+                                class="
         icone-procedimento-dente
         status-{{ item.status }}
         posicao-{{ item.posicao_icone|default:item.procedimento.posicao_icone }}
@@ -142,11 +141,7 @@ PROCEDIMENTOS GERAIS
         {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
             sem-rotacao
         {% endif %}
-    "
-    data-id="{{ item.id }}"
-    data-status="{{ item.status }}"
-    title="{{ item.procedimento.nome }}"
->
+    " data-id="{{ item.id }}" data-status="{{ item.status }}" title="{{ item.procedimento.nome }}">
 
                             {% if item.face %}
 
@@ -180,10 +175,10 @@ PROCEDIMENTOS GERAIS
                     {% for numero in inferiores %}
 
                     <div class="dente-box dente-{{ numero }}">
-                        
+
                         <img src="{% static 'img/dentes/'|add:numero|add:'.png' %}" class="dente-img inferior"
                             data-dente="{{ numero }}" alt="Dente {{ numero }}">
-                            
+
 
                         <div class="procedimentos-dente">
 
@@ -193,8 +188,7 @@ PROCEDIMENTOS GERAIS
 
                             {% if item.procedimento.tipo == 'dente' %}
 
-                            <img
-                                src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
+                            <img src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
                                 class="
                                     icone-procedimento-dente
                                     status-{{ item.status }}
@@ -203,11 +197,8 @@ PROCEDIMENTOS GERAIS
                                     {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
                                         sem-rotacao
                                     {% endif %}
-                                "
-                                data-id="{{ item.id }}"
-                                data-status="{{ item.status }}"
-                                title="{{ item.procedimento.nome }}"
-                            >
+                                " data-id="{{ item.id }}" data-status="{{ item.status }}"
+                                title="{{ item.procedimento.nome }}">
 
                             {% if item.face %}
 
@@ -266,9 +257,8 @@ PROCEDIMENTOS GERAIS
 
                             {% if item.procedimento.tipo == 'dente' %}
 
-                            <img
-    src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
-    class="
+                            <img src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
+                                class="
         icone-procedimento-dente
         status-{{ item.status }}
         posicao-{{ item.posicao_icone|default:item.procedimento.posicao_icone }}
@@ -276,11 +266,7 @@ PROCEDIMENTOS GERAIS
         {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
             sem-rotacao
         {% endif %}
-    "
-    data-id="{{ item.id }}"
-    data-status="{{ item.status }}"
-    title="{{ item.procedimento.nome }}"
->
+    " data-id="{{ item.id }}" data-status="{{ item.status }}" title="{{ item.procedimento.nome }}">
                             {% if item.face %}
 
                             <span class="face-badge status-{{ item.status }}">
@@ -329,9 +315,8 @@ PROCEDIMENTOS GERAIS
 
                             {% if item.procedimento.tipo == 'dente' %}
 
-                            <img
-    src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
-    class="
+                            <img src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
+                                class="
         icone-procedimento-dente
         status-{{ item.status }}
         posicao-{{ item.posicao_icone|default:item.procedimento.posicao_icone }}
@@ -339,11 +324,7 @@ PROCEDIMENTOS GERAIS
         {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
             sem-rotacao
         {% endif %}
-    "
-    data-id="{{ item.id }}"
-    data-status="{{ item.status }}"
-    title="{{ item.procedimento.nome }}"
->
+    " data-id="{{ item.id }}" data-status="{{ item.status }}" title="{{ item.procedimento.nome }}">
                             {% if item.face %}
 
                             <span class="face-badge status-{{ item.status }}">
@@ -635,35 +616,32 @@ MODAL EVOLUÇÃO CLÍNICA
                             Posição do Ícone
                         </label>
 
-                        <select name="posicao_icone" class="anamnese-input">
+                        <select name="posicao_icone" class="anamnese-input">                        
 
-                            <option value="">
-                                Automático
-                            </option>
+                                <option value="">
+                                    Automático
 
-                            <option value="coroa">
-                                Coroa
-                            </option>
+                                </option>
 
-                            <option value="raiz">
-                                Raiz
-                            </option>
+                                <option value="coroa">
+                                    Coroa
+                                </option>
 
-                            <option value="centro">
-                                Centro
-                            </option>
+                                <option value="raiz">
+                                    Raiz
+                                </option>
 
-                            <option value="oclusal">
-                                Oclusal
-                            </option>
+                                <option value="centro">
+                                    Centro
+                                </option>
 
-                            <option value="vestibular">
-                                Vestibular
-                            </option>
+                                <option value="oclusal">
+                                    Oclusal
+                                </option>
 
-                            <option value="lingual">
-                                Lingual
-                            </option>
+                            </select>
+
+
 
                         </select>
 
