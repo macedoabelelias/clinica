@@ -419,6 +419,18 @@ path(
     name='imprimir_solicitacao_exame'
 ),
 
+path(
+    'fornecedores/',
+    views.fornecedores,
+    name='fornecedores'
+),
+
+path(
+    'fornecedores/novo/',
+    views.novo_fornecedor,
+    name='novo_fornecedor'
+),
+
 
 ]
 

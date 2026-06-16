@@ -55,6 +55,7 @@ from .models import (
     ModeloReceita,
     Exame,
     SolicitacaoExame,
+    Fornecedor,
 )
 
 from .forms import (
@@ -68,6 +69,7 @@ from datetime import timedelta
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import PerfilUsuario
+from .permissions import perfil_required
 
 # =========================================
 # LOGIN
@@ -522,6 +524,11 @@ def excluir_paciente(request, id):
 # =========================================
 
 @login_required(login_url='/')
+@perfil_required(
+    'admin',
+    'dentista',
+    'acd'
+)
 def odontograma(request, id):
 
     paciente = get_object_or_404(
@@ -744,6 +751,11 @@ def odontograma(request, id):
 # =========================================
 
 @login_required(login_url='/')
+@perfil_required(
+    'admin',
+    'dentista',
+    'acd'
+)
 def salvar_procedimento_geral(request, id):
 
     paciente = get_object_or_404(
@@ -832,6 +844,13 @@ def salvar_procedimento_geral(request, id):
         id=paciente.id
     )
 
+@login_required(login_url='/')
+@perfil_required(
+    'admin',
+    'dentista',
+    'acd',
+    'secretaria'
+)
 def anamnese(request, id):
 
     paciente = Paciente.objects.get(id=id)
@@ -1125,6 +1144,10 @@ def anamnese(request, id):
     )
 
 @login_required(login_url='/')
+@perfil_required(
+    'admin',
+    'dentista'
+)
 def ficha_clinica(request, id):
 
     paciente = get_object_or_404(
@@ -1250,6 +1273,10 @@ def ficha_clinica(request, id):
 # =========================================
 
 @login_required(login_url='/')
+@perfil_required(
+    'admin',
+    'dentista'
+)
 def upload_anexo(request, id):
 
     paciente = get_object_or_404(
@@ -1289,6 +1316,9 @@ def upload_anexo(request, id):
 # =========================================
 
 @login_required(login_url='/')
+@perfil_required(
+    'admin'
+)
 def procedimentos(request):
 
     procedimentos = Procedimento.objects.all().order_by(
@@ -3287,6 +3317,10 @@ def novo_medicamento(request):
 # =========================================
 
 @login_required(login_url='/')
+@perfil_required(
+    'admin',
+    'dentista'
+)
 def receitas(request, id):
 
     paciente = get_object_or_404(
@@ -4102,6 +4136,10 @@ def excluir_exame(request, id):
 # =========================================
 
 @login_required(login_url='/')
+@perfil_required(
+    'admin',
+    'dentista'
+)
 def solicitacoes_exames(request, id):
 
     paciente = get_object_or_404(
@@ -4134,6 +4172,10 @@ def solicitacoes_exames(request, id):
 # =========================================
 
 @login_required(login_url='/')
+@perfil_required(
+    'admin',
+    'dentista'
+)
 def nova_solicitacao_exame(request, id):
 
     paciente = get_object_or_404(
@@ -4617,11 +4659,54 @@ def usuario_dentista(user):
 
     return user.perfil.tipo_usuario == 'dentista'
 
+def usuario_secretaria(user):
+
+    if not hasattr(user, 'perfil'):
+        return False
+
+    return user.perfil.tipo_usuario == 'secretaria'
+
+
+def usuario_acd(user):
+
+    if not hasattr(user, 'perfil'):
+        return False
+
+    return user.perfil.tipo_usuario == 'acd'
+
+
+def usuario_contabilidade(user):
+
+    if not hasattr(user, 'perfil'):
+        return False
+
+    return user.perfil.tipo_usuario == 'contabilidade'
+
+
+def usuario_marketing(user):
+
+    if not hasattr(user, 'perfil'):
+        return False
+
+    return user.perfil.tipo_usuario == 'marketing'
+
+
+def usuario_auditoria(user):
+
+    if not hasattr(user, 'perfil'):
+        return False
+
+    return user.perfil.tipo_usuario == 'auditoria'
+
 # =========================================
 # USUÁRIOS
 # =========================================
 
 @login_required
+@perfil_required(
+    'admin',
+    'gestor'
+)
 def usuarios(request):
 
     usuarios = User.objects.select_related(
@@ -4632,9 +4717,7 @@ def usuarios(request):
     )
 
     context = {
-
         'usuarios': usuarios
-
     }
 
     return render(
@@ -4642,7 +4725,6 @@ def usuarios(request):
         'accounts/usuarios.html',
         context
     )
-
 
 # =========================================
 # NOVO USUÁRIO
@@ -4658,12 +4740,6 @@ def novo_usuario(request):
         email = request.POST.get('email')
         senha = request.POST.get('senha')
 
-        tipo_usuario = request.POST.get('tipo_usuario')
-
-        cro = request.POST.get('cro')
-        especialidade = request.POST.get('especialidade')
-        telefone = request.POST.get('telefone')
-
         if User.objects.filter(username=username).exists():
 
             messages.error(
@@ -4674,26 +4750,43 @@ def novo_usuario(request):
             return redirect('novo_usuario')
 
         usuario = User.objects.create_user(
-
             username=username,
             email=email,
             password=senha,
             first_name=nome
-
         )
 
         PerfilUsuario.objects.create(
-
             usuario=usuario,
 
-            tipo_usuario=tipo_usuario,
+            # Perfil
+            tipo_usuario=request.POST.get('tipo_usuario'),
 
-            cro=cro,
+            # Dados pessoais
+            foto=request.FILES.get('foto'),
+            cpf=request.POST.get('cpf'),
+            rg=request.POST.get('rg'),
+            data_nascimento=request.POST.get('data_nascimento') or None,
+            sexo=request.POST.get('sexo'),
 
-            especialidade=especialidade,
+            # Contato
+            telefone=request.POST.get('telefone'),
+            celular=request.POST.get('celular'),
 
-            telefone=telefone
+            # Endereço
+            cep=request.POST.get('cep'),
+            logradouro=request.POST.get('logradouro'),
+            numero=request.POST.get('numero'),
+            complemento=request.POST.get('complemento'),
+            bairro=request.POST.get('bairro'),
+            cidade=request.POST.get('cidade'),
+            uf=request.POST.get('uf'),
 
+            # Dados profissionais
+            cro=request.POST.get('cro'),
+            cro_uf=request.POST.get('cro_uf'),
+            especialidade=request.POST.get('especialidade'),
+            assinatura=request.FILES.get('assinatura')
         )
 
         messages.success(
@@ -4799,5 +4892,126 @@ def desativar_usuario(request, id):
     usuario.perfil.save()
 
     return redirect('usuarios')
+
+
+# =========================================
+# FORNECEDORES
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def fornecedores(request):
+
+    fornecedores = Fornecedor.objects.order_by(
+        'nome'
+    )
+
+    context = {
+
+        'fornecedores': fornecedores
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/fornecedores.html',
+
+        context
+
+    )
+
+# =========================================
+# NOVO FORNECEDOR
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def novo_fornecedor(request):
+
+    if request.method == 'POST':
+
+        Fornecedor.objects.create(
+
+            nome=request.POST.get('nome'),
+
+            razao_social=request.POST.get(
+                'razao_social'
+            ),
+
+            cnpj=request.POST.get(
+                'cnpj'
+            ),
+
+            contato=request.POST.get(
+                'contato'
+            ),
+
+            telefone=request.POST.get(
+                'telefone'
+            ),
+
+            celular=request.POST.get(
+                'celular'
+            ),
+
+            email=request.POST.get(
+                'email'
+            ),
+
+            cep=request.POST.get(
+                'cep'
+            ),
+
+            logradouro=request.POST.get(
+                'logradouro'
+            ),
+
+            numero=request.POST.get(
+                'numero'
+            ),
+
+            bairro=request.POST.get(
+                'bairro'
+            ),
+
+            cidade=request.POST.get(
+                'cidade'
+            ),
+
+            uf=request.POST.get(
+                'uf'
+            ),
+
+            ativo=True
+
+        )
+
+        messages.success(
+
+            request,
+
+            'Fornecedor cadastrado com sucesso.'
+
+        )
+
+        return redirect(
+            'fornecedores'
+        )
+
+    return render(
+
+        request,
+
+        'accounts/fornecedor_form.html'
+
+    )
 
 

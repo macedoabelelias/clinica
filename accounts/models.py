@@ -2026,6 +2026,95 @@ class PerfilUsuario(models.Model):
 
     )
 
+    cpf = models.CharField(
+        max_length=14,
+        blank=True,
+        null=True
+    )
+
+    rg = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True
+    )
+
+    data_nascimento = models.DateField(
+        blank=True,
+        null=True
+    )
+
+    sexo = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True
+    )
+
+    foto = models.ImageField(
+        upload_to='usuarios/fotos/',
+        blank=True,
+        null=True
+    )
+
+    assinatura = models.ImageField(
+        upload_to='usuarios/assinaturas/',
+        blank=True,
+        null=True
+    )
+
+    cro_uf = models.CharField(
+        max_length=2,
+        blank=True,
+        null=True
+    )
+
+    cep = models.CharField(
+        max_length=10,
+        blank=True,
+        null=True
+    )
+
+    logradouro = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+
+    numero = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True
+    )
+
+    complemento = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    bairro = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    cidade = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    uf = models.CharField(
+        max_length=2,
+        blank=True,
+        null=True
+    )
+
+    celular = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True
+    )
+
     # Controle
 
     ativo = models.BooleanField(
@@ -2061,3 +2150,110 @@ class PerfilUsuario(models.Model):
             return f'{nome} ({self.get_tipo_usuario_display()})'
 
         return f'{self.usuario.username} ({self.get_tipo_usuario_display()})'
+    
+# =========================================
+# FORNECEDORES
+# =========================================
+
+# =========================================
+# FORNECEDORES
+# =========================================
+
+class Fornecedor(models.Model):
+
+    nome = models.CharField(
+        max_length=200
+    )
+
+    razao_social = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True
+    )
+
+    cnpj = models.CharField(
+        max_length=18,
+        blank=True,
+        null=True
+    )
+
+    contato = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    telefone = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True
+    )
+
+    celular = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True
+    )
+
+    email = models.EmailField(
+        blank=True,
+        null=True
+    )
+
+    # Endereço
+
+    cep = models.CharField(
+        max_length=10,
+        blank=True,
+        null=True
+    )
+
+    logradouro = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+
+    numero = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True
+    )
+
+    complemento = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    bairro = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    cidade = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    uf = models.CharField(
+        max_length=2,
+        blank=True,
+        null=True
+    )
+
+    # Controle
+
+    ativo = models.BooleanField(
+        default=True
+    )
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+
+        return self.nome

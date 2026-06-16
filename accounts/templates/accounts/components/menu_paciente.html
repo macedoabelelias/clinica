@@ -102,11 +102,15 @@
             <span>Perfil</span>
         </a>
 
+        {% if request.user.perfil.tipo_usuario == 'admin' or request.user.perfil.tipo_usuario == 'dentista' or request.user.perfil.tipo_usuario == 'acd' %}
+
         <a href="{% url 'odontograma' paciente.id %}"
             class="menu-clinico-btn {% if request.resolver_match.url_name == 'odontograma' %}active{% endif %}">
             <i class="bi bi-heart-pulse-fill icon-odonto"></i>
             <span>Odontograma</span>
         </a>
+
+        {% endif %}
 
         <a href="{% url 'orcamento' paciente.id %}"
             class="menu-clinico-btn {% if request.resolver_match.url_name == 'orcamento' %}active{% endif %}">
@@ -114,11 +118,15 @@
             <span>Orçamento</span>
         </a>
 
+        {% if request.user.perfil.tipo_usuario == 'admin' or request.user.perfil.tipo_usuario == 'dentista' %}
+
         <a href="{% url 'ficha_clinica' paciente.id %}"
             class="menu-clinico-btn {% if request.resolver_match.url_name == 'ficha_clinica' %}active{% endif %}">
             <i class="bi bi-file-earmark-medical-fill icon-ficha"></i>
             <span>Ficha Clínica</span>
         </a>
+
+        {% endif %}
 
         <a href="{% url 'anamnese' paciente.id %}"
             class="menu-clinico-btn {% if request.resolver_match.url_name == 'anamnese' %}active{% endif %}">
@@ -126,11 +134,17 @@
             <span>Anamnese</span>
         </a>
 
+        {% if request.user.perfil.tipo_usuario == 'admin' or request.user.perfil.tipo_usuario == 'dentista' %}
+
         <a href="{% url 'receitas' paciente.id %}"
             class="menu-clinico-btn {% if request.resolver_match.url_name == 'receitas' %}active{% endif %}">
             <i class="bi bi-capsule-pill icon-receita"></i>
             <span>Receitas</span>
         </a>
+
+        {% endif %}
+
+        {% if request.user.perfil.tipo_usuario == 'admin' or request.user.perfil.tipo_usuario == 'dentista' or request.user.perfil.tipo_usuario == 'acd' %}
 
         <a href="{% url 'exames' paciente.id %}"
             class="menu-clinico-btn {% if request.resolver_match.url_name == 'exames' %}active{% endif %}">
@@ -138,16 +152,27 @@
             <span>Exames</span>
         </a>
 
-        <a href="{% url 'solicitacoes_exames' paciente.id %}" class="menu-clinico-btn">
+        {% endif %}
+
+        {% if request.user.perfil.tipo_usuario == 'admin' or request.user.perfil.tipo_usuario == 'dentista' %}
+
+        <a href="{% url 'solicitacoes_exames' paciente.id %}"
+            class="menu-clinico-btn">
             <i class="bi bi-clipboard2-pulse"></i>
             <span>Solicitações</span>
         </a>
+
+        {% endif %}
+
+        {% if request.user.perfil.tipo_usuario == 'admin' or request.user.perfil.tipo_usuario == 'dentista' or request.user.perfil.tipo_usuario == 'acd' %}
 
         <a href="{% url 'novo_documento' paciente.id %}"
             class="menu-clinico-btn {% if request.resolver_match.url_name == 'novo_documento' %}active{% endif %}">
             <i class="bi bi-file-earmark-text-fill icon-documento"></i>
             <span>Documentos</span>
         </a>
+
+        {% endif %}
 
     </div>
 

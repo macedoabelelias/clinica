@@ -208,8 +208,6 @@ CSS DASHBOARD
 
                     <ul class="submenu-clinica">
 
-
-
                         <li>
 
                             <a href="{% url 'configuracao_clinica' %}">
@@ -225,38 +223,6 @@ CSS DASHBOARD
                             <a href="{% url 'usuarios' %}">
 
                                 Usuários
-
-                            </a>
-
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                {% endif %}
-
-                <!-- COMPRAS -->
-
-                {% if perfil == 'admin' or perfil == 'secretaria' %}
-
-                <li class="menu-clinica">
-
-                    <a href="#">
-
-                        <i class="fa-solid fa-cart-shopping"></i>
-
-                        <span>Compras</span>
-
-                    </a>
-
-                    <ul class="submenu-clinica">
-
-                        <li>
-
-                            <a href="{% url 'fornecedores' %}">
-
-                                Fornecedores
 
                             </a>
 
