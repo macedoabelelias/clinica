@@ -36,6 +36,10 @@
 
                         <th>Status</th>
 
+                        <th width="220">
+                            Ações
+                        </th>
+
                     </tr>
 
                 </thead>
@@ -46,27 +50,88 @@
 
                     <tr>
 
-                        <td>{{ fornecedor.nome }}</td>
+                        <td>
 
-                        <td>{{ fornecedor.contato }}</td>
+                            <strong>
+                                {{ fornecedor.nome }}
+                            </strong>
 
-                        <td>{{ fornecedor.telefone }}</td>
+                        </td>
+
+                        <td>
+
+                            {{ fornecedor.contato }}
+
+                        </td>
+
+                        <td>
+
+                            {{ fornecedor.telefone }}
+
+                        </td>
 
                         <td>
 
                             {% if fornecedor.ativo %}
 
                             <span class="badge bg-success">
+
                                 Ativo
+
                             </span>
 
                             {% else %}
 
                             <span class="badge bg-danger">
+
                                 Inativo
+
                             </span>
 
                             {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <div class="d-flex gap-2">
+
+                                <a href="{% url 'editar_fornecedor' fornecedor.id %}" class="btn btn-sm btn-primary">
+
+                                    <i class="fa-solid fa-pen"></i>
+
+                                </a>
+
+                                {% if fornecedor.ativo %}
+
+                                <a href="{% url 'alterar_status_fornecedor' fornecedor.id %}"
+                                    class="btn btn-sm btn-warning"
+                                    onclick="return confirm('Deseja inativar este fornecedor?')">
+
+                                    <i class="fa-solid fa-toggle-off"></i>
+
+                                </a>
+
+                                {% else %}
+
+                                <a href="{% url 'alterar_status_fornecedor' fornecedor.id %}"
+                                    class="btn btn-sm btn-success"
+                                    onclick="return confirm('Deseja ativar este fornecedor?')">
+
+                                    <i class="fa-solid fa-toggle-on"></i>
+
+                                </a>
+
+                                {% endif %}
+
+                                <a href="{% url 'excluir_fornecedor' fornecedor.id %}" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Deseja excluir este fornecedor?')">
+
+                                    <i class="fa-solid fa-trash"></i>
+
+                                </a>
+
+                            </div>
 
                         </td>
 
@@ -76,7 +141,7 @@
 
                     <tr>
 
-                        <td colspan="4" class="text-center">
+                        <td colspan="5" class="text-center">
 
                             Nenhum fornecedor cadastrado.
 

@@ -217,7 +217,7 @@ CSS DASHBOARD
 
             <div class="topbar">
 
-                <div class="d-flex justify-content-end align-items-center w-100">
+                <div class="d-flex justify-content-end align-items-center">
 
                     {% if request.user.is_authenticated %}
 
@@ -241,17 +241,11 @@ CSS DASHBOARD
                                 <div class="profile-user-name">
 
                                     {% if request.user.first_name and request.user.last_name %}
-
                                     {{ request.user.first_name }} {{ request.user.last_name }}
-
                                     {% elif request.user.first_name %}
-
                                     {{ request.user.first_name }}
-
                                     {% else %}
-
                                     {{ request.user.username }}
-
                                     {% endif %}
 
                                 </div>
@@ -269,27 +263,17 @@ CSS DASHBOARD
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm">
 
                             <li>
-
                                 <a class="dropdown-item" href="{% url 'meu_perfil' %}">
-
                                     <i class="fa-solid fa-user me-2"></i>
-
                                     Meu Perfil
-
                                 </a>
-
                             </li>
 
                             <li>
-
                                 <a class="dropdown-item" href="{% url 'alterar_senha' %}">
-
                                     <i class="fa-solid fa-key me-2"></i>
-
                                     Alterar Senha
-
                                 </a>
-
                             </li>
 
                             <li>
@@ -297,15 +281,10 @@ CSS DASHBOARD
                             </li>
 
                             <li>
-
                                 <a class="dropdown-item text-danger" href="{% url 'logout' %}">
-
                                     <i class="fa-solid fa-right-from-bracket me-2"></i>
-
                                     Sair
-
                                 </a>
-
                             </li>
 
                         </ul>

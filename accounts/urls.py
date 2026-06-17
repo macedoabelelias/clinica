@@ -449,6 +449,24 @@ path(
     name='alterar_status_usuario'
 ),
 
+path(
+    'fornecedores/<int:fornecedor_id>/editar/',
+    views.editar_fornecedor,
+    name='editar_fornecedor'
+),
+
+path(
+    'fornecedores/<int:fornecedor_id>/status/',
+    views.alterar_status_fornecedor,
+    name='alterar_status_fornecedor'
+),
+
+path(
+    'fornecedores/<int:fornecedor_id>/excluir/',
+    views.excluir_fornecedor,
+    name='excluir_fornecedor'
+),
+
 ]
 
 

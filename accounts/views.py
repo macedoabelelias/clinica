@@ -5090,20 +5090,15 @@ def fornecedores(request):
     )
 
     context = {
-
         'fornecedores': fornecedores
-
     }
 
     return render(
-
         request,
-
         'accounts/fornecedores.html',
-
         context
-
     )
+
 
 # =========================================
 # NOVO FORNECEDOR
@@ -5158,6 +5153,10 @@ def novo_fornecedor(request):
                 'numero'
             ),
 
+            complemento=request.POST.get(
+                'complemento'
+            ),
+
             bairro=request.POST.get(
                 'bairro'
             ),
@@ -5175,11 +5174,8 @@ def novo_fornecedor(request):
         )
 
         messages.success(
-
             request,
-
             'Fornecedor cadastrado com sucesso.'
-
         )
 
         return redirect(
@@ -5187,11 +5183,155 @@ def novo_fornecedor(request):
         )
 
     return render(
-
         request,
-
         'accounts/fornecedor_form.html'
-
     )
 
 
+# =========================================
+# EDITAR FORNECEDOR
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def editar_fornecedor(request, fornecedor_id):
+
+    fornecedor = get_object_or_404(
+        Fornecedor,
+        id=fornecedor_id
+    )
+
+    if request.method == 'POST':
+
+        fornecedor.nome = request.POST.get(
+            'nome'
+        )
+
+        fornecedor.razao_social = request.POST.get(
+            'razao_social'
+        )
+
+        fornecedor.cnpj = request.POST.get(
+            'cnpj'
+        )
+
+        fornecedor.contato = request.POST.get(
+            'contato'
+        )
+
+        fornecedor.telefone = request.POST.get(
+            'telefone'
+        )
+
+        fornecedor.celular = request.POST.get(
+            'celular'
+        )
+
+        fornecedor.email = request.POST.get(
+            'email'
+        )
+
+        fornecedor.cep = request.POST.get(
+            'cep'
+        )
+
+        fornecedor.logradouro = request.POST.get(
+            'logradouro'
+        )
+
+        fornecedor.numero = request.POST.get(
+            'numero'
+        )
+
+        fornecedor.complemento = request.POST.get(
+            'complemento'
+        )
+
+        fornecedor.bairro = request.POST.get(
+            'bairro'
+        )
+
+        fornecedor.cidade = request.POST.get(
+            'cidade'
+        )
+
+        fornecedor.uf = request.POST.get(
+            'uf'
+        )
+
+        fornecedor.save()
+
+        messages.success(
+            request,
+            'Fornecedor atualizado com sucesso.'
+        )
+
+        return redirect(
+            'fornecedores'
+        )
+
+    return render(
+        request,
+        'accounts/fornecedor_form.html',
+        {
+            'fornecedor': fornecedor
+        }
+    )
+
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def alterar_status_fornecedor(
+    request,
+    fornecedor_id
+):
+
+    fornecedor = get_object_or_404(
+        Fornecedor,
+        id=fornecedor_id
+    )
+
+    fornecedor.ativo = not fornecedor.ativo
+
+    fornecedor.save()
+
+    messages.success(
+        request,
+        'Status do fornecedor atualizado.'
+    )
+
+    return redirect(
+        'fornecedores'
+    )
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def excluir_fornecedor(
+    request,
+    fornecedor_id
+):
+
+    fornecedor = get_object_or_404(
+        Fornecedor,
+        id=fornecedor_id
+    )
+
+    fornecedor.delete()
+
+    messages.success(
+        request,
+        'Fornecedor excluído com sucesso.'
+    )
+
+    return redirect(
+        'fornecedores'
+    )
