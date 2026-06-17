@@ -74,19 +74,23 @@
 
                         <td>
 
-                            {% if usuario.perfil.ativo %}
+                            <a href="{% url 'alterar_status_usuario' usuario.id %}" class="text-decoration-none">
 
-                            <span class="badge bg-success">
-                                Ativo
-                            </span>
+                                {% if usuario.perfil.ativo %}
 
-                            {% else %}
+                                <span class="badge bg-success">
+                                    Ativo
+                                </span>
 
-                            <span class="badge bg-danger">
-                                Inativo
-                            </span>
+                                {% else %}
 
-                            {% endif %}
+                                <span class="badge bg-danger">
+                                    Inativo
+                                </span>
+
+                                {% endif %}
+
+                            </a>
 
                         </td>
 

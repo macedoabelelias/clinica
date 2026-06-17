@@ -86,7 +86,8 @@
                                     Nome Completo
                                 </label>
 
-                                <input type="text" name="nome" class="form-control" required>
+                                <input type="text" name="nome" class="form-control" value="{{ usuario_obj.first_name }}"
+                                    required>
 
                             </div>
 
@@ -96,7 +97,8 @@
                                     CPF
                                 </label>
 
-                                <input type="text" id="cpf" name="cpf" class="form-control" maxlength="14">
+                                <input type="text" id="cpf" name="cpf" class="form-control" maxlength="14"
+                                    value="{{ perfil.cpf|default:'' }}">
                             </div>
 
                             <div id="cpf-erro" class="text-danger small mt-1" style="display:none;">
@@ -109,7 +111,7 @@
                                     RG
                                 </label>
 
-                                <input type="text" name="rg" class="form-control">
+                                <input type="text" name="rg" class="form-control" value="{{ perfil.rg|default:'' }}">
 
                             </div>
 
@@ -119,7 +121,8 @@
                                     Data Nascimento
                                 </label>
 
-                                <input type="date" name="data_nascimento" class="form-control">
+                                <input type="date" name="data_nascimento" class="form-control"
+                                    value="{% if perfil.data_nascimento %}{{ perfil.data_nascimento|date:'Y-m-d' }}{% endif %}">
 
                             </div>
 
@@ -191,7 +194,7 @@
                             CEP
                         </label>
 
-                        <input type="text" id="cep" name="cep" class="form-control">
+                        <input type="text" id="cep" name="cep" class="form-control" value="{{ perfil.cep|default:'' }}">
 
                     </div>
 
@@ -201,7 +204,8 @@
                             Endereço
                         </label>
 
-                        <input type="text" id="logradouro" name="logradouro" class="form-control">
+                        <input type="text" id="logradouro" name="logradouro" class="form-control"
+                            value="{{ perfil.logradouro|default:'' }}">
 
                     </div>
 
@@ -211,7 +215,7 @@
                             Número
                         </label>
 
-                        <input type="text" name="numero" class="form-control">
+                        <input type="text" name="numero" class="form-control" value="{{ perfil.numero|default:'' }}">
 
                     </div>
 
@@ -221,7 +225,8 @@
                             Complemento
                         </label>
 
-                        <input type="text" name="complemento" class="form-control">
+                        <input type="text" name="complemento" class="form-control"
+                            value="{{ perfil.complemento|default:'' }}">
 
                     </div>
 
@@ -231,7 +236,8 @@
                             Bairro
                         </label>
 
-                        <input type="text" id="bairro" name="bairro" class="form-control">
+                        <input type="text" id="bairro" name="bairro" class="form-control"
+                            value="{{ perfil.bairro|default:'' }}">
 
                     </div>
 
@@ -241,7 +247,8 @@
                             Cidade
                         </label>
 
-                        <input type="text" id="cidade" name="cidade" class="form-control">
+                        <input type="text" id="cidade" name="cidade" class="form-control"
+                            value="{{ perfil.cidade|default:'' }}">
 
                     </div>
 
@@ -251,7 +258,7 @@
                             Estado
                         </label>
 
-                        <input type="text" id="uf" name="uf" class="form-control">
+                        <input type="text" id="uf" name="uf" class="form-control" value="{{ perfil.uf|default:'' }}">
 
                     </div>
 
@@ -261,7 +268,9 @@
                             Telefone
                         </label>
 
-                        <input type="text" id="telefone" name="telefone" class="form-control">
+                        <input type="text" id="telefone" name="telefone" class="form-control"
+                            value="{{ perfil.telefone|default:'' }}">
+
                     </div>
 
                     <div class="col-md-3 mb-3">
@@ -270,7 +279,8 @@
                             Celular
                         </label>
 
-                        <input type="text" id="celular" name="celular" class="form-control">
+                        <input type="text" id="celular" name="celular" class="form-control"
+                            value="{{ perfil.celular|default:'' }}">
 
                     </div>
 
@@ -280,7 +290,8 @@
                             E-mail
                         </label>
 
-                        <input type="email" name="email" class="form-control">
+                        <input type="email" name="email" class="form-control"
+                            value="{{ usuario_obj.email|default:'' }}">
 
                     </div>
 

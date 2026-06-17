@@ -70,6 +70,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import PerfilUsuario
 from .permissions import perfil_required
+from django.contrib.auth import update_session_auth_hash
 
 # =========================================
 # LOGIN
@@ -4860,6 +4861,185 @@ def editar_usuario(request, id):
 
         context
 
+    )
+
+@login_required
+def alterar_status_usuario(request, id):
+
+    usuario = User.objects.get(id=id)
+
+    if usuario.id == request.user.id:
+
+        messages.warning(
+            request,
+            'Você não pode desativar seu próprio usuário.'
+        )
+
+        return redirect('usuarios')
+
+    perfil = usuario.perfil
+
+    perfil.ativo = not perfil.ativo
+
+    perfil.save()
+
+    messages.success(
+        request,
+        'Status atualizado com sucesso.'
+    )
+
+    return redirect('usuarios')
+
+# =========================================
+# MEU PERFIL
+# =========================================
+
+@login_required
+def meu_perfil(request):
+
+    usuario = request.user
+    perfil = usuario.perfil
+
+    if request.method == 'POST':
+
+        # =====================================
+        # USUÁRIO
+        # =====================================
+
+        usuario.first_name = request.POST.get('nome')
+        usuario.email = request.POST.get('email')
+
+        usuario.save()
+
+        # =====================================
+        # DADOS PESSOAIS
+        # =====================================
+
+        perfil.telefone = request.POST.get('telefone')
+        perfil.celular = request.POST.get('celular')
+
+        perfil.cpf = request.POST.get('cpf')
+        perfil.rg = request.POST.get('rg')
+
+        perfil.sexo = request.POST.get('sexo')
+
+        data_nascimento = request.POST.get('data_nascimento')
+
+        if data_nascimento:
+            perfil.data_nascimento = data_nascimento
+
+        # =====================================
+        # ENDEREÇO
+        # =====================================
+
+        perfil.cep = request.POST.get('cep')
+        perfil.logradouro = request.POST.get('logradouro')
+        perfil.numero = request.POST.get('numero')
+        perfil.complemento = request.POST.get('complemento')
+
+        perfil.bairro = request.POST.get('bairro')
+        perfil.cidade = request.POST.get('cidade')
+        perfil.uf = request.POST.get('uf')
+
+        # =====================================
+        # DADOS PROFISSIONAIS
+        # =====================================
+
+        perfil.cro = request.POST.get('cro')
+        perfil.cro_uf = request.POST.get('cro_uf')
+        perfil.especialidade = request.POST.get('especialidade')
+
+        # =====================================
+        # FOTO
+        # =====================================
+
+        if request.FILES.get('foto'):
+
+            perfil.foto = request.FILES.get('foto')
+
+        # =====================================
+        # ASSINATURA
+        # =====================================
+
+        if request.FILES.get('assinatura'):
+
+            perfil.assinatura = request.FILES.get('assinatura')
+
+        perfil.save()
+
+        messages.success(
+            request,
+            'Perfil atualizado com sucesso.'
+        )
+
+        return redirect('meu_perfil')
+
+    context = {
+
+        'usuario_obj': usuario,
+        'perfil': perfil
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/meu_perfil.html',
+
+        context
+
+    )
+
+# =========================================
+# ALTERAR SENHA
+# =========================================
+
+@login_required
+def alterar_senha(request):
+
+    if request.method == 'POST':
+
+        senha_atual = request.POST.get('senha_atual')
+        nova_senha = request.POST.get('nova_senha')
+        confirmar_senha = request.POST.get('confirmar_senha')
+
+        if not request.user.check_password(senha_atual):
+
+            messages.error(
+                request,
+                'Senha atual incorreta.'
+            )
+
+            return redirect('alterar_senha')
+
+        if nova_senha != confirmar_senha:
+
+            messages.error(
+                request,
+                'As senhas não conferem.'
+            )
+
+            return redirect('alterar_senha')
+
+        request.user.set_password(nova_senha)
+        request.user.save()
+
+        update_session_auth_hash(
+            request,
+            request.user
+        )
+
+        messages.success(
+            request,
+            'Senha alterada com sucesso.'
+        )
+
+        return redirect('meu_perfil')
+
+    return render(
+        request,
+        'accounts/alterar_senha.html'
     )
 
 # =========================================

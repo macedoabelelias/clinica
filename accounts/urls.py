@@ -431,6 +431,23 @@ path(
     name='novo_fornecedor'
 ),
 
+path(
+    'meu-perfil/',
+    views.meu_perfil,
+    name='meu_perfil'
+),
+
+path(
+    'alterar-senha/',
+    views.alterar_senha,
+    name='alterar_senha'
+),
+
+path(
+    'usuarios/<int:id>/status/',
+    views.alterar_status_usuario,
+    name='alterar_status_usuario'
+),
 
 ]
 

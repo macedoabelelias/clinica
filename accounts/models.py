@@ -2149,11 +2149,7 @@ class PerfilUsuario(models.Model):
 
             return f'{nome} ({self.get_tipo_usuario_display()})'
 
-        return f'{self.usuario.username} ({self.get_tipo_usuario_display()})'
-    
-# =========================================
-# FORNECEDORES
-# =========================================
+        return f'{self.usuario.username} ({self.get_tipo_usuario_display()})'    
 
 # =========================================
 # FORNECEDORES

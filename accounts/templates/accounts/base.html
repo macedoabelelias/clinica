@@ -96,142 +96,94 @@ CSS DASHBOARD
 
             <ul class="sidebar-menu">
 
-                <!-- DASHBOARD -->
+                <!-- GERAL -->
+
+                <div class="sidebar-section">
+                    Geral
+                </div>
 
                 <li class="{% if 'dashboard' in request.path %}active{% endif %}">
-
                     <a href="/dashboard/">
-
                         <i class="fa-solid fa-chart-line"></i>
-
                         <span>Dashboard</span>
-
                     </a>
-
                 </li>
 
-                <!-- PACIENTES -->
+                <!-- CLÍNICA -->
+
+                <div class="sidebar-section">
+                    Clínica
+                </div>
 
                 <li class="{% if 'pacientes' in request.path and 'odontograma' not in request.path %}active{% endif %}">
-
                     <a href="/pacientes/">
-
                         <i class="fa-solid fa-users"></i>
-
                         <span>Pacientes</span>
-
                     </a>
-
                 </li>
 
-                <!-- PROCEDIMENTOS -->
+                <li class="{% if 'agenda' in request.path %}active{% endif %}">
+                    <a href="/agenda/">
+                        <i class="fa-solid fa-calendar"></i>
+                        <span>Agenda</span>
+                    </a>
+                </li>
 
                 {% if perfil == 'admin' %}
 
                 <li class="{% if 'procedimentos' in request.path %}active{% endif %}">
-
                     <a href="/procedimentos/">
-
                         <i class="fa-solid fa-tooth"></i>
-
                         <span>Procedimentos</span>
-
                     </a>
+                </li>
 
+                <li class="{% if 'convenios' in request.path %}active{% endif %}">
+                    <a href="{% url 'convenios' %}">
+                        <i class="fa-solid fa-hospital-user"></i>
+                        <span>Convênios</span>
+                    </a>
                 </li>
 
                 {% endif %}
-
-                <!-- AGENDA -->
-
-                <li class="{% if 'agenda' in request.path %}active{% endif %}">
-
-                    <a href="/agenda/">
-
-                        <i class="fa-solid fa-calendar"></i>
-
-                        <span>Agenda</span>
-
-                    </a>
-
-                </li>
 
                 <!-- FINANCEIRO -->
 
                 {% if perfil == 'admin' or perfil == 'secretaria' %}
 
+                <div class="sidebar-section">
+                    Financeiro
+                </div>
+
                 <li class="{% if 'financeiro' in request.path %}active{% endif %}">
-
                     <a href="/financeiro/">
-
                         <i class="fa-solid fa-wallet"></i>
-
                         <span>Financeiro</span>
-
                     </a>
-
                 </li>
 
                 {% endif %}
 
-                <!-- CONVÊNIOS -->
+                <!-- CONFIGURAÇÕES -->
 
                 {% if perfil == 'admin' %}
 
-                <li class="{% if 'convenios' in request.path %}active{% endif %}">
+                <div class="sidebar-section">
+                    Configurações
+                </div>
 
-                    <a href="{% url 'convenios' %}">
-
-                        <i class="fa-solid fa-hospital-user"></i>
-
-                        <span>Convênios</span>
-
-                    </a>
-
-                </li>
-
-                {% endif %}
-
-                <!-- CLÍNICA -->
-
-                {% if perfil == 'admin' %}
-
-                <li class="menu-clinica">
-
-                    <a href="#">
-
+                <li class="{% if 'configuracao-clinica' in request.path %}active{% endif %}">
+                    <a href="{% url 'configuracao_clinica' %}">
                         <i class="fa-solid fa-building"></i>
-
                         <span>Clínica</span>
-
                     </a>
+                </li>
 
-                    <ul class="submenu-clinica">
-
-
-
-                        <li>
-
-                            <a href="{% url 'configuracao_clinica' %}">
-
-                                Configuração
-
-                            </a>
-
-                        </li>
-
-                        <li>
-
-                            <a href="{% url 'usuarios' %}">
-
-                                Usuários
-
-                            </a>
-
-                        </li>
-
-                    </ul>
-
+                <li class="{% if 'usuarios' in request.path %}active{% endif %}">
+                    <a href="{% url 'usuarios' %}">
+                        <i class="fa-solid fa-user-group"></i>
+                        <span>Usuários</span>
+                    </a>
                 </li>
 
                 {% endif %}
@@ -240,30 +192,15 @@ CSS DASHBOARD
 
                 {% if perfil == 'admin' or perfil == 'secretaria' %}
 
-                <li class="menu-clinica">
+                <div class="sidebar-section">
+                    Compras
+                </div>
 
-                    <a href="#">
-
-                        <i class="fa-solid fa-cart-shopping"></i>
-
-                        <span>Compras</span>
-
+                <li class="{% if 'fornecedores' in request.path %}active{% endif %}">
+                    <a href="{% url 'fornecedores' %}">
+                        <i class="fa-solid fa-truck-field"></i>
+                        <span>Fornecedores</span>
                     </a>
-
-                    <ul class="submenu-clinica">
-
-                        <li>
-
-                            <a href="{% url 'fornecedores' %}">
-
-                                Fornecedores
-
-                            </a>
-
-                        </li>
-
-                    </ul>
-
                 </li>
 
                 {% endif %}
@@ -280,46 +217,98 @@ CSS DASHBOARD
 
             <div class="topbar">
 
-                <div class="d-flex justify-content-end align-items-center">
+                <div class="d-flex justify-content-end align-items-center w-100">
 
                     {% if request.user.is_authenticated %}
 
-                    <div class="d-flex align-items-center gap-2">
+                    <div class="dropdown">
 
-                        {% if request.user.perfil.foto %}
+                        <button class="btn profile-dropdown-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
 
-                        <img src="{{ request.user.perfil.foto.url }}" alt="Foto" width="40" height="40" style="
-                                border-radius:50%;
-                                object-fit:cover;
-                                border:2px solid #dee2e6;
-                            ">
+                            {% if request.user.perfil.foto %}
 
-                        {% else %}
+                            <img src="{{ request.user.perfil.foto.url }}" alt="Foto" class="profile-avatar">
 
-                        <div style="
-                                width:40px;
-                                height:40px;
-                                border-radius:50%;
-                                background:#dee2e6;
-                            "></div>
+                            {% else %}
 
-                        {% endif %}
+                            <div class="profile-avatar-placeholder"></div>
 
-                        <div>
+                            {% endif %}
 
-                            <div class="fw-semibold">
-                                {{ request.user.first_name }}
+                            <div class="text-start">
+
+                                <div class="profile-user-name">
+
+                                    {% if request.user.first_name and request.user.last_name %}
+
+                                    {{ request.user.first_name }} {{ request.user.last_name }}
+
+                                    {% elif request.user.first_name %}
+
+                                    {{ request.user.first_name }}
+
+                                    {% else %}
+
+                                    {{ request.user.username }}
+
+                                    {% endif %}
+
+                                </div>
+
+                                <small class="profile-user-role">
+
+                                    {{ request.user.perfil.get_tipo_usuario_display }}
+
+                                </small>
+
                             </div>
 
-                            <small class="text-muted">
-                                {{ request.user.perfil.get_tipo_usuario_display }}
-                            </small>
+                        </button>
 
-                        </div>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
 
-                        <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-danger ms-3">
-                            Sair
-                        </a>
+                            <li>
+
+                                <a class="dropdown-item" href="{% url 'meu_perfil' %}">
+
+                                    <i class="fa-solid fa-user me-2"></i>
+
+                                    Meu Perfil
+
+                                </a>
+
+                            </li>
+
+                            <li>
+
+                                <a class="dropdown-item" href="{% url 'alterar_senha' %}">
+
+                                    <i class="fa-solid fa-key me-2"></i>
+
+                                    Alterar Senha
+
+                                </a>
+
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <li>
+
+                                <a class="dropdown-item text-danger" href="{% url 'logout' %}">
+
+                                    <i class="fa-solid fa-right-from-bracket me-2"></i>
+
+                                    Sair
+
+                                </a>
+
+                            </li>
+
+                        </ul>
 
                     </div>
 
