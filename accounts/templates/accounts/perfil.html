@@ -102,11 +102,23 @@ Perfil do Paciente | AM Systems
 
                     <div>
 
+                        {% if paciente.ativo %}
+
                         <span class="badge bg-success">
 
-                            {{ paciente.status }}
+                            Ativo
 
                         </span>
+
+                        {% else %}
+
+                        <span class="badge bg-danger">
+
+                            Inativo
+
+                        </span>
+
+                        {% endif %}
 
                     </div>
 

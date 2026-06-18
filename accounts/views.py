@@ -199,7 +199,17 @@ def pacientes_view(request):
     # LISTAGEM
     # =========================================
 
-    pacientes = Paciente.objects.all().order_by('-id')
+    perfil = request.user.perfil.tipo_usuario
+
+    if perfil == 'dentista':
+
+        pacientes = Paciente.objects.filter(
+            dentista=request.user
+        ).order_by('-id')
+
+    else:
+
+        pacientes = Paciente.objects.all().order_by('-id')
 
     convenios = Convenio.objects.filter(
         ativo=True
@@ -286,6 +296,8 @@ def novo_paciente(request):
 
         paciente = Paciente.objects.create(
 
+            dentista=request.user,
+
             foto=request.FILES.get('foto'),
 
             nome=request.POST.get('nome'),
@@ -296,8 +308,6 @@ def novo_paciente(request):
             genero=request.POST.get('genero'),
             estado_civil=request.POST.get('estado_civil'),
             profissao=request.POST.get('profissao'),
-
-            # CONTATO
 
             telefone=request.POST.get('telefone'),
             whatsapp=request.POST.get('whatsapp'),
@@ -519,6 +529,31 @@ def excluir_paciente(request, id):
     paciente.delete()
 
     return redirect('pacientes')
+
+# =========================================
+# ALTERAR STATUS PACIENTE
+# =========================================
+
+@login_required(login_url='/')
+def alterar_status_paciente(request, id):
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
+
+    paciente.ativo = not paciente.ativo
+
+    paciente.save()
+
+    messages.success(
+        request,
+        'Status do paciente atualizado com sucesso.'
+    )
+
+    return redirect(
+        'pacientes'
+    )
 
 # =========================================
 # ODONTOGRAMA
@@ -5100,6 +5135,38 @@ def fornecedores(request):
         context
     )
 
+
+# =========================================
+# VALIDAÇÃO DO CNPJ
+# =========================================
+
+import re
+
+def validar_cnpj(cnpj):
+
+    cnpj = re.sub(r'\D', '', cnpj)
+
+    if len(cnpj) != 14:
+        return False
+
+    if cnpj == cnpj[0] * 14:
+        return False
+
+    peso1 = [5,4,3,2,9,8,7,6,5,4,3,2]
+    soma = sum(int(cnpj[i]) * peso1[i] for i in range(12))
+
+    dig1 = 0 if soma % 11 < 2 else 11 - (soma % 11)
+
+    if dig1 != int(cnpj[12]):
+        return False
+
+    peso2 = [6,5,4,3,2,9,8,7,6,5,4,3,2]
+    soma = sum(int(cnpj[i]) * peso2[i] for i in range(13))
+
+    dig2 = 0 if soma % 11 < 2 else 11 - (soma % 11)
+
+    return dig2 == int(cnpj[13])
+
 # =========================================
 # NOVO FORNECEDOR
 # =========================================
@@ -5113,17 +5180,63 @@ def novo_fornecedor(request):
 
     if request.method == 'POST':
 
+        nome = request.POST.get(
+            'nome'
+        )
+
+        if not nome:
+
+            messages.error(
+                request,
+                'Informe o nome do fornecedor.'
+            )
+
+            return render(
+                request,
+                'accounts/fornecedor_form.html'
+            )
+
+        cnpj = request.POST.get(
+            'cnpj'
+        )
+
+        if cnpj:
+
+            if not validar_cnpj(cnpj):
+
+                messages.error(
+                    request,
+                    'CNPJ inválido.'
+                )
+
+                return render(
+                    request,
+                    'accounts/fornecedor_form.html'
+                )
+
+            if Fornecedor.objects.filter(
+                cnpj=cnpj
+            ).exists():
+
+                messages.error(
+                    request,
+                    'Já existe um fornecedor com este CNPJ.'
+                )
+
+                return render(
+                    request,
+                    'accounts/fornecedor_form.html'
+                )
+
         Fornecedor.objects.create(
 
-            nome=request.POST.get('nome'),
+            nome=nome,
 
             razao_social=request.POST.get(
                 'razao_social'
             ),
 
-            cnpj=request.POST.get(
-                'cnpj'
-            ),
+            cnpj=cnpj,
 
             contato=request.POST.get(
                 'contato'
@@ -5187,6 +5300,9 @@ def novo_fornecedor(request):
         'accounts/fornecedor_form.html'
     )
 
+# =========================================
+# EDITAR FORNECEDOR
+# =========================================
 
 @login_required
 @perfil_required(
@@ -5201,6 +5317,62 @@ def editar_fornecedor(request, fornecedor_id):
     )
 
     if request.method == 'POST':
+
+        cnpj = request.POST.get(
+            'cnpj'
+        )
+
+        if cnpj:
+
+            cnpj_limpo = re.sub(
+                r'\D',
+                '',
+                cnpj
+            )
+
+            if not validar_cnpj(cnpj_limpo):
+
+                messages.error(
+                    request,
+                    'CNPJ inválido.'
+                )
+
+                return render(
+                    request,
+                    'accounts/fornecedor_form.html',
+                    {
+                        'fornecedor': fornecedor
+                    }
+                )
+
+            if Fornecedor.objects.filter(
+                cnpj=cnpj
+            ).exclude(
+                id=fornecedor.id
+            ).exists():
+
+                messages.error(
+                    request,
+                    'Já existe outro fornecedor com este CNPJ.'
+                )
+
+                return render(
+                    request,
+                    'accounts/fornecedor_form.html',
+                    {
+                        'fornecedor': fornecedor
+                    }
+                )
+
+        fornecedor.nome = request.POST.get(
+            'nome'
+        )
+
+        fornecedor.razao_social = request.POST.get(
+            'razao_social'
+        )
+
+        fornecedor.cnpj = cnpj
 
         fornecedor.nome = request.POST.get(
             'nome'
@@ -5277,6 +5449,9 @@ def editar_fornecedor(request, fornecedor_id):
         }
     )
 
+# =========================================
+# ALTERAR STATUS DO FORNECEDOR
+# =========================================
 
 @login_required
 @perfil_required(
@@ -5305,6 +5480,10 @@ def alterar_status_fornecedor(
     return redirect(
         'fornecedores'
     )
+
+# =========================================
+# EXCLUIR FORNECEDOR
+# =========================================
 
 
 @login_required

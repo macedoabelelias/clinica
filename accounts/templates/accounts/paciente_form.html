@@ -333,12 +333,13 @@ Paciente | AM Systems
         <label>Telefone</label>
 
         <input
-            type="text"
-            id="telefone"
-            name="telefone"
-            class="form-control"
-            value="{{ paciente.telefone|default:'' }}"
-        >
+    type="text"
+    id="telefone"
+    name="telefone"
+    class="form-control"
+    value="{{ paciente.telefone|default:'' }}"
+    oninput="mascaraTelefone(this)"
+>
 
     </div>
 
@@ -346,13 +347,14 @@ Paciente | AM Systems
 
         <label>WhatsApp</label>
 
-        <input
-            type="text"
-            id="whatsapp"
-            name="whatsapp"
-            class="form-control"
-            value="{{ paciente.whatsapp|default:'' }}"
-        >
+       <input
+    type="text"
+    id="whatsapp"
+    name="whatsapp"
+    class="form-control"
+    value="{{ paciente.whatsapp|default:'' }}"
+    oninput="mascaraCelular(this)"
+>
 
     </div>
 
@@ -579,12 +581,13 @@ Paciente | AM Systems
             <label>WhatsApp Responsável</label>
 
             <input
-                type="text"
-                id="telefone_responsavel"
-                name="telefone_responsavel"
-                class="form-control"
-                value="{{ paciente.telefone_responsavel|default:'' }}"
-            >
+    type="text"
+    id="telefone_responsavel"
+    name="telefone_responsavel"
+    class="form-control"
+    value="{{ paciente.telefone_responsavel|default:'' }}"
+    oninput="mascaraCelular(this)"
+>
 
         </div>
 
@@ -840,16 +843,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
         let v = campo.value.replace(/\D/g,'');
 
-        v = v.substring(0,11);
+        v = v.substring(0,10);
 
-        if(v.length > 10){
-
-            v = v.replace(
-                /^(\d{2})(\d{5})(\d{0,4}).*/,
-                '($1) $2-$3'
-            );
-
-        }else if(v.length > 6){
+        if(v.length > 6){
 
             v = v.replace(
                 /^(\d{2})(\d{4})(\d{0,4}).*/,
@@ -868,6 +864,33 @@ document.addEventListener('DOMContentLoaded', function(){
         campo.value = v;
 
     }
+
+    function mascaraCelular(campo){
+
+        let v = campo.value.replace(/\D/g,'');
+
+        v = v.substring(0,11);
+
+        if(v.length > 7){
+
+            v = v.replace(
+                /^(\d{2})(\d{5})(\d{0,4}).*/,
+                '($1) $2-$3'
+            );
+
+        }else if(v.length > 2){
+
+            v = v.replace(
+                /^(\d{2})(\d+).*/,
+                '($1) $2'
+            );
+
+        }
+
+        campo.value = v;
+
+    }
+    
 
     // =====================================
     // CPF PACIENTE
@@ -943,10 +966,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
         whatsapp.addEventListener(
             'input',
-            function(){
-
-                mascaraTelefone(this);
-
+            function () {
+                mascaraCelular(this);
             }
         );
 
@@ -971,12 +992,10 @@ document.addEventListener('DOMContentLoaded', function(){
 
     if(telefoneResponsavel){
 
-        telefoneResponsavel.addEventListener(
+       telefoneResponsavel.addEventListener(
             'input',
-            function(){
-
-                mascaraTelefone(this);
-
+            function () {
+                mascaraCelular(this);
             }
         );
 

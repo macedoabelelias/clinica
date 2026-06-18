@@ -70,6 +70,12 @@ urlpatterns = [
         name='excluir_paciente'
     ),
 
+    path(
+        'pacientes/<int:id>/status/',
+        views.alterar_status_paciente,
+        name='alterar_status_paciente'
+    ),
+
     # =========================================
     # ODONTOGRAMA
     # =========================================
