@@ -450,6 +450,12 @@ path(
 ),
 
 path(
+    'fornecedores/novo/',
+    views.novo_fornecedor,
+    name='novo_fornecedor'
+),
+
+path(
     'fornecedores/<int:fornecedor_id>/editar/',
     views.editar_fornecedor,
     name='editar_fornecedor'

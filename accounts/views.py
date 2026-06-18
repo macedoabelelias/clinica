@@ -5074,6 +5074,7 @@ def desativar_usuario(request, id):
     return redirect('usuarios')
 
 
+
 # =========================================
 # FORNECEDORES
 # =========================================
@@ -5098,7 +5099,6 @@ def fornecedores(request):
         'accounts/fornecedores.html',
         context
     )
-
 
 # =========================================
 # NOVO FORNECEDOR
@@ -5187,10 +5187,6 @@ def novo_fornecedor(request):
         'accounts/fornecedor_form.html'
     )
 
-
-# =========================================
-# EDITAR FORNECEDOR
-# =========================================
 
 @login_required
 @perfil_required(
@@ -5310,6 +5306,7 @@ def alterar_status_fornecedor(
         'fornecedores'
     )
 
+
 @login_required
 @perfil_required(
     'admin',
@@ -5335,3 +5332,6 @@ def excluir_fornecedor(
     return redirect(
         'fornecedores'
     )
+
+
+
