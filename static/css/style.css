@@ -722,6 +722,37 @@ SUBMENU CLÍNICA
 }
 
 /* =========================================
+PRODUTOS
+========================================= */
+
+.produto-nome{
+
+    max-width:350px;
+
+    white-space:normal;
+
+    word-break:break-word;
+
+}
+
+.card-estoque{
+    border-left:4px solid #2563eb;
+}
+
+.card-minimo{
+    border-left:4px solid #dc3545;
+}
+
+.card-valor{
+    border-left:4px solid #198754;
+}
+
+.estoque-baixo{
+    background-color: #fff5f5 !important;
+    border-left: 4px solid #dc3545;
+}
+
+/* =========================================
 RESPONSIVO
 ========================================= */
 

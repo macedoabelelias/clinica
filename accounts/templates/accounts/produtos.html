@@ -22,149 +22,204 @@
 
         <div class="card-body">
 
-            <table class="table table-hover align-middle">
+            <div class="table-responsive">
 
-                <thead>
+                {% if total_produtos_baixos > 0 %}
 
-                    <tr>
+<div class="alert alert-danger mb-3">
 
-                        <th>Nome</th>
+    <i class="fa-solid fa-triangle-exclamation"></i>
 
-                        <th>Código</th>
+    Existem
 
-                        <th>Estoque</th>
+    <strong>
 
-                        <th>Valor Compra</th>
+        {{ total_produtos_baixos }}
 
-                        <th>Valor Venda</th>
+    </strong>
 
-                        <th>Status</th>
+    produto(s) abaixo do estoque mínimo.
 
-                        <th width="220">
-                            Ações
-                        </th>
+</div>
 
-                    </tr>
+{% endif %}
 
-                </thead>
+                <table class="table table-hover align-middle">
 
-                <tbody>
+    <thead>
 
-                    {% for produto in produtos %}
+        <tr>
 
-                    <tr>
+            <th width="30%">Nome</th>
 
-                        <td>
+            <th width="12%">Código</th>
 
-                            <strong>
-                                {{ produto.nome }}
-                            </strong>
+            <th width="10%">Estoque</th>
 
-                        </td>
+            <th width="10%">Mínimo</th>
 
-                        <td>
+            <th width="12%">Compra</th>
 
-                            {{ produto.codigo|default:"—" }}
+            <th width="12%">Venda</th>
 
-                        </td>
+            <th width="8%">Status</th>
 
-                        <td>
+            <th width="16%">Ações</th>
 
-                            {{ produto.estoque }}
+        </tr>
 
-                        </td>
+    </thead>
 
-                        <td>
+    <tbody>
 
-                            R$ {{ produto.valor_compra }}
+        {% for produto in produtos %}
 
-                        </td>
+        <tr>
 
-                        <td>
+            <td
+                class="produto-nome"
+                title="{{ produto.nome }}">
 
-                            R$ {{ produto.valor_venda }}
+                <strong>
 
-                        </td>
+                    {{ produto.nome|truncatechars:45 }}
 
-                        <td>
+                </strong>
 
-                            {% if produto.ativo %}
+            </td>
 
-                            <span class="badge bg-success">
-                                Ativo
-                            </span>
+            <td>
 
-                            {% else %}
+                {{ produto.codigo|default:"—" }}
 
-                            <span class="badge bg-danger">
-                                Inativo
-                            </span>
+            </td>
 
-                            {% endif %}
+            <td>
 
-                        </td>
+                {% if produto.estoque <= produto.estoque_minimo %}
 
-                        <td>
+                    <span class="badge bg-danger">
 
-                            <div class="d-flex gap-2">
+                        {{ produto.estoque }}
 
-                                <a href="{% url 'editar_produto' produto.id %}"
-                                   class="btn btn-sm btn-primary">
+                    </span>
 
-                                    <i class="fa-solid fa-pen"></i>
+                {% else %}
 
-                                </a>
+                    {{ produto.estoque }}
 
-                                {% if produto.ativo %}
+                {% endif %}
 
-                                <a href="{% url 'alterar_status_produto' produto.id %}"
-                                   class="btn btn-sm btn-warning">
+            </td>
 
-                                    <i class="fa-solid fa-toggle-off"></i>
+            <td>
 
-                                </a>
+                {{ produto.estoque_minimo }}
 
-                                {% else %}
+            </td>
 
-                                <a href="{% url 'alterar_status_produto' produto.id %}"
-                                   class="btn btn-sm btn-success">
+            <td>
 
-                                    <i class="fa-solid fa-toggle-on"></i>
+                R$ {{ produto.valor_compra }}
 
-                                </a>
+            </td>
 
-                                {% endif %}
+            <td>
 
-                                <a href="{% url 'excluir_produto' produto.id %}"
-                                   class="btn btn-sm btn-danger">
+                R$ {{ produto.valor_venda }}
 
-                                    <i class="fa-solid fa-trash"></i>
+            </td>
 
-                                </a>
+            <td>
 
-                            </div>
+                {% if produto.ativo %}
 
-                        </td>
+                    <span class="badge bg-success">
 
-                    </tr>
+                        Ativo
 
-                    {% empty %}
+                    </span>
 
-                    <tr>
+                {% else %}
 
-                        <td colspan="7" class="text-center">
+                    <span class="badge bg-danger">
 
-                            Nenhum produto cadastrado.
+                        Inativo
 
-                        </td>
+                    </span>
 
-                    </tr>
+                {% endif %}
 
-                    {% endfor %}
+            </td>
 
-                </tbody>
+            <td>
 
-            </table>
+                <div class="d-flex gap-2">
+
+                    <a href="{% url 'editar_produto' produto.id %}"
+                       class="btn btn-sm btn-primary"
+                       title="Editar">
+
+                        <i class="fa-solid fa-pen"></i>
+
+                    </a>
+
+                    {% if produto.ativo %}
+
+                    <a href="{% url 'alterar_status_produto' produto.id %}"
+                       class="btn btn-sm btn-warning"
+                       title="Inativar">
+
+                        <i class="fa-solid fa-toggle-off"></i>
+
+                    </a>
+
+                    {% else %}
+
+                    <a href="{% url 'alterar_status_produto' produto.id %}"
+                       class="btn btn-sm btn-success"
+                       title="Ativar">
+
+                        <i class="fa-solid fa-toggle-on"></i>
+
+                    </a>
+
+                    {% endif %}
+
+                    <a href="{% url 'excluir_produto' produto.id %}"
+                       class="btn btn-sm btn-danger"
+                       title="Excluir"
+                       onclick="return confirm('Deseja excluir este produto?')">
+
+                        <i class="fa-solid fa-trash"></i>
+
+                    </a>
+
+                </div>
+
+            </td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+
+            <td colspan="8" class="text-center">
+
+                Nenhum produto cadastrado.
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+            </div>
 
         </div>
 

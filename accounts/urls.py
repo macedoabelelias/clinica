@@ -490,6 +490,12 @@ path(
 ),
 
 path(
+    'estoque/',
+    views.estoque,
+    name='estoque'
+),
+
+path(
     'produtos/novo/',
     views.novo_produto,
     name='novo_produto'
@@ -528,6 +534,25 @@ path(
     views.nova_compra,
     name='nova_compra'
 ),
+
+path(
+    'compras/<int:compra_id>/',
+    views.visualizar_compra,
+    name='visualizar_compra'
+),
+
+path(
+    'compras/<int:compra_id>/editar/',
+    views.editar_compra,
+    name='editar_compra'
+),
+
+path(
+    'compras/<int:compra_id>/excluir/',
+    views.excluir_compra,
+    name='excluir_compra'
+),
+
 
 ]
 

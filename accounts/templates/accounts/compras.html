@@ -25,21 +25,14 @@
             <table class="table table-hover">
 
                 <thead>
-
                     <tr>
-
                         <th>ID</th>
-
                         <th>Fornecedor</th>
-
                         <th>Data</th>
-
                         <th>NF</th>
-
                         <th>Total</th>
-
+                        <th width="160">Ações</th>
                     </tr>
-
                 </thead>
 
                 <tbody>
@@ -50,16 +43,54 @@
 
                         <td>{{ compra.id }}</td>
 
-                        <td>{{ compra.fornecedor.nome }}</td>
+                        <td>
+                            {{ compra.fornecedor.nome }}
+                        </td>
 
-                        <td>{{ compra.data_compra }}</td>
+                        <td>
+                            {{ compra.data_compra|date:"d \d\e F \d\e Y" }}
+                        </td>
 
-                        <td>{{ compra.numero_nf }}</td>
+                        <td>
+                            {{ compra.numero_nf }}
+                        </td>
 
-                        <td>R$ {{ compra.valor_total }}</td>
+                        <td>
+                            R$ {{ compra.valor_total }}
+                        </td>
+
+                        <td>
+
+   <div class="d-flex gap-2">
+
+    <a href="{% url 'visualizar_compra' compra.id %}"
+       class="btn btn-sm btn-warning"
+       title="Visualizar">
+
+        <i class="fa-solid fa-eye"></i>
+
+    </a>   
+
+    </button><a href="{% url 'editar_compra' compra.id %}"
+   class="btn btn-sm btn-primary"
+   title="Editar">
+
+    <i class="fa-solid fa-pen"></i>
+
+</a>
+
+   <a href="{% url 'excluir_compra' compra.id %}"
+   class="btn btn-sm btn-danger"
+   onclick="return confirm('Deseja excluir esta compra?')">
+
+    <i class="fa-solid fa-trash"></i>
+
+</a>
+
+</div>
+
 
                     </tr>
-
                     {% empty %}
 
                     <tr>

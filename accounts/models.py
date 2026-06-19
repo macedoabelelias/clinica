@@ -2350,6 +2350,12 @@ class Compra(models.Model):
         null=True
     )
 
+    arquivo_nf = models.FileField(
+        upload_to='notas_fiscais/',
+        blank=True,
+        null=True
+    )
+
     valor_total = models.DecimalField(
         max_digits=12,
         decimal_places=2,
@@ -2362,8 +2368,7 @@ class Compra(models.Model):
 
     def __str__(self):
 
-        return f'Compra #{self.id}'
-    
+        return f'Compra #{self.id}'    
 
 # =========================================
 # ITENS DA COMPRA
@@ -2382,7 +2387,7 @@ class ItemCompra(models.Model):
         on_delete=models.PROTECT
     )
 
-    quantidade = models.IntegerField()
+    quantidade = models.PositiveIntegerField()
 
     valor_unitario = models.DecimalField(
         max_digits=10,
@@ -2391,9 +2396,22 @@ class ItemCompra(models.Model):
 
     subtotal = models.DecimalField(
         max_digits=12,
-        decimal_places=2
+        decimal_places=2,
+        default=0
     )
+
+    def save(self, *args, **kwargs):
+
+        self.subtotal = (
+            self.quantidade *
+            self.valor_unitario
+        )
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
 
-        return self.produto.nome
+        return (
+            f'{self.produto.nome} '
+            f'({self.quantidade})'
+        )

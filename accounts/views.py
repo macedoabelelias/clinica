@@ -73,6 +73,7 @@ from .models import PerfilUsuario
 from .permissions import perfil_required
 from django.contrib.auth import update_session_auth_hash
 from .models import Compra, ItemCompra
+from decimal import Decimal
 
 # =========================================
 # LOGIN
@@ -5525,6 +5526,8 @@ def excluir_fornecedor(
 # PRODUTOS
 # =========================================
 
+from django.db.models import F
+
 @login_required
 @perfil_required(
     'admin',
@@ -5536,14 +5539,29 @@ def produtos(request):
         'nome'
     )
 
+    produtos_baixos = Produto.objects.filter(
+        ativo=True,
+        estoque__lte=F('estoque_minimo')
+    )
+
     context = {
-        'produtos': produtos
+
+        'produtos': produtos,
+
+        'produtos_baixos': produtos_baixos,
+
+        'total_produtos_baixos': produtos_baixos.count()
+
     }
 
     return render(
+
         request,
+
         'accounts/produtos.html',
+
         context
+
     )
 
 # =========================================
@@ -5788,14 +5806,442 @@ def nova_compra(request):
         ativo=True
     ).order_by('nome')
 
+    produtos = Produto.objects.filter(
+        ativo=True
+    ).order_by('nome')
+
+    if request.method == 'POST':
+
+        fornecedor_id = request.POST.get(
+            'fornecedor'
+        )
+
+        data_compra = request.POST.get(
+            'data_compra'
+        )
+
+        numero_nf = request.POST.get(
+            'numero_nf'
+        )
+
+        observacoes = request.POST.get(
+            'observacoes'
+        )
+
+        arquivo_nf = request.FILES.get(
+            'arquivo_nf'
+        )
+
+        compra = Compra.objects.create(
+
+            fornecedor_id=fornecedor_id,
+
+            data_compra=data_compra,
+
+            numero_nf=numero_nf,
+
+            observacoes=observacoes,
+
+            arquivo_nf=arquivo_nf,
+
+            valor_total=0
+
+        )
+
+        produtos_ids = request.POST.getlist(
+            'produto[]'
+        )
+
+        quantidades = request.POST.getlist(
+            'quantidade[]'
+        )
+
+        valores = request.POST.getlist(
+            'valor_unitario[]'
+        )
+
+        total_compra = Decimal('0.00')
+
+        for i in range(
+            len(produtos_ids)
+        ):
+
+            produto = Produto.objects.get(
+                id=produtos_ids[i]
+            )
+
+            quantidade = int(
+                quantidades[i]
+            )
+
+            valor_unitario = Decimal(
+                valores[i]
+            )
+
+            subtotal = (
+                quantidade *
+                valor_unitario
+            )
+
+            ItemCompra.objects.create(
+
+                compra=compra,
+
+                produto=produto,
+
+                quantidade=quantidade,
+
+                valor_unitario=valor_unitario,
+
+                subtotal=subtotal
+
+            )
+
+            produto.estoque += quantidade
+
+            produto.save()
+
+            total_compra += subtotal
+
+        compra.valor_total = total_compra
+
+        compra.save()
+
+        messages.success(
+
+            request,
+
+            'Compra cadastrada com sucesso.'
+
+        )
+
+        return redirect(
+            'compras'
+        )
+
     context = {
-        'fornecedores': fornecedores
+
+        'fornecedores': fornecedores,
+
+        'produtos': produtos
+
     }
 
     return render(
+
         request,
+
         'accounts/compra_form.html',
+
         context
+
+    )
+
+
+# =========================================
+# VISUALIZAR COMPRA
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def visualizar_compra(request, compra_id):
+
+    compra = get_object_or_404(
+        Compra,
+        id=compra_id
+    )
+
+    itens = ItemCompra.objects.filter(
+        compra=compra
+    )
+
+    context = {
+
+        'compra': compra,
+        'itens': itens
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/compra_visualizar.html',
+
+        context
+
+    )
+
+# =========================================
+# EDITAR COMPRA
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def editar_compra(request, compra_id):
+
+    compra = get_object_or_404(
+        Compra,
+        id=compra_id
+    )
+
+    item = ItemCompra.objects.filter(
+        compra=compra
+    ).first()
+
+    fornecedores = Fornecedor.objects.filter(
+        ativo=True
+    ).order_by('nome')
+
+    produtos = Produto.objects.filter(
+        ativo=True
+    ).order_by('nome')
+
+    if request.method == 'POST':
+
+        fornecedor_id = request.POST.get(
+            'fornecedor'
+        )
+
+        data_compra = request.POST.get(
+            'data_compra'
+        )
+
+        numero_nf = request.POST.get(
+            'numero_nf'
+        )
+
+        observacoes = request.POST.get(
+            'observacoes'
+        )
+
+        produto_id = request.POST.get(
+            'produto'
+        )
+
+        nova_quantidade = int(
+            request.POST.get(
+                'quantidade',
+                0
+            )
+        )
+
+        novo_valor = Decimal(
+            request.POST.get(
+                'valor_unitario',
+                0
+            )
+        )
+
+        if item:
+
+            produto_antigo = item.produto
+
+            produto_antigo.estoque -= (
+                item.quantidade
+            )
+
+            if produto_antigo.estoque < 0:
+
+                produto_antigo.estoque = 0
+
+            produto_antigo.save()
+
+        produto = Produto.objects.get(
+            id=produto_id
+        )
+
+        subtotal = (
+            nova_quantidade *
+            novo_valor
+        )
+
+        produto.estoque += (
+            nova_quantidade
+        )
+
+        produto.save()
+
+        compra.fornecedor_id = (
+            fornecedor_id
+        )
+
+        compra.data_compra = (
+            data_compra
+        )
+
+        compra.numero_nf = (
+            numero_nf
+        )
+
+        compra.observacoes = (
+            observacoes
+        )
+
+        compra.valor_total = (
+            subtotal
+        )
+
+        compra.save()
+
+        if item:
+
+            item.produto = produto
+
+            item.quantidade = (
+                nova_quantidade
+            )
+
+            item.valor_unitario = (
+                novo_valor
+            )
+
+            item.subtotal = (
+                subtotal
+            )
+
+            item.save()
+
+        messages.success(
+
+            request,
+
+            'Compra atualizada com sucesso.'
+
+        )
+
+        return redirect(
+            'compras'
+        )
+
+    context = {
+
+        'compra': compra,
+
+        'item': item,
+
+        'fornecedores': fornecedores,
+
+        'produtos': produtos
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/compra_editar.html',
+
+        context
+
+    )
+
+# =========================================
+# EXCLUIR COMPRA
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def excluir_compra(request, compra_id):
+
+    compra = get_object_or_404(
+        Compra,
+        id=compra_id
+    )
+
+    itens = ItemCompra.objects.filter(
+        compra=compra
+    )
+
+    for item in itens:
+
+        produto = item.produto
+
+        produto.estoque -= item.quantidade
+
+        if produto.estoque < 0:
+
+            produto.estoque = 0
+
+        produto.save()
+
+    compra.delete()
+
+    messages.success(
+        request,
+        'Compra excluída com sucesso.'
+    )
+
+    return redirect(
+        'compras'
+    )
+
+# =========================================
+# ESTOQUE
+# =========================================
+
+from django.db.models import F
+from decimal import Decimal
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def estoque(request):
+
+    produtos = Produto.objects.filter(
+        ativo=True
+    ).order_by('nome')
+
+    produtos_baixos = produtos.filter(
+        estoque__lte=F('estoque_minimo')
+    )
+
+    valor_total_estoque = Decimal('0.00')
+
+    for produto in produtos:
+
+        produto.valor_estoque = (
+            produto.estoque *
+            produto.valor_compra
+        )
+
+        valor_total_estoque += (
+            produto.valor_estoque
+        )
+
+    context = {
+
+        'produtos': produtos,
+
+        'produtos_baixos': produtos_baixos,
+
+        'total_produtos': produtos.count(),
+
+        'total_produtos_baixos': produtos_baixos.count(),
+
+        'valor_total_estoque': valor_total_estoque
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/estoque.html',
+
+        context
+
     )
 
 
