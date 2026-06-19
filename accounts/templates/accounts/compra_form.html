@@ -1,0 +1,75 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <h1>Nova Compra</h1>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <form>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Fornecedor</label>
+
+                        <select class="form-control">
+
+                            <option>
+
+                                Selecione
+
+                            </option>
+
+                            {% for fornecedor in fornecedores %}
+
+                            <option>
+
+                                {{ fornecedor.nome }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+
+                        <label>Data</label>
+
+                        <input
+                            type="date"
+                            class="form-control"
+                        >
+
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+
+                        <label>NF</label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                        >
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -56,6 +56,7 @@ from .models import (
     Exame,
     SolicitacaoExame,
     Fornecedor,
+    Produto
 )
 
 from .forms import (
@@ -71,6 +72,7 @@ from django.contrib import messages
 from .models import PerfilUsuario
 from .permissions import perfil_required
 from django.contrib.auth import update_session_auth_hash
+from .models import Compra, ItemCompra
 
 # =========================================
 # LOGIN
@@ -5517,6 +5519,283 @@ def excluir_fornecedor(
 
     return redirect(
         'fornecedores'
+    )
+
+# =========================================
+# PRODUTOS
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def produtos(request):
+
+    produtos = Produto.objects.order_by(
+        'nome'
+    )
+
+    context = {
+        'produtos': produtos
+    }
+
+    return render(
+        request,
+        'accounts/produtos.html',
+        context
+    )
+
+# =========================================
+# NOVO PRODUTO
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def novo_produto(request):
+
+    if request.method == 'POST':
+
+        nome = request.POST.get(
+            'nome'
+        )
+
+        if not nome:
+
+            messages.error(
+                request,
+                'Informe o nome do produto.'
+            )
+
+            return render(
+                request,
+                'accounts/produto_form.html'
+            )
+
+        Produto.objects.create(
+
+            nome=nome,
+
+            descricao=request.POST.get(
+                'descricao'
+            ),
+
+            codigo=request.POST.get(
+                'codigo'
+            ),
+
+            estoque=request.POST.get(
+                'estoque'
+            ) or 0,
+
+            estoque_minimo=request.POST.get(
+                'estoque_minimo'
+            ) or 0,
+
+            valor_compra=request.POST.get(
+                'valor_compra'
+            ) or 0,
+
+            valor_venda=request.POST.get(
+                'valor_venda'
+            ) or 0,
+
+            ativo=True
+
+        )
+
+        messages.success(
+            request,
+            'Produto cadastrado com sucesso.'
+        )
+
+        return redirect(
+            'produtos'
+        )
+
+    return render(
+        request,
+        'accounts/produto_form.html'
+    )
+
+# =========================================
+# EDITAR PRODUTO
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def editar_produto(
+    request,
+    produto_id
+):
+
+    produto = get_object_or_404(
+        Produto,
+        id=produto_id
+    )
+
+    if request.method == 'POST':
+
+        produto.nome = request.POST.get(
+            'nome'
+        )
+
+        produto.descricao = request.POST.get(
+            'descricao'
+        )
+
+        produto.codigo = request.POST.get(
+            'codigo'
+        )
+
+        produto.estoque = request.POST.get(
+            'estoque'
+        ) or 0
+
+        produto.estoque_minimo = request.POST.get(
+            'estoque_minimo'
+        ) or 0
+
+        produto.valor_compra = request.POST.get(
+            'valor_compra'
+        ) or 0
+
+        produto.valor_venda = request.POST.get(
+            'valor_venda'
+        ) or 0
+
+        produto.save()
+
+        messages.success(
+            request,
+            'Produto atualizado com sucesso.'
+        )
+
+        return redirect(
+            'produtos'
+        )
+
+    context = {
+        'produto': produto
+    }
+
+    return render(
+        request,
+        'accounts/produto_form.html',
+        context
+    )
+
+# =========================================
+# STATUS PRODUTO
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def alterar_status_produto(
+    request,
+    produto_id
+):
+
+    produto = get_object_or_404(
+        Produto,
+        id=produto_id
+    )
+
+    produto.ativo = not produto.ativo
+
+    produto.save()
+
+    return redirect(
+        'produtos'
+    )
+
+# =========================================
+# EXCLUIR PRODUTO
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def excluir_produto(
+    request,
+    produto_id
+):
+
+    produto = get_object_or_404(
+        Produto,
+        id=produto_id
+    )
+
+    produto.delete()
+
+    messages.success(
+        request,
+        'Produto excluído com sucesso.'
+    )
+
+    return redirect(
+        'produtos'
+    )
+
+# =========================================
+# COMPRAS
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def compras(request):
+
+    compras = Compra.objects.select_related(
+        'fornecedor'
+    ).order_by('-id')
+
+    context = {
+        'compras': compras
+    }
+
+    return render(
+        request,
+        'accounts/compras.html',
+        context
+    )
+
+# =========================================
+# NOVA COMPRA
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def nova_compra(request):
+
+    fornecedores = Fornecedor.objects.filter(
+        ativo=True
+    ).order_by('nome')
+
+    context = {
+        'fornecedores': fornecedores
+    }
+
+    return render(
+        request,
+        'accounts/compra_form.html',
+        context
     )
 
 

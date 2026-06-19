@@ -479,6 +479,56 @@ path(
     name='excluir_fornecedor'
 ),
 
+# =========================================
+# PRODUTOS
+# =========================================
+
+path(
+    'produtos/',
+    views.produtos,
+    name='produtos'
+),
+
+path(
+    'produtos/novo/',
+    views.novo_produto,
+    name='novo_produto'
+),
+
+path(
+    'produtos/<int:produto_id>/editar/',
+    views.editar_produto,
+    name='editar_produto'
+),
+
+path(
+    'produtos/<int:produto_id>/status/',
+    views.alterar_status_produto,
+    name='alterar_status_produto'
+),
+
+path(
+    'produtos/<int:produto_id>/excluir/',
+    views.excluir_produto,
+    name='excluir_produto'
+),
+
+# =========================================
+# COMPRAS
+# =========================================
+
+path(
+    'compras/',
+    views.compras,
+    name='compras'
+),
+
+path(
+    'compras/nova/',
+    views.nova_compra,
+    name='nova_compra'
+),
+
 ]
 
 

@@ -302,6 +302,98 @@ MENU
 }
 
 /* =========================================
+SUBMENUS
+========================================= */
+
+.menu-group{
+
+    margin-bottom:8px;
+
+}
+
+.menu-toggle{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 14px;
+
+    border:none;
+
+    background:none;
+
+    color:#64748b;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.menu-toggle:hover{
+
+    background:#f4f7fb;
+
+    color:#2563eb;
+
+}
+
+.menu-toggle i{
+
+    transition:.3s;
+
+}
+
+.menu-group.open .menu-toggle i{
+
+    transform:rotate(90deg);
+
+}
+
+.submenu{
+
+    display:none;
+
+    list-style:none;
+
+    padding-left:16px;
+
+    margin-top:6px;
+
+}
+
+.menu-group.open .submenu{
+
+    display:block;
+
+}
+
+.submenu li{
+
+    margin-bottom:4px;
+
+}
+
+.submenu li a{
+
+    padding:10px 14px;
+
+    font-size:13px;
+
+}
+
+/* =========================================
 CONTEÚDO
 ========================================= */
 

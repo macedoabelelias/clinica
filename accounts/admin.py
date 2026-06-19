@@ -6,6 +6,10 @@ from .models import (
 
 from .models import PerfilUsuario
 
+from .models import Produto
+
+admin.site.register(Produto)
+
 
 # =========================================
 # TEMPLATE DOCUMENTOS
