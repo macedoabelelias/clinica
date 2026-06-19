@@ -567,6 +567,7 @@ LISTAGEM PREMIUM
         2.2fr
         1fr
         1fr
+        1.3fr
         .8fr
         180px;
 
@@ -580,6 +581,27 @@ LISTAGEM PREMIUM
 
     transition:.2s;
 
+}
+
+.patient-col.actions{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-end;
+
+    gap:10px;
+
+    flex-wrap:nowrap;
+
+}
+
+.dentista-badge{
+    max-width:180px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
 
 .patient-row:hover{

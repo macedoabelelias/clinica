@@ -189,6 +189,26 @@ Pacientes | AM Systems
 
                 <div class="patient-col">
 
+                    {% if paciente.dentista %}
+
+                    <span class="dentista-badge">
+
+                        {{ paciente.dentista.get_full_name|default:paciente.dentista.username }}
+
+                    </span>
+
+                    {% else %}
+
+                    <span class="text-muted">
+                        Não definido
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="patient-col">
+
                     {% if paciente.ativo %}
 
                     <span class="status-badge status-ativo">
@@ -207,53 +227,44 @@ Pacientes | AM Systems
 
                 <div class="patient-col actions">
 
-    <a href="{% url 'perfil_paciente' paciente.id %}"
-       class="action-btn"
-       title="Perfil">
+                    <a href="{% url 'perfil_paciente' paciente.id %}" class="action-btn" title="Perfil">
 
-        <i class="bi bi-person-vcard"></i>
+                        <i class="bi bi-person-vcard"></i>
 
-    </a>
+                    </a>
 
-    <a href="{% url 'editar_paciente' paciente.id %}"
-       class="action-btn"
-       title="Editar">
+                    <a href="{% url 'editar_paciente' paciente.id %}" class="action-btn" title="Editar">
 
-        <i class="bi bi-pencil"></i>
+                        <i class="bi bi-pencil"></i>
 
-    </a>
+                    </a>
 
-    {% if paciente.ativo %}
+                    {% if paciente.ativo %}
 
-        <a href="{% url 'alterar_status_paciente' paciente.id %}"
-           class="action-btn"
-           title="Inativar">
+                    <a href="{% url 'alterar_status_paciente' paciente.id %}" class="action-btn" title="Inativar">
 
-            <i class="bi bi-toggle-off"></i>
+                        <i class="bi bi-toggle-off"></i>
 
-        </a>
+                    </a>
 
-    {% else %}
+                    {% else %}
 
-        <a href="{% url 'alterar_status_paciente' paciente.id %}"
-           class="action-btn"
-           title="Ativar">
+                    <a href="{% url 'alterar_status_paciente' paciente.id %}" class="action-btn" title="Ativar">
 
-            <i class="bi bi-toggle-on"></i>
+                        <i class="bi bi-toggle-on"></i>
 
-        </a>
+                    </a>
 
-    {% endif %}
+                    {% endif %}
 
-    <a href="{% url 'excluir_paciente' paciente.id %}"
-       class="action-btn action-btn-danger"
-       title="Excluir">
+                    <a href="{% url 'excluir_paciente' paciente.id %}" class="action-btn action-btn-danger"
+                        title="Excluir">
 
-        <i class="bi bi-trash"></i>
+                        <i class="bi bi-trash"></i>
 
-    </a>
+                    </a>
 
-</div>
+                </div>
 
             </div>
 

@@ -184,12 +184,16 @@ def pacientes_view(request):
 
             # RESPONSÁVEL
             responsavel=request.POST.get('responsavel'),
+
             cpf_responsavel=request.POST.get(
                 'cpf_responsavel'
             ),
+
             telefone_responsavel=request.POST.get(
                 'telefone_responsavel'
-            )
+            ),
+
+            dentista_id=request.POST.get('dentista') or None,
 
         )
 
@@ -215,11 +219,14 @@ def pacientes_view(request):
         ativo=True
     ).order_by('nome')
 
+    dentistas = User.objects.filter(
+        perfil__tipo_usuario='dentista'
+    ).order_by('first_name')
+
     context = {
-
         'pacientes': pacientes,
-        'convenios': convenios
-
+        'convenios': convenios,
+        'dentistas': dentistas,
     }
 
     return render(
