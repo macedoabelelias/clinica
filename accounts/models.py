@@ -2566,3 +2566,135 @@ class LoteProduto(models.Model):
             f'{self.lote}'
 
         )
+
+
+# =========================================
+# CONTAS A PAGAR
+# =========================================
+
+class ContaPagar(models.Model):
+
+    STATUS_CHOICES = [
+
+        ('PENDENTE', 'Pendente'),
+
+        ('PAGO', 'Pago'),
+
+        ('VENCIDO', 'Vencido')
+
+    ]
+
+    fornecedor = models.ForeignKey(
+
+        Fornecedor,
+
+        on_delete=models.PROTECT,
+
+        related_name='contas_pagar'
+
+    )
+
+    compra = models.ForeignKey(
+
+        Compra,
+
+        on_delete=models.SET_NULL,
+
+        blank=True,
+
+        null=True,
+
+        related_name='contas_pagar'
+
+    )
+
+    descricao = models.CharField(
+
+        max_length=255
+
+    )
+
+    valor = models.DecimalField(
+
+        max_digits=12,
+
+        decimal_places=2
+
+    )
+
+    vencimento = models.DateField()
+
+    data_pagamento = models.DateField(
+
+        blank=True,
+
+        null=True
+
+    )
+
+    status = models.CharField(
+
+        max_length=20,
+
+        choices=STATUS_CHOICES,
+
+        default='PENDENTE'
+
+    )
+
+    observacao = models.TextField(
+
+        blank=True,
+
+        null=True
+
+    )
+
+    criado_em = models.DateTimeField(
+
+        auto_now_add=True
+
+    )
+
+    atualizado_em = models.DateTimeField(
+
+        auto_now=True
+
+    )
+
+    class Meta:
+
+        ordering = [
+
+            'vencimento'
+
+        ]
+
+        verbose_name = 'Conta a Pagar'
+
+        verbose_name_plural = 'Contas a Pagar'
+
+    def __str__(self):
+
+        return (
+
+            f'{self.descricao} - '
+
+            f'R$ {self.valor}'
+
+        )
+
+    @property
+    def esta_vencida(self):
+
+        from datetime import date
+
+        return (
+
+            self.status != 'PAGO'
+
+            and
+
+            self.vencimento < date.today()
+
+        )

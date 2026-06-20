@@ -147,6 +147,7 @@ CSS DASHBOARD
 
                 {% endif %}
 
+
                 <!-- FINANCEIRO -->
 
                 {% if perfil == 'admin' or perfil == 'secretaria' %}
@@ -156,8 +157,11 @@ CSS DASHBOARD
                     <button class="menu-toggle">
 
                         <span>
-                            <i class="fa-solid fa-wallet"></i>
+
+                            <i class="fa-solid fa-sack-dollar"></i>
+
                             Financeiro
+
                         </span>
 
                         <i class="fa-solid fa-chevron-right"></i>
@@ -167,9 +171,59 @@ CSS DASHBOARD
                     <ul class="submenu">
 
                         <li>
-                            <a href="/financeiro/">
-                                Financeiro
+
+                            <a href="{% url 'contas_pagar' %}">
+
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+
+                                <span>
+                                    Contas a Pagar
+                                </span>
+
                             </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="#">
+
+                                <i class="fa-solid fa-money-bill-wave"></i>
+
+                                <span>
+                                    Contas a Receber
+                                </span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="#">
+
+                                <i class="fa-solid fa-cash-register"></i>
+
+                                <span>
+                                    Caixa
+                                </span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="#">
+
+                                <i class="fa-solid fa-chart-line"></i>
+
+                                <span>
+                                    Relatórios
+                                </span>
+
+                            </a>
+
                         </li>
 
                     </ul>

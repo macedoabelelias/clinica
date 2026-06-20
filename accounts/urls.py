@@ -583,7 +583,27 @@ path(
     name='excluir_compra'
 ),
 
+# =========================================
+# CONTAS A PAGAR
+# =========================================
 
+path(
+    'financeiro/contas-pagar/',
+    views.contas_pagar,
+    name='contas_pagar'
+),
+
+path(
+    'financeiro/contas-pagar/nova/',
+    views.nova_conta_pagar,
+    name='nova_conta_pagar'
+),
+
+path(
+    'financeiro/contas-pagar/<int:conta_id>/pagar/',
+    views.pagar_conta,
+    name='pagar_conta'
+),
 
 ]
 

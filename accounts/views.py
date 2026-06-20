@@ -60,7 +60,8 @@ from .models import (
     Compra,
     ItemCompra,
     MovimentacaoEstoque,
-    LoteProduto
+    LoteProduto,
+    ContaPagar
 )
 
 from .forms import (
@@ -6638,4 +6639,194 @@ def novo_lote(request):
             'produtos': produtos
         }
 
+    )
+
+# =========================================
+# CONTAS A PAGAR
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def contas_pagar(request):
+
+    hoje = timezone.now().date()
+
+    # Atualiza contas vencidas automaticamente
+    ContaPagar.objects.filter(
+        status='PENDENTE',
+        vencimento__lt=hoje
+    ).update(
+        status='VENCIDO'
+    )
+
+    contas = ContaPagar.objects.select_related(
+        'fornecedor'
+    ).order_by(
+        'vencimento'
+    )
+
+    # Filtro por status
+    status = request.GET.get(
+        'status'
+    )
+
+    if status:
+
+        contas = contas.filter(
+            status=status
+        )
+
+    contas_pendentes = ContaPagar.objects.filter(
+        status='PENDENTE'
+    )
+
+    contas_pagas = ContaPagar.objects.filter(
+        status='PAGO'
+    )
+
+    contas_vencidas = ContaPagar.objects.filter(
+        status='VENCIDO'
+    )
+
+    total_pendente = sum(
+        conta.valor
+        for conta in contas_pendentes
+    )
+
+    total_pago = sum(
+        conta.valor
+        for conta in contas_pagas
+    )
+
+    total_vencido = sum(
+        conta.valor
+        for conta in contas_vencidas
+    )
+
+    context = {
+
+        'contas': contas,
+
+        'status': status,
+
+        'total_pendente': total_pendente,
+
+        'total_pago': total_pago,
+
+        'total_vencido': total_vencido,
+
+        'quantidade_pendentes': contas_pendentes.count(),
+
+        'quantidade_pagas': contas_pagas.count(),
+
+        'quantidade_vencidas': contas_vencidas.count(),
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/contas_pagar.html',
+
+        context
+
+    )
+
+# =========================================
+# NOVA CONTA A PAGAR
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def nova_conta_pagar(request):
+
+    fornecedores = Fornecedor.objects.filter(
+        ativo=True
+    ).order_by(
+        'nome'
+    )
+
+    if request.method == 'POST':
+
+        ContaPagar.objects.create(
+
+            fornecedor_id=request.POST.get(
+                'fornecedor'
+            ),
+
+            descricao=request.POST.get(
+                'descricao'
+            ),
+
+            valor=request.POST.get(
+                'valor'
+            ),
+
+            vencimento=request.POST.get(
+                'vencimento'
+            ),
+
+            status='PENDENTE'
+
+        )
+
+        messages.success(
+            request,
+            'Conta cadastrada com sucesso.'
+        )
+
+        return redirect(
+            'contas_pagar'
+        )
+
+    return render(
+
+        request,
+
+        'accounts/nova_conta_pagar.html',
+
+        {
+
+            'fornecedores': fornecedores
+
+        }
+
+    )
+
+# =========================================
+# PAGAR CONTA
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def pagar_conta(request, conta_id):
+
+    conta = get_object_or_404(
+        ContaPagar,
+        id=conta_id
+    )
+
+    conta.status = 'PAGO'
+
+    conta.data_pagamento = timezone.now().date()
+
+    conta.save()
+
+    messages.success(
+        request,
+        'Conta paga com sucesso.'
+    )
+
+    return redirect(
+        'contas_pagar'
     )
