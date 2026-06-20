@@ -3,7 +3,7 @@ from django.db import models
 from datetime import date
 
 from django.contrib.auth.models import User
-
+from django.conf import settings
 
 # =========================================
 # PACIENTES
@@ -2321,10 +2321,42 @@ class Produto(models.Model):
         auto_now=True
     )
 
+    class Meta:
+        ordering = ['nome']
+        verbose_name = 'Produto'
+        verbose_name_plural = 'Produtos'
+
     def __str__(self):
 
         return self.nome
-    
+
+    @property
+    def estoque_critico(self):
+
+        return self.estoque <= self.estoque_minimo
+
+    @staticmethod
+    def produtos_criticos():
+
+        return Produto.objects.filter(
+            estoque__lte=F('estoque_minimo'),
+            ativo=True
+        )
+
+    def entrada_estoque(self, quantidade):
+
+        self.estoque += quantidade
+        self.save()
+
+    def saida_estoque(self, quantidade):
+
+        if quantidade > self.estoque:
+            raise ValueError(
+                'Estoque insuficiente.'
+            )
+
+        self.estoque -= quantidade
+        self.save()    
 
 # =========================================
 # COMPRAS
@@ -2414,4 +2446,123 @@ class ItemCompra(models.Model):
         return (
             f'{self.produto.nome} '
             f'({self.quantidade})'
+        )
+    
+
+# =========================================
+# MOVIMENTAÇÃO DO ESTOQUE
+# =========================================
+
+class MovimentacaoEstoque(models.Model):
+
+    TIPO_CHOICES = [
+        ('COMPRA', 'Compra'),
+        ('ENTRADA', 'Entrada'),
+        ('SAIDA', 'Saída'),
+        ('AJUSTE', 'Ajuste'),
+    ]
+
+    produto = models.ForeignKey(
+        'Produto',
+        on_delete=models.PROTECT,
+        related_name='movimentacoes'
+    )
+
+    tipo = models.CharField(
+        max_length=20,
+        choices=TIPO_CHOICES
+    )
+
+    quantidade = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+
+    estoque_anterior = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0
+    )
+
+    estoque_atual = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0
+    )
+
+    observacao = models.TextField(
+        blank=True,
+        null=True
+    )
+
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+        related_name='movimentacoes_estoque'
+    )
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        verbose_name = 'Movimentação de Estoque'
+        verbose_name_plural = 'Movimentações de Estoque'
+        ordering = ['-criado_em']
+
+    def __str__(self):
+
+        return (
+            f'{self.produto.nome} - '
+            f'{self.tipo} - '
+            f'{self.quantidade}'
+        )
+    
+
+# =========================================
+# LOTES DE PRODUTOS
+# =========================================
+
+class LoteProduto(models.Model):
+
+    produto = models.ForeignKey(
+        Produto,
+        on_delete=models.CASCADE,
+        related_name='lotes'
+    )
+
+    lote = models.CharField(
+        max_length=50
+    )
+
+    quantidade = models.IntegerField(
+        default=0
+    )
+
+    validade = models.DateField()
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+
+        ordering = [
+
+            'validade'
+
+        ]
+
+        verbose_name = 'Lote'
+
+        verbose_name_plural = 'Lotes'
+
+    def __str__(self):
+
+        return (
+
+            f'{self.produto.nome} - '
+
+            f'{self.lote}'
+
         )

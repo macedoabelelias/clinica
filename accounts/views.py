@@ -56,7 +56,11 @@ from .models import (
     Exame,
     SolicitacaoExame,
     Fornecedor,
-    Produto
+    Produto,
+    Compra,
+    ItemCompra,
+    MovimentacaoEstoque,
+    LoteProduto
 )
 
 from .forms import (
@@ -74,6 +78,8 @@ from .permissions import perfil_required
 from django.contrib.auth import update_session_auth_hash
 from .models import Compra, ItemCompra
 from decimal import Decimal
+from .models import Produto
+from .models import Compra
 
 # =========================================
 # LOGIN
@@ -6244,5 +6250,392 @@ def estoque(request):
 
     )
 
+# =========================================
+# MOVIMENTAÇÕES DE ESTOQUE
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def movimentacoes_estoque(request):
+
+    movimentacoes = (
+        MovimentacaoEstoque.objects
+        .select_related(
+            'produto',
+            'usuario'
+        )
+        .order_by(
+            '-criado_em'
+        )
+    )
+
+    produtos = Produto.objects.filter(
+        ativo=True
+    ).order_by(
+        'nome'
+    )
+
+    produto_id = request.GET.get(
+        'produto'
+    )
+
+    tipo = request.GET.get(
+        'tipo'
+    )
+
+    data_inicial = request.GET.get(
+        'data_inicial'
+    )
+
+    data_final = request.GET.get(
+        'data_final'
+    )
+
+    if produto_id:
+
+        movimentacoes = movimentacoes.filter(
+            produto_id=produto_id
+        )
+
+    if tipo:
+
+        movimentacoes = movimentacoes.filter(
+            tipo=tipo
+        )
+
+    if data_inicial:
+
+        movimentacoes = movimentacoes.filter(
+            criado_em__date__gte=data_inicial
+        )
+
+    if data_final:
+
+        movimentacoes = movimentacoes.filter(
+            criado_em__date__lte=data_final
+        )
+
+    context = {
+
+        'movimentacoes': movimentacoes,
+
+        'produtos': produtos,
+
+        'produto_id': produto_id,
+
+        'tipo': tipo,
+
+        'data_inicial': data_inicial,
+
+        'data_final': data_final
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/movimentacoes_estoque.html',
+
+        context
+
+    )
+
+# =========================================
+# FUNÇÃO AUXILIAR
+# =========================================
+
+def registrar_movimentacao(
+    produto,
+    tipo,
+    quantidade,
+    usuario,
+    observacao=''
+):
+
+    estoque_anterior = produto.estoque
+
+    if tipo == 'SAIDA':
+
+        if quantidade > produto.estoque:
+
+            raise ValueError(
+                'Estoque insuficiente.'
+            )
+
+        produto.estoque -= quantidade
+
+    elif tipo in [
+
+        'COMPRA',
+        'ENTRADA'
+
+    ]:
+
+        produto.estoque += quantidade
+
+    elif tipo == 'AJUSTE':
+
+        produto.estoque = quantidade
+
+    produto.save()
+
+    MovimentacaoEstoque.objects.create(
+
+        produto=produto,
+
+        tipo=tipo,
+
+        quantidade=quantidade,
+
+        estoque_anterior=estoque_anterior,
+
+        estoque_atual=produto.estoque,
+
+        observacao=observacao,
+
+        usuario=usuario
+
+    )
 
 
+# =========================================
+# NOVA MOVIMENTAÇÃO DE ESTOQUE
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def nova_movimentacao_estoque(request):
+
+    produtos = Produto.objects.filter(
+        ativo=True
+    ).order_by(
+        'nome'
+    )
+
+    if request.method == 'POST':
+
+        produto = get_object_or_404(
+            Produto,
+            id=request.POST.get('produto')
+        )
+
+        tipo = request.POST.get(
+            'tipo'
+        )
+
+        quantidade = int(
+            request.POST.get(
+                'quantidade'
+            ) or 0
+        )
+
+        observacao = request.POST.get(
+            'observacao'
+        )
+
+        try:
+
+            registrar_movimentacao(
+                produto=produto,
+                tipo=tipo,
+                quantidade=quantidade,
+                usuario=request.user,
+                observacao=observacao
+            )
+
+            messages.success(
+                request,
+                'Movimentação registrada com sucesso.'
+            )
+
+            return redirect(
+                'movimentacoes_estoque'
+            )
+
+        except ValueError as erro:
+
+            messages.error(
+                request,
+                str(erro)
+            )
+
+    context = {
+
+        'produtos': produtos
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/movimentacao_form.html',
+
+        context
+
+    )
+
+
+# =========================================
+# PRODUTOS CRÍTICOS
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def produtos_criticos(request):
+
+    produtos = Produto.objects.filter(
+        ativo=True,
+        estoque__lte=F('estoque_minimo')
+    ).order_by(
+        'nome'
+    )
+
+    context = {
+
+        'produtos': produtos,
+
+        'total_produtos': produtos.count()
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/produtos_criticos.html',
+
+        context
+
+    )
+
+# =========================================
+# LOTES
+# =========================================
+
+from datetime import date, timedelta
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def lotes(request):
+
+    lotes = LoteProduto.objects.select_related(
+        'produto'
+    ).order_by(
+        'validade'
+    )
+
+    hoje = date.today()
+
+    for lote in lotes:
+
+        dias = (
+            lote.validade - hoje
+        ).days
+
+        if dias < 0:
+
+            lote.status_validade = 'VENCIDO'
+
+        elif dias <= 30:
+
+            lote.status_validade = '30_DIAS'
+
+        elif dias <= 60:
+
+            lote.status_validade = '60_DIAS'
+
+        else:
+
+            lote.status_validade = 'VALIDO'
+
+    context = {
+
+        'lotes': lotes,
+
+        'total_lotes': lotes.count()
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/lotes.html',
+
+        context
+
+    )
+
+# =========================================
+# NOVO LOTE
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def novo_lote(request):
+
+    produtos = Produto.objects.filter(
+        ativo=True
+    ).order_by(
+        'nome'
+    )
+
+    if request.method == 'POST':
+
+        LoteProduto.objects.create(
+
+            produto_id=request.POST.get(
+                'produto'
+            ),
+
+            lote=request.POST.get(
+                'lote'
+            ),
+
+            quantidade=request.POST.get(
+                'quantidade'
+            ) or 0,
+
+            validade=request.POST.get(
+                'validade'
+            )
+
+        )
+
+        messages.success(
+            request,
+            'Lote cadastrado com sucesso.'
+        )
+
+        return redirect(
+            'lotes'
+        )
+
+    return render(
+
+        request,
+
+        'accounts/lote_form.html',
+
+        {
+            'produtos': produtos
+        }
+
+    )

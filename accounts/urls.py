@@ -496,6 +496,18 @@ path(
 ),
 
 path(
+    'estoque/movimentacoes/',
+    views.movimentacoes_estoque,
+    name='movimentacoes_estoque'
+),
+
+path(
+    'estoque/movimentacoes/nova/',
+    views.nova_movimentacao_estoque,
+    name='nova_movimentacao_estoque'
+),
+
+path(
     'produtos/novo/',
     views.novo_produto,
     name='novo_produto'
@@ -517,6 +529,24 @@ path(
     'produtos/<int:produto_id>/excluir/',
     views.excluir_produto,
     name='excluir_produto'
+),
+
+path(
+    'estoque/produtos-criticos/',
+    views.produtos_criticos,
+    name='produtos_criticos'
+),
+
+path(
+    'lotes/',
+    views.lotes,
+    name='lotes'
+),
+
+path(
+    'lotes/novo/',
+    views.novo_lote,
+    name='novo_lote'
 ),
 
 # =========================================
@@ -552,6 +582,7 @@ path(
     views.excluir_compra,
     name='excluir_compra'
 ),
+
 
 
 ]
