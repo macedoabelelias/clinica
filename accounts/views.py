@@ -61,7 +61,9 @@ from .models import (
     ItemCompra,
     MovimentacaoEstoque,
     LoteProduto,
-    ContaPagar
+    ContaPagar,
+    ContaReceber,
+    Caixa
 )
 
 from .forms import (
@@ -81,6 +83,9 @@ from .models import Compra, ItemCompra
 from decimal import Decimal
 from .models import Produto
 from .models import Compra
+
+from django.db.models import Sum
+from django.db.models.functions import ExtractMonth
 
 # =========================================
 # LOGIN
@@ -136,11 +141,259 @@ def login_view(request):
 @login_required(login_url='/')
 def dashboard_view(request):
 
+    from decimal import Decimal
+
+    from django.db.models import Sum
+
+    from django.db.models.functions import ExtractMonth
+
+    from django.utils import timezone
+
+    hoje = timezone.now().date()
+
+    # =========================================
+    # PACIENTES
+    # =========================================
+
+    total_pacientes = Paciente.objects.filter(
+        ativo=True
+    ).count()
+
+    # =========================================
+    # FORNECEDORES
+    # =========================================
+
+    fornecedores_ativos = Fornecedor.objects.filter(
+        ativo=True
+    ).count()
+    
+
+    # =========================================
+    # CONTAS A RECEBER
+    # =========================================
+
+    receber_pendente = (
+
+        ContaReceber.objects.filter(
+            status='PENDENTE'
+        ).aggregate(
+            total=Sum('valor')
+        )['total']
+
+        or Decimal('0.00')
+
+    )
+
+    # =========================================
+    # CONTAS A PAGAR
+    # =========================================
+
+    pagar_pendente = (
+
+        ContaPagar.objects.filter(
+            status='PENDENTE'
+        ).aggregate(
+            total=Sum('valor')
+        )['total']
+
+        or Decimal('0.00')
+
+    )
+
+    # =========================================
+    # CAIXA
+    # =========================================
+
+    total_entradas = (
+
+        Caixa.objects.filter(
+            tipo='ENTRADA'
+        ).aggregate(
+            total=Sum('valor')
+        )['total']
+
+        or Decimal('0.00')
+
+    )
+
+    total_saidas = (
+
+        Caixa.objects.filter(
+            tipo='SAIDA'
+        ).aggregate(
+            total=Sum('valor')
+        )['total']
+
+        or Decimal('0.00')
+
+    )
+
+    saldo_caixa = total_entradas - total_saidas
+
+    # =========================================
+    # MOVIMENTAÇÃO HOJE
+    # =========================================
+
+    entradas_hoje = (
+
+        Caixa.objects.filter(
+            tipo='ENTRADA',
+            data=hoje
+        ).aggregate(
+            total=Sum('valor')
+        )['total']
+
+        or Decimal('0.00')
+
+    )
+
+    saidas_hoje = (
+
+        Caixa.objects.filter(
+            tipo='SAIDA',
+            data=hoje
+        ).aggregate(
+            total=Sum('valor')
+        )['total']
+
+        or Decimal('0.00')
+
+    )
+
+    lucro_hoje = entradas_hoje - saidas_hoje
+
+    # =========================================
+    # ÚLTIMAS MOVIMENTAÇÕES
+    # =========================================
+
+    ultimas_movimentacoes = Caixa.objects.order_by(
+        '-data',
+        '-id'
+    )[:10]
+
+    # =========================================
+    # GRÁFICO FINANCEIRO
+    # =========================================
+
+    meses = [
+
+        'Jan',
+        'Fev',
+        'Mar',
+        'Abr',
+        'Mai',
+        'Jun',
+        'Jul',
+        'Ago',
+        'Set',
+        'Out',
+        'Nov',
+        'Dez'
+
+    ]
+
+    entradas_mes = [0] * 12
+    saidas_mes = [0] * 12
+
+    entradas_grafico = (
+
+        Caixa.objects
+
+        .filter(
+            tipo='ENTRADA'
+        )
+
+        .annotate(
+            mes=ExtractMonth('data')
+        )
+
+        .values('mes')
+
+        .annotate(
+            total=Sum('valor')
+        )
+
+    )
+
+    for item in entradas_grafico:
+
+        entradas_mes[
+            item['mes'] - 1
+        ] = float(
+            item['total']
+        )
+
+    saidas_grafico = (
+
+        Caixa.objects
+
+        .filter(
+            tipo='SAIDA'
+        )
+
+        .annotate(
+            mes=ExtractMonth('data')
+        )
+
+        .values('mes')
+
+        .annotate(
+            total=Sum('valor')
+        )
+
+    )
+
+    for item in saidas_grafico:
+
+        saidas_mes[
+            item['mes'] - 1
+        ] = float(
+            item['total']
+        )
+
+    # =========================================
+    # CONTEXT
+    # =========================================
+
+    context = {
+
+        'total_pacientes': total_pacientes,
+
+        'fornecedores_ativos': fornecedores_ativos,
+
+        'receber_pendente': receber_pendente,
+
+        'pagar_pendente': pagar_pendente,
+
+        'saldo_caixa': saldo_caixa,
+
+        'total_entradas': total_entradas,
+
+        'total_saidas': total_saidas,
+
+        'entradas_hoje': entradas_hoje,
+
+        'saidas_hoje': saidas_hoje,
+
+        'lucro_hoje': lucro_hoje,
+
+        'ultimas_movimentacoes': ultimas_movimentacoes,
+
+        'meses': meses,
+
+        'entradas_mes': entradas_mes,
+
+        'saidas_mes': saidas_mes,
+
+    }
+
     return render(
 
         request,
 
-        'accounts/dashboard.html'
+        'accounts/dashboard.html',
+
+        context
 
     )
 
@@ -1739,6 +1992,65 @@ def orcamento(request, id):
         request,
         'accounts/orcamento.html',
         context
+    )
+
+# =========================================
+# APROVAR ORÇAMENTO
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def aprovar_orcamento(request, id):
+
+    orcamento = get_object_or_404(
+        Orcamento,
+        id=id
+    )
+
+    if orcamento.status == 'aprovado':
+
+        messages.warning(
+            request,
+            'Este orçamento já foi aprovado.'
+        )
+
+        return redirect(
+            'orcamento',
+            id=orcamento.paciente.id
+        )
+
+    # Aprova orçamento
+    orcamento.status = 'aprovado'
+    orcamento.save()
+
+    # Gera Conta a Receber
+    ContaReceber.objects.create(
+
+        paciente=orcamento.paciente,
+
+        orcamento=orcamento,
+
+        descricao=f'Orçamento #{orcamento.id}',
+
+        valor=orcamento.total,
+
+        vencimento=timezone.now().date(),
+
+        status='PENDENTE'
+
+    )
+
+    messages.success(
+        request,
+        'Orçamento aprovado e conta gerada com sucesso.'
+    )
+
+    return redirect(
+        'orcamento',
+        id=orcamento.paciente.id
     )
 
 
@@ -5827,6 +6139,10 @@ def nova_compra(request):
             'data_compra'
         )
 
+        vencimento = request.POST.get(
+            'vencimento'
+        )
+
         numero_nf = request.POST.get(
             'numero_nf'
         )
@@ -5904,6 +6220,7 @@ def nova_compra(request):
 
             )
 
+            # Atualiza estoque
             produto.estoque += quantidade
 
             produto.save()
@@ -5913,6 +6230,33 @@ def nova_compra(request):
         compra.valor_total = total_compra
 
         compra.save()
+
+        # =========================================
+        # GERA CONTA A PAGAR AUTOMÁTICA
+        # =========================================
+
+        ContaPagar.objects.create(
+
+            fornecedor=compra.fornecedor,
+
+            compra=compra,
+
+            descricao=(
+                f'Compra NF '
+                f'{compra.numero_nf or compra.id}'
+            ),
+
+            valor=compra.valor_total,
+
+            vencimento=vencimento,
+
+            observacao=(
+                compra.observacoes
+            ),
+
+            status='PENDENTE'
+
+        )
 
         messages.success(
 
@@ -6816,17 +7160,210 @@ def pagar_conta(request, conta_id):
         id=conta_id
     )
 
-    conta.status = 'PAGO'
+    if conta.status != 'PAGO':
 
-    conta.data_pagamento = timezone.now().date()
+        conta.status = 'PAGO'
 
-    conta.save()
+        conta.data_pagamento = timezone.now().date()
 
-    messages.success(
-        request,
-        'Conta paga com sucesso.'
-    )
+        conta.save()
+
+        # Lança saída no Caixa
+        Caixa.objects.create(
+
+            data=timezone.now().date(),
+
+            descricao=conta.descricao,
+
+            tipo='SAIDA',
+
+            valor=conta.valor,
+
+            conta_pagar=conta
+
+        )
+
+        messages.success(
+
+            request,
+
+            'Conta paga com sucesso.'
+
+        )
 
     return redirect(
         'contas_pagar'
+    )
+
+# =========================================
+# CONTAS A RECEBER
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def contas_receber(request):
+
+    hoje = timezone.now().date()
+
+    ContaReceber.objects.filter(
+        status='PENDENTE',
+        vencimento__lt=hoje
+    ).update(
+        status='VENCIDO'
+    )
+
+    contas = ContaReceber.objects.select_related(
+        'paciente'
+    ).order_by(
+        'vencimento'
+    )
+
+    contas_pendentes = contas.filter(
+        status='PENDENTE'
+    )
+
+    contas_recebidas = contas.filter(
+        status='RECEBIDO'
+    )
+
+    contas_vencidas = contas.filter(
+        status='VENCIDO'
+    )
+
+    context = {
+
+        'contas': contas,
+
+        'total_pendente': sum(
+            conta.valor
+            for conta in contas_pendentes
+        ),
+
+        'total_recebido': sum(
+            conta.valor
+            for conta in contas_recebidas
+        ),
+
+        'total_vencido': sum(
+            conta.valor
+            for conta in contas_vencidas
+        )
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/contas_receber.html',
+
+        context
+
+    )
+
+# =========================================
+# RECEBER CONTA
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def receber_conta(request, conta_id):
+
+    conta = get_object_or_404(
+
+        ContaReceber,
+
+        id=conta_id
+
+    )
+
+    if conta.status != 'RECEBIDO':
+
+        conta.status = 'RECEBIDO'
+
+        conta.data_recebimento = timezone.now().date()
+
+        conta.save()
+
+        Caixa.objects.create(
+
+            data=timezone.now().date(),
+
+            descricao=conta.descricao,
+
+            tipo='ENTRADA',
+
+            valor=conta.valor,
+
+            conta_receber=conta
+
+        )
+
+        messages.success(
+
+            request,
+
+            'Conta recebida com sucesso.'
+
+        )
+
+    return redirect(
+
+        'contas_receber'
+
+    )
+
+# =========================================
+# CAIXA
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def caixa(request):
+
+    movimentacoes = Caixa.objects.all()
+
+    total_entradas = sum(
+        item.valor
+        for item in movimentacoes
+        if item.tipo == 'ENTRADA'
+    )
+
+    total_saidas = sum(
+        item.valor
+        for item in movimentacoes
+        if item.tipo == 'SAIDA'
+    )
+
+    saldo = total_entradas - total_saidas
+
+    context = {
+
+        'movimentacoes': movimentacoes,
+
+        'total_entradas': total_entradas,
+
+        'total_saidas': total_saidas,
+
+        'saldo': saldo,
+
+    }
+
+    return render(
+
+        request,
+
+        'accounts/caixa.html',
+
+        context
+
     )

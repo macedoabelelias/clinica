@@ -2698,3 +2698,202 @@ class ContaPagar(models.Model):
             self.vencimento < date.today()
 
         )
+    
+
+# =========================================
+# CONTAS A RECEBER
+# =========================================
+
+class ContaReceber(models.Model):
+
+    STATUS_CHOICES = [
+
+        ('PENDENTE', 'Pendente'),
+
+        ('RECEBIDO', 'Recebido'),
+
+        ('VENCIDO', 'Vencido')
+
+    ]
+
+    paciente = models.ForeignKey(
+
+        Paciente,
+
+        on_delete=models.PROTECT,
+
+        related_name='contas_receber'
+
+    )
+
+    orcamento = models.ForeignKey(
+
+        Orcamento,
+
+        on_delete=models.SET_NULL,
+
+        blank=True,
+
+        null=True,
+
+        related_name='contas_receber'
+
+    )
+
+    descricao = models.CharField(
+
+        max_length=255
+
+    )
+
+    valor = models.DecimalField(
+
+        max_digits=12,
+
+        decimal_places=2
+
+    )
+
+    vencimento = models.DateField()
+
+    data_recebimento = models.DateField(
+
+        blank=True,
+
+        null=True
+
+    )
+
+    status = models.CharField(
+
+        max_length=20,
+
+        choices=STATUS_CHOICES,
+
+        default='PENDENTE'
+
+    )
+
+    observacao = models.TextField(
+
+        blank=True,
+
+        null=True
+
+    )
+
+    criado_em = models.DateTimeField(
+
+        auto_now_add=True
+
+    )
+
+    atualizado_em = models.DateTimeField(
+
+        auto_now=True
+
+    )
+
+    class Meta:
+
+        ordering = [
+
+            'vencimento'
+
+        ]
+
+        verbose_name = 'Conta a Receber'
+
+        verbose_name_plural = 'Contas a Receber'
+
+    def __str__(self):
+
+        return (
+
+            f'{self.paciente.nome} - '
+
+            f'R$ {self.valor}'
+
+        )
+    
+
+# =========================================
+# CAIXA
+# =========================================
+
+class Caixa(models.Model):
+
+    TIPO_CHOICES = [
+
+        ('ENTRADA', 'Entrada'),
+
+        ('SAIDA', 'Saída')
+
+    ]
+
+    data = models.DateField()
+
+    descricao = models.CharField(
+        max_length=255
+    )
+
+    tipo = models.CharField(
+        max_length=10,
+        choices=TIPO_CHOICES
+    )
+
+    valor = models.DecimalField(
+        max_digits=12,
+        decimal_places=2
+    )
+
+    conta_pagar = models.ForeignKey(
+
+        'ContaPagar',
+
+        on_delete=models.SET_NULL,
+
+        null=True,
+
+        blank=True
+
+    )
+
+    conta_receber = models.ForeignKey(
+
+        'ContaReceber',
+
+        on_delete=models.SET_NULL,
+
+        null=True,
+
+        blank=True
+
+    )
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+
+        ordering = [
+
+            '-data',
+            '-id'
+
+        ]
+
+        verbose_name = 'Caixa'
+
+        verbose_name_plural = 'Caixa'
+
+    def __str__(self):
+
+        return (
+
+            f'{self.data} - '
+
+            f'{self.descricao}'
+
+        )

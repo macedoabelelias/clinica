@@ -605,6 +605,34 @@ path(
     name='pagar_conta'
 ),
 
+# =========================================
+# CONTAS A RECEBER
+# =========================================
+
+path(
+    'financeiro/contas-receber/',
+    views.contas_receber,
+    name='contas_receber'
+),
+
+path(
+    'orcamento/<int:id>/aprovar/',
+    views.aprovar_orcamento,
+    name='aprovar_orcamento'
+),
+
+path(
+    'financeiro/contas-receber/<int:conta_id>/receber/',
+    views.receber_conta,
+    name='receber_conta'
+),
+
+path(
+    'financeiro/caixa/',
+    views.caixa,
+    name='caixa'
+),
+
 ]
 
 

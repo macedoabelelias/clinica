@@ -24,153 +24,204 @@
 
             <form method="POST" enctype="multipart/form-data">
 
-                {% csrf_token %}
+    {% csrf_token %}
 
-                <!-- DADOS DA COMPRA -->
+    <!-- DADOS DA COMPRA -->
 
-                <div class="row">
+    <div class="row">
 
-                    <div class="col-md-6 mb-3">
+        <div class="col-md-4 mb-3">
 
-                        <label class="form-label">
+            <label class="form-label">
 
-                            Fornecedor
+                Fornecedor
 
-                        </label>
+            </label>
 
-                        <select name="fornecedor" class="form-control" required>
+            <select
+                name="fornecedor"
+                class="form-select"
+                required
+            >
 
-                            <option value="">
+                <option value="">
 
-                                Selecione
+                    Selecione
 
-                            </option>
+                </option>
 
-                            {% for fornecedor in fornecedores %}
+                {% for fornecedor in fornecedores %}
 
-                            <option value="{{ fornecedor.id }}">
+                <option value="{{ fornecedor.id }}">
 
-                                {{ fornecedor.nome }}
+                    {{ fornecedor.nome }}
 
-                            </option>
+                </option>
 
-                            {% endfor %}
+                {% endfor %}
 
-                        </select>
+            </select>
 
-                    </div>
+        </div>
 
-                    <div class="col-md-3 mb-3">
+        <div class="col-md-2 mb-3">
 
-                        <label class="form-label">
+            <label class="form-label">
 
-                            Data da Compra
+                Data da Compra
 
-                        </label>
+            </label>
 
-                        <input type="date" name="data_compra" class="form-control" required>
+            <input
+                type="date"
+                name="data_compra"
+                class="form-control"
+                required
+            >
 
-                    </div>
+        </div>
 
-                    <div class="col-md-3 mb-3">
+        <div class="col-md-3 mb-3">
 
-                        <label class="form-label">
+            <label class="form-label">
 
-                            Número da NF
+                Vencimento
 
-                        </label>
+            </label>
 
-                        <input type="text" name="numero_nf" class="form-control">
+            <input
+                type="date"
+                name="vencimento"
+                class="form-control"
+                required
+            >
 
-                    </div>
+        </div>
 
-                </div>
+        <div class="col-md-3 mb-3">
 
-                <div class="row">
+            <label class="form-label">
 
-                    <div class="col-md-6 mb-3">
+                Número da NF
 
-                        <label class="form-label">
+            </label>
 
-                            Arquivo da NF
+            <input
+                type="text"
+                name="numero_nf"
+                class="form-control"
+            >
 
-                        </label>
+        </div>
 
-                        <input type="file" name="arquivo_nf" class="form-control">
+    </div>
 
-                        <small class="text-muted">
+    <div class="row">
 
-                            PDF ou XML da nota fiscal
+        <div class="col-md-6 mb-3">
 
-                        </small>
+            <label class="form-label">
 
-                    </div>
+                Arquivo da NF
 
-                </div>
+            </label>
 
-                <hr>
+            <input
+                type="file"
+                name="arquivo_nf"
+                class="form-control"
+            >
 
-                <!-- PRODUTOS DA COMPRA -->
+            <small class="text-muted">
 
-                <h5 class="mb-3">
+                PDF ou XML da nota fiscal
 
-                    <i class="fa-solid fa-cart-shopping"></i>
+            </small>
 
-                    Produtos da Compra
+        </div>
 
-                </h5>
+        <div class="col-md-6 mb-3">
 
-                <!-- ITENS DA COMPRA -->
+            <label class="form-label">
 
-<div class="mb-3">
+                Observações
 
-    <button
-        type="button"
-        class="btn btn-success"
-        onclick="adicionarItem()">
+            </label>
 
-        <i class="fa-solid fa-plus"></i>
+            <textarea
+                name="observacoes"
+                class="form-control"
+                rows="3"
+            ></textarea>
 
-        Adicionar Produto
+        </div>
 
-    </button>
+    </div>
 
-</div>
+    <hr>
 
-<div class="table-responsive">
+    <!-- PRODUTOS DA COMPRA -->
 
-    <table class="table table-bordered">
+    <h5 class="mb-3">
 
-        <thead>
+        <i class="fa-solid fa-cart-shopping"></i>
 
-            <tr>
+        Produtos da Compra
 
-                <th>Produto</th>
+    </h5>
 
-                <th width="120">
-                    Quantidade
-                </th>
+    <!-- ITENS DA COMPRA -->
 
-                <th width="180">
-                    Valor Unitário
-                </th>
+    <div class="mb-3">
 
-                <th width="180">
-                    Subtotal
-                </th>
+        <button
+            type="button"
+            class="btn btn-success"
+            onclick="adicionarItem()"
+        >
 
-                <th width="80">
-                </th>
+            <i class="fa-solid fa-plus"></i>
 
-            </tr>
+            Adicionar Produto
 
-        </thead>
+        </button>
 
-        <tbody id="itens-compra">
+    </div>
 
-        </tbody>
+    <div class="table-responsive">
 
-    </table>
+        <table class="table table-bordered">
+
+            <thead>
+
+                <tr>
+
+                    <th>Produto</th>
+
+                    <th width="120">
+                        Quantidade
+                    </th>
+
+                    <th width="180">
+                        Valor Unitário
+                    </th>
+
+                    <th width="180">
+                        Subtotal
+                    </th>
+
+                    <th width="80">
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="itens-compra">
+
+            </tbody>
+
+        </table>
 
 </div>
 
