@@ -1062,6 +1062,7 @@ class Orcamento(models.Model):
 
         ('rascunho', 'Rascunho'),
         ('aprovado', 'Aprovado'),
+        ('em_execucao', 'Em Execução'),
         ('finalizado', 'Finalizado'),
         ('cancelado', 'Cancelado'),
 
@@ -1089,6 +1090,44 @@ class Orcamento(models.Model):
 
         default=0
 
+    )
+
+    # =========================================
+    # ENTRADA
+    # =========================================
+
+    entrada = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0
+    )
+
+    # =========================================
+    # PARCELAS
+    # =========================================
+
+    parcelas = models.IntegerField(
+        default=1
+    )
+
+    # =========================================
+    # FORMA PAGAMENTO
+    # =========================================
+
+    FORMA_PAGAMENTO = (
+
+        ('dinheiro', 'Dinheiro'),
+        ('pix', 'PIX'),
+        ('debito', 'Cartão Débito'),
+        ('credito', 'Cartão Crédito'),
+        ('boleto', 'Boleto'),
+
+    )
+
+    forma_pagamento = models.CharField(
+        max_length=20,
+        choices=FORMA_PAGAMENTO,
+        default='pix'
     )
 
     # =========================================
@@ -2754,6 +2793,22 @@ class ContaReceber(models.Model):
 
     )
 
+    # =========================================
+    # PARCELAMENTO
+    # =========================================
+
+    parcela = models.IntegerField(
+
+        default=1
+
+    )
+
+    total_parcelas = models.IntegerField(
+
+        default=1
+
+    )
+
     vencimento = models.DateField()
 
     data_recebimento = models.DateField(
@@ -2812,10 +2867,11 @@ class ContaReceber(models.Model):
 
             f'{self.paciente.nome} - '
 
+            f'Parcela {self.parcela}/{self.total_parcelas} - '
+
             f'R$ {self.valor}'
 
-        )
-    
+        )    
 
 # =========================================
 # CAIXA

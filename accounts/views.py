@@ -87,6 +87,9 @@ from .models import Compra
 from django.db.models import Sum
 from django.db.models.functions import ExtractMonth
 
+from agenda.models import Profissional
+from agenda.models import Agendamento
+
 # =========================================
 # LOGIN
 # =========================================
@@ -139,7 +142,7 @@ def login_view(request):
 # =========================================
 
 @login_required(login_url='/')
-def dashboard_view(request):
+def dashboard_view(request):    
 
     from decimal import Decimal
 
@@ -276,80 +279,59 @@ def dashboard_view(request):
     # =========================================
 
     meses = [
-
-        'Jan',
-        'Fev',
-        'Mar',
-        'Abr',
-        'Mai',
-        'Jun',
-        'Jul',
-        'Ago',
-        'Set',
-        'Out',
-        'Nov',
-        'Dez'
-
+        'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+        'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
     ]
 
     entradas_mes = [0] * 12
     saidas_mes = [0] * 12
 
     entradas_grafico = (
-
         Caixa.objects
-
-        .filter(
-            tipo='ENTRADA'
-        )
-
-        .annotate(
-            mes=ExtractMonth('data')
-        )
-
+        .filter(tipo='ENTRADA')
+        .annotate(mes=ExtractMonth('data'))
         .values('mes')
-
-        .annotate(
-            total=Sum('valor')
-        )
-
+        .annotate(total=Sum('valor'))
     )
 
     for item in entradas_grafico:
 
-        entradas_mes[
-            item['mes'] - 1
-        ] = float(
-            item['total']
-        )
+        if item['mes']:
+
+            entradas_mes[item['mes'] - 1] = float(item['total'])
 
     saidas_grafico = (
-
         Caixa.objects
-
-        .filter(
-            tipo='SAIDA'
-        )
-
-        .annotate(
-            mes=ExtractMonth('data')
-        )
-
+        .filter(tipo='SAIDA')
+        .annotate(mes=ExtractMonth('data'))
         .values('mes')
-
-        .annotate(
-            total=Sum('valor')
-        )
-
+        .annotate(total=Sum('valor'))
     )
 
     for item in saidas_grafico:
 
-        saidas_mes[
-            item['mes'] - 1
-        ] = float(
-            item['total']
-        )
+        if item['mes']:
+
+            saidas_mes[item['mes'] - 1] = float(item['total'])
+
+    # =========================================
+    # PRÓXIMAS CONSULTAS
+    # =========================================
+
+    proximas_consultas = Agendamento.objects.filter(
+        status__in=[
+            'agendado',
+            'confirmado',
+            'atendimento'
+        ],
+        data__gte=hoje
+    ).select_related(
+        'paciente',
+        'procedimento'
+    ).order_by(
+        'data',
+        'hora_inicio'
+    )[:5]
 
     # =========================================
     # CONTEXT
@@ -358,43 +340,35 @@ def dashboard_view(request):
     context = {
 
         'total_pacientes': total_pacientes,
-
         'fornecedores_ativos': fornecedores_ativos,
 
         'receber_pendente': receber_pendente,
-
         'pagar_pendente': pagar_pendente,
 
         'saldo_caixa': saldo_caixa,
 
         'total_entradas': total_entradas,
-
         'total_saidas': total_saidas,
 
         'entradas_hoje': entradas_hoje,
-
         'saidas_hoje': saidas_hoje,
 
         'lucro_hoje': lucro_hoje,
 
         'ultimas_movimentacoes': ultimas_movimentacoes,
 
+        'proximas_consultas': proximas_consultas,
+
         'meses': meses,
-
         'entradas_mes': entradas_mes,
-
         'saidas_mes': saidas_mes,
 
     }
 
     return render(
-
         request,
-
         'accounts/dashboard.html',
-
         context
-
     )
 
 # =========================================
@@ -564,9 +538,16 @@ def novo_paciente(request):
 
     if request.method == 'POST':
 
+        dentista_id = request.POST.get('dentista')
+
+        dentista = None
+
+        if dentista_id:
+            dentista = User.objects.get(id=dentista_id)
+
         paciente = Paciente.objects.create(
 
-            dentista=request.user,
+            dentista=dentista,
 
             foto=request.FILES.get('foto'),
 
@@ -620,6 +601,17 @@ def novo_paciente(request):
         ativo=True
     ).order_by('nome')
 
+    # =========================================
+    # DENTISTAS
+    # =========================================
+
+    from agenda.models import Profissional
+
+    dentistas = User.objects.filter(
+        perfil__tipo_usuario='dentista',
+        perfil__ativo=True
+    ).order_by('first_name')
+
     return render(
 
         request,
@@ -628,6 +620,7 @@ def novo_paciente(request):
 
         {
             'convenios': convenios,
+            'dentistas': dentistas,
             'modo': 'novo'
         }
 
@@ -1933,38 +1926,117 @@ def orcamento(request, id):
     )
 
     # =========================================
-    # ADICIONAR ITEM
+    # FORMULÁRIO PADRÃO
+    # =========================================
+
+    item_form = ItemOrcamentoForm()
+
+    # =========================================
+    # ADICIONAR ITEM / SALVAR FINANCEIRO
     # =========================================
 
     if request.method == 'POST':
+
+       # =========================================
+        # SALVAR DADOS FINANCEIROS
+        # =========================================
+
+        if 'salvar_financeiro' in request.POST:
+
+            print(request.POST)
+
+            entrada = request.POST.get(
+                'entrada',
+                '0'
+            )
+
+            # só converte vírgula para ponto
+            entrada = entrada.replace(',', '.')
+
+            parcelas = request.POST.get(
+                'parcelas',
+                '1'
+            )
+
+            forma_pagamento = request.POST.get(
+                'forma_pagamento',
+                'pix'
+            )
+
+            print('ENTRADA:', entrada)
+            print('PARCELAS:', parcelas)
+            print('FORMA:', forma_pagamento)
+
+            try:
+
+                orcamento.entrada = Decimal(
+                    entrada or '0'
+                )
+
+                orcamento.parcelas = int(
+                    parcelas or 1
+                )
+
+                orcamento.forma_pagamento = (
+                    forma_pagamento
+                )
+
+                orcamento.save()
+
+                # Recarrega do banco
+                orcamento.refresh_from_db()
+
+                print('SALVO NO BANCO ->')
+                print('ENTRADA:', orcamento.entrada)
+                print('PARCELAS:', orcamento.parcelas)
+                print('FORMA:', orcamento.forma_pagamento)
+
+                messages.success(
+                    request,
+                    'Dados financeiros salvos com sucesso.'
+                )
+
+            except Exception as erro:
+
+                print('ERRO AO SALVAR:', erro)
+
+                messages.error(
+                    request,
+                    f'Erro ao salvar: {erro}'
+                )
+
+            return redirect(
+                'orcamento',
+                id=paciente.id
+            )
+
+        # =========================================
+        # ADICIONAR PROCEDIMENTO
+        # =========================================
 
         item_form = ItemOrcamentoForm(request.POST)
 
         if item_form.is_valid():
 
-            item = item_form.save(commit=False)
-
-            # ORÇAMENTO
+            item = item_form.save(
+                commit=False
+            )
 
             item.orcamento = orcamento
 
-            # DENTE
+            item.dente = request.POST.get(
+                'dente'
+            )
 
-            item.dente = request.POST.get('dente')
-
-            # FACE
-
-            item.face = request.POST.get('face')
-
-            # STATUS
+            item.face = request.POST.get(
+                'face'
+            )
 
             item.status = 'planejado'
 
-            # VALOR
-
-            item.valor_unitario = item.procedimento.valor_particular
-
-            # SALVAR
+            item.valor_unitario = (
+                item.procedimento.valor_particular
+            )
 
             item.save()
 
@@ -1972,9 +2044,45 @@ def orcamento(request, id):
                 'orcamento',
                 id=paciente.id
             )
-    else:
 
-        item_form = ItemOrcamentoForm()
+        # =========================================
+        # ADICIONAR PROCEDIMENTO
+        # =========================================
+
+        item_form = ItemOrcamentoForm(request.POST)
+
+        if item_form.is_valid():
+
+            item = item_form.save(
+                commit=False
+            )
+
+            item.orcamento = orcamento
+
+            item.dente = request.POST.get(
+                'dente'
+            )
+
+            item.face = request.POST.get(
+                'face'
+            )
+
+            item.status = 'planejado'
+
+            item.valor_unitario = (
+                item.procedimento.valor_particular
+            )
+
+            item.save()
+
+            return redirect(
+                'orcamento',
+                id=paciente.id
+            )
+
+        else:
+
+            item_form = ItemOrcamentoForm()
 
     # =========================================
     # CONTEXT
@@ -2010,6 +2118,20 @@ def aprovar_orcamento(request, id):
         id=id
     )
 
+    if ContaReceber.objects.filter(
+        orcamento=orcamento
+    ).exists():
+
+        messages.warning(
+            request,
+            'Já existem parcelas geradas para este orçamento.'
+        )
+
+        return redirect(
+            'orcamento',
+            id=orcamento.paciente.id
+        )
+
     if orcamento.status == 'aprovado':
 
         messages.warning(
@@ -2022,30 +2144,100 @@ def aprovar_orcamento(request, id):
             id=orcamento.paciente.id
         )
 
-    # Aprova orçamento
+    # =========================================
+    # APROVA ORÇAMENTO
+    # =========================================
+
     orcamento.status = 'aprovado'
     orcamento.save()
 
-    # Gera Conta a Receber
-    ContaReceber.objects.create(
+    # =========================================
+    # VALORES
+    # =========================================
 
-        paciente=orcamento.paciente,
+    valor_entrada = orcamento.entrada or 0
 
-        orcamento=orcamento,
-
-        descricao=f'Orçamento #{orcamento.id}',
-
-        valor=orcamento.total,
-
-        vencimento=timezone.now().date(),
-
-        status='PENDENTE'
-
+    quantidade_parcelas = max(
+        1,
+        orcamento.parcelas
     )
+
+    saldo = (
+        orcamento.total -
+        valor_entrada
+    )
+
+    valor_parcela = (
+        saldo /
+        quantidade_parcelas
+    )
+
+    # =========================================
+    # ENTRADA
+    # =========================================
+
+    if valor_entrada > 0:
+
+        ContaReceber.objects.create(
+
+            paciente=orcamento.paciente,
+
+            orcamento=orcamento,
+
+            descricao=(
+                f'Entrada - Orçamento #{orcamento.id}'
+            ),
+
+            valor=valor_entrada,
+
+            parcela=0,
+
+            total_parcelas=quantidade_parcelas,
+
+            vencimento=timezone.now().date(),
+
+            status='PENDENTE'
+
+        )
+
+    # =========================================
+    # PARCELAS
+    # =========================================
+
+    for numero in range(
+        1,
+        quantidade_parcelas + 1
+    ):
+
+        ContaReceber.objects.create(
+
+            paciente=orcamento.paciente,
+
+            orcamento=orcamento,
+
+            descricao=(
+                f'Orçamento #{orcamento.id}'
+            ),
+
+            valor=valor_parcela,
+
+            parcela=numero,
+
+            total_parcelas=quantidade_parcelas,
+
+            vencimento=(
+                timezone.now().date()
+                +
+                timedelta(days=30 * numero)
+            ),
+
+            status='PENDENTE'
+
+        )
 
     messages.success(
         request,
-        'Orçamento aprovado e conta gerada com sucesso.'
+        'Orçamento aprovado e parcelas geradas com sucesso.'
     )
 
     return redirect(
@@ -2053,6 +2245,46 @@ def aprovar_orcamento(request, id):
         id=orcamento.paciente.id
     )
 
+# =========================================
+# EXCLUIR ORÇAMENTO
+# =========================================
+
+@login_required
+@perfil_required(
+    'admin',
+    'secretaria'
+)
+def excluir_orcamento(request, id):
+
+    orcamento = get_object_or_404(
+        Orcamento,
+        id=id
+    )
+
+    # Exclui contas financeiras geradas
+    ContaReceber.objects.filter(
+        orcamento=orcamento
+    ).delete()
+
+    # Exclui itens
+    ItemOrcamento.objects.filter(
+        orcamento=orcamento
+    ).delete()
+
+    paciente_id = orcamento.paciente.id
+
+    # Exclui orçamento
+    orcamento.delete()
+
+    messages.success(
+        request,
+        'Orçamento excluído com sucesso.'
+    )
+
+    return redirect(
+        'perfil_paciente',
+        id=paciente_id
+    )
 
 # =========================================
 # CONVÊNIOS
@@ -5121,37 +5353,60 @@ def novo_usuario(request):
             first_name=nome
         )
 
-        PerfilUsuario.objects.create(
+        perfil = PerfilUsuario.objects.create(
+
+        usuario=usuario,
+
+        tipo_usuario=request.POST.get('tipo_usuario'),
+
+        foto=request.FILES.get('foto'),
+        cpf=request.POST.get('cpf'),
+        rg=request.POST.get('rg'),
+        data_nascimento=request.POST.get('data_nascimento') or None,
+        sexo=request.POST.get('sexo'),
+
+        telefone=request.POST.get('telefone'),
+        celular=request.POST.get('celular'),
+
+        cep=request.POST.get('cep'),
+        logradouro=request.POST.get('logradouro'),
+        numero=request.POST.get('numero'),
+        complemento=request.POST.get('complemento'),
+        bairro=request.POST.get('bairro'),
+        cidade=request.POST.get('cidade'),
+        uf=request.POST.get('uf'),
+
+        cro=request.POST.get('cro'),
+        cro_uf=request.POST.get('cro_uf'),
+        especialidade=request.POST.get('especialidade'),
+        assinatura=request.FILES.get('assinatura')
+    )
+
+    # =========================================
+    # CRIAR PROFISSIONAL AUTOMATICAMENTE
+    # =========================================
+
+    if perfil.tipo_usuario in [
+
+        PerfilUsuario.DENTISTA,
+        PerfilUsuario.ACD,
+
+    ]:
+
+        Profissional.objects.get_or_create(
+
             usuario=usuario,
 
-            # Perfil
-            tipo_usuario=request.POST.get('tipo_usuario'),
+            defaults={
 
-            # Dados pessoais
-            foto=request.FILES.get('foto'),
-            cpf=request.POST.get('cpf'),
-            rg=request.POST.get('rg'),
-            data_nascimento=request.POST.get('data_nascimento') or None,
-            sexo=request.POST.get('sexo'),
+                'nome': nome,
+                'email': email,
+                'telefone': request.POST.get('celular'),
+                'especialidade': request.POST.get('especialidade'),
+                'ativo': True,
 
-            # Contato
-            telefone=request.POST.get('telefone'),
-            celular=request.POST.get('celular'),
+            }
 
-            # Endereço
-            cep=request.POST.get('cep'),
-            logradouro=request.POST.get('logradouro'),
-            numero=request.POST.get('numero'),
-            complemento=request.POST.get('complemento'),
-            bairro=request.POST.get('bairro'),
-            cidade=request.POST.get('cidade'),
-            uf=request.POST.get('uf'),
-
-            # Dados profissionais
-            cro=request.POST.get('cro'),
-            cro_uf=request.POST.get('cro_uf'),
-            especialidade=request.POST.get('especialidade'),
-            assinatura=request.FILES.get('assinatura')
         )
 
         messages.success(
@@ -5247,6 +5502,24 @@ def alterar_status_usuario(request, id):
 
     perfil.save()
 
+    # =========================================
+    # SINCRONIZAR PROFISSIONAL
+    # =========================================
+
+    try:
+
+        profissional = Profissional.objects.get(
+            usuario=usuario
+        )
+
+        profissional.ativo = perfil.ativo
+
+        profissional.save()
+
+    except Profissional.DoesNotExist:
+
+        pass
+
     messages.success(
         request,
         'Status atualizado com sucesso.'
@@ -5331,12 +5604,51 @@ def meu_perfil(request):
 
         perfil.save()
 
-        messages.success(
-            request,
-            'Perfil atualizado com sucesso.'
-        )
+        # =========================================
+        # SINCRONIZAR PROFISSIONAL
+        # =========================================
 
-        return redirect('meu_perfil')
+        if perfil.tipo_usuario in [
+
+            PerfilUsuario.DENTISTA,
+            PerfilUsuario.ACD,
+
+        ]:
+
+            profissional, criado = Profissional.objects.get_or_create(
+
+                usuario=usuario,
+
+                defaults={
+
+                    'nome': usuario.first_name,
+                    'email': usuario.email,
+                    'telefone': perfil.celular or perfil.telefone,
+                    'especialidade': perfil.especialidade,
+                    'ativo': perfil.ativo,
+
+                }
+
+            )
+
+            profissional.nome = usuario.first_name
+            profissional.email = usuario.email
+            profissional.telefone = (
+                perfil.celular or perfil.telefone
+            )
+            profissional.especialidade = (
+                perfil.especialidade
+            )
+            profissional.ativo = perfil.ativo
+
+            profissional.save()
+
+            messages.success(
+                request,
+                'Perfil atualizado com sucesso.'
+            )
+
+            return redirect('meu_perfil')
 
     context = {
 
@@ -7367,3 +7679,85 @@ def caixa(request):
         context
 
     )
+
+# =========================================
+# CENTRAL ORÇAMENTO
+# =========================================
+
+def central_orcamentos(request):
+
+    status = request.GET.get('status')
+
+    orcamentos = Orcamento.objects.all()
+
+    if status:
+        orcamentos = orcamentos.filter(status=status)
+
+    total_orcamentos = Orcamento.objects.count()
+
+    valor_total = 0
+    valor_aprovado = 0
+
+    for orcamento in Orcamento.objects.all():
+
+        valor_total += orcamento.total
+
+        if orcamento.status == 'aprovado':
+            valor_aprovado += orcamento.total
+
+    percentual_conversao = 0
+
+    if valor_total > 0:
+
+        percentual_conversao = round(
+            (valor_aprovado / valor_total) * 100,
+            1
+        )
+
+    rascunhos = Orcamento.objects.filter(
+        status='rascunho'
+    ).count()
+
+    aprovados = Orcamento.objects.filter(
+        status='aprovado'
+    ).count()
+
+    finalizados = Orcamento.objects.filter(
+        status='finalizado'
+    ).count()
+
+    cancelados = Orcamento.objects.filter(
+        status='cancelado'
+    ).count()
+
+    context = {
+
+        'orcamentos': orcamentos,
+
+        'status': status,
+
+        'total_orcamentos': total_orcamentos,
+
+        'valor_total': valor_total,
+
+        'valor_aprovado': valor_aprovado,
+
+        'percentual_conversao': percentual_conversao,
+
+        'rascunhos': rascunhos,
+
+        'aprovados': aprovados,
+
+        'finalizados': finalizados,
+
+        'cancelados': cancelados,
+
+    }
+
+    return render(
+        request,
+        'accounts/central_orcamentos.html',
+        context
+    )
+
+

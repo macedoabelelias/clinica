@@ -346,47 +346,57 @@ MOVIMENTAÇÃO HOJE
 
     <!-- CONSULTAS -->
 
-    <div class="appointments-card">
+<div class="appointments-card">
 
-        <div class="card-header">
+    <div class="card-header">
 
-            <h5>
+        <h5>
 
-                Próximas consultas
+            Próximas consultas
 
-            </h5>
+        </h5>
+
+    </div>
+
+    {% for consulta in proximas_consultas %}
+
+    <div class="appointment-item">
+
+        <div>
+
+            <strong>
+
+                {{ consulta.hora_inicio|time:"H:i" }}
+
+            </strong>
 
         </div>
 
-        <!-- ITEM -->
+        <div>
 
-        <div class="appointment-item">
+            <h6>
 
-            <div>
+                {{ consulta.paciente.nome }}
 
-                <strong>
+            </h6>
 
-                    08:00
+            <p>
 
-                </strong>
+                {% if consulta.procedimento %}
 
-            </div>
+                    {{ consulta.procedimento.nome }}
 
-            <div>
+                {% else %}
 
-                <h6>
+                    Consulta
 
-                    João Silva
+                {% endif %}
 
-                </h6>
+            </p>
 
-                <p>
+        </div>
 
-                    Limpeza Dental
-
-                </p>
-
-            </div>
+        {% if consulta.status == 'confirmado' %}
 
             <span class="badge-confirmed">
 
@@ -394,85 +404,45 @@ MOVIMENTAÇÃO HOJE
 
             </span>
 
-        </div>
-
-        <!-- ITEM -->
-
-        <div class="appointment-item">
-
-            <div>
-
-                <strong>
-
-                    09:30
-
-                </strong>
-
-            </div>
-
-            <div>
-
-                <h6>
-
-                    Maria Oliveira
-
-                </h6>
-
-                <p>
-
-                    Clareamento
-
-                </p>
-
-            </div>
-
-            <span class="badge-confirmed">
-
-                Confirmada
-
-            </span>
-
-        </div>
-
-        <!-- ITEM -->
-
-        <div class="appointment-item">
-
-            <div>
-
-                <strong>
-
-                    11:00
-
-                </strong>
-
-            </div>
-
-            <div>
-
-                <h6>
-
-                    Pedro Santos
-
-                </h6>
-
-                <p>
-
-                    Avaliação
-
-                </p>
-
-            </div>
+        {% elif consulta.status == 'agendado' %}
 
             <span class="badge-pending">
 
-                Pendente
+                Agendada
 
             </span>
+
+        {% elif consulta.status == 'atendimento' %}
+
+            <span class="badge-confirmed">
+
+                Em Atendimento
+
+            </span>
+
+        {% endif %}
+
+    </div>
+
+    {% empty %}
+
+    <div class="appointment-item">
+
+        <div>
+
+            <strong>
+
+                Nenhuma consulta encontrada
+
+            </strong>
 
         </div>
 
     </div>
+
+    {% endfor %}
+
+</div>
 
 </div>
 

@@ -100,6 +100,26 @@ Perfil do Paciente | AM Systems
 
                     </div>
 
+                    <div style="
+                        font-size:13px;
+                        color:#64748b;
+                        margin-bottom:2px;
+                    ">
+
+                        Dentista:
+
+                        <strong>
+
+                            {% if paciente.dentista %}
+                                {{ paciente.dentista.get_full_name|default:paciente.dentista.username }}
+                            {% else %}
+                                Não definido
+                            {% endif %}
+
+                        </strong>
+
+                    </div>
+
                     <div>
 
                         {% if paciente.ativo %}

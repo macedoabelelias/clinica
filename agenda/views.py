@@ -10,7 +10,7 @@ from django.shortcuts import (
 from django.http import JsonResponse
 from django.urls import reverse
 
-from .models import Agendamento
+from .models import Agendamento, Profissional
 from .forms import AgendamentoForm
 
 from accounts.models import Paciente
@@ -18,6 +18,13 @@ from accounts.models import Paciente
 from urllib.parse import quote_plus
 
 from django.views.decorators.http import require_POST
+
+from accounts.models import (
+    Paciente,
+    Procedimento,
+    Orcamento,
+    ItemOrcamento
+)
 
 # =========================================
 # AGENDA
@@ -148,11 +155,60 @@ def novo_agendamento_paciente(request, paciente_id):
         id=paciente_id
     )
 
+    # =========================================
+    # PROFISSIONAL RESPONSÁVEL
+    # =========================================
+
+    profissional = None
+
+    if paciente.dentista:
+
+        nome_dentista = (
+            paciente.dentista.get_full_name()
+            or paciente.dentista.username
+        )
+
+        profissional = Profissional.objects.filter(
+            nome__icontains=nome_dentista
+        ).first()
+
+    # =========================================
+    # ORÇAMENTO APROVADO
+    # =========================================
+
+    orcamento = Orcamento.objects.filter(
+        paciente=paciente,
+        status='aprovado'
+    ).order_by('-id').first()
+
+    procedimentos_ids = []
+
+    if orcamento:
+
+        procedimentos_ids = ItemOrcamento.objects.filter(
+            orcamento=orcamento
+        ).values_list(
+            'procedimento_id',
+            flat=True
+        )
+
+    # =========================================
+    # POST
+    # =========================================
+
     if request.method == 'POST':
 
         form = AgendamentoForm(
             request.POST
         )
+
+        if orcamento:
+
+            form.fields['procedimento'].queryset = (
+                Procedimento.objects.filter(
+                    id__in=procedimentos_ids
+                ).distinct()
+            )
 
         if form.is_valid():
 
@@ -172,15 +228,32 @@ def novo_agendamento_paciente(request, paciente_id):
 
             print(form.errors)
 
+    # =========================================
+    # GET
+    # =========================================
+
     else:
 
         form = AgendamentoForm(
             initial={
-                'paciente': paciente
+                'paciente': paciente,
+                'profissional': profissional
             }
         )
 
-        # form.fields['paciente'].disabled = True
+        if orcamento:
+
+            form.fields['procedimento'].queryset = (
+                Procedimento.objects.filter(
+                    id__in=procedimentos_ids
+                ).distinct()
+            )
+
+        else:
+
+            form.fields['procedimento'].queryset = (
+                Procedimento.objects.none()
+            )
 
     return render(
 
@@ -191,6 +264,7 @@ def novo_agendamento_paciente(request, paciente_id):
         {
             'form': form,
             'paciente': paciente,
+            'orcamento': orcamento,
         }
 
     )
@@ -443,11 +517,49 @@ def novo_agendamento_paciente(request, paciente_id):
         id=paciente_id
     )
 
+    # =========================================
+    # PROFISSIONAL RESPONSÁVEL
+    # =========================================
+
+    profissional = Profissional.objects.filter(
+        nome=paciente.dentista.get_full_name()
+    ).first()
+
+    # =========================================
+    # ORÇAMENTO APROVADO
+    # =========================================
+
+    orcamento = Orcamento.objects.filter(
+        paciente=paciente,
+        status='aprovado'
+    ).order_by('-id').first()
+
+    procedimentos_ids = []
+
+    if orcamento:
+
+        procedimentos_ids = ItemOrcamento.objects.filter(
+            orcamento=orcamento
+        ).values_list(
+            'procedimento_id',
+            flat=True
+        )
+
+    # =========================================
+    # POST
+    # =========================================
+
     if request.method == 'POST':
 
-        form = AgendamentoForm(
-            request.POST
-        )
+        form = AgendamentoForm(request.POST)
+
+        if orcamento:
+
+            form.fields['procedimento'].queryset = (
+                Procedimento.objects.filter(
+                    id__in=procedimentos_ids
+                )
+            )
 
         if form.is_valid():
 
@@ -459,23 +571,38 @@ def novo_agendamento_paciente(request, paciente_id):
 
             agendamento.save()
 
-            return redirect(
-                'agenda'
-            )
+            return redirect('agenda')
 
         else:
 
             print(form.errors)
 
+    # =========================================
+    # GET
+    # =========================================
+
     else:
 
         form = AgendamentoForm(
             initial={
-                'paciente': paciente
+                'paciente': paciente,
+                'profissional': profissional,
             }
         )
 
-        # form.fields['paciente'].disabled = True
+        if orcamento:
+
+            form.fields['procedimento'].queryset = (
+                Procedimento.objects.filter(
+                    id__in=procedimentos_ids
+                )
+            )
+
+        else:
+
+            form.fields['procedimento'].queryset = (
+                Procedimento.objects.none()
+            )
 
     return render(
 
@@ -489,7 +616,6 @@ def novo_agendamento_paciente(request, paciente_id):
         }
 
     )
-
 # =========================================
 # INICIAR ATENDIMENTO
 # =========================================

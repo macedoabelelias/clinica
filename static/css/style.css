@@ -752,6 +752,30 @@ PRODUTOS
     border-left: 4px solid #dc3545;
 }
 
+.table tbody tr{
+    transition: all .2s ease;
+}
+
+.table tbody tr:hover{
+    background:#f8fafc;
+}
+
+.table td{
+    vertical-align: middle;
+}
+
+.badge.rounded-pill{
+    font-size:.80rem;
+    font-weight:600;
+}
+
+.btn-outline-primary,
+.btn-outline-success,
+.btn-outline-danger,
+.btn-outline-dark{
+    border-radius:10px;
+}
+
 /* =========================================
 RESPONSIVO
 ========================================= */

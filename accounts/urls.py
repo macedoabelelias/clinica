@@ -633,6 +633,18 @@ path(
     name='caixa'
 ),
 
+path(
+    'orcamentos/central/',
+    views.central_orcamentos,
+    name='central_orcamentos'
+),
+
+path(
+    'orcamentos/<int:id>/excluir/',
+    views.excluir_orcamento,
+    name='excluir_orcamento'
+),
+
 ]
 
 

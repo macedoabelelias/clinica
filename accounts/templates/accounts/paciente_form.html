@@ -490,12 +490,12 @@ Paciente | AM Systems
 
                             {% for convenio in convenios %}
 
-                           <option
-    value="{{ convenio.nome }}"
-    {% if paciente.convenio == convenio.nome %}selected{% endif %}
->
-    {{ convenio.nome }}
-</option>
+                            <option
+                                value="{{ convenio.nome }}"
+                                {% if paciente.convenio == convenio.nome %}selected{% endif %}
+                            >
+                                {{ convenio.nome }}
+                            </option>
 
                             {% endfor %}
 
@@ -527,11 +527,11 @@ Paciente | AM Systems
                         {% for dentista in dentistas %}
 
                         <option
-    value="{{ dentista.id }}"
-    {% if paciente.dentista_id == dentista.id %}selected{% endif %}
->
-    {{ dentista.get_full_name|default:dentista.username }}
-</option>
+                            value="{{ dentista.id }}"
+                            {% if paciente.dentista_id == dentista.id %}selected{% endif %}
+                        >
+                            {{ dentista.get_full_name|default:dentista.username }}
+                        </option>
 
                         {% endfor %}
 
