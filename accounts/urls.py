@@ -2,8 +2,6 @@ from django.urls import path
 
 from . import views
 
-from .views import convenios
-
 
 urlpatterns = [
 
@@ -156,6 +154,12 @@ urlpatterns = [
         name='procedimentos'
     ),
 
+   path(
+        'pacientes/<int:id>/procedimento-geral/',
+        views.salvar_procedimento_geral,
+        name='procedimento_geral'
+    ),
+
     # =========================================
     # LOGOUT
     # =========================================
@@ -167,14 +171,10 @@ urlpatterns = [
     ),
 
     path(
-
-    'convenios/',
-
-    convenios,
-
-    name='convenios'
-
-),
+        'convenios/',
+        views.convenios,
+        name='convenios'
+    ),
 
 path(
     'procedimentos/editar/<int:id>/',
@@ -644,6 +644,8 @@ path(
     views.excluir_orcamento,
     name='excluir_orcamento'
 ),
+
+
 
 ]
 

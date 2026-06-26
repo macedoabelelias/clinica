@@ -53,683 +53,686 @@
 
             </div>
 
-            <!-- FORM -->
+           <!-- FORM PROCEDIMENTO -->
 
-            <form method="POST">
+<form method="POST">
 
-                {% csrf_token %}
+    {% csrf_token %}
 
-                <div class="row g-2 align-items-end">
+    <div class="row g-2 align-items-end">
 
-                    <!-- PROCEDIMENTO -->
+        <!-- PROCEDIMENTO -->
 
-                    <div class="col-md-3">
+        <div class="col-md-3">
 
-                        <label class="form-label fw-semibold">
-                            Procedimento
-                        </label>
+            <label class="form-label fw-semibold">
+                Procedimento
+            </label>
 
-                        {{ item_form.procedimento }}
+            {{ item_form.procedimento }}
 
-                    </div>
+        </div>
 
-                    <!-- TIPO LOCAL -->
+        <!-- TIPO LOCAL -->
 
-                    <div class="col-md-2">
+        <div class="col-md-2">
 
-                        <label class="form-label fw-semibold">
-                            Tipo
-                        </label>
+            <label class="form-label fw-semibold">
+                Tipo
+            </label>
 
-                        <select name="tipo_local" id="id_tipo_local" class="form-select rounded-3">
+            <select
+                name="tipo_local"
+                id="id_tipo_local"
+                class="form-select rounded-3">
 
-                            <option value="dente">
-                                Dente
-                            </option>
+                <option value="dente">
+                    Dente
+                </option>
 
-                            <option value="hemiarcada">
-                                Hemi Arcada
-                            </option>
+                <option value="hemiarcada">
+                    Hemi Arcada
+                </option>
 
-                            <option value="geral">
-                                Geral
-                            </option>
+                <option value="geral">
+                    Geral
+                </option>
 
-                        </select>
+            </select>
 
-                    </div>
+        </div>
 
-                    <!-- DENTE -->
+        <!-- DENTE -->
 
-                    <div class="col-md-2" id="campo-dente">
+        <div
+            class="col-md-2"
+            id="campo-dente">
 
-                        <label class="form-label fw-semibold">
-                            Dente
-                        </label>
+            <label class="form-label fw-semibold">
+                Dente
+            </label>
 
-                        <select name="dente" id="campo-dente-select" class="form-select rounded-3">
+            <select
+                name="dente"
+                id="campo-dente-select"
+                class="form-select rounded-3">
 
+                <option value="">
+                    Selecione
+                </option>
 
-                            <option value="">
-                                Selecione
-                            </option>
+                <!-- DENTIÇÃO PERMANENTE -->
 
-                            <!-- DENTIÇÃO PERMANENTE -->
+                <optgroup label="Superior Direito">
 
-                            <optgroup label="Superior Direito">
+                    <option value="18">18</option>
+                    <option value="17">17</option>
+                    <option value="16">16</option>
+                    <option value="15">15</option>
+                    <option value="14">14</option>
+                    <option value="13">13</option>
+                    <option value="12">12</option>
+                    <option value="11">11</option>
 
-                                <option value="18">18</option>
-                                <option value="17">17</option>
-                                <option value="16">16</option>
-                                <option value="15">15</option>
-                                <option value="14">14</option>
-                                <option value="13">13</option>
-                                <option value="12">12</option>
-                                <option value="11">11</option>
+                </optgroup>
 
-                            </optgroup>
+                <optgroup label="Superior Esquerdo">
 
-                            <optgroup label="Superior Esquerdo">
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
 
-                                <option value="21">21</option>
-                                <option value="22">22</option>
-                                <option value="23">23</option>
-                                <option value="24">24</option>
-                                <option value="25">25</option>
-                                <option value="26">26</option>
-                                <option value="27">27</option>
-                                <option value="28">28</option>
+                </optgroup>
 
-                            </optgroup>
+                <optgroup label="Inferior Esquerdo">
 
-                            <optgroup label="Inferior Esquerdo">
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
 
-                                <option value="31">31</option>
-                                <option value="32">32</option>
-                                <option value="33">33</option>
-                                <option value="34">34</option>
-                                <option value="35">35</option>
-                                <option value="36">36</option>
-                                <option value="37">37</option>
-                                <option value="38">38</option>
+                </optgroup>
 
-                            </optgroup>
+                <optgroup label="Inferior Direito">
 
-                            <optgroup label="Inferior Direito">
+                    <option value="41">41</option>
+                    <option value="42">42</option>
+                    <option value="43">43</option>
+                    <option value="44">44</option>
+                    <option value="45">45</option>
+                    <option value="46">46</option>
+                    <option value="47">47</option>
+                    <option value="48">48</option>
 
-                                <option value="41">41</option>
-                                <option value="42">42</option>
-                                <option value="43">43</option>
-                                <option value="44">44</option>
-                                <option value="45">45</option>
-                                <option value="46">46</option>
-                                <option value="47">47</option>
-                                <option value="48">48</option>
+                </optgroup>
 
-                            </optgroup>
+                <!-- DENTIÇÃO DECÍDUA -->
 
-                            <!-- DENTIÇÃO DECÍDUA -->
+                <optgroup label="Decídua Superior Direita">
 
-                            <optgroup label="Decídua Superior Direita">
+                    <option value="55">55</option>
+                    <option value="54">54</option>
+                    <option value="53">53</option>
+                    <option value="52">52</option>
+                    <option value="51">51</option>
 
-                                <option value="55">55</option>
-                                <option value="54">54</option>
-                                <option value="53">53</option>
-                                <option value="52">52</option>
-                                <option value="51">51</option>
+                </optgroup>
 
-                            </optgroup>
+                <optgroup label="Decídua Superior Esquerda">
 
-                            <optgroup label="Decídua Superior Esquerda">
+                    <option value="61">61</option>
+                    <option value="62">62</option>
+                    <option value="63">63</option>
+                    <option value="64">64</option>
+                    <option value="65">65</option>
 
-                                <option value="61">61</option>
-                                <option value="62">62</option>
-                                <option value="63">63</option>
-                                <option value="64">64</option>
-                                <option value="65">65</option>
+                </optgroup>
 
-                            </optgroup>
+                <optgroup label="Decídua Inferior Esquerda">
 
-                            <optgroup label="Decídua Inferior Esquerda">
+                    <option value="81">81</option>
+                    <option value="82">82</option>
+                    <option value="83">83</option>
+                    <option value="84">84</option>
+                    <option value="85">85</option>
 
-                                <option value="81">81</option>
-                                <option value="82">82</option>
-                                <option value="83">83</option>
-                                <option value="84">84</option>
-                                <option value="85">85</option>
+                </optgroup>
 
-                            </optgroup>
+                <optgroup label="Decídua Inferior Direita">
 
-                            <optgroup label="Decídua Inferior Direita">
+                    <option value="71">71</option>
+                    <option value="72">72</option>
+                    <option value="73">73</option>
+                    <option value="74">74</option>
+                    <option value="75">75</option>
 
-                                <option value="71">71</option>
-                                <option value="72">72</option>
-                                <option value="73">73</option>
-                                <option value="74">74</option>
-                                <option value="75">75</option>
+                </optgroup>
 
-                            </optgroup>
+            </select>
 
-                        </select>
+        </div>
 
-                    </div>
+        <!-- FACE -->
 
-                    <!-- FACE -->
+        <div
+            class="col-md-2"
+            id="campo-face">
 
-                    <div class="col-md-2" id="campo-face">
+            <label class="form-label fw-semibold">
+                Face
+            </label>
 
-                        <label class="form-label fw-semibold">
-                            Face
-                        </label>
+            <select
+                name="face"
+                class="form-select rounded-3">
 
-                        <select name="face" class="form-select rounded-3">
+                <option value="">
+                    --
+                </option>
 
-                            <option value="">
-                                --
-                            </option>
+                <!-- SIMPLES -->
 
-                            <!-- SIMPLES -->
+                <option value="O">O</option>
+                <option value="M">M</option>
+                <option value="D">D</option>
+                <option value="V">V</option>
+                <option value="L">L</option>
+                <option value="P">P</option>
 
-                            <option value="O">O</option>
-                            <option value="M">M</option>
-                            <option value="D">D</option>
-                            <option value="V">V</option>
-                            <option value="L">L</option>
-                            <option value="P">P</option>
+                <!-- COMPOSTAS -->
 
-                            <!-- COMPOSTAS -->
+                <option value="MO">MO</option>
+                <option value="DO">DO</option>
+                <option value="MOD">MOD</option>
 
-                            <option value="MO">MO</option>
-                            <option value="DO">DO</option>
-                            <option value="MOD">MOD</option>
+                <option value="MV">MV</option>
+                <option value="DV">DV</option>
 
-                            <option value="MV">MV</option>
-                            <option value="DV">DV</option>
+                <option value="ML">ML</option>
+                <option value="DL">DL</option>
 
-                            <option value="ML">ML</option>
-                            <option value="DL">DL</option>
+                <option value="OV">OV</option>
+                <option value="OL">OL</option>
 
-                            <option value="OV">OV</option>
-                            <option value="OL">OL</option>
+                <option value="VP">VP</option>
+                <option value="LP">LP</option>
 
-                            <option value="VP">VP</option>
-                            <option value="LP">LP</option>
+                <option value="MD">MD</option>
 
-                            <option value="MD">MD</option>
+            </select>
 
-                        </select>
-
-                    </div>
+        </div>
 
                     <!-- QUANTIDADE -->
 
-                    <div class="col-md-1">
+<div class="col-md-1">
 
-                        <label class="form-label fw-semibold">
-                            Quantidade
-                        </label>
+    <label class="form-label fw-semibold">
+        Quantidade
+    </label>
 
-                        {{ item_form.quantidade }}
+    {{ item_form.quantidade }}
 
-                    </div>
+</div>
 
+<!-- BOTÃO -->
 
-                    <!-- BOTÃO -->
+<div class="col-md-2">
 
-                    <div class="col-md-2">
+    <div class="h-100 d-flex align-items-end">
 
-                        <div class="h-100 d-flex align-items-end">
+        <button
+            type="submit"
+            name="adicionar_item"
+            class="btn btn-primary w-100 rounded-pill shadow-sm">
 
-                            <button type="submit" class="btn btn-primary w-100 rounded-pill shadow-sm" style="
-                height:46px;
-                margin-bottom:1px;
-            ">
+            <i class="fas fa-plus me-2"></i>
 
-                                <i class="fas fa-plus me-2"></i>
+            Adicionar
 
-                                Adicionar
+        </button>
 
-                            </button>
+    </div>
 
-                        </div>
+</div>
 
-                    </div>
+</div>
 
-                    <!-- TABELA -->
+</form>
 
-                    <div class="card border-0 shadow-sm rounded-4">
+<!-- =========================================
+FORMULÁRIO FINANCEIRO
+========================================= -->
 
-                        <div class="card-body p-4">
+<form method="POST">
 
-                            <table class="table align-middle">
+    {% csrf_token %}
 
-                                <thead class="table-light">
+    <!-- TABELA -->
 
-                                    <tr>
+    <div class="card border-0 shadow-sm rounded-4">
 
-                                        <th>
-                                            Dente
-                                        </th>
+        <div class="card-body p-4">
 
-                                        <th>
-                                            Face
-                                        </th>
+            <table class="table align-middle">
 
-                                        <th>
-                                            Procedimento
-                                        </th>
+                <thead class="table-light">
 
-                                        <th>
-                                            Quantidade
-                                        </th>
+                    <tr>
 
-                                        <th>
-                                            Valor
-                                        </th>
+                        <th>Dente</th>
 
-                                        <th>
-                                            Total
-                                        </th>
+                        <th>Face</th>
 
-                                        <th class="text-center">
-                                            Status
-                                        </th>
+                        <th>Procedimento</th>
 
-                                        <th class="text-end">
-                                            Ações
-                                        </th>
+                        <th>Quantidade</th>
 
-                                    </tr>
+                        <th>Valor</th>
 
-                                </thead>
+                        <th>Total</th>
 
-                                <tbody>
+                        <th class="text-center">Status</th>
 
-                                    {% for item in orcamento.itens.all %}
+                        <th class="text-end">Ações</th>
 
-                                    <tr>
+                    </tr>
 
-                                        <!-- DENTE -->
+                </thead>
 
-                                        <td>
+                <tbody>
 
-                                            <span class="badge bg-light text-dark border">
+                    {% for item in orcamento.itens.all %}
 
-                                                {{ item.dente|default:"--" }}
+                    <tr>
 
-                                            </span>
+                        <!-- DENTE -->
 
-                                        </td>
+                        <td>
 
-                                        <!-- FACE -->
+                            <span class="badge bg-light text-dark border">
 
-                                        <td>
+                                {{ item.dente|default:"--" }}
 
-                                            <span class="badge bg-primary rounded-pill px-3">
+                            </span>
 
-                                                {{ item.face|default:"--" }}
+                        </td>
 
-                                            </span>
+                        <!-- FACE -->
 
-                                        </td>
+                        <td>
 
-                                        <!-- PROCEDIMENTO -->
+                            <span class="badge bg-primary rounded-pill px-3">
 
-                                        <td>
+                                {{ item.face|default:"--" }}
 
-                                            <div class="fw-semibold">
+                            </span>
 
-                                                {{ item.procedimento.nome }}
+                        </td>
 
-                                            </div>
+                        <!-- PROCEDIMENTO -->
 
-                                            <small class="text-muted">
+                        <td>
 
-                                                {{ item.procedimento.codigo|default:"Sem código" }}
+                            <div class="fw-semibold">
 
-                                            </small>
+                                {{ item.procedimento.nome }}
 
-                                        </td>
+                            </div>
 
-                                        <!-- QUANTIDADE -->
+                            <small class="text-muted">
 
-                                        <td>
+                                {{ item.procedimento.codigo|default:"Sem código" }}
 
-                                            {{ item.quantidade }}
+                            </small>
 
-                                        </td>
+                        </td>
 
-                                        <!-- VALOR -->
+                        <!-- QUANTIDADE -->
 
-                                        <td>
+                        <td>
 
-                                            R$ {{ item.valor_unitario }}
+                            {{ item.quantidade }}
 
-                                        </td>
+                        </td>
 
-                                        <!-- TOTAL -->
+                        <!-- VALOR -->
 
-                                        <td>
+                        <td>
 
-                                            <span class="fw-bold text-success">
+                            R$ {{ item.valor_unitario }}
 
-                                                R$ {{ item.total }}
+                        </td>
 
-                                            </span>
+                        <!-- TOTAL -->
 
-                                        </td>
+                        <td>
 
-                                        <!-- STATUS -->
+                            <span class="fw-bold text-success">
 
-                                        <td class="text-center">
+                                R$ {{ item.total }}
 
-                                            <span class="badge bg-warning text-dark rounded-pill px-3">
+                            </span>
 
-                                                Planejado
+                        </td>
 
-                                            </span>
+                        <!-- STATUS -->
 
-                                        </td>
+                        <td class="text-center">
+
+                            <span class="badge bg-warning text-dark rounded-pill px-3">
+
+                                Planejado
+
+                            </span>
+
+                        </td>
 
                                         <!-- AÇÕES -->
 
-                                        <td class="text-end">
+<td class="text-end">
 
-                                            <div class="d-flex justify-content-end gap-2">
+    <div class="d-flex justify-content-end gap-2">
 
-                                                <!-- EDITAR -->
-                                                <a href="{% url 'editar_item_orcamento' item.id %}"
-                                                    class="btn btn-sm btn-light border rounded-circle" title="Editar">
+        <!-- EDITAR -->
 
-                                                    <i class="fas fa-edit text-primary"></i>
+        <a href="{% url 'editar_item_orcamento' item.id %}"
+           class="btn btn-sm btn-light border rounded-circle"
+           title="Editar">
 
-                                                </a>
-                                                <!-- EXCLUIR -->
+            <i class="fas fa-edit text-primary"></i>
 
+        </a>
 
+        <!-- EXCLUIR -->
 
-                                                <a href="{% url 'excluir_item_orcamento' item.id %}"
-                                                    class="btn btn-sm btn-light border rounded-circle" title="Excluir">
+        <a href="{% url 'excluir_item_orcamento' item.id %}"
+           class="btn btn-sm btn-light border rounded-circle"
+           title="Excluir">
 
-                                                    <i class="fas fa-trash text-danger"></i>
+            <i class="fas fa-trash text-danger"></i>
 
-                                                </a>
+        </a>
 
+    </div>
 
+</td>
 
-                                            </div>
+</tr>
 
-                                        </td>
+{% empty %}
 
-                                    </tr>
+<tr>
 
-                                    {% empty %}
+    <td colspan="8" class="text-center text-muted py-4">
 
-                                    <tr>
+        Nenhum item adicionado.
 
-                                        <td colspan="7" class="text-center text-muted py-4">
+    </td>
 
-                                            Nenhum item adicionado.
+</tr>
 
-                                        </td>
+{% endfor %}
 
-                                    </tr>
+</tbody>
 
-                                    {% endfor %}
+</table>
 
-                                </tbody>
+<!-- DADOS FINANCEIROS -->
 
-                            </table>
+<div class="row mt-4">
 
-                            <!-- TOTAL -->
+    <div class="col-md-3">
 
-                            <div class="row mt-4">
+        <label class="form-label fw-semibold">
 
-                                <div class="col-md-3">
+            Entrada
 
-                                    <label class="form-label fw-semibold">
-                                        Entrada
-                                    </label>
+        </label>
 
-                                    <input
-                                        type="number"
-                                        step="0.01"
-                                        name="entrada"
-                                        class="form-control"
-                                        value="{{ orcamento.entrada }}"
-                                    >
+        <input
+            type="text"
+            name="entrada"
+            class="form-control"
+            value="{{ orcamento.entrada }}">
 
-                                </div>
+    </div>
 
-                                <div class="col-md-3">
+    <div class="col-md-3">
 
-                                    <label class="form-label fw-semibold">
-                                        Parcelas
-                                    </label>
+        <label class="form-label fw-semibold">
 
-                                    <input
-                                        type="number"
-                                        name="parcelas"
-                                        class="form-control"
-                                        value="{{ orcamento.parcelas }}"
-                                    >
+            Parcelas
 
-                                </div>
+        </label>
 
-                                <div class="col-md-3">
+        <input
+            type="number"
+            min="1"
+            name="parcelas"
+            class="form-control"
+            value="{{ orcamento.parcelas|default:1 }}"
+        >
 
-                                    <label class="form-label fw-semibold">
-                                        Forma de Pagamento
-                                    </label>
+    </div>
 
-                                    <select
-                                    name="forma_pagamento"
-                                    class="form-select"
-                                >
-                                    <option value="pix"
-                                        {% if orcamento.forma_pagamento == 'pix' %}
-                                        selected
-                                        {% endif %}
-                                    >
-                                        PIX
-                                    </option>
+    <div class="col-md-3">
 
-                                    <option value="credito"
-                                        {% if orcamento.forma_pagamento == 'credito' %}
-                                        selected
-                                        {% endif %}
-                                    >
-                                        Cartão Crédito
-                                    </option>
+        <label class="form-label fw-semibold">
 
-                                    <option value="debito"
-                                        {% if orcamento.forma_pagamento == 'debito' %}
-                                        selected
-                                        {% endif %}
-                                    >
-                                        Cartão Débito
-                                    </option>
+            Forma de Pagamento
 
-                                    <option value="dinheiro"
-                                        {% if orcamento.forma_pagamento == 'dinheiro' %}
-                                        selected
-                                        {% endif %}
-                                    >
-                                        Dinheiro
-                                    </option>
+        </label>
 
-                                    <option value="boleto"
-                                        {% if orcamento.forma_pagamento == 'boleto' %}
-                                        selected
-                                        {% endif %}
-                                    >
-                                        Boleto
-                                    </option>
+        <select
+            name="forma_pagamento"
+            class="form-select">
 
-                                </select>
+            <option value="pix"
+                {% if orcamento.forma_pagamento == 'pix' %}
+                selected
+                {% endif %}>
+                PIX
+            </option>
 
-                                </div>
+            <option value="credito"
+                {% if orcamento.forma_pagamento == 'credito' %}
+                selected
+                {% endif %}>
+                Cartão Crédito
+            </option>
 
-                                <div class="col-md-3 d-flex align-items-end">
+            <option value="debito"
+                {% if orcamento.forma_pagamento == 'debito' %}
+                selected
+                {% endif %}>
+                Cartão Débito
+            </option>
 
-                                    <button type="submit" name="salvar_financeiro" class="btn btn-success w-100">
-                                        Salvar Financeiro
-                                    </button>
+            <option value="dinheiro"
+                {% if orcamento.forma_pagamento == 'dinheiro' %}
+                selected
+                {% endif %}>
+                Dinheiro
+            </option>
 
-                                </div>
+            <option value="boleto"
+                {% if orcamento.forma_pagamento == 'boleto' %}
+                selected
+                {% endif %}>
+                Boleto
+            </option>
 
-                            </div>
+        </select>
 
-                            <hr>
+    </div>
 
-                            <div class="text-end">
+    <div class="col-md-3 d-flex align-items-end">
 
-                                <h4 class="fw-bold">
+        <button
+            type="submit"
+            name="salvar_financeiro"
+            value="1"
+            class="btn btn-success w-100">
 
-                                    Total:
-                                    <span class="text-success">
-                                        R$ {{ orcamento.total }}
-                                    </span>
+            <i class="fas fa-save me-2"></i>
 
-                                </h4>
+            Salvar Financeiro
 
-                            </div>
+        </button>
 
-                            <div class="d-flex justify-content-end gap-2 mt-4">
+    </div>
 
-                                <a href="{% url 'odontograma' paciente.id %}"
-                                    class="btn btn-secondary rounded-pill px-4">
-                                    <i class="fas fa-arrow-left me-2"></i>
-                                    Voltar
-                                </a>
+</div>
 
-                                {% if orcamento.status != 'aprovado' %}
+<hr>
 
-                                <a href="{% url 'aprovar_orcamento' orcamento.id %}"
-                                    class="btn btn-primary rounded-pill px-4"
-                                    onclick="return confirm('Deseja aprovar este orçamento?')">
-                                    <i class="fas fa-check me-2"></i>
-                                    Aprovar Orçamento
-                                </a>
+<div class="text-end">
 
-                                {% else %}
+    <h4 class="fw-bold">
 
-                                <span class="btn btn-success rounded-pill px-4 disabled">
+        Total:
 
-                                    <i class="fas fa-check-circle me-2"></i>
+        <span class="text-success">
 
-                                    Orçamento Aprovado
+            R$ {{ orcamento.total }}
 
-                                </span>
+        </span>
 
-                                {% endif %}
+    </h4>
 
-                                <a href="{% url 'gerar_pdf_orcamento' orcamento.id %}" target="_blank"
-                                    class="btn btn-success rounded-pill px-4">
-                                    <i class="fas fa-file-pdf me-2"></i>
-                                    PDF
-                                </a>
+</div>
 
-                            </div>
+</div>
 
-                        </div>
+</div>
 
-                    </div>
+</form>
 
-                </div>
+<!-- BOTÕES -->
 
-                <script>
+<div class="d-flex justify-content-end gap-2 mt-4">
 
-                    document.addEventListener('DOMContentLoaded', function () {
+    <a href="{% url 'odontograma' paciente.id %}"
+       class="btn btn-secondary rounded-pill px-4">
 
-                        const tipo = document.getElementById('id_tipo_local');
+        <i class="fas fa-arrow-left me-2"></i>
 
-                        const denteSelect = document.getElementById('campo-dente-select');
+        Voltar
 
-                        const campoFace = document.getElementById('campo-face');
+    </a>
 
+    {% if orcamento.status != 'aprovado' %}
 
-                        /* SALVA DENTES ORIGINAIS */
+    <a href="{% url 'aprovar_orcamento' orcamento.id %}"
+       class="btn btn-primary rounded-pill px-4"
+       onclick="return confirm('Deseja aprovar este orçamento?')">
 
-                        const dentesOriginais = denteSelect.innerHTML;
+        <i class="fas fa-check me-2"></i>
 
+        Aprovar Orçamento
 
-                        /* OPÇÕES HEMI ARCADA */
+    </a>
 
-                        const hemiOptions = `
+    {% else %}
 
-        <option value="">
-            Selecione
-        </option>
+    <span class="btn btn-success rounded-pill px-4 disabled">
 
-        <option value="sup_dir">
-            Superior Esquerdo (18 a 14)
-        </option>
+        <i class="fas fa-check-circle me-2"></i>
 
-        <option value="sup_centro">
-            Superior Anterior (13 a 23)
-        </option>
+        Orçamento Aprovado
 
-        <option value="sup_esq">
-            Superior Direito (24 a 28)
-        </option>
+    </span>
 
-        <option value="inf_dir">
-            Inferior Esquerdo (48 a 44)
-        </option>
+    {% endif %}
 
-        <option value="inf_centro">
-            Inferior Anterior (43 a 33)
-        </option>
+    <a href="{% url 'gerar_pdf_orcamento' orcamento.id %}"
+       target="_blank"
+       class="btn btn-success rounded-pill px-4">
 
-        <option value="inf_esq">
-            Inferior Direito (34 a 38)
-        </option>
+        <i class="fas fa-file-pdf me-2"></i>
 
-    `;
+        PDF
 
+    </a>
 
-                        function atualizarCampos() {
+</div>
 
-                            /* DENTE */
+    
 
-                            if (tipo.value === 'dente') {
+            <script>
 
-                                denteSelect.innerHTML = dentesOriginais;
+                document.addEventListener('DOMContentLoaded', function () {
 
-                                campoFace.style.display = 'block';
-                            }
+                    const tipo = document.getElementById('id_tipo_local');
 
-                            /* HEMI ARCADA */
+                    const denteSelect = document.getElementById('campo-dente-select');
 
-                            else if (tipo.value === 'hemiarcada') {
+                    const campoFace = document.getElementById('campo-face');
 
-                                denteSelect.innerHTML = hemiOptions;
+                    const dentesOriginais = denteSelect.innerHTML;
 
-                                campoFace.style.display = 'none';
-                            }
+                    const hemiOptions = `
 
-                            /* GERAL */
+                        <option value="">Selecione</option>
 
-                            else {
+                        <option value="sup_dir">Superior Esquerdo (18 a 14)</option>
 
-                                denteSelect.innerHTML = `
-                <option value="">
-                    Não se aplica
-                </option>
-            `;
+                        <option value="sup_centro">Superior Anterior (13 a 23)</option>
 
-                                campoFace.style.display = 'none';
-                            }
+                        <option value="sup_esq">Superior Direito (24 a 28)</option>
+
+                        <option value="inf_dir">Inferior Esquerdo (48 a 44)</option>
+
+                        <option value="inf_centro">Inferior Anterior (43 a 33)</option>
+
+                        <option value="inf_esq">Inferior Direito (34 a 38)</option>
+
+                    `;
+
+                    function atualizarCampos(){
+
+                        if(tipo.value=="dente"){
+
+                            denteSelect.innerHTML=dentesOriginais;
+
+                            campoFace.style.display="block";
+
                         }
 
-                        atualizarCampos();
+                        else if(tipo.value=="hemiarcada"){
 
-                        tipo.addEventListener('change', atualizarCampos);
+                            denteSelect.innerHTML=hemiOptions;
 
-                    });
+                            campoFace.style.display="none";
 
-                </script>
+                        }
 
+                        else{
 
-                {% endblock %}
+                            denteSelect.innerHTML='<option value="">Não se aplica</option>';
+
+                            campoFace.style.display="none";
+
+                        }
+
+                    }
+
+                    atualizarCampos();
+
+                    tipo.addEventListener("change", atualizarCampos);
+
+                });
+
+            </script>
+
+{% endblock %}

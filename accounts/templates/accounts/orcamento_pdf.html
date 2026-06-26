@@ -648,9 +648,188 @@ table td:nth-child(3){
 
     <div class="total">
 
-        Total: R$ {{ orcamento.total }}
+    Total: R$ {{ orcamento.total }}
 
-    </div>
+</div>
+
+<br>
+
+<div class="card">
+
+    <h4>
+
+        Resumo Financeiro
+
+    </h4>
+
+    <table>
+
+        <tr>
+
+            <td width="35%">
+
+                <strong>Entrada</strong>
+
+            </td>
+
+            <td>
+
+                R$ {{ entrada }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+
+                <strong>Saldo Financiado</strong>
+
+            </td>
+
+            <td>
+
+                R$ {{ saldo }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+
+                <strong>Parcelas</strong>
+
+            </td>
+
+            <td>
+
+                {{ parcelas }}x
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+
+                <strong>Valor da Parcela</strong>
+
+            </td>
+
+            <td>
+
+                R$ {{ valor_parcela|floatformat:2 }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+
+                <strong>Forma de Pagamento</strong>
+
+            </td>
+
+            <td>
+
+                {{ forma_pagamento }}
+
+            </td>
+
+        </tr>
+
+    </table>
+
+    <br>
+
+    <h4>
+
+        Cronograma Financeiro
+
+    </h4>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th width="30%">
+                    Parcela
+                </th>
+
+                <th width="35%">
+                    Vencimento
+                </th>
+
+                <th width="35%">
+                    Valor
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+            
+
+            {% for conta in parcelas_financeiras %}
+
+            <tr>
+
+                <td>
+
+                    {% if conta.parcela == 0 %}
+
+                        Entrada
+
+                    {% else %}
+
+                        {{ conta.parcela }}/{{ conta.total_parcelas }}
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    {{ conta.vencimento|date:"d/m/Y" }}
+
+                </td>
+
+                <td>
+
+                    R$ {{ conta.valor }}
+
+                </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+
+                <td colspan="3" style="text-align:center;">
+
+                    Nenhuma parcela gerada.
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
 
 </div>
 

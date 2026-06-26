@@ -865,6 +865,10 @@ class EvolucaoClinica(models.Model):
 
     )
 
+    # =========================================
+    # PACIENTE
+    # =========================================
+
     paciente = models.ForeignKey(
 
         Paciente,
@@ -874,6 +878,38 @@ class EvolucaoClinica(models.Model):
         related_name='evolucoes'
 
     )
+
+    orcamento = models.ForeignKey(
+
+        'Orcamento',
+
+        on_delete=models.SET_NULL,
+
+        null=True,
+
+        blank=True,
+
+        related_name='evolucoes'
+
+    )
+
+    item_orcamento = models.ForeignKey(
+
+        'ItemOrcamento',
+
+        on_delete=models.SET_NULL,
+
+        null=True,
+
+        blank=True,
+
+        related_name='evolucoes'
+
+    )
+
+    # =========================================
+    # DENTE
+    # =========================================
 
     dente = models.CharField(
 
@@ -885,6 +921,10 @@ class EvolucaoClinica(models.Model):
 
     )
 
+    # =========================================
+    # FACE
+    # =========================================
+
     face = models.CharField(
 
         max_length=20,
@@ -895,16 +935,29 @@ class EvolucaoClinica(models.Model):
 
     )
 
+    # =========================================
+    # POSIÇÃO DO ÍCONE
+    # =========================================
+
     posicao_icone = models.CharField(
+
         max_length=20,
+
         blank=True,
+
         null=True,
+
         choices=Procedimento.POSICOES
+
     )
+
+    # =========================================
+    # PROCEDIMENTO
+    # =========================================
 
     procedimento = models.ForeignKey(
 
-        'Procedimento',
+        Procedimento,
 
         on_delete=models.SET_NULL,
 
@@ -913,6 +966,10 @@ class EvolucaoClinica(models.Model):
         blank=True
 
     )
+
+    # =========================================
+    # STATUS
+    # =========================================
 
     status = models.CharField(
 
@@ -924,6 +981,10 @@ class EvolucaoClinica(models.Model):
 
     )
 
+    # =========================================
+    # DESCRIÇÃO
+    # =========================================
+
     descricao = models.TextField(
 
         blank=True,
@@ -931,6 +992,10 @@ class EvolucaoClinica(models.Model):
         null=True
 
     )
+
+    # =========================================
+    # DATA
+    # =========================================
 
     criado_em = models.DateTimeField(
 
@@ -945,15 +1010,23 @@ class EvolucaoClinica(models.Model):
     def __str__(self):
 
         procedimento = (
+
             self.procedimento.nome
+
             if self.procedimento
+
             else 'Sem procedimento'
+
         )
 
         return (
+
             f'{self.paciente.nome} - '
+
             f'{procedimento} - '
+
             f'{self.get_status_display()}'
+
         )
 
 # =========================================
