@@ -8,12 +8,11 @@ LAYOUT PRINCIPAL
 
     align-items:flex-start;
 
-    gap:28px;
+    gap:30px;
 
     width:100%;
 
 }
-
 /* =========================================
 ODONTOGRAMA
 ========================================= */
@@ -23,11 +22,13 @@ ODONTOGRAMA
     flex:1;
 
     min-width:0;
+     display:flex;
 
 }
 
+
 /* =========================================
-TIMELINE
+PROCEDIMENTOS CLÍNICOS
 ========================================= */
 
 .timeline-container{
@@ -38,34 +39,96 @@ TIMELINE
 
     align-self:flex-start;
 
-    padding:4px;
-
 }
 
 .timeline-card{
 
     position:relative;
 
-    top:20px;
+    background:#ffffff;
 
-    background:#fff;
+    width:100%;
 
     border-radius:32px;
 
     padding:18px;
 
-    border:none;
+    border:1px solid #e2e8f0;
 
-    box-shadow:
-        0 10px 35px rgba(15,23,42,.25);
-
-    height:640px;
+    box-shadow:0 10px 35px rgba(15,23,42,.25);
 
     display:flex;
 
     flex-direction:column;
 
     overflow:hidden;
+
+}
+
+/* Barra azul superior */
+
+.timeline-card::before{
+
+    content:'';
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:6px;
+
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #3b82f6
+    );
+
+}
+
+
+/* =========================================
+STATUS DOS PROCEDIMENTOS
+========================================= */
+
+.timeline-label{
+
+    display:block;
+
+    font-size:11px;
+
+    font-weight:700;
+
+    color:#64748b;
+
+    margin-bottom:6px;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+
+}
+
+.status-procedimento{
+
+    border-radius:12px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    border:1px solid #dbe4f0;
+
+    box-shadow:none;
+
+}
+
+.status-procedimento:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 .15rem rgba(37,99,235,.15);
 
 }
 
@@ -103,13 +166,15 @@ HEADER
 
 .timeline-header h5{
 
-    font-size:20px;
+    font-size:1.25rem;
 
     font-weight:700;
 
+    white-space:nowrap;
+
     color:#0f172a;
 
-    margin-bottom:6px;
+    margin-bottom:8px;
 
 }
 
@@ -131,15 +196,17 @@ BODY
 
     flex:1;
 
+    min-height:0;
+
+    overflow-y:auto;
+
     display:flex;
 
     flex-direction:column;
 
     gap:16px;
 
-    overflow-y:auto;
-
-    padding-right:4px;    
+    padding-right:4px;
 
 }
 

@@ -27,6 +27,18 @@
     flex-direction:column;
 }
 
+.timeline-face{
+
+    font-size:.85rem;
+
+    color:#6c757d;
+
+    margin-top:4px;
+
+    margin-bottom:6px;
+
+}
+
 </style>
 
 <!-- =========================================
@@ -433,6 +445,12 @@ COLUNA DIREITA
                     {% if evolucao.dente %}
                     <div class="timeline-dente">
                         🦷 Dente {{ evolucao.dente }}
+                    </div>
+                    {% endif %}
+
+                    {% if evolucao.face %}
+                    <div class="timeline-face">
+                        📍 Face {{ evolucao.face }}
                     </div>
                     {% endif %}
 

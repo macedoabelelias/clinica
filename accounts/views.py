@@ -1480,6 +1480,19 @@ def ficha_clinica(request, id):
     )
 
     # =========================================
+    # PROCEDIMENTOS DO ORÇAMENTO
+    # =========================================
+
+    itens_orcamento = (
+        ItemOrcamento.objects
+        .filter(
+            orcamento__paciente=paciente
+        )
+        .select_related('procedimento')
+        .order_by('-id')
+    )
+
+    # =========================================
     # RESUMO CLÍNICO
     # =========================================
 
@@ -1541,6 +1554,8 @@ def ficha_clinica(request, id):
         'exames': exames,
 
         'solicitacoes': solicitacoes,
+
+        'itens_orcamento': itens_orcamento,
 
         'total_procedimentos': total_procedimentos,
 
@@ -2779,11 +2794,8 @@ from django.http import JsonResponse
 def alterar_status_procedimento(request, id):
 
     item = get_object_or_404(
-
         ItemOrcamento,
-
         id=id
-
     )
 
     data = json.loads(request.body)
@@ -2794,35 +2806,59 @@ def alterar_status_procedimento(request, id):
     )
 
     # =====================================
-    # ATUALIZA STATUS
+    # ATUALIZA ITEM DO ORÇAMENTO
     # =====================================
 
     item.status = novo_status
-
     item.save()
 
     # =====================================
-    # REGISTRA EVOLUÇÃO CLÍNICA
+    # ATUALIZA EVOLUÇÃO EXISTENTE
     # =====================================
 
-    EvolucaoClinica.objects.create(
+    evolucao = EvolucaoClinica.objects.filter(
 
         paciente=item.orcamento.paciente,
 
-        dente=item.dente,
-
         procedimento=item.procedimento,
 
-        status=novo_status,
+        dente=item.dente,
 
-        descricao=''
+        face=item.face
 
-    )
+    ).order_by('-id').first()
+
+    if evolucao:
+
+        evolucao.status = novo_status
+        evolucao.save()
+
+    else:
+
+        EvolucaoClinica.objects.create(
+
+            paciente=item.orcamento.paciente,
+
+            procedimento=item.procedimento,
+
+            dente=item.dente,
+
+            face=item.face,
+
+            posicao_icone=item.posicao_icone,
+
+            status=novo_status,
+
+            descricao=''
+
+        )
+
     return JsonResponse({
 
-        'success': True
+        'sucesso': True
 
     })
+
 # =========================================
 # RODAPÉ PDF
 # =========================================
