@@ -5,6 +5,8 @@ from datetime import date
 from django.contrib.auth.models import User
 from django.conf import settings
 
+from django.utils import timezone
+
 # =========================================
 # PACIENTES
 # =========================================
@@ -244,16 +246,26 @@ class Paciente(models.Model):
     @property
     def status(self):
 
-        return 'Ativo' if self.ativo else 'Inativo'
-    
+        return "Ativo" if self.ativo else "Inativo"
+
+    # =========================================
+    # TRATAMENTO ATIVO
+    # =========================================
+
+    @property
+    def tratamento_ativo(self):
+
+        return self.tratamentos.filter(
+            status="ATIVO"
+        ).first()
+
     # =========================================
     # STRING
     # =========================================
 
     def __str__(self):
 
-        return self.nome
-    
+        return self.nome 
 
 class Anamnese(models.Model):
 
@@ -1029,6 +1041,8 @@ class EvolucaoClinica(models.Model):
 
         )
 
+
+
 # =========================================
 # PRONTUÁRIO CLÍNICO
 # =========================================
@@ -1107,6 +1121,86 @@ class ProntuarioClinico(models.Model):
             f'{self.paciente.nome} - '
             f'{self.titulo}'
         )
+    
+# =========================================
+# TRATAMENTO
+# =========================================
+
+class Tratamento(models.Model):
+
+    STATUS_CHOICES = [
+        ("ATIVO", "Ativo"),
+        ("ENCERRADO", "Encerrado"),
+    ]
+
+    paciente = models.ForeignKey(
+        "Paciente",
+        on_delete=models.CASCADE,
+        related_name="tratamentos"
+    )
+
+    titulo = models.CharField(
+        "Título",
+        max_length=150,
+        default="Tratamento Inicial"
+    )
+
+    status = models.CharField(
+        "Status",
+        max_length=15,
+        choices=STATUS_CHOICES,
+        default="ATIVO"
+    )
+
+    data_inicio = models.DateField(
+        "Data de início",
+        default=timezone.now
+    )
+
+    data_encerramento = models.DateField(
+        "Data de encerramento",
+        null=True,
+        blank=True
+    )
+
+    observacoes = models.TextField(
+        "Observações",
+        blank=True
+    )
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    atualizado_em = models.DateTimeField(
+        auto_now=True
+    )
+
+    class Meta:
+        verbose_name = "Tratamento"
+        verbose_name_plural = "Tratamentos"
+        ordering = ["-criado_em"]
+
+    def save(self, *args, **kwargs):
+
+        if self.status == "ATIVO":
+
+            Tratamento.objects.filter(
+                paciente=self.paciente,
+                status="ATIVO"
+            ).exclude(
+                pk=self.pk
+            ).update(
+                status="ENCERRADO",
+                data_encerramento=timezone.now().date()
+            )
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+
+        return f"{self.paciente.nome} - {self.titulo}"
+
 
 # =========================================
 # ORÇAMENTO
@@ -1118,19 +1212,26 @@ class Orcamento(models.Model):
     # =========================================
 
     paciente = models.ForeignKey(
-
         Paciente,
-
         on_delete=models.CASCADE,
-
         related_name='orcamentos'
+    )
 
+    # =========================================
+    # TRATAMENTO
+    # =========================================
+
+    tratamento = models.ForeignKey(
+        Tratamento,
+        on_delete=models.CASCADE,
+        related_name='orcamentos',
+        null=True,
+        blank=True
     )
 
     # =========================================
     # STATUS
     # =========================================
-
     STATUS_CHOICES = (
 
         ('rascunho', 'Rascunho'),

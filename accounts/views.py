@@ -44,6 +44,7 @@ from .models import (
     DocumentoClinico,
     TemplateDocumento,
     Paciente,
+    Tratamento,
     Anamnese,
     Procedimento,
     Orcamento,
@@ -79,10 +80,8 @@ from django.contrib import messages
 from .models import PerfilUsuario
 from .permissions import perfil_required
 from django.contrib.auth import update_session_auth_hash
-from .models import Compra, ItemCompra
+
 from decimal import Decimal
-from .models import Produto
-from .models import Compra
 
 from django.db.models import Sum
 from django.db.models.functions import ExtractMonth
@@ -1942,8 +1941,20 @@ def orcamento(request, id):
 
     if orcamento is None:
 
+        tratamento = paciente.tratamentos.filter(
+            status="ATIVO"
+        ).first()
+
+        if tratamento is None:
+
+            tratamento = Tratamento.objects.create(
+                paciente=paciente,
+                titulo="Tratamento Inicial"
+            )
+
         orcamento = Orcamento.objects.create(
-            paciente=paciente
+            paciente=paciente,
+            tratamento=tratamento
         )
 
     # =========================================
@@ -7952,6 +7963,29 @@ def central_orcamentos(request):
         request,
         'accounts/central_orcamentos.html',
         context
+    )
+
+
+# =========================================
+# ENCERRAR TRATAMENTO
+# =========================================
+
+@login_required(login_url="/")
+def encerrar_tratamento(request, tratamento_id):
+
+    tratamento = get_object_or_404(
+        Tratamento,
+        id=tratamento_id
+    )
+
+    messages.success(
+        request,
+        f"Tratamento '{tratamento.titulo}' selecionado para encerramento."
+    )
+
+    return redirect(
+        "odontograma",
+        id=tratamento.paciente.id
     )
 
 

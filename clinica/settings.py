@@ -31,7 +31,7 @@ INSTALLED_APPS = [
 
     # APPS DO SISTEMA
 
-    'accounts',
+    'accounts.apps.AccountsConfig',
     'agenda',
     'ckeditor',
 

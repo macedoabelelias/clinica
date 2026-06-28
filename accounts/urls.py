@@ -645,6 +645,16 @@ path(
     name='excluir_orcamento'
 ),
 
+# =========================================
+# TRATAMENTOS
+# =========================================
+
+path(
+    "tratamentos/<int:tratamento_id>/encerrar/",
+    views.encerrar_tratamento,
+    name="encerrar_tratamento",
+),
+
 
 
 ]

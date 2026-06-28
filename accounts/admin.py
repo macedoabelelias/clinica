@@ -10,6 +10,8 @@ from .models import Produto
 
 admin.site.register(Produto)
 
+from .models import Tratamento
+
 
 # =========================================
 # TEMPLATE DOCUMENTOS
@@ -59,4 +61,25 @@ class PerfilUsuarioAdmin(admin.ModelAdmin):
 
         'cro'
 
+    )
+
+@admin.register(Tratamento)
+class TratamentoAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "id",
+        "paciente",
+        "titulo",
+        "status",
+        "data_inicio",
+        "data_encerramento",
+    )
+
+    list_filter = (
+        "status",
+    )
+
+    search_fields = (
+        "paciente__nome",
+        "titulo",
     )
