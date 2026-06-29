@@ -62,8 +62,8 @@ LAYOUT
 
 
                 <!-- =========================================
-PROCEDIMENTOS GERAIS
-========================================= -->
+                PROCEDIMENTOS GERAIS
+                ========================================= -->
 
                 <div class="procedimentos-header">
 
@@ -134,14 +134,14 @@ PROCEDIMENTOS GERAIS
 
                             <img src="{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}"
                                 class="
-        icone-procedimento-dente
-        status-{{ item.status }}
-        posicao-{{ item.posicao_icone|default:item.procedimento.posicao_icone }}
+                                icone-procedimento-dente
+                                status-{{ item.status }}
+                                posicao-{{ item.posicao_icone|default:item.procedimento.posicao_icone }}
 
-        {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
-            sem-rotacao
-        {% endif %}
-    " data-id="{{ item.id }}" data-status="{{ item.status }}" title="{{ item.procedimento.nome }}">
+                                {% if item.procedimento.arquivo_icone == 'ausente.png' or item.procedimento.arquivo_icone == 'rx_dente.png' %}
+                                    sem-rotacao
+                                {% endif %}
+                            " data-id="{{ item.id }}" data-status="{{ item.status }}" title="{{ item.procedimento.nome }}">
 
                             {% if item.face %}
 
@@ -357,156 +357,152 @@ PROCEDIMENTOS GERAIS
 
 
 
-    <!-- TIMELINE -->
+    <!-- ========================================= -->
+<!-- PROCEDIMENTOS CLÍNICOS -->
+<!-- ========================================= -->
 
-    <div class="timeline-container">
+<div class="timeline-container">
 
-        <div class="timeline-card">
+    <div class="timeline-card">
 
-            <div class="timeline-header">
+        <div class="timeline-header">
 
-                <h5>
-                    🦷 Procedimentos Clínicos
-                </h5>
+            <h5>
+                🦷 Procedimentos Clínicos
+            </h5>
 
-                <p>
-                    Gerenciamento dos procedimentos do paciente
-                </p>
+            <p>
+                Gerenciamento dos procedimentos do paciente
+            </p>
 
-            </div>
+        </div>
 
-  <div class="timeline-body">
+        <div class="timeline-body">
 
-    {% for item in itens_orcamento %}
+            {% for item in itens_orcamento %}
 
-    <div class="timeline-item">
+            <div class="timeline-item">
 
-        <div class="timeline-dot"></div>
+                <div class="timeline-dot"></div>
 
-        <div class="timeline-content">
+                <div class="timeline-content">
 
-            <div class="timeline-top">
+                    <div class="timeline-top">
 
-                <div class="timeline-procedimento">
+                        <div class="timeline-procedimento">
 
-                    {% if item.procedimento.arquivo_icone %}
+                            {% if item.procedimento.arquivo_icone %}
 
-                        <img src="
-                        {% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemiarcada' %}
-                            {% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone }}
-                        {% else %}
-                            {% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}
-                        {% endif %}
-                        "
-                        class="timeline-icone"
-                        alt="{{ item.procedimento.nome }}">
+                                <img
+                                    src="{% if item.procedimento.tipo == 'geral' or item.procedimento.tipo == 'hemiarcada' %}{% static 'img/procedimentos/full/' %}{{ item.procedimento.arquivo_icone }}{% else %}{% static 'img/procedimentos/mini/' %}{{ item.procedimento.arquivo_icone }}{% endif %}"
+                                    class="timeline-icone"
+                                    alt="{{ item.procedimento.nome }}"
+                                >
+
+                            {% endif %}
+
+                            <strong>
+                                {{ item.procedimento.nome }}
+                            </strong>
+
+                        </div>
+
+                        <span>
+
+                            {% if item.orcamento.criado_em %}
+                                {{ item.orcamento.criado_em|date:"d/m/Y" }}
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+                    {% if item.dente %}
+
+                    <div class="timeline-dente">
+
+                        🦷 Dente {{ item.dente }}
+
+                    </div>
 
                     {% endif %}
 
-                    <strong>
-                        {{ item.procedimento.nome }}
-                    </strong>
+                    {% if item.face %}
+
+                    <div class="timeline-dente">
+
+                        📍 Face {{ item.face }}
+
+                    </div>
+
+                    {% endif %}
+
+                    <div class="mt-3">
+
+                        <label class="timeline-label">
+
+                            Status
+
+                        </label>
+
+                        <select
+                            class="form-select form-select-sm status-procedimento"
+                            data-item="{{ item.id }}"
+                        >
+
+                            <option value="planejado"
+                                {% if item.status == 'planejado' %}selected{% endif %}>
+                                Planejado
+                            </option>
+
+                            <option value="existente"
+                                {% if item.status == 'existente' %}selected{% endif %}>
+                                Existente
+                            </option>
+
+                            <option value="andamento"
+                                {% if item.status == 'andamento' %}selected{% endif %}>
+                                Em andamento
+                            </option>
+
+                            <option value="realizado"
+                                {% if item.status == 'realizado' %}selected{% endif %}>
+                                Realizado
+                            </option>
+
+                            <option value="urgencia"
+                                {% if item.status == 'urgencia' %}selected{% endif %}>
+                                Urgência
+                            </option>
+
+                            <option value="cancelado"
+                                {% if item.status == 'cancelado' %}selected{% endif %}>
+                                Cancelado
+                            </option>
+
+                        </select>
+
+                    </div>
 
                 </div>
 
-                <span>
+            </div>
 
-                    {% if item.orcamento.criado_em %}
+            {% empty %}
 
-                        {{ item.orcamento.criado_em|date:"d/m/Y" }}
+            <div class="empty-timeline">
 
-                    {% endif %}
-
-                </span>
+                Nenhum procedimento cadastrado.
 
             </div>
 
-            {% if item.dente %}
-
-            <div class="timeline-dente">
-
-                🦷 Dente {{ item.dente }}
-
-            </div>
-
-            {% endif %}
-
-            {% if item.face %}
-
-            <div class="timeline-dente">
-
-                📍 Face {{ item.face }}
-
-            </div>
-
-            {% endif %}
-
-            <div class="mt-3">
-
-    <label class="timeline-label">
-        Status
-    </label>
-
-    <select
-        class="form-select form-select-sm status-procedimento"
-        data-item="{{ item.id }}">
-
-        <option value="planejado"
-            {% if item.status == 'planejado' %}selected{% endif %}>
-            Planejado
-        </option>
-
-        <option value="existente"
-            {% if item.status == 'existente' %}selected{% endif %}>
-            Existente
-        </option>
-
-        <option value="andamento"
-            {% if item.status == 'andamento' %}selected{% endif %}>
-            Em andamento
-        </option>
-
-        <option value="realizado"
-            {% if item.status == 'realizado' %}selected{% endif %}>
-            Realizado
-        </option>
-
-        <option value="urgencia"
-            {% if item.status == 'urgencia' %}selected{% endif %}>
-            Urgência
-        </option>
-
-        <option value="cancelado"
-            {% if item.status == 'cancelado' %}selected{% endif %}>
-            Cancelado
-        </option>
-
-    </select>
-
-</div>
-
-        </div>
-
-    </div>
-
-    {% empty %}
-
-    <div class="empty-timeline">
-
-        Nenhum procedimento cadastrado.
-
-    </div>
-
-    {% endfor %}
-
-</div>
+            {% endfor %}
 
         </div>
 
     </div>
 
 </div>
-
 
 <!-- =========================================
 MODAL EVOLUÇÃO CLÍNICA

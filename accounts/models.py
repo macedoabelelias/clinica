@@ -877,7 +877,7 @@ class EvolucaoClinica(models.Model):
 
     )
 
-    # =========================================
+        # =========================================
     # PACIENTE
     # =========================================
 
@@ -890,6 +890,29 @@ class EvolucaoClinica(models.Model):
         related_name='evolucoes'
 
     )
+
+    # =========================================
+    # TRATAMENTO
+    # =========================================
+
+    tratamento = models.ForeignKey(
+
+        'Tratamento',
+
+        on_delete=models.CASCADE,
+
+        related_name='evolucoes',
+
+        null=True,
+
+        blank=True
+
+    )
+
+    
+    # =========================================
+    # ORÇAMENTO
+    # =========================================
 
     orcamento = models.ForeignKey(
 
@@ -904,6 +927,10 @@ class EvolucaoClinica(models.Model):
         related_name='evolucoes'
 
     )
+
+    # =========================================
+    # ITEM DO ORÇAMENTO
+    # =========================================
 
     item_orcamento = models.ForeignKey(
 

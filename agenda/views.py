@@ -173,12 +173,32 @@ def novo_agendamento_paciente(request, paciente_id):
         ).first()
 
     # =========================================
-    # ORÇAMENTO APROVADO
+    # TRATAMENTO ATIVO
+    # =========================================
+
+    tratamento = paciente.tratamentos.filter(
+        status='ATIVO'
+    ).first()
+
+    if tratamento is None:
+
+        tratamento = Tratamento.objects.create(
+            paciente=paciente,
+            titulo='Tratamento Inicial'
+        )
+
+    # =========================================
+    # ORÇAMENTO APROVADO DO TRATAMENTO
     # =========================================
 
     orcamento = Orcamento.objects.filter(
+
         paciente=paciente,
+
+        tratamento=tratamento,
+
         status='aprovado'
+
     ).order_by('-id').first()
 
     procedimentos_ids = []
@@ -186,10 +206,15 @@ def novo_agendamento_paciente(request, paciente_id):
     if orcamento:
 
         procedimentos_ids = ItemOrcamento.objects.filter(
+
             orcamento=orcamento
+
         ).values_list(
+
             'procedimento_id',
+
             flat=True
+
         )
 
     # =========================================

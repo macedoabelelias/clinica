@@ -85,6 +85,36 @@ urlpatterns = [
     ),
 
     # =========================================
+# ODONTOGRAMA
+# =========================================
+
+path(
+    'pacientes/<int:id>/odontograma/',
+    views.odontograma,
+    name='odontograma'
+),
+
+# =========================================
+# TRATAMENTOS
+# =========================================
+
+path(
+    'pacientes/<int:id>/tratamentos/',
+    views.tratamentos_paciente,
+    name='tratamentos_paciente'
+),
+
+# =========================================
+# PROCEDIMENTO GERAL
+# =========================================
+
+path(
+    'pacientes/<int:id>/procedimento-geral/',
+    views.salvar_procedimento_geral,
+    name='salvar_procedimento_geral'
+),
+
+    # =========================================
     # ANAMNESE
     # =========================================
 
@@ -646,7 +676,7 @@ path(
 ),
 
 # =========================================
-# TRATAMENTOS
+# ENCERRAR TRATAMENTOS
 # =========================================
 
 path(
@@ -654,6 +684,7 @@ path(
     views.encerrar_tratamento,
     name="encerrar_tratamento",
 ),
+
 
 
 

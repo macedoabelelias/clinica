@@ -836,11 +836,43 @@ def odontograma(request, id):
         id=id
     )
 
+    # =====================================
+    # TRATAMENTO ATIVO
+    # =====================================
+
+    tratamento = paciente.tratamentos.filter(
+        status='ATIVO'
+    ).first()
+
+    if tratamento is None:
+
+        tratamento = Tratamento.objects.create(
+            paciente=paciente,
+            titulo='Tratamento Inicial'
+        )
+
+    # =====================================
+    # ORÇAMENTO DO TRATAMENTO ATIVO
+    # =====================================
+
+    orcamento, created = Orcamento.objects.get_or_create(
+
+        paciente=paciente,
+
+        tratamento=tratamento,
+
+        defaults={
+            'tratamento': tratamento
+        }
+
+    )
+
     # =========================================
     # SALVAR EVOLUÇÃO
     # =========================================
 
     if request.method == 'POST':
+
         print(request.POST)
 
         procedimento = Procedimento.objects.get(
@@ -859,15 +891,9 @@ def odontograma(request, id):
             'posicao_icone'
         )
 
-        print('POSICAO ESCOLHIDA:', posicao_icone)
-
-
-        # =====================================
-        # GARANTE ORÇAMENTO
-        # =====================================
-
-        orcamento, created = Orcamento.objects.get_or_create(
-            paciente=paciente
+        print(
+            'POSICAO ESCOLHIDA:',
+            posicao_icone
         )
 
         # =====================================
@@ -886,7 +912,7 @@ def odontograma(request, id):
 
                 valor_unitario = (
                     procedimento.valor_particular
-                    * (convenio.indice)
+                    * convenio.indice
                 )
 
         # =====================================
@@ -896,17 +922,23 @@ def odontograma(request, id):
         item = ItemOrcamento.objects.create(
 
             orcamento=orcamento,
+
             procedimento=procedimento,
+
             tipo_local='dente',
+
             dente=dente,
+
             face=face,
+
             posicao_icone=posicao_icone,
+
             valor_unitario=valor_unitario,
+
             status=status
 
         )
 
-        
         # =====================================
         # REGISTRA EVOLUÇÃO CLÍNICA
         # =====================================
@@ -914,6 +946,12 @@ def odontograma(request, id):
         EvolucaoClinica.objects.create(
 
             paciente=paciente,
+
+            tratamento=tratamento,
+
+            orcamento=orcamento,
+
+            item_orcamento=item,
 
             dente=dente,
 
@@ -933,13 +971,17 @@ def odontograma(request, id):
             'odontograma',
             id=paciente.id
         )
-
-    # =========================================
+    
+        # =========================================
     # EVOLUÇÕES CLÍNICAS
     # =========================================
 
     evolucoes = EvolucaoClinica.objects.filter(
-        paciente=paciente
+
+        paciente=paciente,
+
+        tratamento=tratamento
+
     ).order_by('-criado_em')
 
     # =========================================
@@ -947,7 +989,9 @@ def odontograma(request, id):
     # =========================================
 
     itens_orcamento = ItemOrcamento.objects.filter(
-        orcamento__paciente=paciente
+
+        orcamento=orcamento
+
     )
 
     # =========================================
@@ -955,15 +999,27 @@ def odontograma(request, id):
     # =========================================
 
     procedimentos = Procedimento.objects.all().order_by(
+
         'categoria',
+
         'nome'
+
     )
 
+    # =========================================
+    # PROCEDIMENTOS GERAIS
+    # =========================================
+
     procedimentos_gerais = Procedimento.objects.filter(
+
         tipo__in=['geral', 'hemiarcada']
+
     ).order_by(
+
         'categoria',
+
         'nome'
+
     )
 
     # =========================================
@@ -974,6 +1030,16 @@ def odontograma(request, id):
 
         'paciente': paciente,
 
+        'tratamento': tratamento,
+
+        'evolucoes': evolucoes,
+
+        'itens_orcamento': itens_orcamento,
+
+        'procedimentos': procedimentos,
+
+        'procedimentos_gerais': procedimentos_gerais,
+        
         # =========================================
         # DENTES PERMANENTES
         # =========================================
@@ -1010,28 +1076,46 @@ def odontograma(request, id):
 
         ],
 
-        # =========================================
+               # =========================================
         # EVOLUÇÕES
         # =========================================
 
         'evolucoes': evolucoes,
 
         # =========================================
-        # ITENS ORÇAMENTO
+        # ITENS DO ORÇAMENTO
         # =========================================
 
         'itens_orcamento': itens_orcamento,
 
-       # PROCEDIMENTOS
+        # =========================================
+        # PROCEDIMENTOS
+        # =========================================
 
         'procedimentos': procedimentos,
 
+        # =========================================
         # PROCEDIMENTOS GERAIS
+        # =========================================
 
         'procedimentos_gerais': procedimentos_gerais,
-        }
-    
+
+        # =========================================
+        # TRATAMENTO
+        # =========================================
+
+        'tratamento': tratamento,
+
+        # =========================================
+        # ORÇAMENTO
+        # =========================================
+
+        'orcamento': orcamento,
+
+    }
+
     for item in itens_orcamento:
+
         print(
             f'ITEM {item.id} | DENTE={item.dente} | POSICAO={item.posicao_icone}'
         )
@@ -1045,6 +1129,7 @@ def odontograma(request, id):
         context
 
     )
+
 
 # =========================================
 # PROCEDIMENTO GERAL
@@ -1063,29 +1148,57 @@ def salvar_procedimento_geral(request, id):
         id=id
     )
 
+    # =====================================
+    # TRATAMENTO ATIVO
+    # =====================================
+
+    tratamento = paciente.tratamentos.filter(
+        status='ATIVO'
+    ).first()
+
+    if tratamento is None:
+
+        tratamento = Tratamento.objects.create(
+            paciente=paciente,
+            titulo='Tratamento Inicial'
+        )
+
+    # =====================================
+    # ORÇAMENTO DO TRATAMENTO
+    # =====================================
+
+    orcamento, created = Orcamento.objects.get_or_create(
+
+        paciente=paciente,
+
+        tratamento=tratamento,
+
+        defaults={
+            'tratamento': tratamento
+        }
+
+    )
+
     if request.method == 'POST':
 
         procedimento = get_object_or_404(
+
             Procedimento,
+
             id=request.POST.get('procedimento')
+
         )
 
         status = request.POST.get(
             'status'
-        )
+        ) or 'planejado'
 
         descricao = request.POST.get(
             'descricao'
-        )
+        ) or ''
 
         posicao_icone = request.POST.get(
             'posicao_icone'
-        )
-
-        # GARANTE ORÇAMENTO
-
-        orcamento, created = Orcamento.objects.get_or_create(
-            paciente=paciente
         )
 
         # =====================================
@@ -1111,7 +1224,7 @@ def salvar_procedimento_geral(request, id):
         # CRIA ITEM NO ORÇAMENTO
         # =====================================
 
-        ItemOrcamento.objects.create(
+        item = ItemOrcamento.objects.create(
 
             orcamento=orcamento,
 
@@ -1123,21 +1236,55 @@ def salvar_procedimento_geral(request, id):
 
             quantidade=1,
 
-            status=status or 'planejado'
+            status=status
 
         )
 
-        # CRIA EVOLUÇÃO
+        # =====================================
+        # CRIA EVOLUÇÃO CLÍNICA
+        # =====================================
 
         EvolucaoClinica.objects.create(
 
             paciente=paciente,
 
+            tratamento=tratamento,
+
+            orcamento=orcamento,
+
+            item_orcamento=item,
+
             procedimento=procedimento,
+
+            status=status,
 
             descricao=descricao
 
         )
+
+        messages.success(
+
+            request,
+
+            'Procedimento salvo com sucesso.'
+
+        )
+
+        return redirect(
+
+            'odontograma',
+
+            id=paciente.id
+
+        )
+
+    return redirect(
+
+        'odontograma',
+
+        id=paciente.id
+
+    )   
 
 @login_required(login_url='/')
 @perfil_required(
@@ -1148,7 +1295,12 @@ def salvar_procedimento_geral(request, id):
 )
 def anamnese(request, id):
 
-    paciente = Paciente.objects.get(id=id)
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
+
+
 
     anamnese, created = Anamnese.objects.get_or_create(
         paciente=paciente
@@ -1163,7 +1315,6 @@ def anamnese(request, id):
         anamnese.queixa_principal = request.POST.get(
             'queixa_principal', ''
         )
-
         # =========================================
         # HISTÓRIA MÉDICA
         # =========================================
@@ -1950,6 +2101,22 @@ def orcamento(request, id):
             tratamento = Tratamento.objects.create(
                 paciente=paciente,
                 titulo="Tratamento Inicial"
+            )
+
+            # =====================================
+            # ORÇAMENTO DO TRATAMENTO
+            # =====================================
+
+            orcamento, created = Orcamento.objects.get_or_create(
+
+                paciente=paciente,
+
+                tratamento=tratamento,
+
+                defaults={
+                    'tratamento': tratamento
+                }
+
             )
 
         orcamento = Orcamento.objects.create(
@@ -7988,4 +8155,53 @@ def encerrar_tratamento(request, tratamento_id):
         id=tratamento.paciente.id
     )
 
+# =========================================
+# TRATAMENTOS DO PACIENTE
+# =========================================
+
+@login_required(login_url='/')
+@perfil_required(
+    'admin',
+    'dentista',
+    'acd',
+    'secretaria'
+)
+def tratamentos_paciente(request, id):
+
+    print("ID recebido:", id)
+
+    print("Pacientes cadastrados:")
+
+    for p in Paciente.objects.all():
+
+        print(
+            p.id,
+            p.nome
+        )
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=id
+    )
+
+    tratamentos = Tratamento.objects.filter(
+        paciente=paciente
+    ).order_by(
+        '-data_inicio',
+        '-id'
+    )
+
+    context = {
+
+        'paciente': paciente,
+
+        'tratamentos': tratamentos,
+
+    }
+
+    return render(
+        request,
+        'accounts/tratamentos.html',
+        context
+    )
 
