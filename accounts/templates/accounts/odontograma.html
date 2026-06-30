@@ -363,6 +363,58 @@ LAYOUT
 
 <div class="timeline-container">
 
+    <div class="tratamento-card">
+
+    <div class="tratamento-header">
+
+        <h5>
+
+            🦷 Tratamento Atual
+
+        </h5>
+
+        <p>
+
+            Informações do tratamento em andamento
+
+        </p>
+
+    </div>
+
+    <div class="tratamento-body">
+
+        <h6>
+
+            Tratamento Inicial
+
+        </h6>
+
+        <div class="tratamento-info">
+
+            <strong>Início:</strong>
+
+            30/06/2026
+
+        </div>
+
+        <div class="tratamento-status ativo">
+
+            🟢 Em andamento
+
+        </div>
+
+        <button
+            class="btn btn-danger w-100 mt-3"
+            disabled>
+
+            Encerrar Tratamento
+
+        </button>
+
+    </div>
+
+</div>
+
     <div class="timeline-card">
 
         <div class="timeline-header">
@@ -502,7 +554,41 @@ LAYOUT
 
     </div>
 
+    <div class="historico-card">
+
+    <div class="historico-header">
+
+        <h5>
+
+            📚 Histórico
+
+        </h5>
+
+    </div>
+
+    <div class="historico-body">
+
+        <div class="historico-item">
+
+            Tratamento Inicial
+
+            <br>
+
+            <small>
+
+                Em andamento
+
+            </small>
+
+        </div>
+
+    </div>
+
 </div>
+
+</div>
+
+
 
 <!-- =========================================
 MODAL EVOLUÇÃO CLÍNICA
@@ -1145,8 +1231,8 @@ MODAL PROCEDIMENTO GERAL
 
         if (!odontograma || !timeline) return;
 
-        timeline.style.height =
-            odontograma.offsetHeight + 'px';
+        // timeline.style.height =
+        //     odontograma.offsetHeight + 'px';
 
     }
 

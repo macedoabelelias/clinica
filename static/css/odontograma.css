@@ -31,13 +31,45 @@ ODONTOGRAMA
 PROCEDIMENTOS CLÍNICOS
 ========================================= */
 
+/* =========================================
+COLUNA DIREITA
+========================================= */
+
 .timeline-container{
 
-    width:300px;
+    width:320px;
 
-    min-width:300px;
+    min-width:320px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
 
     align-self:flex-start;
+
+}
+
+
+/* Todos os cards da lateral */
+
+.tratamento-card,
+.historico-card{
+
+    position:relative;
+
+    background:#fff;
+
+    border-radius:28px;
+
+    border:1px solid #e2e8f0;
+
+    box-shadow:0 10px 35px rgba(15,23,42,.15);
+
+    overflow:hidden;
+
+    flex:0 0 auto;    
 
 }
 
@@ -45,23 +77,49 @@ PROCEDIMENTOS CLÍNICOS
 
     position:relative;
 
-    background:#ffffff;
+    background:#fff;
 
-    width:100%;
-
-    border-radius:32px;
-
-    padding:18px;
+    border-radius:28px;
 
     border:1px solid #e2e8f0;
 
-    box-shadow:0 10px 35px rgba(15,23,42,.25);
+    box-shadow:0 10px 35px rgba(15,23,42,.15);
+
+    overflow:hidden;
+
+    height:900px;
 
     display:flex;
 
     flex-direction:column;
 
-    overflow:hidden;
+}
+
+/* Barra azul */
+
+.tratamento-card::before,
+.timeline-card::before,
+.historico-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:100%;
+
+    height:6px;
+
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #3b82f6
+    );
+
+    flex:0 0 auto;
 
 }
 
@@ -158,26 +216,35 @@ STATUS DOS PROCEDIMENTOS
 HEADER
 ========================================= */
 
-.timeline-header{
+/* =========================================
+HEADER PADRÃO DOS CARDS
+========================================= */
 
-    margin-bottom:20px;
+.tratamento-header,
+.timeline-header,
+.historico-header{
+
+    padding:20px 22px 0;
 
 }
 
-.timeline-header h5{
 
-    font-size:1.25rem;
+.tratamento-header h5,
+.timeline-header h5,
+.historico-header h5{
+
+    font-size:27px;
 
     font-weight:700;
 
-    white-space:nowrap;
-
     color:#0f172a;
 
-    margin-bottom:8px;
+    margin-bottom:6px;
 
 }
 
+
+.tratamento-header p,
 .timeline-header p{
 
     color:#64748b;
@@ -196,9 +263,9 @@ BODY
 
     flex:1;
 
-    min-height:0;
-
     overflow-y:auto;
+
+    padding:20px;
 
     display:flex;
 
@@ -206,7 +273,90 @@ BODY
 
     gap:16px;
 
-    padding-right:4px;
+}
+/* =========================================
+TRATAMENTO
+========================================= */
+
+.tratamento-body{
+
+    padding:20px;
+
+}
+
+
+.tratamento-body h6{
+
+    font-size:18px;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+    margin-bottom:16px;
+
+}
+
+
+.tratamento-info{
+
+    margin-bottom:8px;
+
+    color:#334155;
+
+}
+
+
+.tratamento-status{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#16a34a;
+
+    font-weight:600;
+
+    margin-top:10px;
+
+}
+
+
+.tratamento-card button{
+
+    border-radius:12px;
+
+}
+
+/* =========================================
+HISTÓRICO
+========================================= */
+
+.historico-body{
+
+    padding:20px;
+
+}
+
+
+.historico-item{
+
+    background:#f8fafc;
+
+    border-radius:14px;
+
+    padding:14px;
+
+    border:1px solid #e2e8f0;
+
+}
+
+
+.historico-item small{
+
+    color:#64748b;
 
 }
 
@@ -240,18 +390,21 @@ ITEM
 
 }
 
-.timeline-content{
+.timeline-container{
 
-    flex:1;
+    width:320px;
 
-    background:#f8fafc;
+    min-width:320px;
 
-    border:1px solid #e2e8f0;
+    display:flex;
 
-    border-radius:18px;
+    flex-direction:column;
 
-    padding:14px;
+    gap:18px;
 
+    align-self:flex-start;
+
+    height:900px;   /* temporário */
 }
 
 .timeline-top{
