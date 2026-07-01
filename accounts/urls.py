@@ -685,7 +685,15 @@ path(
     name="encerrar_tratamento",
 ),
 
+# =========================================
+# NOVO TRATAMENTO
+# =========================================
 
+path(
+    "pacientes/<int:paciente_id>/novo-tratamento/",
+    views.novo_tratamento,
+    name="novo_tratamento",
+),
 
 
 ]

@@ -836,37 +836,41 @@ def odontograma(request, id):
         id=id
     )
 
-    # =====================================
+   # =====================================
     # TRATAMENTO ATIVO
     # =====================================
 
     tratamento = paciente.tratamentos.filter(
-        status='ATIVO'
+        status="ATIVO"
     ).first()
 
-    if tratamento is None:
+    # =====================================
+    # HISTÓRICO DE TRATAMENTOS
+    # =====================================
 
-        tratamento = Tratamento.objects.create(
-            paciente=paciente,
-            titulo='Tratamento Inicial'
-        )
+    historico_tratamentos = paciente.tratamentos.filter(
+        status="ENCERRADO"
+    ).order_by("-data_encerramento")
 
     # =====================================
     # ORÇAMENTO DO TRATAMENTO ATIVO
     # =====================================
 
-    orcamento, created = Orcamento.objects.get_or_create(
+    orcamento = None
 
-        paciente=paciente,
+    if tratamento:
 
-        tratamento=tratamento,
+        orcamento, created = Orcamento.objects.get_or_create(
 
-        defaults={
-            'tratamento': tratamento
-        }
+            paciente=paciente,
 
-    )
+            tratamento=tratamento,
 
+            defaults={
+                "tratamento": tratamento
+            }
+
+        )
     # =========================================
     # SALVAR EVOLUÇÃO
     # =========================================
@@ -972,29 +976,41 @@ def odontograma(request, id):
             id=paciente.id
         )
     
-        # =========================================
+    # =========================================
     # EVOLUÇÕES CLÍNICAS
     # =========================================
 
-    evolucoes = EvolucaoClinica.objects.filter(
+    if tratamento:
 
-        paciente=paciente,
+        evolucoes = EvolucaoClinica.objects.filter(
 
-        tratamento=tratamento
+            paciente=paciente,
 
-    ).order_by('-criado_em')
+            tratamento=tratamento
+
+        ).order_by('-criado_em')
+
+    else:
+
+        evolucoes = EvolucaoClinica.objects.none()
+
 
     # =========================================
     # ITENS DO ORÇAMENTO
     # =========================================
 
-    itens_orcamento = ItemOrcamento.objects.filter(
+    if orcamento:
 
-        orcamento=orcamento
+        itens_orcamento = ItemOrcamento.objects.filter(
 
-    )
+            orcamento=orcamento
 
-    # =========================================
+        )
+
+    else:
+
+        itens_orcamento = ItemOrcamento.objects.none()
+   # =========================================
     # PROCEDIMENTOS
     # =========================================
 
@@ -1022,15 +1038,15 @@ def odontograma(request, id):
 
     )
 
-    # =========================================
-    # CONTEXT
-    # =========================================
-
     context = {
 
         'paciente': paciente,
 
         'tratamento': tratamento,
+
+        'historico_tratamentos': historico_tratamentos,
+
+        'orcamento': orcamento,
 
         'evolucoes': evolucoes,
 
@@ -1039,23 +1055,18 @@ def odontograma(request, id):
         'procedimentos': procedimentos,
 
         'procedimentos_gerais': procedimentos_gerais,
-        
         # =========================================
         # DENTES PERMANENTES
         # =========================================
 
         'superiores': [
-
             '18','17','16','15','14','13','12','11',
             '21','22','23','24','25','26','27','28'
-
         ],
 
         'inferiores': [
-
             '48','47','46','45','44','43','42','41',
             '31','32','33','34','35','36','37','38'
-
         ],
 
         # =========================================
@@ -1063,57 +1074,16 @@ def odontograma(request, id):
         # =========================================
 
         'dec_superiores': [
-
             '55','54','53','52','51',
             '61','62','63','64','65'
-
         ],
 
         'dec_inferiores': [
-
             '85','84','83','82','81',
             '71','72','73','74','75'
-
         ],
 
-               # =========================================
-        # EVOLUÇÕES
-        # =========================================
-
-        'evolucoes': evolucoes,
-
-        # =========================================
-        # ITENS DO ORÇAMENTO
-        # =========================================
-
-        'itens_orcamento': itens_orcamento,
-
-        # =========================================
-        # PROCEDIMENTOS
-        # =========================================
-
-        'procedimentos': procedimentos,
-
-        # =========================================
-        # PROCEDIMENTOS GERAIS
-        # =========================================
-
-        'procedimentos_gerais': procedimentos_gerais,
-
-        # =========================================
-        # TRATAMENTO
-        # =========================================
-
-        'tratamento': tratamento,
-
-        # =========================================
-        # ORÇAMENTO
-        # =========================================
-
-        'orcamento': orcamento,
-
     }
-
     for item in itens_orcamento:
 
         print(
@@ -1162,6 +1132,14 @@ def salvar_procedimento_geral(request, id):
             paciente=paciente,
             titulo='Tratamento Inicial'
         )
+
+    # =====================================
+    # HISTÓRICO DE TRATAMENTOS
+    # =====================================
+
+    historico_tratamentos = paciente.tratamentos.filter(
+        status='ENCERRADO'
+    ).order_by('-data_encerramento')
 
     # =====================================
     # ORÇAMENTO DO TRATAMENTO
@@ -8140,19 +8118,132 @@ def central_orcamentos(request):
 @login_required(login_url="/")
 def encerrar_tratamento(request, tratamento_id):
 
+    if request.method != "POST":
+
+        return redirect(
+            "odontograma",
+            id=get_object_or_404(
+                Tratamento,
+                id=tratamento_id
+            ).paciente.id
+        )
+
     tratamento = get_object_or_404(
         Tratamento,
         id=tratamento_id
     )
 
+    # Evita encerrar duas vezes
+    if tratamento.status == "ENCERRADO":
+
+        messages.warning(
+            request,
+            "Este tratamento já está encerrado."
+        )
+
+        return redirect(
+            "odontograma",
+            id=tratamento.paciente.id
+        )
+
+    # Encerra o tratamento
+    tratamento.status = "ENCERRADO"
+    tratamento.data_encerramento = timezone.now().date()
+
+    tratamento.save()
+
     messages.success(
         request,
-        f"Tratamento '{tratamento.titulo}' selecionado para encerramento."
+        "Tratamento encerrado com sucesso."
     )
 
     return redirect(
         "odontograma",
         id=tratamento.paciente.id
+    )
+
+# =========================================
+# NOVO TRATAMENTO
+# =========================================
+
+@login_required(login_url="/")
+def novo_tratamento(request, paciente_id):
+
+    paciente = get_object_or_404(
+        Paciente,
+        id=paciente_id
+    )
+
+    if request.method != "POST":
+
+        return redirect(
+            "odontograma",
+            id=paciente.id
+        )
+
+    # Verifica se já existe tratamento ativo
+    tratamento_ativo = paciente.tratamentos.filter(
+        status="ATIVO"
+    ).first()
+
+    if tratamento_ativo:
+
+        messages.warning(
+            request,
+            "Já existe um tratamento ativo para este paciente."
+        )
+
+        return redirect(
+            "odontograma",
+            id=paciente.id
+        )
+
+    titulo = request.POST.get(
+        "titulo",
+        ""
+    ).strip()
+
+    observacoes = request.POST.get(
+        "observacoes",
+        ""
+    ).strip()
+
+    if not titulo:
+
+        titulo = "Novo Tratamento"
+
+    tratamento = Tratamento.objects.create(
+
+        paciente=paciente,
+
+        titulo=titulo,
+
+        observacoes=observacoes,
+
+        status="ATIVO"
+
+    )
+
+    Orcamento.objects.get_or_create(
+
+        paciente=paciente,
+
+        tratamento=tratamento,
+
+        defaults={
+            "tratamento": tratamento
+        }
+
+    )
+
+    messages.success(
+        request,
+        "Novo tratamento criado com sucesso."
+    )
+
+    return redirect(
+        "odontograma",
+        id=paciente.id
     )
 
 # =========================================

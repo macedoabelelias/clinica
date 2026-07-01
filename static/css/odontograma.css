@@ -5,14 +5,12 @@ LAYOUT PRINCIPAL
 .odontograma-layout{
 
     display:flex;
-
     align-items:flex-start;
-
     gap:30px;
-
     width:100%;
 
 }
+
 /* =========================================
 ODONTOGRAMA
 ========================================= */
@@ -20,16 +18,10 @@ ODONTOGRAMA
 .odontograma-wrapper{
 
     flex:1;
-
     min-width:0;
-     display:flex;
+    display:flex;
 
 }
-
-
-/* =========================================
-PROCEDIMENTOS CLÍNICOS
-========================================= */
 
 /* =========================================
 COLUNA DIREITA
@@ -38,8 +30,6 @@ COLUNA DIREITA
 .timeline-container{
 
     width:320px;
-
-    min-width:320px;
 
     display:flex;
 
@@ -52,9 +42,12 @@ COLUNA DIREITA
 }
 
 
-/* Todos os cards da lateral */
+/* =========================================
+CARDS DA LATERAL
+========================================= */
 
 .tratamento-card,
+.timeline-card,
 .historico-card{
 
     position:relative;
@@ -69,33 +62,53 @@ COLUNA DIREITA
 
     overflow:hidden;
 
-    flex:0 0 auto;    
+}
+
+
+/* =========================================
+TRATAMENTO ATUAL
+========================================= */
+
+.tratamento-card{
+
+    flex:none;
+
+    min-height:220px;
 
 }
 
+
+/* =========================================
+PROCEDIMENTOS CLÍNICOS
+========================================= */
+
 .timeline-card{
 
-    position:relative;
-
-    background:#fff;
-
-    border-radius:28px;
-
-    border:1px solid #e2e8f0;
-
-    box-shadow:0 10px 35px rgba(15,23,42,.15);
-
-    overflow:hidden;
-
-    height:900px;
+    flex:none;
 
     display:flex;
 
     flex-direction:column;
 
+    height:340px;
+
 }
 
-/* Barra azul */
+
+/* =========================================
+HISTÓRICO
+========================================= */
+
+.historico-card{
+
+    flex:none;
+
+    min-height:240px;
+
+}
+
+
+/* Barra Azul */
 
 .tratamento-card::before,
 .timeline-card::before,
@@ -119,31 +132,8 @@ COLUNA DIREITA
         #3b82f6
     );
 
-    flex:0 0 auto;
-
 }
 
-/* Barra azul superior */
-
-.timeline-card::before{
-
-    content:'';
-
-    position:absolute;
-
-    top:0;
-    left:0;
-
-    width:100%;
-    height:6px;
-
-    background:linear-gradient(
-        90deg,
-        #2563eb,
-        #3b82f6
-    );
-
-}
 
 
 /* =========================================
@@ -154,13 +144,13 @@ STATUS DOS PROCEDIMENTOS
 
     display:block;
 
+    margin-bottom:6px;
+
     font-size:11px;
 
     font-weight:700;
 
     color:#64748b;
-
-    margin-bottom:6px;
 
     text-transform:uppercase;
 
@@ -170,13 +160,13 @@ STATUS DOS PROCEDIMENTOS
 
 .status-procedimento{
 
+    border:1px solid #dbe4f0;
+
     border-radius:12px;
 
     font-size:13px;
 
     font-weight:600;
-
-    border:1px solid #dbe4f0;
 
     box-shadow:none;
 
@@ -190,34 +180,9 @@ STATUS DOS PROCEDIMENTOS
 
 }
 
-/* BARRA SUPERIOR PREMIUM */
-
-.timeline-card::before{
-
-    content:'';
-
-    position:absolute;
-
-    top:0;
-
-    left:0;
-
-    width:100%;
-
-    height:5px;
-
-    background:#2563eb;
-
-    border-radius:32px 32px 0 0;
-
-}
 
 /* =========================================
-HEADER
-========================================= */
-
-/* =========================================
-HEADER PADRÃO DOS CARDS
+CABEÇALHO DOS CARDS
 ========================================= */
 
 .tratamento-header,
@@ -228,64 +193,40 @@ HEADER PADRÃO DOS CARDS
 
 }
 
-
 .tratamento-header h5,
 .timeline-header h5,
 .historico-header h5{
 
-    font-size:27px;
+    margin-bottom:4px;
+
+    font-size:24px;
 
     font-weight:700;
 
+    line-height:1.2;
+
     color:#0f172a;
 
-    margin-bottom:6px;
-
 }
-
 
 .tratamento-header p,
 .timeline-header p{
 
-    color:#64748b;
-
-    font-size:13px;
-
     margin:0;
 
-}
+    font-size:12px;
 
-/* =========================================
-BODY
-========================================= */
+    line-height:1.4;
 
-.timeline-body{
-
-    flex:1;
-
-    overflow-y:auto;
-
-    padding:20px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:16px;
-
-}
-/* =========================================
-TRATAMENTO
-========================================= */
-
-.tratamento-body{
-
-    padding:20px;
+    color:#64748b;
 
 }
 
+/* ==========================================
+   CARD TRATAMENTO
+========================================== */
 
-.tratamento-body h6{
+.tratamento-titulo{
 
     font-size:18px;
 
@@ -293,36 +234,76 @@ TRATAMENTO
 
     color:#0f172a;
 
-    margin-bottom:16px;
+    margin-bottom:14px;
 
 }
-
 
 .tratamento-info{
 
-    margin-bottom:8px;
+    font-size:14px;
 
-    color:#334155;
+    color:#475569;
+
+    margin-bottom:8px;
 
 }
 
+.tratamento-info i{
+
+    width:18px;
+
+    color:#2563eb;
+
+}
 
 .tratamento-status{
 
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    color:#16a34a;
+    font-size:14px;
 
     font-weight:600;
 
-    margin-top:10px;
+    color:#16a34a;
+
+    margin-bottom:10px;
 
 }
 
+.btn-tratamento{
+
+    font-size:14px;
+
+    font-weight:600;
+
+    padding:8px 12px;
+
+    border-radius:10px;
+
+}
+
+
+/* ==========================================
+   BODY DOS PROCEDIMENTOS
+========================================== */
+
+.timeline-body{
+
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:18px;
+
+}
+
+/* ==========================================
+   TRATAMENTO
+========================================== */
+
+.tratamento-body{
+
+    padding:20px;
+
+}
 
 .tratamento-card button{
 
@@ -330,39 +311,54 @@ TRATAMENTO
 
 }
 
+
 /* =========================================
 HISTÓRICO
 ========================================= */
 
 .historico-body{
 
-    padding:20px;
+    max-height:170px;
+
+    overflow-y:auto;
+
+    padding:18px;
 
 }
-
 
 .historico-item{
 
     background:#f8fafc;
 
-    border-radius:14px;
-
-    padding:14px;
-
     border:1px solid #e2e8f0;
 
+    border-radius:14px;
+
+    padding:12px;
+
 }
-
-
 .historico-item small{
 
     color:#64748b;
 
 }
 
+
 /* =========================================
-ITEM
+TIMELINE
 ========================================= */
+
+.timeline-container{
+
+    width:320px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:22px;
+
+}
 
 .timeline-item{
 
@@ -382,29 +378,12 @@ ITEM
 
     min-width:10px;
 
+    margin-top:8px;
+
     border-radius:50%;
 
     background:#2563eb;
 
-    margin-top:8px;
-
-}
-
-.timeline-container{
-
-    width:320px;
-
-    min-width:320px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:18px;
-
-    align-self:flex-start;
-
-    height:900px;   /* temporário */
 }
 
 .timeline-top{
@@ -480,35 +459,32 @@ ITEM
 }
 
 /* =========================================
-CARD ODONTOGRAMA
+   CARD ODONTOGRAMA
 ========================================= */
 
 .odontograma-card{
-
-    background:#ffffff;
-
-    border-radius:32px;
-
-    padding:28px;
-
-    border:1px solid #e2e8f0;
-
-    box-shadow:
-    0 10px 35px rgba(15,23,42,.25);
 
     position:relative;
 
     overflow:hidden;
 
-    min-height:auto;
+    background:#fff;
+
+    border:1px solid #e2e8f0;
+
+    border-radius:32px;
+
+    padding:28px;
+
+    box-shadow:0 10px 35px rgba(15,23,42,.25);
 
 }
 
-/* brilho suave */
+/* Barra Superior */
 
 .odontograma-card::before{
 
-    content:'';
+    content:"";
 
     position:absolute;
 
@@ -528,8 +504,9 @@ CARD ODONTOGRAMA
 
 }
 
+
 /* =========================================
-HEADER
+   HEADER
 ========================================= */
 
 .odontograma-header{
@@ -540,13 +517,13 @@ HEADER
 
 .odontograma-header h6{
 
+    margin-bottom:6px;
+
     font-size:22px;
 
     font-weight:800;
 
     color:#0f172a;
-
-    margin-bottom:6px;
 
     letter-spacing:-1px;
 
@@ -554,23 +531,19 @@ HEADER
 
 .odontograma-header p{
 
+    margin-bottom:26px;
+
     font-size:13px;
 
     color:#64748b;
 
-    margin-bottom:26px;
-
 }
 
 /* =========================================
-ÁREA INTERNA ODONTOGRAMA
+   ÁREA INTERNA DO ODONTOGRAMA
 ========================================= */
 
 .odontograma-box{
-
-    border:4px solid #dbe4f0;
-
-    border-radius:28px;
 
     padding:36px;
 
@@ -580,16 +553,23 @@ HEADER
         #f1f5f9
     );
 
+    border:4px solid #dbe4f0;
+
+    border-radius:28px;
+
     box-shadow:
-    inset 0 10px 35px rgba(15,23,42,.15);
+        inset 0 10px 35px rgba(15,23,42,.15);
 
 }
 
+
 /* =========================================
-SEÇÃO
+   TÍTULOS DAS SEÇÕES
 ========================================= */
 
 .secao-titulo{
+
+    margin-bottom:6px;
 
     font-size:16px;
 
@@ -599,12 +579,11 @@ SEÇÃO
 
     color:#0f172a;
 
-    margin-bottom:6px;
-
 }
 
+
 /* =========================================
-ARCADAS
+   ARCADAS
 ========================================= */
 
 .arcada{
@@ -615,9 +594,9 @@ ARCADAS
 
     align-items:flex-start;
 
-    gap:6px;
-
     flex-wrap:nowrap;
+
+    gap:6px;
 
 }
 
@@ -627,13 +606,18 @@ ARCADAS
 
 }
 
+
 /* =========================================
-DIVISÃO
+   DIVISÃO ENTRE ARCADAS
 ========================================= */
 
 .linha-divisao{
 
     height:4px;
+
+    margin:34px 0;
+
+    border-radius:999px;
 
     background:linear-gradient(
         90deg,
@@ -641,10 +625,6 @@ DIVISÃO
         #a2a9b3,
         transparent
     );
-
-    margin:34px 0;
-
-    border-radius:999px;
 
 }
 
@@ -1214,7 +1194,7 @@ OCLUSAL PADRÃO
 RESPONSIVO
 ========================================= */
 
-@media(max-width:1200px){
+@media (max-width:1200px){
 
     .odontograma-layout{
 
@@ -1230,19 +1210,7 @@ RESPONSIVO
 
     .timeline-card{
 
-        position:relative;
-
-        top:auto;
-
-        height:640px;
-
-        max-height:none;
-
-    }
-
-    .timeline-body{
-
-        max-height:none;
+        min-height:430px;
 
     }
 
@@ -1495,38 +1463,48 @@ DECÍDUOS INFERIORES
 }
 
 
+/* HOVER */
+
+.status-item:hover{
+
+    transform: translateX(3px);
+
+}
+
 /* =========================================
-MENU STATUS PREMIUM REFINADO
+MENU DE STATUS
 ========================================= */
 
 .menu-status{
 
-    position: absolute;
+    display:none;
 
-    width: 190px;
+    position:absolute;
 
-    background: rgba(235, 232, 232, 0.92);
+    z-index:999999;
 
-    backdrop-filter: blur(12px);
+    width:190px;
 
-    -webkit-backdrop-filter: blur(12px);
+    padding:8px;
 
-    border: 2px solid rgba(95, 93, 93, 0.45);
+    background:rgba(235,232,232,.92);
 
-    border-radius: 16px;
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
 
-    padding: 8px;
+    border:2px solid rgba(95,93,93,.45);
+
+    border-radius:16px;
 
     box-shadow:
-    0 8px 25px rgba(15,23,42,1.02);
-
-    z-index: 999999;
-
-    display: none;
+        0 8px 25px rgba(15,23,42,.20);
 
 }
 
-/* ITENS */
+
+/* =========================================
+ITENS DO MENU
+========================================= */
 
 .status-item{
 
@@ -1544,89 +1522,22 @@ MENU STATUS PREMIUM REFINADO
 
     font-weight:600;
 
-    cursor:pointer;
-
-    transition:.18s ease;
-
     color:#0f172a;
-
-}
-
-/* HOVER */
-
-.status-item:hover{
-
-    transform: translateX(3px);
-
-}
-
-/* =========================================
-MENU STATUS PREMIUM REFINADO
-========================================= */
-
-.menu-status{
-
-    position: absolute;
-
-    width: 190px;
-
-    background: rgba(235, 232, 232, 0.92);
-
-    backdrop-filter: blur(12px);
-
-    -webkit-backdrop-filter: blur(12px);
-
-    border: 2px solid rgba(95, 93, 93, 0.45);
-
-    border-radius: 16px;
-
-    padding: 8px;
-
-    box-shadow:
-    0 8px 25px rgba(15,23,42,1.02);
-
-    z-index: 999999;
-
-    display: none;
-
-}
-
-/* ITENS */
-
-.status-item{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    padding:8px 10px;
-
-    border-radius:12px;
-
-    font-size:12px;
-
-    font-weight:600;
 
     cursor:pointer;
 
     transition:.18s ease;
 
-    color:#0f172a;
-
 }
-
-/* HOVER */
 
 .status-item:hover{
 
-    transform: translateX(3px);
+    transform:translateX(3px);
 
 }
 
 /* =========================================
-BOLINHAS DE STATUS
+STATUS DOS PROCEDIMENTOS
 ========================================= */
 
 .status-dot{
@@ -1635,59 +1546,64 @@ BOLINHAS DE STATUS
 
     height:12px;
 
-    border-radius:50%;
-
     display:inline-block;
 
     flex-shrink:0;
 
+    border-radius:50%;
+
 }
 
-/* EXISTENTE */
 
-.status-existente .status-dot{
+/* =========================================
+CORES DOS STATUS
+========================================= */
+
+.status-existente .status-dot,
+.status-existente::before{
 
     background:#6b7280;
 
 }
 
-/* PLANEJADO */
-
-.status-planejado .status-dot{
+.status-planejado .status-dot,
+.status-planejado::before{
 
     background:#ef4444;
 
 }
 
-/* EM ANDAMENTO */
-
-.status-andamento .status-dot{
+.status-andamento .status-dot,
+.status-andamento::before{
 
     background:#10b981;
 
 }
 
-/* REALIZADO */
-
-.status-realizado .status-dot{
+.status-realizado .status-dot,
+.status-realizado::before{
 
     background:#2563eb;
 
 }
 
-/* CANCELADO */
-
-.status-cancelado .status-dot{
+.status-cancelado .status-dot,
+.status-cancelado::before{
 
     background:#9333ea;
 
 }
 
-/* BADGE */
+
+/* =========================================
+BADGE
+========================================= */
 
 .status-item::before{
 
-    content:'';
+    content:"";
+
+    display:block;
 
     width:12px;
 
@@ -1695,27 +1611,12 @@ BOLINHAS DE STATUS
 
     border-radius:4px;
 
-    display:block;
-
 }
 
-/* EXISTENTE */
 
-.status-existente::before{
-
-    background:#6b7280;
-
-}
-
-/* PLANEJADO */
-
-.status-planejado::before{
-
-    background:#ef4444;
-
-}
-
-/* ANDAMENTO */
+/* =========================================
+CORES DO TEXTO
+========================================= */
 
 .status-andamento{
 
@@ -1723,29 +1624,26 @@ BOLINHAS DE STATUS
 
 }
 
-.status-andamento::before{
-
-    background:#10b981;
-
-}
-
-.status-andamento:hover{
-
-    background:#ecfdf5;
-
-}
-
-/* REALIZADO */
-
 .status-realizado{
 
     color:#2563eb;
 
 }
 
-.status-realizado::before{
+.status-cancelado{
 
-    background:#2563eb;
+    color:#9333ea;
+
+}
+
+
+/* =========================================
+HOVER
+========================================= */
+
+.status-andamento:hover{
+
+    background:#ecfdf5;
 
 }
 
@@ -1755,26 +1653,11 @@ BOLINHAS DE STATUS
 
 }
 
-/* CANCELADO */
-
-.status-cancelado{
-
-    color:#9333ea;
-
-}
-
-.status-cancelado::before{
-
-    background:#9333ea;
-
-}
-
 .status-cancelado:hover{
 
     background:#faf5ff;
 
 }
-
 
 /* =========================================
 PROCEDIMENTOS GERAIS PREMIUM
@@ -1884,7 +1767,7 @@ PROCEDIMENTOS GERAIS PREMIUM
 }
 
 /* =========================================
-STATUS DOS PROCEDIMENTOS GERAIS
+   STATUS DOS PROCEDIMENTOS GERAIS
 ========================================= */
 
 .procedimento-geral-chip.status-existente span{
@@ -1907,8 +1790,9 @@ STATUS DOS PROCEDIMENTOS GERAIS
     color:#7c3aed;
 }
 
+
 /* =========================================
-HEMI ARCADA PREMIUM
+   HEMI ARCADA
 ========================================= */
 
 .hemi-wrapper{
@@ -1922,11 +1806,15 @@ HEMI ARCADA PREMIUM
 }
 
 
-/* ITEM */
+/* =========================================
+   ITEM
+========================================= */
 
 .hemi-item{
 
     position:absolute;
+
+    z-index:30;
 
     width:120px;
 
@@ -1934,32 +1822,30 @@ HEMI ARCADA PREMIUM
 
     flex-direction:column;
 
-    align-items:center;
-
     justify-content:center;
 
-    z-index:30;
+    align-items:center;
 
 }
 
 
 /* =========================================
-ÍCONE
+   ÍCONE
 ========================================= */
 
 .hemi-item .icone-hemi{
 
     position:relative !important;
 
+    display:block;
+
     width:42px !important;
 
     height:42px !important;
 
+    margin:0 auto 4px;
+
     object-fit:contain;
-
-    display:block;
-
-    margin:0 auto 4px auto;
 
     left:auto !important;
     right:auto !important;
@@ -1967,11 +1853,12 @@ HEMI ARCADA PREMIUM
     bottom:auto !important;
 
     transform:none !important;
+
 }
 
 
 /* =========================================
-TEXTO
+   TEXTO
 ========================================= */
 
 .hemi-item span{
@@ -1980,23 +1867,22 @@ TEXTO
 
     max-width:68px;
 
+    margin:0 auto;
+
     font-size:9px;
 
     font-weight:600;
 
-    color:#475569;
+    line-height:1.1;
 
     text-align:center;
 
-    line-height:1.1;
+    color:#475569;
 
     white-space:normal;
 
-    overflow-wrap:anywhere;
-
     word-break:break-word;
 
-    margin:0 auto;
 }
 
 /* =========================================
@@ -2086,30 +1972,6 @@ INFERIOR ESQUERDA
 
 }
 
-.hemi-item span{
-
-    display:block;
-
-    max-width:68px;
-
-    font-size:9px;
-
-    font-weight:600;
-
-    color:#475569;
-
-    text-align:center;
-
-    line-height:1.1;
-
-    white-space:normal;
-
-    overflow-wrap:anywhere;
-
-    word-break:break-word;
-
-    margin:0 auto;
-}
 
 /* =========================================
 STATUS HEMI ARCADA
@@ -2136,51 +1998,33 @@ STATUS HEMI ARCADA
 }
 
 /* =========================================
-RX INFERIOR
+   RX INFERIOR
 ========================================= */
 
 .arcada.inferior .icone-procedimento-dente[src*="rx_dente.png"],
 .arcada.decidua.inferior .icone-procedimento-dente[src*="rx_dente.png"]{
 
-    top:auto !important;
+    left:50% !important;
 
     bottom:-16px !important;
 
-    left:50% !important;
-
-    transform:translateX(-50%) !important;
-
-}
-
-/* RX PERMANENTE INFERIOR */
-
-.arcada.inferior .icone-procedimento-dente[src*="rx_dente.png"]{
-
     top:auto !important;
 
-    bottom:-24px !important;
-
-    left:50% !important;
-
     transform:translateX(-50%) !important;
 
 }
 
 /* =========================================
-NOVO PROCEDIMENTO GERAL
-========================================= */
-
-/* =========================================
-HEADER PROCEDIMENTOS GERAIS
+   HEADER PROCEDIMENTOS GERAIS
 ========================================= */
 
 .procedimentos-header{
 
     display:flex;
 
-    align-items:center;
-
     justify-content:space-between;
+
+    align-items:center;
 
     margin-bottom:18px;
 
@@ -2198,8 +2042,9 @@ HEADER PROCEDIMENTOS GERAIS
 
 }
 
+
 /* =========================================
-BOTÃO NOVO
+   BOTÃO NOVO
 ========================================= */
 
 .btn-add-geral{
@@ -2210,7 +2055,11 @@ BOTÃO NOVO
 
     gap:6px;
 
+    padding:6px 12px;
+
     border:none;
+
+    border-radius:999px;
 
     background:#eff6ff;
 
@@ -2220,13 +2069,9 @@ BOTÃO NOVO
 
     font-weight:700;
 
-    padding:6px 12px;
-
-    border-radius:999px;
-
     cursor:pointer;
 
-    transition:.25s;
+    transition:.25s ease;
 
 }
 
@@ -2265,8 +2110,7 @@ RESPONSIVO
 
     .hemi-item{
 
-        width:60px;
-        height:60px;
+        width:70px;
     }
 
     .icone-hemi{
