@@ -1,0 +1,164 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h1>
+            Caixa
+        </h1>
+
+    </div>
+
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card border-success">
+
+                <div class="card-body">
+
+                    <h6>
+                        Total Entradas
+                    </h6>
+
+                    <h4>
+                        R$ {{ total_entradas }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card border-danger">
+
+                <div class="card-body">
+
+                    <h6>
+                        Total Saídas
+                    </h6>
+
+                    <h4>
+                        R$ {{ total_saidas }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card border-primary">
+
+                <div class="card-body">
+
+                    <h6>
+                        Saldo Atual
+                    </h6>
+
+                    <h4>
+                        R$ {{ saldo }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in movimentacoes %}
+
+                        <tr>
+
+                            <td>
+                                {{ item.data|date:"d/m/Y" }}
+                            </td>
+
+                            <td>
+                                {{ item.descricao }}
+                            </td>
+
+                            <td>
+
+                                {% if item.tipo == 'ENTRADA' %}
+
+                                    <span class="badge bg-success">
+                                        Entrada
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-danger">
+                                        Saída
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                R$ {{ item.valor }}
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="4" class="text-center">
+
+                                Nenhuma movimentação encontrada.
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
